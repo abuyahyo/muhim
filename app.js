@@ -167,7 +167,6 @@
       let cdCls = 'day-card-countdown';
       let cdText;
       if (d.daysLeft === 0) { cdText = '● Бугун'; cdCls += ' today'; }
-      else if (d.daysLeft < 0) { cdText = Math.abs(d.daysLeft) + ' кун олдин'; cdCls += ' past'; }
       else if (d.daysLeft === 1) { cdText = 'Эртага'; }
       else { cdText = d.daysLeft + ' кун қолди'; }
 
@@ -409,7 +408,10 @@
     if (!raw) return { name: 'home' };
     const parts = raw.split('/');
     if (parts[0] === 'day' && parts[1]) {
-      return { name: 'day', id: decodeURIComponent(parts[1]) };
+      let id;
+      try { id = decodeURIComponent(parts[1]); }
+      catch (e) { return { name: 'home' }; }
+      return { name: 'day', id };
     }
     if (parts[0] === 'calendar') {
       if (parts[1]) {

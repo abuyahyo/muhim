@@ -54,6 +54,11 @@
   --focus-ring-color: var(--sea-500);
   --focus-ring-width: 3px;
   --focus-ring-offset: 2px;
+
+  /* Жума акценти */
+  --friday-bg: linear-gradient(135deg, #fef3c7, #fde68a);
+  --friday-text-strong: #92400e;
+  --friday-text-soft: #b45309;
 }
 
 body {
@@ -553,7 +558,6 @@ main {
   align-items: center;
   gap: 4px;
 }
-.day-card-countdown.past { color: var(--ink-light); }
 .day-card-countdown.today { color: var(--coral); }
 
 /* === БАТАФСИЛ КУН === */
@@ -849,7 +853,7 @@ main {
   .cal-cell { padding: 10px; }
 }
 .cal-cell.empty { background: transparent; }
-.cal-cell.friday { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+.cal-cell.friday { background: var(--friday-bg); }
 .cal-cell.important {
   cursor: pointer;
   color: white;
@@ -863,7 +867,7 @@ main {
   background: white;
 }
 .cal-cell.today.friday {
-  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  background: var(--friday-bg);
 }
 .cal-cell.today.important {
   box-shadow: 0 0 0 3px white, 0 0 0 5px var(--sea-500);
@@ -879,7 +883,7 @@ main {
   .cal-h-day { font-size: 20px; }
 }
 .cal-cell.important .cal-h-day { color: white; }
-.cal-cell.friday .cal-h-day { color: #92400e; }
+.cal-cell.friday .cal-h-day { color: var(--friday-text-strong); }
 .cal-g-day {
   font-size: 10px;
   color: var(--ink-light);
@@ -887,7 +891,7 @@ main {
   margin-top: 2px;
 }
 .cal-cell.important .cal-g-day { color: rgba(255,255,255,0.85); }
-.cal-cell.friday .cal-g-day { color: #b45309; }
+.cal-cell.friday .cal-g-day { color: var(--friday-text-soft); }
 
 .cal-legend {
   margin-top: 24px;
@@ -914,7 +918,7 @@ main {
   background: white;
   box-shadow: 0 0 0 2px var(--sea-500);
 }
-.legend-swatch.friday { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+.legend-swatch.friday { background: var(--friday-bg); }
 .legend-swatch.important { background: linear-gradient(135deg, var(--sea-500), var(--sea-700)); }
 
 /* === БУ ОЙДАГИ МУҲИМ КУНЛАР === */
