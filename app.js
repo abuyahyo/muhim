@@ -138,7 +138,7 @@
       const tagClass = nextDay.category === 'байрам' ? 'tag-bayram' : 'tag-muhim';
 
       html += '<section class="upcoming">';
-      html += '<div class="upcoming-card" onclick="showDay(\'' + escapeHtml(nextDay.id) + '\')">';
+      html += '<button class="upcoming-card" onclick="showDay(\'' + escapeHtml(nextDay.id) + '\')">';
       html += '<div class="upcoming-visual" style="background: linear-gradient(135deg, ' + nextDay.color + ', ' + nextDay.color + 'cc);">' + nextDay.hDay + '</div>';
       html += '<div class="upcoming-info">';
       html += '<span class="upcoming-tag ' + tagClass + '">' + escapeHtml(nextDay.category) + '</span>';
@@ -149,7 +149,7 @@
       html += '<div class="countdown-number">' + countdownDisplay + '</div>';
       html += '<div class="countdown-label">' + countdownLabel + '</div>';
       html += '</div>';
-      html += '</div></section>';
+      html += '</button></section>';
     }
 
     // МУҲИМ КУНЛАР
@@ -374,14 +374,14 @@
       for (let me = 0; me < monthEvents.length; me++) {
         const ev = monthEvents[me];
         const evGreg = hijriToGregorian(hYear, hMonth, ev.hDay);
-        html += '<div class="event-row" onclick="showDay(\'' + escapeHtml(ev.id) + '\')">';
+        html += '<button class="event-row" onclick="showDay(\'' + escapeHtml(ev.id) + '\')">';
         html += '<div class="event-day-num" style="background: linear-gradient(135deg, ' + ev.color + ', ' + ev.color + 'cc);">' + ev.hDay + '</div>';
         html += '<div class="event-info">';
         html += '<div class="event-name">' + escapeHtml(ev.name) + '</div>';
         html += '<div class="event-meta">' + ev.hDay + ' ' + escapeHtml(hijriMonths[hMonth - 1]) + ' · ' + evGreg.getDate() + ' ' + escapeHtml(gregorianMonthsShort[evGreg.getMonth()]) + ' ' + evGreg.getFullYear() + '</div>';
         html += '</div>';
         html += '<div class="event-arrow">→</div>';
-        html += '</div>';
+        html += '</button>';
       }
       html += '</div>';
     } else {
