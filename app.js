@@ -73,7 +73,20 @@
 
   // === ҲОЛАТ ===
   let hijriCalView = getCurrentHijri();
-  let prevView = 'home';
+
+  // Юлдузлар — IIFE бошланишида бир мартагина генерация қилинади,
+  // ҳар renderHome() да эмас (детерминистик кўриниш).
+  const STARS_HTML = (function buildStars() {
+    let s = '';
+    for (let i = 0; i < 12; i++) {
+      const sz = 2 + Math.random() * 3;
+      const top = Math.random() * 100;
+      const left = Math.random() * 100;
+      const delay = Math.random() * 3;
+      s += '<div class="star" style="width:' + sz + 'px;height:' + sz + 'px;top:' + top + '%;left:' + left + '%;animation-delay:' + delay + 's;"></div>';
+    }
+    return s;
+  })();
 
   // === БОШ САҲИФА ===
   function renderHome() {
@@ -90,18 +103,8 @@
 
     let html = '<div class="fade-in">';
 
-    // HERO — бугунги сана
-    let stars = '';
-    for (let s = 0; s < 12; s++) {
-      const sz = 2 + Math.random() * 3;
-      const top = Math.random() * 100;
-      const left = Math.random() * 100;
-      const delay = Math.random() * 3;
-      stars += '<div class="star" style="width:' + sz + 'px;height:' + sz + 'px;top:' + top + '%;left:' + left + '%;animation-delay:' + delay + 's;"></div>';
-    }
-
     html += '<section class="hero">';
-    html += '<div class="hero-stars">' + stars + '</div>';
+    html += '<div class="hero-stars">' + STARS_HTML + '</div>';
     html += '<div class="hero-content">';
     html += '<div class="hero-label"><span class="live-dot"></span><span>Бугунги сана</span></div>';
     html += '<div class="hero-grid">';
@@ -392,65 +395,97 @@
     document.getElementById('view-calendar').innerHTML = html;
   }
 
+  // === НАВИГАЦИЯ (Hash routing) ===
+  // URL форматлари:
+  //   ""           ёки "#/"                    → бош саҳифа
+  //   "#/day/qadr"                              → батафсил кун
+  //   "#/calendar"                              → жорий ой
+  //   "#/calendar/1447-09"                      → аниқ ҳижрий ой
+  // Бу ёндашув брауzer 'back' тугмаси, bookmark ва share ни таъминлайди;
+  // ички "prevView" стек керак эмас — history.back() ишлатилади.
+
+  function parseHash() {
+    const raw = (location.hash || '').replace(/^#\/?/, '');
+    if (!raw) return { name: 'home' };
+    const parts = raw.split('/');
+    if (parts[0] === 'day' && parts[1]) {
+      return { name: 'day', id: decodeURIComponent(parts[1]) };
+    }
+    if (parts[0] === 'calendar') {
+      if (parts[1]) {
+        const m = parts[1].match(/^(\d+)-(\d+)$/);
+        if (m) {
+          const year = parseInt(m[1], 10);
+          const month = parseInt(m[2], 10);
+          if (month >= 1 && month <= 12) return { name: 'calendar', year, month };
+        }
+      }
+      return { name: 'calendar' };
+    }
+    return { name: 'home' };
+  }
+
+  function setActiveView(name) {
+    document.getElementById('view-home').classList.toggle('hidden', name !== 'home');
+    document.getElementById('view-day').classList.toggle('hidden', name !== 'day');
+    document.getElementById('view-calendar').classList.toggle('hidden', name !== 'calendar');
+    document.getElementById('nav-home').classList.toggle('active', name === 'home');
+    document.getElementById('nav-cal').classList.toggle('active', name === 'calendar');
+  }
+
+  function route() {
+    const r = parseHash();
+    if (r.name === 'day') {
+      setActiveView('day');
+      renderDay(r.id);
+    } else if (r.name === 'calendar') {
+      hijriCalView = (r.year && r.month) ? { year: r.year, month: r.month } : getCurrentHijri();
+      setActiveView('calendar');
+      renderCalendar();
+    } else {
+      setActiveView('home');
+      renderHome();
+    }
+    window.scrollTo(0, 0);
+  }
+
+  function calendarHash() {
+    return '#/calendar/' + hijriCalView.year + '-' + hijriCalView.month;
+  }
+
   // === КЎРИНИШЛАР ===
-  function showHome() {
-    prevView = 'home';
-    document.getElementById('view-home').classList.remove('hidden');
-    document.getElementById('view-day').classList.add('hidden');
-    document.getElementById('view-calendar').classList.add('hidden');
-    document.getElementById('nav-home').classList.add('active');
-    document.getElementById('nav-cal').classList.remove('active');
-    renderHome();
-    window.scrollTo(0, 0);
-  }
+  // showHome/showDay/showCalendar фақат URL ни ўзгартиради;
+  // ҳақиқий рендер hashchange event'ида route() орқали бажарилади.
+  function showHome() { location.hash = '#/'; }
+  function showDay(dayId) { location.hash = '#/day/' + encodeURIComponent(dayId); }
+  function showCalendar() { location.hash = '#/calendar'; }
+  function goBack() { history.back(); }
 
-  function showDay(dayId) {
-    document.getElementById('view-home').classList.add('hidden');
-    document.getElementById('view-day').classList.remove('hidden');
-    document.getElementById('view-calendar').classList.add('hidden');
-    renderDay(dayId);
-    window.scrollTo(0, 0);
-  }
-
-  function showCalendar() {
-    prevView = 'calendar';
-    hijriCalView = getCurrentHijri();
-    document.getElementById('view-home').classList.add('hidden');
-    document.getElementById('view-day').classList.add('hidden');
-    document.getElementById('view-calendar').classList.remove('hidden');
-    document.getElementById('nav-home').classList.remove('active');
-    document.getElementById('nav-cal').classList.add('active');
-    renderCalendar();
-    window.scrollTo(0, 0);
-  }
-
-  function goBack() {
-    if (prevView === 'calendar') showCalendar();
-    else showHome();
-  }
-
+  // Ой алмаштириш URL ни replaceState билан янгилайди — ҳар тугмада
+  // browser history га ёзилмайди (back бирданига чиқиш олиб боради).
   function calPrev() {
     if (hijriCalView.month === 1) {
-      hijriCalView.month = 12;
-      hijriCalView.year -= 1;
+      hijriCalView = { year: hijriCalView.year - 1, month: 12 };
     } else {
-      hijriCalView.month -= 1;
+      hijriCalView = { year: hijriCalView.year, month: hijriCalView.month - 1 };
     }
+    history.replaceState(null, '', calendarHash());
     renderCalendar();
   }
 
   function calNext() {
     if (hijriCalView.month === 12) {
-      hijriCalView.month = 1;
-      hijriCalView.year += 1;
+      hijriCalView = { year: hijriCalView.year + 1, month: 1 };
     } else {
-      hijriCalView.month += 1;
+      hijriCalView = { year: hijriCalView.year, month: hijriCalView.month + 1 };
     }
+    history.replaceState(null, '', calendarHash());
     renderCalendar();
   }
 
   function calToday() {
     hijriCalView = getCurrentHijri();
+    history.replaceState(null, '', calendarHash());
     renderCalendar();
   }
 
@@ -464,5 +499,6 @@
   window.calToday = calToday;
 
   // БОШЛАШ
-  showHome();
+  window.addEventListener('hashchange', route);
+  route();
 })();
