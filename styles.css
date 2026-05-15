@@ -862,6 +862,9 @@ main {
   box-shadow: 0 0 0 3px var(--sea-500), 0 8px 20px -4px rgba(14, 165, 233, 0.4);
   background: white;
 }
+.cal-cell.today.friday {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+}
 .cal-cell.today.important {
   box-shadow: 0 0 0 3px white, 0 0 0 5px var(--sea-500);
 }
