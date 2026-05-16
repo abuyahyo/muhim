@@ -93,11 +93,6 @@
     if (day.frequency === 'monthly') return 'Ҳар ой';
     return 'Ҳар йил';
   }
-  function freqTagClass(day) {
-    if (day.frequency === 'weekly') return 'tag-weekly';
-    if (day.frequency === 'monthly') return 'tag-monthly';
-    return 'tag-yearly';
-  }
 
   // === ИЗОҲ ===
   // Оят ёки ҳадисга ихтиёрий шарҳ. <details> элементи орқали JS'сиз
@@ -139,7 +134,6 @@
     for (let i = 0; i < items.length; i++) {
       const d = items[i];
       const gDate = d.nextDate;
-      const tagCls = freqTagClass(d);
       let cdCls = 'day-card-countdown';
       let cdText;
       if (d.daysLeft === 0) { cdText = '● Бугун'; cdCls += ' today'; }
@@ -166,7 +160,6 @@
       html += stamp;
       html += '</div>';
       html += '<div class="day-card-body">';
-      html += '<span class="day-card-tag ' + tagCls + '">' + escapeHtml(freqLabel(d)) + '</span>';
       html += '<div class="day-card-name">' + escapeHtml(d.name) + '</div>';
       html += '<div class="day-card-short">' + escapeHtml(d.short) + '</div>';
       html += '<div class="day-card-footer">';
@@ -260,13 +253,10 @@
         countdownLabel = 'кун қолди';
       }
 
-      const tagClass = freqTagClass(nextDay);
-
       html += '<section class="upcoming">';
       html += '<button class="upcoming-card" onclick="showDay(\'' + escapeHtml(nextDay.id) + '\')">';
       html += '<div class="upcoming-visual" style="background: linear-gradient(135deg, ' + nextDay.color + ', ' + nextDay.color + 'cc);">' + nextDay.nextHijri.day + '</div>';
       html += '<div class="upcoming-info">';
-      html += '<span class="upcoming-tag ' + tagClass + '">' + escapeHtml(freqLabel(nextDay)) + '</span>';
       html += '<div class="upcoming-name">' + escapeHtml(nextDay.name) + '</div>';
       html += '<div class="upcoming-short">' + escapeHtml(nextDay.short) + '</div>';
       html += '</div>';
