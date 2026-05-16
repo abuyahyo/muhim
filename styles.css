@@ -33,6 +33,8 @@
   --line: #e2e8f0;
   --bg: #f8fafc;
   --white: #ffffff;
+  --surface: #ffffff;            /* картка/қути фони — тема билан алмашади */
+  --surface-translucent: rgba(255, 255, 255, 0.85); /* header */
 
   /* === Design tokens === */
   /* Радиуслар */
@@ -64,6 +66,57 @@
   /* Transitions — `all` ўрнига аниқ properties (layout reflow'ни тўсади) */
   --t-fast: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s, opacity 0.2s;
   --t-slow: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.3s, opacity 0.3s;
+
+  color-scheme: light;
+}
+
+/* === ҚОРА ТЕМА === */
+/* Фойдаланувчи аниқ танлаганда: data-theme="dark" */
+:root[data-theme="dark"] {
+  --ink: #f1f5f9;
+  --ink-soft: #cbd5e1;
+  --ink-mute: #94a3b8;
+  --ink-light: #64748b;
+  --line: #1e293b;
+  --bg: #020617;
+  --white: #0f172a;
+  --surface: #0f172a;
+  --surface-translucent: rgba(15, 23, 42, 0.85);
+
+  --shadow-xs: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 20px 40px -20px rgba(0, 0, 0, 0.6);
+  --shadow-xl: 0 20px 60px -20px rgba(0, 0, 0, 0.7);
+
+  --friday-bg: linear-gradient(135deg, #422006, #78350f);
+  --friday-text-strong: #fef3c7;
+  --friday-text-soft: #fde68a;
+
+  color-scheme: dark;
+}
+
+/* Тизим қора темани сўраганда (фойдаланувчи ҳали ўз танлови қилмаган) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #f1f5f9;
+    --ink-soft: #cbd5e1;
+    --ink-mute: #94a3b8;
+    --ink-light: #64748b;
+    --line: #1e293b;
+    --bg: #020617;
+    --white: #0f172a;
+    --surface: #0f172a;
+    --surface-translucent: rgba(15, 23, 42, 0.85);
+
+    --shadow-xs: 0 2px 8px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 20px 40px -20px rgba(0, 0, 0, 0.6);
+    --shadow-xl: 0 20px 60px -20px rgba(0, 0, 0, 0.7);
+
+    --friday-bg: linear-gradient(135deg, #422006, #78350f);
+    --friday-text-strong: #fef3c7;
+    --friday-text-soft: #fde68a;
+
+    color-scheme: dark;
+  }
 }
 
 body {
@@ -79,7 +132,7 @@ body {
 
 /* === HEADER === */
 header {
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--surface-translucent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
@@ -137,7 +190,57 @@ header {
   font-weight: 500;
   letter-spacing: 0.3px;
 }
+.header-right { display: flex; align-items: center; gap: 10px; }
+
+.theme-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-soft);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: var(--t-fast);
+  font-family: inherit;
+}
+.theme-toggle:hover {
+  background: var(--sea-50);
+  color: var(--sea-700);
+  border-color: var(--sea-200);
+}
+:root[data-theme="dark"] .theme-toggle:hover {
+  background: var(--bg);
+  color: var(--sea-300);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle:hover {
+    background: var(--bg);
+    color: var(--sea-300);
+  }
+}
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: block; }
+:root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+:root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle .icon-sun { display: block; }
+  :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
+}
+
 nav { display: flex; gap: 4px; background: var(--sea-50); padding: 4px; border-radius: var(--r-md); }
+:root[data-theme="dark"] nav {
+  /* Дарк темада sea-50 жуда чарақлайди */
+  background: var(--bg);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) nav {
+    background: var(--bg);
+  }
+}
 .nav-btn {
   padding: 8px 16px;
   border: none;
@@ -151,7 +254,7 @@ nav { display: flex; gap: 4px; background: var(--sea-50); padding: 4px; border-r
   font-family: inherit;
 }
 .nav-btn.active {
-  background: white;
+  background: var(--surface);
   color: var(--sea-700);
   box-shadow: var(--shadow-xs);
 }
@@ -311,7 +414,7 @@ main {
   margin-bottom: 32px;
 }
 .upcoming-card {
-  background: white;
+  background: var(--surface);
   border-radius: var(--r-3xl);
   padding: 24px;
   border: 1px solid var(--line);
@@ -458,7 +561,7 @@ main {
 }
 
 .day-card {
-  background: white;
+  background: var(--surface);
   border-radius: var(--r-2xl);
   padding: 0;
   border: 1px solid var(--line);
@@ -569,7 +672,7 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: white;
+  background: var(--surface);
   border: 1px solid var(--line);
   color: var(--ink-soft);
   padding: 10px 18px;
@@ -661,7 +764,7 @@ main {
 }
 
 .detail-block {
-  background: white;
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--r-2xl);
   padding: 28px;
@@ -714,7 +817,7 @@ main {
 
 /* === ҲИЖРИЙ ТАҚВИМ === */
 .cal-shell {
-  background: white;
+  background: var(--surface);
   border-radius: var(--r-4xl);
   padding: 24px;
   border: 1px solid var(--line);
@@ -764,7 +867,7 @@ main {
   height: 44px;
   border-radius: var(--r-lg);
   border: 1px solid var(--line);
-  background: white;
+  background: var(--surface);
   cursor: pointer;
   font-size: 16px;
   font-weight: 600;
@@ -865,7 +968,7 @@ main {
 }
 .cal-cell.today {
   box-shadow: 0 0 0 3px var(--sea-500), 0 8px 20px -4px rgba(14, 165, 233, 0.4);
-  background: white;
+  background: var(--surface);
 }
 .cal-cell.today.friday {
   background: var(--friday-bg);
@@ -916,7 +1019,7 @@ main {
   border-radius: var(--r-xs);
 }
 .legend-swatch.today {
-  background: white;
+  background: var(--surface);
   box-shadow: 0 0 0 2px var(--sea-500);
 }
 .legend-swatch.friday { background: var(--friday-bg); }
@@ -934,7 +1037,7 @@ main {
   margin-bottom: 16px;
 }
 .event-row {
-  background: white;
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--r-xl);
   padding: 16px 20px;
@@ -990,7 +1093,7 @@ footer {
   padding: 40px 20px 60px;
   border-top: 1px solid var(--line);
   margin-top: 40px;
-  background: white;
+  background: var(--surface);
 }
 .foot-mark {
   width: 36px;
