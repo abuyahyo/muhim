@@ -923,25 +923,13 @@ main {
 }
 .cal-h-day {
   font-family: var(--font-num);
-  font-size: clamp(13px, 3.6vw, 20px);
+  font-size: clamp(16px, 4.6vw, 26px);
   font-weight: 400;
   color: var(--ink);
   line-height: 1;
 }
 .cal-cell.important .cal-h-day { color: white; }
 .cal-cell.friday .cal-h-day { color: var(--friday-text-strong); }
-.cal-g-day {
-  font-size: clamp(8px, 2.2vw, 10px);
-  color: var(--ink-mute);
-  font-weight: 500;
-  margin-top: 2px;
-  max-width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: clip;
-}
-.cal-cell.important .cal-g-day { color: rgba(255,255,255,0.85); }
-.cal-cell.friday .cal-g-day { color: var(--friday-text-soft); }
 
 .cal-legend {
   margin-top: 24px;
