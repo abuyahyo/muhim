@@ -675,6 +675,7 @@ main {
   font-size: 17px;
   line-height: 1.7;
   color: var(--ink);
+  white-space: pre-line;
 }
 .source-attrib {
   margin-top: 16px;
