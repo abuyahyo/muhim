@@ -68,21 +68,21 @@
   --t-slow: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.3s, opacity 0.3s;
 
   /* Соф рақамли элементлар учун шрифт (катта рақамлар) */
-  --font-num: 'DM Serif Display', 'Playfair Display', Georgia, serif;
+  --font-num: 'DM Serif Display', 'DM Sans', system-ui, sans-serif;
 
   color-scheme: dark;
 }
 
 html { overflow-x: hidden; }
 body {
-  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
   background: var(--bg);
   color: var(--ink);
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-.display { font-family: 'Playfair Display', Georgia, serif; }
+.display { font-family: 'DM Sans', system-ui, sans-serif; }
 .arabic { font-family: 'Amiri', serif; }
 
 /* === СУЗУВЧИ НАВИГАЦИЯ === */
@@ -251,7 +251,7 @@ main {
   -webkit-text-fill-color: transparent;
 }
 .hijri-month {
-  font-family: 'Playfair Display', serif;
+  font-family: 'DM Sans', system-ui, sans-serif;
   font-size: clamp(24px, 5vw, 36px);
   font-weight: 600;
   margin-top: 4px;
@@ -280,7 +280,7 @@ main {
   margin-bottom: 8px;
 }
 .gregorian-date {
-  font-family: 'Playfair Display', serif;
+  font-family: 'DM Sans', system-ui, sans-serif;
   font-size: 26px;
   font-weight: 600;
   line-height: 1.2;
@@ -358,7 +358,7 @@ main {
   margin-bottom: 8px;
 }
 .upcoming-name {
-  font-family: 'Playfair Display', serif;
+  font-family: 'DM Sans', system-ui, sans-serif;
   font-size: 24px;
   font-weight: 700;
   color: var(--ink);
@@ -415,7 +415,7 @@ main {
   gap: 16px;
 }
 .section-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'DM Sans', system-ui, sans-serif;
   font-size: 26px;
   font-weight: 700;
   color: var(--ink);
@@ -512,7 +512,7 @@ main {
 .tag-bayram { background: #fef3c7; color: #92400e; }
 .tag-muhim { background: var(--sea-100); color: var(--sea-700); }
 .day-card-name {
-  font-family: 'Playfair Display', serif;
+  font-family: 'DM Sans', system-ui, sans-serif;
   font-size: 20px;
   font-weight: 700;
   color: var(--ink);
@@ -607,7 +607,7 @@ main {
   border: 1px solid rgba(255,255,255,0.25);
 }
 .detail-name {
-  font-family: 'Playfair Display', serif;
+  font-family: 'DM Sans', system-ui, sans-serif;
   font-size: 40px;
   font-weight: 800;
   line-height: 1;
@@ -641,7 +641,7 @@ main {
   font-weight: 600;
 }
 .detail-date-value {
-  font-family: 'Playfair Display', serif;
+  font-family: 'DM Sans', system-ui, sans-serif;
   font-size: 22px;
   font-weight: 600;
 }
@@ -687,7 +687,7 @@ main {
   color: var(--sea-700);
 }
 .placeholder-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'DM Sans', system-ui, sans-serif;
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 8px;
@@ -725,7 +725,7 @@ main {
   margin-bottom: 4px;
 }
 .cal-month-name {
-  font-family: 'Playfair Display', serif;
+  font-family: 'DM Sans', system-ui, sans-serif;
   font-size: clamp(26px, 7vw, 44px);
   font-weight: 800;
   color: var(--ink);
@@ -912,7 +912,7 @@ main {
   margin-top: 24px;
 }
 .month-events-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'DM Sans', system-ui, sans-serif;
   font-size: 20px;
   font-weight: 700;
   color: var(--ink);
@@ -953,7 +953,7 @@ main {
 }
 .event-info { flex: 1; min-width: 0; }
 .event-name {
-  font-family: 'Playfair Display', serif;
+  font-family: 'DM Sans', system-ui, sans-serif;
   font-size: 17px;
   font-weight: 700;
   color: var(--ink);
