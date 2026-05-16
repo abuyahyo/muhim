@@ -465,20 +465,6 @@
     renderCalendar();
   }
 
-  // === ТЕМА (қора/оқ) ===
-  // Бошланғич: localStorage да аниқ танлов бўлса, у; йўқ бўлса —
-  // тизим prefers-color-scheme. localStorage 'light' ёки 'dark' сақланади;
-  // null = тизим бошқарувида.
-  function toggleTheme() {
-    const root = document.documentElement;
-    const explicit = root.getAttribute('data-theme');
-    const sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isDark = explicit ? explicit === 'dark' : sysDark;
-    const next = isDark ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    try { localStorage.setItem('muhim:theme', next); } catch (e) {}
-  }
-
   // Инлайн onclick ҳандлерлари учун глобал экспорт
   window.showHome = showHome;
   window.showDay = showDay;
@@ -487,7 +473,6 @@
   window.calPrev = calPrev;
   window.calNext = calNext;
   window.calToday = calToday;
-  window.toggleTheme = toggleTheme;
 
   // БОШЛАШ
   window.addEventListener('hashchange', route);

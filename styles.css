@@ -26,15 +26,15 @@
   --purple: #a78bfa;
   --emerald: #10b981;
 
-  --ink: #0f172a;
-  --ink-soft: #475569;
-  --ink-mute: #64748b;   /* WCAG AA matn (oq fonda ~4.6:1) */
-  --ink-light: #94a3b8;  /* faqat dekorativ — matn uchun emas */
-  --line: #e2e8f0;
-  --bg: #f8fafc;
-  --white: #ffffff;
-  --surface: #ffffff;            /* картка/қути фони — тема билан алмашади */
-  --surface-translucent: rgba(255, 255, 255, 0.85); /* header */
+  --ink: #f1f5f9;
+  --ink-soft: #cbd5e1;
+  --ink-mute: #94a3b8;   /* WCAG AA matn (қора фонда) */
+  --ink-light: #64748b;  /* faqat dekorativ — matn uchun emas */
+  --line: #1e293b;
+  --bg: #020617;
+  --white: #0f172a;              /* эски ном — энди қора surface */
+  --surface: #0f172a;            /* картка/қути фони */
+  --surface-translucent: rgba(15, 23, 42, 0.85);
 
   /* === Design tokens === */
   /* Радиуслар */
@@ -49,9 +49,9 @@
   --r-full: 999px;
 
   /* Соялар */
-  --shadow-xs: 0 2px 8px rgba(15, 23, 42, 0.06);
-  --shadow-lg: 0 20px 40px -20px rgba(15, 23, 42, 0.15);
-  --shadow-xl: 0 20px 60px -20px rgba(7, 89, 133, 0.4);
+  --shadow-xs: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 20px 40px -20px rgba(0, 0, 0, 0.6);
+  --shadow-xl: 0 20px 60px -20px rgba(0, 0, 0, 0.7);
 
   /* Фокус ҳалқаси */
   --focus-ring-color: var(--sea-500);
@@ -59,64 +59,15 @@
   --focus-ring-offset: 2px;
 
   /* Жума акценти */
-  --friday-bg: linear-gradient(135deg, #fef3c7, #fde68a);
-  --friday-text-strong: #92400e;
-  --friday-text-soft: #b45309;
+  --friday-bg: linear-gradient(135deg, #422006, #78350f);
+  --friday-text-strong: #fef3c7;
+  --friday-text-soft: #fde68a;
 
   /* Transitions — `all` ўрнига аниқ properties (layout reflow'ни тўсади) */
   --t-fast: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s, opacity 0.2s;
   --t-slow: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.3s, opacity 0.3s;
 
-  color-scheme: light;
-}
-
-/* === ҚОРА ТЕМА === */
-/* Фойдаланувчи аниқ танлаганда: data-theme="dark" */
-:root[data-theme="dark"] {
-  --ink: #f1f5f9;
-  --ink-soft: #cbd5e1;
-  --ink-mute: #94a3b8;
-  --ink-light: #64748b;
-  --line: #1e293b;
-  --bg: #020617;
-  --white: #0f172a;
-  --surface: #0f172a;
-  --surface-translucent: rgba(15, 23, 42, 0.85);
-
-  --shadow-xs: 0 2px 8px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 20px 40px -20px rgba(0, 0, 0, 0.6);
-  --shadow-xl: 0 20px 60px -20px rgba(0, 0, 0, 0.7);
-
-  --friday-bg: linear-gradient(135deg, #422006, #78350f);
-  --friday-text-strong: #fef3c7;
-  --friday-text-soft: #fde68a;
-
   color-scheme: dark;
-}
-
-/* Тизим қора темани сўраганда (фойдаланувчи ҳали ўз танлови қилмаган) */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --ink: #f1f5f9;
-    --ink-soft: #cbd5e1;
-    --ink-mute: #94a3b8;
-    --ink-light: #64748b;
-    --line: #1e293b;
-    --bg: #020617;
-    --white: #0f172a;
-    --surface: #0f172a;
-    --surface-translucent: rgba(15, 23, 42, 0.85);
-
-    --shadow-xs: 0 2px 8px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 20px 40px -20px rgba(0, 0, 0, 0.6);
-    --shadow-xl: 0 20px 60px -20px rgba(0, 0, 0, 0.7);
-
-    --friday-bg: linear-gradient(135deg, #422006, #78350f);
-    --friday-text-strong: #fef3c7;
-    --friday-text-soft: #fde68a;
-
-    color-scheme: dark;
-  }
 }
 
 body {
@@ -129,66 +80,6 @@ body {
 
 .display { font-family: 'Playfair Display', Georgia, serif; }
 .arabic { font-family: 'Amiri', serif; }
-
-/* === СУЗУВЧИ ТЕМА ТУГМАСИ === */
-/* Кунлар/Тақвим pill'и билан бир хил баландликда — пастки ўнг бурчак */
-.theme-toggle {
-  position: fixed;
-  bottom: calc(20px + env(safe-area-inset-bottom));
-  right: 20px;
-  width: 44px;
-  height: 44px;
-  border-radius: var(--r-full);
-  border: 1px solid var(--line);
-  background: var(--surface-translucent);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  color: var(--ink-soft);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  transition: var(--t-fast);
-  font-family: inherit;
-  box-shadow:
-    0 4px 12px -4px rgba(15, 23, 42, 0.18),
-    0 24px 48px -12px rgba(15, 23, 42, 0.22);
-  z-index: 50;
-}
-:root[data-theme="dark"] .theme-toggle {
-  box-shadow:
-    0 4px 12px -4px rgba(0, 0, 0, 0.55),
-    0 24px 48px -12px rgba(0, 0, 0, 0.7);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .theme-toggle {
-    box-shadow:
-      0 4px 12px -4px rgba(0, 0, 0, 0.55),
-      0 24px 48px -12px rgba(0, 0, 0, 0.7);
-  }
-}
-.theme-toggle:hover {
-  color: var(--sea-700);
-  border-color: var(--sea-200);
-  transform: scale(1.05);
-}
-:root[data-theme="dark"] .theme-toggle:hover {
-  color: var(--sea-300);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .theme-toggle:hover {
-    color: var(--sea-300);
-  }
-}
-.theme-toggle .icon-sun { display: none; }
-.theme-toggle .icon-moon { display: block; }
-:root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
-:root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .theme-toggle .icon-sun { display: block; }
-  :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
-}
 
 /* === СУЗУВЧИ НАВИГАЦИЯ === */
 .bottom-nav {
@@ -205,21 +96,9 @@ body {
   display: inline-flex;
   gap: 4px;
   box-shadow:
-    0 4px 12px -4px rgba(15, 23, 42, 0.18),
-    0 24px 48px -12px rgba(15, 23, 42, 0.22);
-  z-index: 50;
-}
-:root[data-theme="dark"] .bottom-nav {
-  box-shadow:
     0 4px 12px -4px rgba(0, 0, 0, 0.55),
     0 24px 48px -12px rgba(0, 0, 0, 0.7);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .bottom-nav {
-    box-shadow:
-      0 4px 12px -4px rgba(0, 0, 0, 0.55),
-      0 24px 48px -12px rgba(0, 0, 0, 0.7);
-  }
+  z-index: 50;
 }
 .bottom-nav-btn {
   display: inline-flex;
@@ -238,15 +117,7 @@ body {
   white-space: nowrap;
 }
 .bottom-nav-btn:hover {
-  color: var(--sea-700);
-}
-:root[data-theme="dark"] .bottom-nav-btn:hover {
   color: var(--sea-300);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .bottom-nav-btn:hover {
-    color: var(--sea-300);
-  }
 }
 .bottom-nav-btn.active {
   background: linear-gradient(135deg, var(--sea-500) 0%, var(--sea-700) 100%);
