@@ -130,31 +130,18 @@ body {
 .display { font-family: 'Playfair Display', Georgia, serif; }
 .arabic { font-family: 'Amiri', serif; }
 
-/* === HEADER === */
-header {
-  background: var(--surface-translucent);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--line);
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
-.header-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
+/* === СУЗУВЧИ ТЕМА ТУГМАСИ === */
 .theme-toggle {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--r-md);
+  position: fixed;
+  top: calc(20px + env(safe-area-inset-top));
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-full);
   border: 1px solid var(--line);
-  background: var(--surface);
+  background: var(--surface-translucent);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
   color: var(--ink-soft);
   cursor: pointer;
   display: flex;
@@ -163,19 +150,33 @@ header {
   font-size: 18px;
   transition: var(--t-fast);
   font-family: inherit;
+  box-shadow:
+    0 4px 12px -4px rgba(15, 23, 42, 0.18),
+    0 24px 48px -12px rgba(15, 23, 42, 0.22);
+  z-index: 50;
+}
+:root[data-theme="dark"] .theme-toggle {
+  box-shadow:
+    0 4px 12px -4px rgba(0, 0, 0, 0.55),
+    0 24px 48px -12px rgba(0, 0, 0, 0.7);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle {
+    box-shadow:
+      0 4px 12px -4px rgba(0, 0, 0, 0.55),
+      0 24px 48px -12px rgba(0, 0, 0, 0.7);
+  }
 }
 .theme-toggle:hover {
-  background: var(--sea-50);
   color: var(--sea-700);
   border-color: var(--sea-200);
+  transform: scale(1.05);
 }
 :root[data-theme="dark"] .theme-toggle:hover {
-  background: var(--bg);
   color: var(--sea-300);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .theme-toggle:hover {
-    background: var(--bg);
     color: var(--sea-300);
   }
 }
@@ -265,8 +266,10 @@ header {
 main {
   max-width: 1200px;
   margin: 0 auto;
-  /* Пастки сузувчи nav учун жой қолдирамиз (footer ўчирилди) */
-  padding: 28px 20px calc(110px + env(safe-area-inset-bottom));
+  /* Тепада сузувчи theme toggle, пастда сузувчи nav учун жой */
+  padding:
+    calc(28px + env(safe-area-inset-top)) 20px
+    calc(110px + env(safe-area-inset-bottom));
 }
 
 /* === БОШ САҲИФА HERO === */
