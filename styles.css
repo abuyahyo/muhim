@@ -697,6 +697,35 @@ main {
   font-size: 14px;
   color: var(--ink-mute);
 }
+.source-list {
+  list-style: none;
+  margin: 16px auto 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 420px;
+  text-align: left;
+}
+.source-list li {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 0;
+}
+.source-list a {
+  display: block;
+  padding: 12px 14px;
+  color: var(--sea-300);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: var(--t-fast);
+}
+.source-list a:hover {
+  color: var(--sea-200);
+  background: var(--line);
+}
 
 /* === ҲИЖРИЙ ТАҚВИМ === */
 .cal-shell {

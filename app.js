@@ -44,6 +44,28 @@
     });
   }
 
+  // === МАНБА РЎЙХАТИ ===
+  // Оят/ҳадис ҳали тўлдирилмаганда placeholder ўрнига манба ҳаволалари
+  // кўрсатилади. Фойдаланувчи тасдиқланган манбагача ўз олимидан кўриб,
+  // оят/ҳадис матнини текширади.
+  function renderSourceList(sources, kind, title, subtitle) {
+    let h = '<div class="placeholder ' + kind + '">';
+    h += '<div class="placeholder-icon">' + (kind === 'verses' ? '۞' : 'ﷺ') + '</div>';
+    h += '<div class="placeholder-title">' + escapeHtml(title) + '</div>';
+    h += '<div class="placeholder-text">' + escapeHtml(subtitle) + '</div>';
+    if (sources && sources.length) {
+      h += '<ul class="source-list">';
+      for (let i = 0; i < sources.length; i++) {
+        const s = sources[i];
+        h += '<li><a href="' + escapeHtml(s.url) + '" target="_blank" rel="noopener noreferrer">'
+           + escapeHtml(s.ref) + ' ↗</a></li>';
+      }
+      h += '</ul>';
+    }
+    h += '</div>';
+    return h;
+  }
+
   // === ҲОЛАТ ===
   let hijriCalView = getCurrentHijri();
 
@@ -197,11 +219,9 @@
     // Оятлар
     html += '<div style="margin: 28px 0 16px;"><div class="section-title" style="font-size:22px;">Қуръон оятлари</div></div>';
     if (day.verses.length === 0) {
-      html += '<div class="placeholder verses">';
-      html += '<div class="placeholder-icon">۞</div>';
-      html += '<div class="placeholder-title">Оятлар тез орада қўшилади</div>';
-      html += '<div class="placeholder-text">Бу кунга оид Қуръон оятлари кейинроқ киритилади, инша Аллоҳ.</div>';
-      html += '</div>';
+      html += renderSourceList(day.sources && day.sources.verses, 'verses',
+        'Оятлар тез орада қўшилади',
+        'Қуйидаги манбалардан текширилгач қўшилади. Ҳозирча манбани очиб ўқиш мумкин.');
     } else {
       for (let v = 0; v < day.verses.length; v++) {
         const verse = day.verses[v];
@@ -216,11 +236,9 @@
     // Ҳадислар
     html += '<div style="margin: 28px 0 16px;"><div class="section-title" style="font-size:22px;">Шарифа ҳадислар</div></div>';
     if (day.hadiths.length === 0) {
-      html += '<div class="placeholder hadiths">';
-      html += '<div class="placeholder-icon">ﷺ</div>';
-      html += '<div class="placeholder-title">Ҳадислар тез орада қўшилади</div>';
-      html += '<div class="placeholder-text">Бу кунга оид саҳиҳ ҳадислар кейинроқ киритилади, инша Аллоҳ.</div>';
-      html += '</div>';
+      html += renderSourceList(day.sources && day.sources.hadiths, 'hadiths',
+        'Ҳадислар тез орада қўшилади',
+        'Қуйидаги саҳиҳ манбалардан текширилгач қўшилади.');
     } else {
       for (let h = 0; h < day.hadiths.length; h++) {
         const hadith = day.hadiths[h];

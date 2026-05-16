@@ -1,5 +1,11 @@
 // === МАЪЛУМОТЛАР ===
 // Барча статик маълумотлар: ой номлари, ҳафта кунлари, муҳим кунлар рўйхати.
+//
+// === ОЯТ/ҲАДИС ТЎЛДИРИШ БЎЙИЧА ЭСЛАТМА ===
+// Ҳар куннинг `verses` ва `hadiths` массивлари бўш. Уларни тўлдиришдан
+// олдин ҳар бир манба (`sources`) `ref`ини **ишончли матн билан** ва
+// маҳаллий олим тасдиғи билан текширинг. Расулуллоҳ ﷺ га нисбатан
+// нотўғри ҳадис ёки Қуръон оятининг хато таржимаси — катта масъулият.
 
 const AppData = {
   hijriMonths: [
@@ -29,46 +35,167 @@ const AppData = {
     { id: 'new-year', hMonth: 1, hDay: 1, name: 'Ҳижрий Янги Йил', category: 'муҳим',
       short: 'Ислом тақвимининг бошланиши',
       description: 'Муҳаррам ойининг биринчи куни — Ҳижрий йилнинг бошланиши. Расулуллоҳ ﷺ Маккадан Мадинага ҳижрат қилган санадан ҳисобланади.',
-      color: '#0369a1', verses: [], hadiths: [] },
+      color: '#0369a1',
+      verses: [], hadiths: [],
+      sources: {
+        verses: [
+          { ref: 'Тавба сураси (9), 36-оят — ҳаром ойлар', url: 'https://quran.com/9/36' }
+        ],
+        hadiths: [
+          { ref: 'Саҳиҳ Бухорий, 3197 — ой ҳақида', url: 'https://sunnah.com/bukhari:3197' }
+        ]
+      }
+    },
     { id: 'ashura', hMonth: 1, hDay: 10, name: 'Ашуро Куни', category: 'муҳим',
       short: 'Муҳаррам ойининг 10-куни',
       description: 'Расулуллоҳ ﷺ бу куни рўза тутишни тавсия қилганлар. Мусо алайҳиссалом ва унинг қавми Фиръавндан нажот топган кун.',
-      color: '#075985', verses: [], hadiths: [] },
+      color: '#075985',
+      verses: [], hadiths: [],
+      sources: {
+        verses: [],
+        hadiths: [
+          { ref: 'Саҳиҳ Бухорий, 2004 — Мусо ва Фиръавн', url: 'https://sunnah.com/bukhari:2004' },
+          { ref: 'Саҳиҳ Бухорий, 2006 — Ашуро рўзаси', url: 'https://sunnah.com/bukhari:2006' },
+          { ref: 'Саҳиҳ Муслим, 1130', url: 'https://sunnah.com/muslim:1130' }
+        ]
+      }
+    },
     { id: 'mawlid', hMonth: 3, hDay: 12, name: 'Мавлуди Шариф', category: 'муҳим',
       short: 'Расулуллоҳ ﷺ туғилган кун',
       description: 'Рабиул аввал ойининг 12-куни — Пайғамбаримиз Муҳаммад ﷺ дунёга келган кун.',
-      color: '#0d9488', verses: [], hadiths: [] },
+      color: '#0d9488',
+      verses: [], hadiths: [],
+      sources: {
+        verses: [
+          { ref: 'Аҳзоб сураси (33), 21-оят — Расулуллоҳ ﷺ намунаси', url: 'https://quran.com/33/21' }
+        ],
+        hadiths: [
+          { ref: 'Саҳиҳ Муслим, 1162 — Душанба рўзаси (туғилиш куни)', url: 'https://sunnah.com/muslim:1162' }
+        ]
+      }
+    },
     { id: 'miraj', hMonth: 7, hDay: 27, name: 'Исро ва Меърож', category: 'муҳим',
       short: 'Ражаб ойининг 27-кечаси',
       description: 'Расулуллоҳ ﷺ Маккадан Қудсга, у ердан осмонга кўтарилган муборак кеча. Беш вақт намоз шу кечада фарз қилинган.',
-      color: '#4338ca', verses: [], hadiths: [] },
+      color: '#4338ca',
+      verses: [], hadiths: [],
+      sources: {
+        verses: [
+          { ref: 'Исро сураси (17), 1-оят — туннги сафар', url: 'https://quran.com/17/1' },
+          { ref: 'Нажм сураси (53), 1-18-оят — Меърож', url: 'https://quran.com/53' }
+        ],
+        hadiths: [
+          { ref: 'Саҳиҳ Бухорий, 349 — Исро ва Меърож баёни', url: 'https://sunnah.com/bukhari:349' },
+          { ref: 'Саҳиҳ Муслим, 162', url: 'https://sunnah.com/muslim:162' }
+        ]
+      }
+    },
     { id: 'baraat', hMonth: 8, hDay: 15, name: 'Бароат Кечаси', category: 'муҳим',
       short: 'Шаъбон ойининг 15-кечаси',
       description: 'Лайлатул бароат — бандаларнинг гуноҳлари кечириладиган муборак кеча.',
-      color: '#0e7490', verses: [], hadiths: [] },
+      color: '#0e7490',
+      verses: [], hadiths: [],
+      sources: {
+        verses: [
+          { ref: 'Духон сураси (44), 3-4-оят — муборак кеча', url: 'https://quran.com/44/3-4' }
+        ],
+        hadiths: [
+          { ref: 'Ибн Можа, 1390 — Шаъбон ойининг 15-кечаси', url: 'https://sunnah.com/ibnmajah:1390' }
+        ]
+      }
+    },
     { id: 'ramadan', hMonth: 9, hDay: 1, name: 'Рамазон Бошланиши', category: 'байрам',
       short: 'Рўза ойининг биринчи куни',
       description: 'Муборак Рамазон ойининг бошланиши. Бу ойда Қуръони Карим нозил қилинган.',
-      color: '#0891b2', verses: [], hadiths: [] },
+      color: '#0891b2',
+      verses: [], hadiths: [],
+      sources: {
+        verses: [
+          { ref: 'Бақара сураси (2), 183-185-оят — рўза фарзи', url: 'https://quran.com/2/183-185' }
+        ],
+        hadiths: [
+          { ref: 'Саҳиҳ Бухорий, 1899 — Рамазонда жаннат эшиклари', url: 'https://sunnah.com/bukhari:1899' },
+          { ref: 'Саҳиҳ Бухорий, 1901 — таровиҳ', url: 'https://sunnah.com/bukhari:1901' }
+        ]
+      }
+    },
     { id: 'qadr', hMonth: 9, hDay: 27, name: 'Лайлатул Қадр', category: 'муҳим',
       short: 'Рамазоннинг охирги 10 кунлиги ичида',
       description: 'Минг ойдан афзал бўлган муборак кеча. Кўпчилик уламолар Рамазоннинг 27-кечаси деб айтган.',
-      color: '#7c3aed', verses: [], hadiths: [] },
+      color: '#7c3aed',
+      verses: [], hadiths: [],
+      sources: {
+        verses: [
+          { ref: 'Қадр сураси (97) — тўлиқ', url: 'https://quran.com/97' },
+          { ref: 'Бақара (2), 185-оят — Қуръон нозил қилинган', url: 'https://quran.com/2/185' }
+        ],
+        hadiths: [
+          { ref: 'Саҳиҳ Бухорий, 2014 — Қадр кечасида намоз', url: 'https://sunnah.com/bukhari:2014' },
+          { ref: 'Саҳиҳ Бухорий, 2017 — охирги 10 кунлик', url: 'https://sunnah.com/bukhari:2017' }
+        ]
+      }
+    },
     { id: 'fitr', hMonth: 10, hDay: 1, name: 'Рамазон Ҳайити', category: 'байрам',
       short: 'Ийдул Фитр',
       description: 'Шаввол ойининг биринчи куни — Рамазон рўзаси якунланиши муносабати билан мусулмонлар нишонлайдиган байрам.',
-      color: '#0284c7', verses: [], hadiths: [] },
+      color: '#0284c7',
+      verses: [], hadiths: [],
+      sources: {
+        verses: [
+          { ref: 'Бақара (2), 185-оят охири — байрам ва шукр', url: 'https://quran.com/2/185' }
+        ],
+        hadiths: [
+          { ref: 'Саҳиҳ Бухорий, 954 — Ийд намози', url: 'https://sunnah.com/bukhari:954' },
+          { ref: 'Саҳиҳ Муслим, 1140', url: 'https://sunnah.com/muslim:1140' }
+        ]
+      }
+    },
     { id: 'arafa', hMonth: 12, hDay: 9, name: 'Арафа Куни', category: 'муҳим',
       short: 'Зулҳижжа ойининг 9-куни',
       description: 'Ҳожилар Арафот тоғида тўпланадиган муборак кун. Бу куни рўза тутиш икки йиллик гуноҳга каффорат.',
-      color: '#0369a1', verses: [], hadiths: [] },
+      color: '#0369a1',
+      verses: [], hadiths: [],
+      sources: {
+        verses: [
+          { ref: 'Моида (5), 3-оят — диннинг камолга етиши', url: 'https://quran.com/5/3' }
+        ],
+        hadiths: [
+          { ref: 'Саҳиҳ Муслим, 1162 — Арафа рўзаси', url: 'https://sunnah.com/muslim:1162' },
+          { ref: 'Саҳиҳ Бухорий, 1564 — Арафада дуо', url: 'https://sunnah.com/bukhari:1564' }
+        ]
+      }
+    },
     { id: 'adha', hMonth: 12, hDay: 10, name: 'Қурбон Ҳайити', category: 'байрам',
       short: 'Ийдул Азҳо',
       description: 'Зулҳижжа ойининг 10-куни — Иброҳим алайҳиссаломнинг суннатига эргашиб қурбонлик қилинадиган улуғ байрам.',
-      color: '#1e40af', verses: [], hadiths: [] },
+      color: '#1e40af',
+      verses: [], hadiths: [],
+      sources: {
+        verses: [
+          { ref: 'Ҳаж (22), 34-37-оят — қурбонлик', url: 'https://quran.com/22/34-37' },
+          { ref: 'Саффат (37), 102-107-оят — Иброҳим ва Исмоил', url: 'https://quran.com/37/102-107' },
+          { ref: 'Кавсар (108), 2-оят — намоз ва қурбонлик', url: 'https://quran.com/108/2' }
+        ],
+        hadiths: [
+          { ref: 'Саҳиҳ Бухорий, 5545 — қурбонлик ҳайвонлари', url: 'https://sunnah.com/bukhari:5545' },
+          { ref: 'Саҳиҳ Муслим, 1977', url: 'https://sunnah.com/muslim:1977' }
+        ]
+      }
+    },
     { id: 'tashriq', hMonth: 12, hDay: 11, name: 'Ташриқ Кунлари', category: 'муҳим',
       short: 'Зулҳижжанинг 11-13-кунлари',
       description: 'Қурбон ҳайитидан сўнг кейинги уч кун — таҳмид ва такбир айтиш кунлари.',
-      color: '#1d4ed8', verses: [], hadiths: [] }
+      color: '#1d4ed8',
+      verses: [], hadiths: [],
+      sources: {
+        verses: [
+          { ref: 'Бақара (2), 200-203-оят — зикр кунлари', url: 'https://quran.com/2/200-203' },
+          { ref: 'Ҳаж (22), 28-оят — маълум кунлар', url: 'https://quran.com/22/28' }
+        ],
+        hadiths: [
+          { ref: 'Саҳиҳ Муслим, 1141 — ташриқ кунларида рўза', url: 'https://sunnah.com/muslim:1141' }
+        ]
+      }
+    }
   ]
 };
