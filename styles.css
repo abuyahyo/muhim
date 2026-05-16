@@ -143,54 +143,11 @@ header {
 .header-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 14px 20px;
+  padding: 10px 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-.brand-mark {
-  width: 42px;
-  height: 42px;
-  border-radius: var(--r-lg);
-  background: linear-gradient(135deg, var(--sea-500) 0%, var(--sea-700) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 22px;
-  box-shadow: 0 8px 20px -8px var(--sea-500);
-  position: relative;
-  overflow: hidden;
-}
-.brand-mark::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.3), transparent);
-}
-.brand-text { text-align: left; }
-.brand-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 19px;
-  font-weight: 700;
-  color: var(--ink);
-  line-height: 1.2;
-}
-.brand-tag {
-  font-size: 11px;
-  color: var(--ink-mute);
-  font-weight: 500;
-  letter-spacing: 0.3px;
-}
-.header-right { display: flex; align-items: center; gap: 10px; }
 
 .theme-toggle {
   width: 40px;
@@ -231,33 +188,73 @@ header {
   :root:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
 }
 
-nav { display: flex; gap: 4px; background: var(--sea-50); padding: 4px; border-radius: var(--r-md); }
-:root[data-theme="dark"] nav {
-  /* Дарк темада sea-50 жуда чарақлайди */
-  background: var(--bg);
+/* === ПАСТКИ НАВИГАЦИЯ === */
+.bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--surface-translucent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  z-index: 50;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) nav {
-    background: var(--bg);
-  }
-}
-.nav-btn {
-  padding: 8px 16px;
-  border: none;
-  border-radius: var(--r-sm);
+.bottom-nav-btn {
+  flex: 1;
+  max-width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
   background: transparent;
-  color: var(--ink-soft);
-  font-size: 14px;
+  color: var(--ink-mute);
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: var(--t-fast);
   font-family: inherit;
 }
-.nav-btn.active {
-  background: var(--surface);
+.bottom-nav-btn:hover {
   color: var(--sea-700);
-  box-shadow: var(--shadow-xs);
+  background: var(--sea-50);
 }
+:root[data-theme="dark"] .bottom-nav-btn:hover {
+  color: var(--sea-300);
+  background: var(--bg);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .bottom-nav-btn:hover {
+    color: var(--sea-300);
+    background: var(--bg);
+  }
+}
+.bottom-nav-btn.active {
+  color: var(--sea-700);
+  background: var(--sea-50);
+  border-color: var(--sea-200);
+}
+:root[data-theme="dark"] .bottom-nav-btn.active {
+  color: var(--sea-300);
+  background: var(--bg);
+  border-color: var(--line);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .bottom-nav-btn.active {
+    color: var(--sea-300);
+    background: var(--bg);
+    border-color: var(--line);
+  }
+}
+.bottom-nav-icon { font-size: 18px; line-height: 1; }
+.bottom-nav-label { letter-spacing: 0.3px; }
 
 /* === МАЙН === */
 main {
@@ -1090,7 +1087,8 @@ main {
 /* === FOOTER === */
 footer {
   text-align: center;
-  padding: 40px 20px 60px;
+  /* Пастки sticky nav учун қўшимча жой — bottom-nav ~84px + safe area */
+  padding: 40px 20px calc(100px + env(safe-area-inset-bottom));
   border-top: 1px solid var(--line);
   margin-top: 40px;
   background: var(--surface);
@@ -1127,13 +1125,12 @@ footer {
 :focus { outline: none; }
 
 button:focus-visible,
-.brand:focus-visible,
 .day-card:focus-visible,
 .upcoming-card:focus-visible,
 .event-row:focus-visible,
 .cal-cell:focus-visible,
 .cal-btn:focus-visible,
-.nav-btn:focus-visible,
+.bottom-nav-btn:focus-visible,
 .back-btn:focus-visible {
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-offset);

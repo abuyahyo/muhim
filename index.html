@@ -24,23 +24,10 @@
 
 <header>
   <div class="header-inner">
-    <button class="brand" onclick="showHome()">
-      <div class="brand-mark">☪</div>
-      <div class="brand-text">
-        <div class="brand-name">Исломий Тақвим</div>
-        <div class="brand-tag">Ҳижрий сана ва муҳим кунлар</div>
-      </div>
+    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Тема алмаштириш">
+      <span class="icon-moon" aria-hidden="true">☾</span>
+      <span class="icon-sun" aria-hidden="true">☀</span>
     </button>
-    <div class="header-right">
-      <nav>
-        <button class="nav-btn active" id="nav-home" onclick="showHome()">Кунлар</button>
-        <button class="nav-btn" id="nav-cal" onclick="showCalendar()">Тақвим</button>
-      </nav>
-      <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Тема алмаштириш">
-        <span class="icon-moon" aria-hidden="true">☾</span>
-        <span class="icon-sun" aria-hidden="true">☀</span>
-      </button>
-    </div>
   </div>
 </header>
 
@@ -54,6 +41,17 @@
   <div class="foot-mark">☪</div>
   <div class="foot-text">Аллоҳу таоло барчамизга яхши кунлар насиб этсин</div>
 </footer>
+
+<nav class="bottom-nav" aria-label="Асосий навигация">
+  <button class="bottom-nav-btn active" id="nav-home" onclick="showHome()">
+    <span class="bottom-nav-icon" aria-hidden="true">◇</span>
+    <span class="bottom-nav-label">Кунлар</span>
+  </button>
+  <button class="bottom-nav-btn" id="nav-cal" onclick="showCalendar()">
+    <span class="bottom-nav-icon" aria-hidden="true">▦</span>
+    <span class="bottom-nav-label">Тақвим</span>
+  </button>
+</nav>
 
 <script src="data.js"></script>
 <script src="hijri.js"></script>
