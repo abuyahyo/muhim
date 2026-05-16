@@ -395,22 +395,20 @@
       eventMap[monthEvents[em].hDay] = monthEvents[em];
     }
 
-    // Ойлик ва ҳафталик такрорий кунлар — ҳужайра учун воқеа топувчи ёрдамчилар
+    // Ойлик такрорий event ёрдамчиси (масалан Аййамул Бийз 13-15)
     const monthlyEvents = importantDays.filter(function (d) { return d.frequency === 'monthly'; });
-    const weeklyEvents = importantDays.filter(function (d) { return d.frequency === 'weekly'; });
-
-    // Жума ва ой кунини монтажий бирлаштириш — `findRecurring` ҳужайра учун
-    // тегишли takror воқеасини топади (ёки null). Йиллик event'ка ўхшаб
-    // ишлайди, лекин календарь ёзувида монтажий тарзда бошқа кўриниш олади.
-    function findRecurring(dd, dow) {
+    function findMonthly(dd) {
       for (let i = 0; i < monthlyEvents.length; i++) {
         if (monthlyEvents[i].hDays.indexOf(dd) !== -1) return monthlyEvents[i];
       }
-      for (let i = 0; i < weeklyEvents.length; i++) {
-        const targets = weeklyEvents[i].weekDays || [weeklyEvents[i].weekDay];
-        if (targets.indexOf(dow) !== -1) return weeklyEvents[i];
-      }
       return null;
+    }
+    // Жума ҳужайраси босилганда Жума карточкасига ўтиш учун кириш нуқтаси.
+    // Бошқа ҳафталик event'лар (Душ./Пай.) ҳужайра кўринишига киритилмайди —
+    // календар тоза туришига урғу.
+    let jumuaEntry = null;
+    for (let i = 0; i < importantDays.length; i++) {
+      if (importantDays[i].id === 'jumua') { jumuaEntry = importantDays[i]; break; }
     }
 
     let html = '<div class="fade-in">';
@@ -456,30 +454,27 @@
     }
     for (let dd = 1; dd <= daysInMonth; dd++) {
       const cellGreg = hijriToGregorian(hYear, hMonth, dd);
-      const dow = cellGreg.getDay();
-      const isFriday = dow === 5;
+      const isFriday = cellGreg.getDay() === 5;
       const isToday = isCurrentMonth && dd === todayHijri.day;
-      // Йиллик event (юқори устуворлик) → такрорий (ой/ҳафта)
       const yearlyEvent = eventMap[dd];
-      const recurring = yearlyEvent ? null : findRecurring(dd, dow);
-      const event = yearlyEvent || recurring;
-      const isMonthly = recurring && recurring.frequency === 'monthly';
-      const isJumua = recurring && recurring.frequency === 'weekly' && recurring.weekDay === 5;
+      const monthlyEvent = yearlyEvent ? null : findMonthly(dd);
+      // Ҳужайра босилганда таркибга мос карточка очилиши: йиллик > ойлик > Жума.
+      const linkEvent = yearlyEvent || monthlyEvent || (isFriday ? jumuaEntry : null);
 
       let cls = 'cal-cell';
       if (isFriday) cls += ' friday';
-      if (yearlyEvent || isMonthly) cls += ' important';
-      if (recurring && !isMonthly && !isJumua) cls += ' recurring';
+      if (yearlyEvent || monthlyEvent) cls += ' important';
       if (isToday) cls += ' today';
 
-      // Жума ҳужайраси .friday стилини сақлайди (жигар-олтин tone);
-      // йиллик ва ойлик event'лар учун ўз ранги bg сифатида қойилади.
+      // Жума ҳужайраси .friday-нинг бг'сини сақлайди; йиллик ва ойлик
+      // event'лар учун ўз ранги тўлдирилади.
       let style = '';
-      if ((yearlyEvent || isMonthly) && !isFriday) {
-        style = 'background: linear-gradient(135deg, ' + event.color + ', ' + event.color + 'cc);';
+      if ((yearlyEvent || monthlyEvent) && !isFriday) {
+        const ev = yearlyEvent || monthlyEvent;
+        style = 'background: linear-gradient(135deg, ' + ev.color + ', ' + ev.color + 'cc);';
       }
 
-      const onclick = event ? 'onclick="showDay(\'' + escapeHtml(event.id) + '\')"' : '';
+      const onclick = linkEvent ? 'onclick="showDay(\'' + escapeHtml(linkEvent.id) + '\')"' : '';
 
       html += '<button class="' + cls + '" style="' + style + '" ' + onclick + '>';
       html += '<div class="cal-h-day">' + dd + '</div>';
@@ -493,7 +488,6 @@
     html += '<div class="legend-item"><div class="legend-swatch today"></div><span>Бугун</span></div>';
     html += '<div class="legend-item"><div class="legend-swatch friday"></div><span>Жума</span></div>';
     html += '<div class="legend-item"><div class="legend-swatch important"></div><span>Муҳим кун</span></div>';
-    html += '<div class="legend-item"><div class="legend-swatch dot"></div><span>Душ./Пай. рўзаси</span></div>';
     html += '</div>';
 
     html += '</div>'; // cal-shell
