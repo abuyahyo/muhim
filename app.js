@@ -21,20 +21,53 @@
     return gregorianToHijri(new Date());
   }
 
-  function getDayDate(hMonth, hDay) {
+  // Кейинги такрорини ҳисоблаш — ҳар частота учун.
+  // Қайтаради: { date: Date, daysLeft: int, hijri: {year, month, day} }
+  //
+  // frequency:
+  //  - 'yearly' (default) — hMonth + hDay
+  //  - 'monthly' — hDays массиви (масалан [13,14,15] ҳар ҳижрий ойда)
+  //  - 'weekly' — weekDay (0=Якш, 5=Жума, ҳ.к. — Date.getDay() форматида)
+  function nextOccurrence(day) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (day.frequency === 'weekly') {
+      const daysLeft = (day.weekDay - today.getDay() + 7) % 7;
+      const date = new Date(today);
+      date.setDate(today.getDate() + daysLeft);
+      return { date: date, daysLeft: daysLeft, hijri: gregorianToHijri(date) };
+    }
+
     const current = getCurrentHijri();
+
+    if (day.frequency === 'monthly') {
+      const sortedDays = day.hDays.slice().sort(function (a, b) { return a - b; });
+      // Шу ойда қолган тоифа кунини топиш
+      for (let i = 0; i < sortedDays.length; i++) {
+        if (current.day <= sortedDays[i]) {
+          const date = hijriToGregorian(current.year, current.month, sortedDays[i]);
+          const daysLeft = Math.ceil((date - today) / 86400000);
+          return { date: date, daysLeft: daysLeft, hijri: { year: current.year, month: current.month, day: sortedDays[i] } };
+        }
+      }
+      // Шу ойда ҳаммаси ўтиб бўлган — кейинги ойнинг биринчи тоифа куни
+      let nextMonth = current.month + 1;
+      let nextYear = current.year;
+      if (nextMonth > 12) { nextMonth = 1; nextYear += 1; }
+      const date = hijriToGregorian(nextYear, nextMonth, sortedDays[0]);
+      const daysLeft = Math.ceil((date - today) / 86400000);
+      return { date: date, daysLeft: daysLeft, hijri: { year: nextYear, month: nextMonth, day: sortedDays[0] } };
+    }
+
+    // yearly (default)
     let year = current.year;
-    if (hMonth < current.month || (hMonth === current.month && hDay < current.day)) {
+    if (day.hMonth < current.month || (day.hMonth === current.month && day.hDay < current.day)) {
       year = current.year + 1;
     }
-    return hijriToGregorian(year, hMonth, hDay);
-  }
-
-  function daysUntil(hMonth, hDay) {
-    const target = getDayDate(hMonth, hDay);
-    const now = new Date();
-    now.setHours(0, 0, 0, 0);
-    return Math.ceil((target - now) / (1000 * 60 * 60 * 24));
+    const date = hijriToGregorian(year, day.hMonth, day.hDay);
+    const daysLeft = Math.ceil((date - today) / 86400000);
+    return { date: date, daysLeft: daysLeft, hijri: { year: year, month: day.hMonth, day: day.hDay } };
   }
 
   // === ХАВФСИЗ HTML ===
@@ -69,6 +102,56 @@
     return '<div class="star" style="width:' + s[0] + 'px;height:' + s[0] + 'px;top:' + s[1] + '%;left:' + s[2] + '%;animation-delay:' + s[3] + 's;"></div>';
   }).join('');
 
+  // === КУН КАРТОЧКАЛАРИ ГРИДИ ===
+  // Бош саҳифадаги бир секция учун. Йиллик ва такрорий
+  // кунлар алоҳида секцияларда бир хил тузилмадан фойдаланади.
+  function renderDayGrid(title, items) {
+    if (!items.length) return '';
+    let html = '<section>';
+    html += '<div class="section-head">';
+    html += '<div class="section-title">' + escapeHtml(title) + '</div>';
+    html += '<div class="section-meta">' + items.length + ' та кун</div>';
+    html += '</div>';
+    html += '<div class="cards-grid">';
+
+    for (let i = 0; i < items.length; i++) {
+      const d = items[i];
+      const gDate = d.nextDate;
+      const tagCls = d.category === 'байрам' ? 'tag-bayram' : 'tag-muhim';
+      let cdCls = 'day-card-countdown';
+      let cdText;
+      if (d.daysLeft === 0) { cdText = '● Бугун'; cdCls += ' today'; }
+      else if (d.daysLeft === 1) { cdText = 'Эртага'; }
+      else { cdText = d.daysLeft + ' кун қолди'; }
+
+      // Баннердаги катта рақам — keyingi takrorning ҳижрий куни.
+      // Жума учун (haftalik) рақам ўрнига иконка кўрсатилади.
+      const bannerLabel = d.frequency === 'weekly'
+        ? '<div class="day-card-icon">⊕</div>'
+        : '<div class="day-card-number">' + d.nextHijri.day + '</div>';
+      const monthPill = d.frequency === 'weekly'
+        ? escapeHtml(weekDaysFull[d.weekDay])
+        : escapeHtml(hijriMonths[d.nextHijri.month - 1]);
+
+      html += '<button class="day-card" onclick="showDay(\'' + escapeHtml(d.id) + '\')">';
+      html += '<div class="day-card-banner" style="background: linear-gradient(135deg, ' + d.color + ', ' + d.color + 'cc);">';
+      html += bannerLabel;
+      html += '<div class="day-card-month-pill">' + monthPill + '</div>';
+      html += '</div>';
+      html += '<div class="day-card-body">';
+      html += '<span class="day-card-tag ' + tagCls + '">' + escapeHtml(d.category) + '</span>';
+      html += '<div class="day-card-name">' + escapeHtml(d.name) + '</div>';
+      html += '<div class="day-card-short">' + escapeHtml(d.short) + '</div>';
+      html += '<div class="day-card-footer">';
+      html += '<span class="day-card-greg">' + gDate.getDate() + ' ' + escapeHtml(gregorianMonthsShort[gDate.getMonth()]) + ' ' + gDate.getFullYear() + '</span>';
+      html += '<span class="' + cdCls + '">' + cdText + '</span>';
+      html += '</div></div></button>';
+    }
+
+    html += '</div></section>';
+    return html;
+  }
+
   // === БОШ САҲИФА ===
   function renderHome() {
     const hijri = getCurrentHijri();
@@ -76,11 +159,16 @@
 
     const sorted = importantDays.map(function (d) {
       const c = Object.assign({}, d);
-      c.daysLeft = daysUntil(d.hMonth, d.hDay);
+      const occ = nextOccurrence(d);
+      c.daysLeft = occ.daysLeft;
+      c.nextDate = occ.date;
+      c.nextHijri = occ.hijri;
       return c;
     }).sort(function (a, b) { return a.daysLeft - b.daysLeft; });
 
     const nextDay = sorted[0];
+    const yearly = sorted.filter(function (d) { return !d.frequency || d.frequency === 'yearly'; });
+    const recurring = sorted.filter(function (d) { return d.frequency === 'monthly' || d.frequency === 'weekly'; });
 
     let html = '<div class="fade-in">';
 
@@ -120,7 +208,7 @@
 
       html += '<section class="upcoming">';
       html += '<button class="upcoming-card" onclick="showDay(\'' + escapeHtml(nextDay.id) + '\')">';
-      html += '<div class="upcoming-visual" style="background: linear-gradient(135deg, ' + nextDay.color + ', ' + nextDay.color + 'cc);">' + nextDay.hDay + '</div>';
+      html += '<div class="upcoming-visual" style="background: linear-gradient(135deg, ' + nextDay.color + ', ' + nextDay.color + 'cc);">' + nextDay.nextHijri.day + '</div>';
       html += '<div class="upcoming-info">';
       html += '<span class="upcoming-tag ' + tagClass + '">' + escapeHtml(nextDay.category) + '</span>';
       html += '<div class="upcoming-name">' + escapeHtml(nextDay.name) + '</div>';
@@ -133,40 +221,10 @@
       html += '</button></section>';
     }
 
-    // МУҲИМ КУНЛАР
-    html += '<section>';
-    html += '<div class="section-head">';
-    html += '<div class="section-title">Муҳим кунлар</div>';
-    html += '<div class="section-meta">' + importantDays.length + ' та кун</div>';
+    html += renderDayGrid('Муҳим кунлар', yearly);
+    if (recurring.length) html += renderDayGrid('Такрорий кунлар', recurring);
+
     html += '</div>';
-    html += '<div class="cards-grid">';
-
-    for (let i = 0; i < sorted.length; i++) {
-      const d = sorted[i];
-      const gDate = getDayDate(d.hMonth, d.hDay);
-      const tagCls = d.category === 'байрам' ? 'tag-bayram' : 'tag-muhim';
-      let cdCls = 'day-card-countdown';
-      let cdText;
-      if (d.daysLeft === 0) { cdText = '● Бугун'; cdCls += ' today'; }
-      else if (d.daysLeft === 1) { cdText = 'Эртага'; }
-      else { cdText = d.daysLeft + ' кун қолди'; }
-
-      html += '<button class="day-card" onclick="showDay(\'' + escapeHtml(d.id) + '\')">';
-      html += '<div class="day-card-banner" style="background: linear-gradient(135deg, ' + d.color + ', ' + d.color + 'cc);">';
-      html += '<div class="day-card-number">' + d.hDay + '</div>';
-      html += '<div class="day-card-month-pill">' + escapeHtml(hijriMonths[d.hMonth - 1]) + '</div>';
-      html += '</div>';
-      html += '<div class="day-card-body">';
-      html += '<span class="day-card-tag ' + tagCls + '">' + escapeHtml(d.category) + '</span>';
-      html += '<div class="day-card-name">' + escapeHtml(d.name) + '</div>';
-      html += '<div class="day-card-short">' + escapeHtml(d.short) + '</div>';
-      html += '<div class="day-card-footer">';
-      html += '<span class="day-card-greg">' + gDate.getDate() + ' ' + escapeHtml(gregorianMonthsShort[gDate.getMonth()]) + ' ' + gDate.getFullYear() + '</span>';
-      html += '<span class="' + cdCls + '">' + cdText + '</span>';
-      html += '</div></div></button>';
-    }
-
-    html += '</div></section></div>';
 
     document.getElementById('view-home').innerHTML = html;
   }
@@ -179,7 +237,8 @@
     }
     if (!day) return;
 
-    const gDate = getDayDate(day.hMonth, day.hDay);
+    const occ = nextOccurrence(day);
+    const gDate = occ.date;
 
     let html = '<div class="fade-in detail-wrap">';
     html += '<button class="back-btn" onclick="goBack()">← Орқага</button>';
@@ -189,12 +248,28 @@
     html += '<span class="detail-cat">' + escapeHtml(day.category) + '</span>';
     html += '<div class="detail-name">' + escapeHtml(day.name) + '</div>';
     html += '<div class="detail-dates">';
+
+    // Ҳижрий ёки такрорлик ёзуви (частотага қараб)
+    let leftLabel, leftValue;
+    if (day.frequency === 'weekly') {
+      leftLabel = 'Ҳафталик';
+      leftValue = escapeHtml(weekDaysFull[day.weekDay]);
+    } else if (day.frequency === 'monthly') {
+      leftLabel = 'Ҳар ҳижрий ой';
+      leftValue = day.hDays.join(', ') + '-куни';
+    } else {
+      leftLabel = 'Ҳижрий';
+      leftValue = day.hDay + ' ' + escapeHtml(hijriMonths[day.hMonth - 1]);
+    }
     html += '<div class="detail-date-block">';
-    html += '<div class="detail-date-label">Ҳижрий</div>';
-    html += '<div class="detail-date-value">' + day.hDay + ' ' + escapeHtml(hijriMonths[day.hMonth - 1]) + '</div>';
+    html += '<div class="detail-date-label">' + leftLabel + '</div>';
+    html += '<div class="detail-date-value">' + leftValue + '</div>';
     html += '</div>';
+
+    // Кейинги — гар частота учун
+    const rightLabel = day.frequency ? 'Кейинги' : 'Милодий';
     html += '<div class="detail-date-block">';
-    html += '<div class="detail-date-label">Милодий</div>';
+    html += '<div class="detail-date-label">' + rightLabel + '</div>';
     html += '<div class="detail-date-value">' + gDate.getDate() + ' ' + escapeHtml(gregorianMonths[gDate.getMonth()]) + ' ' + gDate.getFullYear() + '</div>';
     html += '</div>';
     html += '</div></div></div>';
