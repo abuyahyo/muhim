@@ -666,6 +666,13 @@ main {
   line-height: 1.7;
   color: var(--ink);
 }
+.note-block {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.08), rgba(251, 191, 36, 0.03));
+  border-color: rgba(251, 191, 36, 0.3);
+}
+.note-block .detail-block-label {
+  color: var(--gold);
+}
 
 .placeholder {
   border-radius: var(--r-2xl);

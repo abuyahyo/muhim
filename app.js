@@ -194,6 +194,13 @@
     html += '<div class="detail-text">' + escapeHtml(day.description) + '</div>';
     html += '</div>';
 
+    if (day.note) {
+      html += '<div class="detail-block note-block">';
+      html += '<div class="detail-block-label">Изоҳ</div>';
+      html += '<div class="detail-text">' + escapeHtml(day.note) + '</div>';
+      html += '</div>';
+    }
+
     // Оятлар
     html += '<div style="margin: 28px 0 16px;"><div class="section-title" style="font-size:22px;">Қуръон оятлари</div></div>';
     if (day.verses.length === 0) {
