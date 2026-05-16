@@ -501,9 +501,12 @@
 
     html += '</div>'; // cal-shell
 
-    // Бу ойдаги муҳим кунлар (йиллик + ойлик такрорий)
+    // Бу ойдаги муҳим кунлар (йиллик + ойлик + ҳафталик такрорий)
     const monthRows = monthEvents.slice();
     for (let i = 0; i < monthlyEvents.length; i++) monthRows.push(monthlyEvents[i]);
+    for (let i = 0; i < importantDays.length; i++) {
+      if (importantDays[i].frequency === 'weekly') monthRows.push(importantDays[i]);
+    }
     if (monthRows.length > 0) {
       html += '<div class="month-events">';
       html += '<div class="month-events-title">Бу ойдаги муҳим кунлар</div>';
@@ -516,6 +519,17 @@
           const lastG = hijriToGregorian(hYear, hMonth, ev.hDays[ev.hDays.length - 1]);
           meta = ev.hDays.join(', ') + ' ' + escapeHtml(hijriMonths[hMonth - 1])
                + ' · ' + firstG.getDate() + '–' + lastG.getDate() + ' ' + escapeHtml(gregorianMonthsShort[firstG.getMonth()]) + ' ' + firstG.getFullYear();
+        } else if (ev.frequency === 'weekly') {
+          // Шу ҳижрий ойда event'нинг ҳафта кунига тушадиган барча кунларини
+          // тўплаб, штампда биринчисини, метада эса рўйхатни кўрсатамиз.
+          const targets = ev.weekDays || [ev.weekDay];
+          const matches = [];
+          for (let d = 1; d <= daysInMonth; d++) {
+            const g = hijriToGregorian(hYear, hMonth, d);
+            if (targets.indexOf(g.getDay()) !== -1) matches.push(d);
+          }
+          dayNum = matches[0];
+          meta = matches.join(', ') + ' ' + escapeHtml(hijriMonths[hMonth - 1]);
         } else {
           dayNum = ev.hDay;
           const evGreg = hijriToGregorian(hYear, hMonth, ev.hDay);
