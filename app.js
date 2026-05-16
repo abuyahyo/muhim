@@ -146,21 +146,24 @@
       else if (d.daysLeft === 1) { cdText = 'Эртага'; }
       else { cdText = d.daysLeft + ' кун қолди'; }
 
-      // Баннердаги катта рақам — keyingi takrorning ҳижрий куни.
-      // Жума учун (haftalik) рақам ўрнига иконка кўрсатилади.
-      const bannerLabel = d.frequency === 'weekly'
-        ? '<div class="day-card-icon">⊕</div>'
-        : '<div class="day-card-number">' + d.nextHijri.day + '</div>';
-      // Ҳафталик карточка учун — `nextOccurrence` танлаган ҳафта куни.
-      // Бирнечта кунли (масалан Душанба ва Пайшанба) ёзувда энг яқини.
-      const monthPill = d.frequency === 'weekly'
-        ? escapeHtml(weekDaysFull[d.nextWeekDay])
-        : escapeHtml(hijriMonths[d.nextHijri.month - 1]);
+      // Баннер ичида рақам ва ой бирлаштирилган "дата-штамп":
+      //   27
+      //   РАМАЗОН
+      // Ҳафталик кунлар учун эса штамп ичида ҳафта куни номи катта ҳарфда.
+      let stamp;
+      if (d.frequency === 'weekly') {
+        stamp = '<div class="day-card-stamp"><div class="day-card-weekday">'
+              + escapeHtml(weekDaysFull[d.nextWeekDay]) + '</div></div>';
+      } else {
+        stamp = '<div class="day-card-stamp">'
+              + '<div class="day-card-number">' + d.nextHijri.day + '</div>'
+              + '<div class="day-card-month">' + escapeHtml(hijriMonths[d.nextHijri.month - 1]) + '</div>'
+              + '</div>';
+      }
 
       html += '<button class="day-card" onclick="showDay(\'' + escapeHtml(d.id) + '\')">';
       html += '<div class="day-card-banner" style="background: linear-gradient(135deg, ' + d.color + ', ' + d.color + 'cc);">';
-      html += bannerLabel;
-      html += '<div class="day-card-month-pill">' + monthPill + '</div>';
+      html += stamp;
       html += '</div>';
       html += '<div class="day-card-body">';
       html += '<span class="day-card-tag ' + tagCls + '">' + escapeHtml(freqLabel(d)) + '</span>';
