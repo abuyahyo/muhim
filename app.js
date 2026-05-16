@@ -462,15 +462,15 @@
       // Босилганда таркибга мос карточка очилиши: йиллик > ойлик > Жума.
       const linkEvent = yearlyEvent || monthlyEvent || (isFriday ? jumuaEntry : null);
 
-      // Бир ҳужайрага мос event'ларнинг ҳаммаси (йиллик + ойлик мос келса
-      // ҳар иккаласи) — ҳар бири учун рангли нуқта чизилади. Босилганда
+      // Бир ҳужайрага мос event'ларнинг ҳаммаси (йиллик + ойлик + Жума
+      // мос келса) — ҳар бири учун рангли нуқта чизилади. Босилганда
       // йиллик > ойлик > Жума устуворлиги билан тегишли карточка очилади.
       const dotEvents = [];
       if (yearlyEvent) dotEvents.push(yearlyEvent);
       if (monthlyEvent) dotEvents.push(monthlyEvent);
+      if (isFriday && jumuaEntry) dotEvents.push(jumuaEntry);
 
       let cls = 'cal-cell';
-      if (isFriday) cls += ' friday';
       if (dotEvents.length) cls += ' important';
       if (isToday) cls += ' today';
 

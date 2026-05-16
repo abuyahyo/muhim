@@ -58,11 +58,6 @@
   --focus-ring-width: 3px;
   --focus-ring-offset: 2px;
 
-  /* Жума акценти */
-  --friday-bg: linear-gradient(135deg, #422006, #78350f);
-  --friday-text-strong: #fef3c7;
-  --friday-text-soft: #fde68a;
-
   /* Transitions — `all` ўрнига аниқ properties (layout reflow'ни тўсади) */
   --t-fast: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s, opacity 0.2s;
   --t-slow: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.3s, opacity 0.3s;
@@ -899,16 +894,11 @@ main {
   overflow: hidden;
 }
 .cal-cell.empty { background: transparent; }
-.cal-cell.friday { background: var(--friday-bg); }
 .cal-cell.important { cursor: pointer; }
 .cal-cell.important:hover { transform: scale(1.06); }
-.cal-cell.friday { cursor: pointer; }
 .cal-cell.today {
   box-shadow: 0 0 0 3px var(--sea-500), 0 8px 20px -4px rgba(14, 165, 233, 0.4);
   background: var(--surface);
-}
-.cal-cell.today.friday {
-  background: var(--friday-bg);
 }
 .cal-h-day {
   font-family: var(--font-num);
@@ -917,7 +907,6 @@ main {
   color: var(--ink);
   line-height: 1;
 }
-.cal-cell.friday .cal-h-day { color: var(--friday-text-strong); }
 .cal-dots {
   position: absolute;
   bottom: 7px;
@@ -957,11 +946,12 @@ main {
   background: var(--surface);
   box-shadow: 0 0 0 2px var(--sea-500);
 }
-.legend-swatch.friday { background: var(--friday-bg); }
+.legend-swatch.friday,
 .legend-swatch.important {
   background: transparent;
   position: relative;
 }
+.legend-swatch.friday::after,
 .legend-swatch.important::after {
   content: '';
   position: absolute;
@@ -970,8 +960,9 @@ main {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--sea-500);
 }
+.legend-swatch.important::after { background: var(--sea-500); }
+.legend-swatch.friday::after { background: #fbbf24; }
 
 /* === БУ ОЙДАГИ МУҲИМ КУНЛАР === */
 .month-events {
