@@ -229,7 +229,7 @@
         html += '<div class="detail-block">';
         html += '<div class="detail-block-label">' + escapeHtml(hadith.source) + '</div>';
         html += '<div class="detail-text" style="margin-bottom:12px;font-style:italic;">«' + escapeHtml(hadith.text) + '»</div>';
-        html += '<div style="font-size:13px;color:var(--ink-light);font-weight:600;">— ' + escapeHtml(hadith.narrator) + '</div>';
+        html += '<div style="font-size:13px;color:var(--ink-mute);font-weight:600;">— ' + escapeHtml(hadith.narrator) + '</div>';
         html += '</div>';
       }
     }
@@ -245,7 +245,8 @@
     const hMonth = hijriCalView.month;
     const daysInMonth = hijriMonthLength(hYear, hMonth);
     const firstGreg = hijriToGregorian(hYear, hMonth, 1);
-    const startWeekDay = firstGreg.getDay();
+    // Душанба = 0, ..., Якшанба = 6 (хафта Душанбадан бошланади)
+    const startWeekDay = (firstGreg.getDay() + 6) % 7;
 
     const lastGreg = hijriToGregorian(hYear, hMonth, daysInMonth);
 
@@ -291,12 +292,14 @@
     } else {
       gregInfo = firstGreg.getDate() + ' ' + gregorianMonthsShort[firstGreg.getMonth()] + ' ' + firstGreg.getFullYear() + ' – ' + lastGreg.getDate() + ' ' + gregorianMonthsShort[lastGreg.getMonth()] + ' ' + lastGreg.getFullYear();
     }
-    html += '<div class="cal-greg-info"><div class="cal-greg-info-icon">M</div><div>Милодий бўйича: ' + escapeHtml(gregInfo) + '</div></div>';
+    html += '<div class="cal-greg-info"><div class="cal-greg-info-icon">М</div><div>Милодий бўйича: ' + escapeHtml(gregInfo) + '</div></div>';
 
-    // Ҳафта кунлари
+    // Ҳафта кунлари (Душанбадан бошланади). weekDays массиви Якшанба=0
+    // тартибида сақланади (`getDay()` индексига мос); экранда Душанбадан
+    // кўрсатиш учун `(w + 1) % 7` орқали оламиз.
     html += '<div class="cal-weekdays">';
     for (let w = 0; w < 7; w++) {
-      html += '<div class="cal-wd' + (w === 5 ? ' friday' : '') + '">' + escapeHtml(weekDays[w]) + '</div>';
+      html += '<div class="cal-wd' + (w === 4 ? ' friday' : '') + '">' + escapeHtml(weekDays[(w + 1) % 7]) + '</div>';
     }
     html += '</div>';
 
@@ -358,7 +361,7 @@
       html += '</div>';
     } else {
       html += '<div class="month-events">';
-      html += '<div style="text-align:center;padding:32px;color:var(--ink-light);font-size:14px;">Бу ойда муҳим кунлар йўқ</div>';
+      html += '<div style="text-align:center;padding:32px;color:var(--ink-mute);font-size:14px;">Бу ойда муҳим кунлар йўқ</div>';
       html += '</div>';
     }
 

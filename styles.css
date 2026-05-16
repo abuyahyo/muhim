@@ -28,7 +28,8 @@
 
   --ink: #0f172a;
   --ink-soft: #475569;
-  --ink-light: #94a3b8;
+  --ink-mute: #64748b;   /* WCAG AA matn (oq fonda ~4.6:1) */
+  --ink-light: #94a3b8;  /* faqat dekorativ — matn uchun emas */
   --line: #e2e8f0;
   --bg: #f8fafc;
   --white: #ffffff;
@@ -128,7 +129,7 @@ header {
 }
 .brand-tag {
   font-size: 11px;
-  color: var(--ink-light);
+  color: var(--ink-mute);
   font-weight: 500;
   letter-spacing: 0.3px;
 }
@@ -440,7 +441,7 @@ main {
 }
 .section-meta {
   font-size: 13px;
-  color: var(--ink-light);
+  color: var(--ink-mute);
   font-weight: 500;
 }
 
@@ -548,7 +549,7 @@ main {
   font-size: 12px;
 }
 .day-card-greg {
-  color: var(--ink-light);
+  color: var(--ink-mute);
   font-weight: 500;
 }
 .day-card-countdown {
@@ -709,7 +710,7 @@ main {
 }
 .placeholder-text {
   font-size: 14px;
-  color: var(--ink-light);
+  color: var(--ink-mute);
 }
 
 /* === ҲИЖРИЙ ТАҚВИМ === */
@@ -823,7 +824,7 @@ main {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: var(--ink-light);
+  color: var(--ink-mute);
   padding: 8px 0;
 }
 .cal-wd.friday { color: var(--sea-600); }
@@ -886,7 +887,7 @@ main {
 .cal-cell.friday .cal-h-day { color: var(--friday-text-strong); }
 .cal-g-day {
   font-size: 10px;
-  color: var(--ink-light);
+  color: var(--ink-mute);
   font-weight: 500;
   margin-top: 2px;
 }
@@ -976,10 +977,10 @@ main {
 }
 .event-meta {
   font-size: 12px;
-  color: var(--ink-light);
+  color: var(--ink-mute);
 }
 .event-arrow {
-  color: var(--ink-light);
+  color: var(--ink-mute);
   font-size: 18px;
 }
 
@@ -1010,7 +1011,7 @@ footer {
 }
 .foot-version {
   font-size: 11px;
-  color: var(--ink-light);
+  color: var(--ink-mute);
   letter-spacing: 1px;
   text-transform: uppercase;
   font-weight: 600;
