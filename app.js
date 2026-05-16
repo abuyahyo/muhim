@@ -217,6 +217,34 @@
     html += '</div>';
     html += '</div></div></section>';
 
+    // БУГУНГИ event'лар — йиллик/ойлик/ҳафталик мос келганлари
+    const todayDow = today.getDay();
+    const todayEvents = [];
+    for (let i = 0; i < importantDays.length; i++) {
+      const d = importantDays[i];
+      if (!d.frequency || d.frequency === 'yearly') {
+        if (d.hMonth === hijri.month && d.hDay === hijri.day) todayEvents.push(d);
+      } else if (d.frequency === 'monthly') {
+        if (d.hDays.indexOf(hijri.day) !== -1) todayEvents.push(d);
+      } else if (d.frequency === 'weekly') {
+        const targets = d.weekDays || [d.weekDay];
+        if (targets.indexOf(todayDow) !== -1) todayEvents.push(d);
+      }
+    }
+    if (todayEvents.length) {
+      html += '<section class="today-banner">';
+      html += '<div class="today-banner-label">Бугун</div>';
+      html += '<div class="today-banner-chips">';
+      for (let i = 0; i < todayEvents.length; i++) {
+        const ev = todayEvents[i];
+        html += '<button class="today-chip" onclick="showDay(\'' + escapeHtml(ev.id) + '\')">';
+        html += '<span class="today-chip-dot" style="background:' + ev.color + ';"></span>';
+        html += '<span>' + escapeHtml(ev.name) + '</span>';
+        html += '</button>';
+      }
+      html += '</div></section>';
+    }
+
     // ЯҚИНЛАШАЁТГАН КУН
     if (nextDay && nextDay.daysLeft >= 0 && nextDay.daysLeft <= 365) {
       let countdownDisplay = '';
