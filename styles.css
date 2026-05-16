@@ -484,6 +484,14 @@ main {
   position: relative;
   z-index: 1;
 }
+.day-card-icon {
+  font-size: 44px;
+  color: white;
+  line-height: 1;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  position: relative;
+  z-index: 1;
+}
 .day-card-month-pill {
   margin-left: auto;
   background: rgba(255,255,255,0.25);
