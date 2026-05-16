@@ -67,6 +67,9 @@
   --t-fast: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s, opacity 0.2s;
   --t-slow: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.3s, opacity 0.3s;
 
+  /* Соф рақамли элементлар учун шрифт (катта рақамлар) */
+  --font-num: 'DM Serif Display', 'Playfair Display', Georgia, serif;
+
   color-scheme: dark;
 }
 
@@ -236,10 +239,10 @@ main {
   flex-direction: column;
 }
 .hijri-day {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-num);
   /* Кичик экранда 64px, кенгроқда 110px гача — clamp() ёрдамида ёппа-ёппа */
   font-size: clamp(64px, 14vw, 110px);
-  font-weight: 800;
+  font-weight: 400;
   line-height: 0.9;
   letter-spacing: -0.03em;
   background: linear-gradient(180deg, #ffffff 0%, var(--sea-200) 100%);
@@ -331,9 +334,9 @@ main {
   align-items: center;
   justify-content: center;
   color: white;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-num);
   font-size: 36px;
-  font-weight: 700;
+  font-weight: 400;
   position: relative;
   overflow: hidden;
 }
@@ -385,9 +388,9 @@ main {
   }
 }
 .countdown-number {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-num);
   font-size: 36px;
-  font-weight: 800;
+  font-weight: 400;
   color: var(--sea-700);
   line-height: 1;
 }
@@ -472,9 +475,9 @@ main {
   background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent 60%);
 }
 .day-card-number {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-num);
   font-size: 52px;
-  font-weight: 800;
+  font-weight: 400;
   color: white;
   line-height: 1;
   text-shadow: 0 4px 20px rgba(0,0,0,0.15);
@@ -855,9 +858,9 @@ main {
   box-shadow: 0 0 0 3px white, 0 0 0 5px var(--sea-500);
 }
 .cal-h-day {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-num);
   font-size: clamp(13px, 3.6vw, 20px);
-  font-weight: 700;
+  font-weight: 400;
   color: var(--ink);
   line-height: 1;
 }
@@ -943,9 +946,9 @@ main {
   align-items: center;
   justify-content: center;
   color: white;
-  font-family: 'Playfair Display', serif;
-  font-size: 20px;
-  font-weight: 800;
+  font-family: var(--font-num);
+  font-size: 22px;
+  font-weight: 400;
   flex-shrink: 0;
 }
 .event-info { flex: 1; min-width: 0; }
