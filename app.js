@@ -478,7 +478,6 @@
 
       html += '<button class="' + cls + '" style="' + style + '" ' + onclick + '>';
       html += '<div class="cal-h-day">' + dd + '</div>';
-      html += '<div class="cal-g-day">' + cellGreg.getDate() + ' ' + escapeHtml(gregorianMonthsShort[cellGreg.getMonth()]) + '</div>';
       html += '</button>';
     }
     html += '</div>';
