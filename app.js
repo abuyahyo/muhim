@@ -457,28 +457,37 @@
       const isFriday = cellGreg.getDay() === 5;
       const isToday = isCurrentMonth && dd === todayHijri.day;
       const yearlyEvent = eventMap[dd];
-      const monthlyEvent = yearlyEvent ? null : findMonthly(dd);
-      // Ҳужайра босилганда таркибга мос карточка очилиши: йиллик > ойлик > Жума.
+      // Йиллик ва ойлик event бир куни тўғри келиб қолса — иккала нуқта ҳам.
+      const monthlyEvent = findMonthly(dd);
+      // Босилганда таркибга мос карточка очилиши: йиллик > ойлик > Жума.
       const linkEvent = yearlyEvent || monthlyEvent || (isFriday ? jumuaEntry : null);
+
+      // Бир ҳужайрага мос event'ларнинг ҳаммаси (йиллик + ойлик мос келса
+      // ҳар иккаласи) — ҳар бири учун рангли нуқта чизилади. Босилганда
+      // йиллик > ойлик > Жума устуворлиги билан тегишли карточка очилади.
+      const dotEvents = [];
+      if (yearlyEvent) dotEvents.push(yearlyEvent);
+      if (monthlyEvent) dotEvents.push(monthlyEvent);
 
       let cls = 'cal-cell';
       if (isFriday) cls += ' friday';
-      if (yearlyEvent || monthlyEvent) cls += ' important';
+      if (dotEvents.length) cls += ' important';
       if (isToday) cls += ' today';
 
-      // Йиллик/ойлик event'лар учун — кичик ранг нуқта (ҳужайра тоза қолади).
-      // Жума ўз .friday бг'сини сақлайди.
-      let dot = '';
-      if (yearlyEvent || monthlyEvent) {
-        const ev = yearlyEvent || monthlyEvent;
-        dot = '<span class="cal-dot" style="background:' + ev.color + ';"></span>';
+      let dots = '';
+      if (dotEvents.length) {
+        dots = '<div class="cal-dots">';
+        for (let i = 0; i < dotEvents.length; i++) {
+          dots += '<span class="cal-dot" style="background:' + dotEvents[i].color + ';"></span>';
+        }
+        dots += '</div>';
       }
 
       const onclick = linkEvent ? 'onclick="showDay(\'' + escapeHtml(linkEvent.id) + '\')"' : '';
 
       html += '<button class="' + cls + '" ' + onclick + '>';
       html += '<div class="cal-h-day">' + dd + '</div>';
-      html += dot;
+      html += dots;
       html += '</button>';
     }
     html += '</div>';
