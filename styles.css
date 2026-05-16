@@ -1034,6 +1034,70 @@ main {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* === Карточка қайта-қайта чиқиш стаггери ===
+   Бош саҳифадаги "Муҳим кунлар" ва "Такрорий кунлар" сетлари ҳамда
+   батафсилдаги оят/ҳадис блоклари бирин-кетин юзага келади. */
+.cards-grid > *,
+.detail-wrap > .detail-block,
+.detail-wrap > section > .detail-block,
+.detail-wrap > section > .placeholder {
+  animation: slideUp 0.5s ease-out backwards;
+}
+.cards-grid > *:nth-child(1) { animation-delay: 50ms; }
+.cards-grid > *:nth-child(2) { animation-delay: 110ms; }
+.cards-grid > *:nth-child(3) { animation-delay: 170ms; }
+.cards-grid > *:nth-child(4) { animation-delay: 230ms; }
+.cards-grid > *:nth-child(5) { animation-delay: 290ms; }
+.cards-grid > *:nth-child(6) { animation-delay: 350ms; }
+.cards-grid > *:nth-child(7) { animation-delay: 410ms; }
+.cards-grid > *:nth-child(8) { animation-delay: 470ms; }
+.cards-grid > *:nth-child(9) { animation-delay: 530ms; }
+.cards-grid > *:nth-child(10) { animation-delay: 590ms; }
+.cards-grid > *:nth-child(n+11) { animation-delay: 640ms; }
+
+.detail-wrap > .detail-block { animation-delay: 60ms; }
+.detail-wrap > section > .detail-block:nth-of-type(1),
+.detail-wrap > section > .placeholder:nth-of-type(1) { animation-delay: 120ms; }
+.detail-wrap > section > .detail-block:nth-of-type(2) { animation-delay: 180ms; }
+.detail-wrap > section > .detail-block:nth-of-type(3) { animation-delay: 240ms; }
+.detail-wrap > section > .detail-block:nth-of-type(4) { animation-delay: 300ms; }
+.detail-wrap > section > .detail-block:nth-of-type(5) { animation-delay: 360ms; }
+.detail-wrap > section > .detail-block:nth-of-type(n+6) { animation-delay: 420ms; }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === Карточка босилганда — енгил қисилиш === */
+.day-card:active,
+.upcoming-card:active,
+.event-row:active {
+  transform: scale(0.98);
+  transition: transform 0.1s ease-out;
+}
+
+/* === Изоҳ блокининг силлиқ очилиши ===
+   Замонавий браузерларда <details> элементини анимация билан очамиз
+   (interpolate-size + ::details-content). Эски браузерларда оддий
+   ҳолатда тутили — graceful degradation. */
+.commentary {
+  interpolate-size: allow-keywords;
+}
+.commentary::details-content {
+  block-size: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    block-size 0.3s ease,
+    opacity 0.25s ease,
+    content-visibility 0.3s allow-discrete;
+}
+.commentary[open]::details-content {
+  block-size: auto;
+  opacity: 1;
+}
+
 .hidden { display: none !important; }
 
 /* === A11y: фокус кўриниши === */
