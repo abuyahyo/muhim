@@ -388,16 +388,6 @@ main {
   background: linear-gradient(135deg, rgba(255,255,255,0.25), transparent);
 }
 .upcoming-info { min-width: 0; }
-.upcoming-tag {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 4px 10px;
-  border-radius: var(--r-xs);
-  margin-bottom: 8px;
-}
 .upcoming-name {
   font-family: 'DM Sans', system-ui, sans-serif;
   font-size: 24px;
@@ -549,19 +539,6 @@ main {
   text-shadow: 0 4px 20px rgba(0,0,0,0.18);
 }
 .day-card-body { padding: 18px 20px 20px; }
-.day-card-tag {
-  display: inline-block;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 3px 8px;
-  border-radius: var(--r-xs);
-  margin-bottom: 10px;
-}
-.tag-yearly { background: var(--sea-100); color: var(--sea-700); }
-.tag-monthly { background: #ecfccb; color: #3f6212; }
-.tag-weekly { background: #fef3c7; color: #92400e; }
 .day-card-name {
   font-family: 'DM Sans', system-ui, sans-serif;
   font-size: 20px;
