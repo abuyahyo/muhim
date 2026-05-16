@@ -315,7 +315,9 @@
       html += '</div>';
     }
 
-    // Оятлар
+    // Оятлар — `verses` майдони мавжуд бўлмаса, секция умуман чиқмайди
+    // (масалан Мавлуд каби, бу кунга оид Қуръон ояти йўқлиги аниқ бўлганда).
+    if (day.verses) {
     html += '<div style="margin: 28px 0 16px;"><div class="section-title" style="font-size:22px;">Қуръон оятлари</div></div>';
     if (day.verses.length === 0) {
       html += '<div class="placeholder verses">';
@@ -335,7 +337,10 @@
       }
     }
 
-    // Ҳадислар
+    }
+
+    // Ҳадислар — `hadiths` майдони мавжуд бўлмаса, секция чиқмайди.
+    if (day.hadiths) {
     html += '<div style="margin: 28px 0 16px;"><div class="section-title" style="font-size:22px;">Саҳиҳ ҳадислар</div></div>';
     if (day.hadiths.length === 0) {
       html += '<div class="placeholder hadiths">';
@@ -353,6 +358,7 @@
         html += renderCommentary(hadith.commentary);
         html += '</div>';
       }
+    }
     }
 
     html += '</div>';
