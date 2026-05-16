@@ -512,13 +512,6 @@
     }
     html += '</div>';
 
-    // Маънолар
-    html += '<div class="cal-legend">';
-    html += '<div class="legend-item"><div class="legend-swatch today"></div><span>Бугун</span></div>';
-    html += '<div class="legend-item"><div class="legend-swatch friday"></div><span>Жума</span></div>';
-    html += '<div class="legend-item"><div class="legend-swatch important"></div><span>Муҳим кун</span></div>';
-    html += '</div>';
-
     html += '</div>'; // cal-shell
 
     // Бу ойдаги муҳим кунлар (йиллик + ойлик + ҳафталик такрорий)
