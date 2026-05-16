@@ -666,6 +666,13 @@ main {
   line-height: 1.7;
   color: var(--ink);
 }
+.source-attrib {
+  margin-top: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  color: var(--sea-300);
+}
 .commentary {
   margin-top: 18px;
 }
