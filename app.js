@@ -44,6 +44,16 @@
     });
   }
 
+  // === ИЗОҲ ===
+  // Оят ёки ҳадисга ихтиёрий шарҳ. <details> элементи орқали JS'сиз
+  // тугма ҳолатида туради, босилгач кенгаяди.
+  function renderCommentary(text) {
+    if (!text) return '';
+    return '<details class="commentary"><summary>Изоҳ</summary>'
+         + '<div class="commentary-body">' + escapeHtml(text) + '</div>'
+         + '</details>';
+  }
+
   // === ҲОЛАТ ===
   let hijriCalView = getCurrentHijri();
 
@@ -194,13 +204,6 @@
     html += '<div class="detail-text">' + escapeHtml(day.description) + '</div>';
     html += '</div>';
 
-    if (day.note) {
-      html += '<div class="detail-block note-block">';
-      html += '<div class="detail-block-label">Изоҳ</div>';
-      html += '<div class="detail-text">' + escapeHtml(day.note) + '</div>';
-      html += '</div>';
-    }
-
     // Оятлар
     html += '<div style="margin: 28px 0 16px;"><div class="section-title" style="font-size:22px;">Қуръон оятлари</div></div>';
     if (day.verses.length === 0) {
@@ -216,6 +219,7 @@
         html += '<div class="detail-block-label">' + escapeHtml(verse.source) + '</div>';
         if (verse.arabic) html += '<div class="arabic" style="font-size:26px;text-align:right;line-height:1.9;margin-bottom:16px;color:var(--ink);" dir="rtl">' + escapeHtml(verse.arabic) + '</div>';
         html += '<div class="detail-text">' + escapeHtml(verse.translation) + '</div>';
+        html += renderCommentary(verse.commentary);
         html += '</div>';
       }
     }
@@ -235,6 +239,7 @@
         html += '<div class="detail-block-label">' + escapeHtml(hadith.source) + '</div>';
         html += '<div class="detail-text" style="margin-bottom:12px;font-style:italic;">«' + escapeHtml(hadith.text) + '»</div>';
         if (hadith.narrator) html += '<div style="font-size:13px;color:var(--ink-mute);font-weight:600;">— ' + escapeHtml(hadith.narrator) + '</div>';
+        html += renderCommentary(hadith.commentary);
         html += '</div>';
       }
     }
