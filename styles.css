@@ -937,48 +937,6 @@ main {
   border-radius: 50%;
 }
 
-.cal-legend {
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid var(--line);
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  font-size: 12px;
-  color: var(--ink-soft);
-  font-weight: 500;
-}
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.legend-swatch {
-  width: 16px;
-  height: 16px;
-  border-radius: var(--r-xs);
-}
-.legend-swatch.today {
-  background: var(--surface);
-  box-shadow: 0 0 0 2px var(--sea-500);
-}
-.legend-swatch.friday,
-.legend-swatch.important {
-  background: transparent;
-  position: relative;
-}
-.legend-swatch.friday::after,
-.legend-swatch.important::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-.legend-swatch.important::after { background: var(--sea-500); }
-.legend-swatch.friday::after { background: #fbbf24; }
 
 /* === БУ ОЙДАГИ МУҲИМ КУНЛАР === */
 .month-events {
