@@ -237,7 +237,7 @@
         const hadith = day.hadiths[h];
         html += '<div class="detail-block">';
         html += '<div class="detail-block-label">' + escapeHtml(hadith.source) + '</div>';
-        html += '<div class="detail-text" style="margin-bottom:12px;font-style:italic;">«' + escapeHtml(hadith.text) + '»</div>';
+        html += '<div class="detail-text" style="margin-bottom:12px;">«' + escapeHtml(hadith.text) + '»</div>';
         if (hadith.narrator) html += '<div style="font-size:13px;color:var(--ink-mute);font-weight:600;">— ' + escapeHtml(hadith.narrator) + '</div>';
         html += renderCommentary(hadith.commentary);
         html += '</div>';
