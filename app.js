@@ -326,7 +326,7 @@
     }
 
     // Ҳадислар
-    html += '<div style="margin: 28px 0 16px;"><div class="section-title" style="font-size:22px;">Шарифа ҳадислар</div></div>';
+    html += '<div style="margin: 28px 0 16px;"><div class="section-title" style="font-size:22px;">Саҳиҳ ҳадислар</div></div>';
     if (day.hadiths.length === 0) {
       html += '<div class="placeholder hadiths">';
       html += '<div class="placeholder-icon">ﷺ</div>';
