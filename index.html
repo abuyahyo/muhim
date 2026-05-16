@@ -8,6 +8,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script>
+  // Тема FOUC'ни тўсиш — асосий JS юкланмасдан илгари
+  (function () {
+    try {
+      var t = localStorage.getItem('muhim:theme');
+      if (t === 'light' || t === 'dark') {
+        document.documentElement.setAttribute('data-theme', t);
+      }
+    } catch (e) {}
+  })();
+</script>
 </head>
 <body>
 
@@ -20,10 +31,16 @@
         <div class="brand-tag">Ҳижрий сана ва муҳим кунлар</div>
       </div>
     </button>
-    <nav>
-      <button class="nav-btn active" id="nav-home" onclick="showHome()">Кунлар</button>
-      <button class="nav-btn" id="nav-cal" onclick="showCalendar()">Тақвим</button>
-    </nav>
+    <div class="header-right">
+      <nav>
+        <button class="nav-btn active" id="nav-home" onclick="showHome()">Кунлар</button>
+        <button class="nav-btn" id="nav-cal" onclick="showCalendar()">Тақвим</button>
+      </nav>
+      <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Тема алмаштириш">
+        <span class="icon-moon" aria-hidden="true">☾</span>
+        <span class="icon-sun" aria-hidden="true">☀</span>
+      </button>
+    </div>
   </div>
 </header>
 
