@@ -278,7 +278,7 @@
     }
 
     html += renderDayGrid('Йилда бир марта бўладиган муҳим кунлар', yearly);
-    if (recurring.length) html += renderDayGrid('Такрорий кунлар', recurring);
+    if (recurring.length) html += renderDayGrid('Ҳар ҳафта ва ҳар ойда қайталанадиган муҳим кунлар', recurring);
 
     html += '</div>';
 
