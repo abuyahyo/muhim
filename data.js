@@ -26,7 +26,7 @@ const AppData = {
   ],
 
   importantDays: [
-    { id: 'new-year', hMonth: 1, hDay: 1, name: 'Ҳижрий Янги Йил', category: 'байрам',
+    { id: 'new-year', hMonth: 1, hDay: 1, name: 'Ҳижрий Янги Йил', category: 'муҳим',
       short: 'Ислом тақвимининг бошланиши',
       description: 'Муҳаррам ойининг биринчи куни — Ҳижрий йилнинг бошланиши. Расулуллоҳ ﷺ Маккадан Мадинага ҳижрат қилган санадан ҳисобланади.',
       color: '#0369a1', verses: [], hadiths: [] },
