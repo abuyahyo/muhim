@@ -33,10 +33,18 @@
     today.setHours(0, 0, 0, 0);
 
     if (day.frequency === 'weekly') {
-      const daysLeft = (day.weekDay - today.getDay() + 7) % 7;
+      // weekDays массиви ёки битта weekDay — иккаласи қабул қилинади.
+      const targets = day.weekDays || [day.weekDay];
+      const todayDow = today.getDay();
+      let minDaysLeft = Infinity;
+      let chosenDow = targets[0];
+      for (let i = 0; i < targets.length; i++) {
+        const dl = (targets[i] - todayDow + 7) % 7;
+        if (dl < minDaysLeft) { minDaysLeft = dl; chosenDow = targets[i]; }
+      }
       const date = new Date(today);
-      date.setDate(today.getDate() + daysLeft);
-      return { date: date, daysLeft: daysLeft, hijri: gregorianToHijri(date) };
+      date.setDate(today.getDate() + minDaysLeft);
+      return { date: date, daysLeft: minDaysLeft, weekDay: chosenDow, hijri: gregorianToHijri(date) };
     }
 
     const current = getCurrentHijri();
@@ -129,8 +137,10 @@
       const bannerLabel = d.frequency === 'weekly'
         ? '<div class="day-card-icon">⊕</div>'
         : '<div class="day-card-number">' + d.nextHijri.day + '</div>';
+      // Ҳафталик карточка учун — `nextOccurrence` танлаган ҳафта куни.
+      // Бирнечта кунли (масалан Душанба ва Пайшанба) ёзувда энг яқини.
       const monthPill = d.frequency === 'weekly'
-        ? escapeHtml(weekDaysFull[d.weekDay])
+        ? escapeHtml(weekDaysFull[d.nextWeekDay])
         : escapeHtml(hijriMonths[d.nextHijri.month - 1]);
 
       html += '<button class="day-card" onclick="showDay(\'' + escapeHtml(d.id) + '\')">';
@@ -163,6 +173,7 @@
       c.daysLeft = occ.daysLeft;
       c.nextDate = occ.date;
       c.nextHijri = occ.hijri;
+      c.nextWeekDay = occ.weekDay; // weekly учун, бошқа холатларда undefined
       return c;
     }).sort(function (a, b) { return a.daysLeft - b.daysLeft; });
 
@@ -253,7 +264,8 @@
     let leftLabel, leftValue;
     if (day.frequency === 'weekly') {
       leftLabel = 'Ҳафталик';
-      leftValue = escapeHtml(weekDaysFull[day.weekDay]);
+      const dows = day.weekDays || [day.weekDay];
+      leftValue = dows.map(function (d) { return escapeHtml(weekDaysFull[d]); }).join(' ва ');
     } else if (day.frequency === 'monthly') {
       leftLabel = 'Ҳар ҳижрий ой';
       leftValue = day.hDays.join(', ') + '-куни';
