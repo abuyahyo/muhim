@@ -127,7 +127,6 @@
     let html = '<section>';
     html += '<div class="section-head">';
     html += '<div class="section-title">' + escapeHtml(title) + '</div>';
-    html += '<div class="section-meta">' + items.length + ' та кун</div>';
     html += '</div>';
     html += '<div class="cards-grid">';
 
