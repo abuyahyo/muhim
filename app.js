@@ -380,11 +380,12 @@
     const todayHijri = getCurrentHijri();
     const isCurrentMonth = (todayHijri.year === hYear && todayHijri.month === hMonth);
 
-    // Бу ойдаги муҳим кунларни топиш
+    // Йиллик муҳим кунлар (фақат шу ой ҳижрий-ойига мос)
     const monthEvents = [];
     for (let e = 0; e < importantDays.length; e++) {
-      if (importantDays[e].hMonth === hMonth) {
-        monthEvents.push(importantDays[e]);
+      const d = importantDays[e];
+      if ((!d.frequency || d.frequency === 'yearly') && d.hMonth === hMonth) {
+        monthEvents.push(d);
       }
     }
     monthEvents.sort(function (a, b) { return a.hDay - b.hDay; });
@@ -392,6 +393,24 @@
     const eventMap = {};
     for (let em = 0; em < monthEvents.length; em++) {
       eventMap[monthEvents[em].hDay] = monthEvents[em];
+    }
+
+    // Ойлик ва ҳафталик такрорий кунлар — ҳужайра учун воқеа топувчи ёрдамчилар
+    const monthlyEvents = importantDays.filter(function (d) { return d.frequency === 'monthly'; });
+    const weeklyEvents = importantDays.filter(function (d) { return d.frequency === 'weekly'; });
+
+    // Жума ва ой кунини монтажий бирлаштириш — `findRecurring` ҳужайра учун
+    // тегишли takror воқеасини топади (ёки null). Йиллик event'ка ўхшаб
+    // ишлайди, лекин календарь ёзувида монтажий тарзда бошқа кўриниш олади.
+    function findRecurring(dd, dow) {
+      for (let i = 0; i < monthlyEvents.length; i++) {
+        if (monthlyEvents[i].hDays.indexOf(dd) !== -1) return monthlyEvents[i];
+      }
+      for (let i = 0; i < weeklyEvents.length; i++) {
+        const targets = weeklyEvents[i].weekDays || [weeklyEvents[i].weekDay];
+        if (targets.indexOf(dow) !== -1) return weeklyEvents[i];
+      }
+      return null;
     }
 
     let html = '<div class="fade-in">';
@@ -437,17 +456,26 @@
     }
     for (let dd = 1; dd <= daysInMonth; dd++) {
       const cellGreg = hijriToGregorian(hYear, hMonth, dd);
-      const isFriday = cellGreg.getDay() === 5;
+      const dow = cellGreg.getDay();
+      const isFriday = dow === 5;
       const isToday = isCurrentMonth && dd === todayHijri.day;
-      const event = eventMap[dd];
+      // Йиллик event (юқори устуворлик) → такрорий (ой/ҳафта)
+      const yearlyEvent = eventMap[dd];
+      const recurring = yearlyEvent ? null : findRecurring(dd, dow);
+      const event = yearlyEvent || recurring;
+      const isMonthly = recurring && recurring.frequency === 'monthly';
+      const isJumua = recurring && recurring.frequency === 'weekly' && recurring.weekDay === 5;
 
       let cls = 'cal-cell';
       if (isFriday) cls += ' friday';
-      if (event) cls += ' important';
+      if (yearlyEvent || isMonthly) cls += ' important';
+      if (recurring && !isMonthly && !isJumua) cls += ' recurring';
       if (isToday) cls += ' today';
 
+      // Жума ҳужайраси .friday стилини сақлайди (жигар-олтин tone);
+      // йиллик ва ойлик event'лар учун ўз ранги bg сифатида қойилади.
       let style = '';
-      if (event && !isFriday) {
+      if ((yearlyEvent || isMonthly) && !isFriday) {
         style = 'background: linear-gradient(135deg, ' + event.color + ', ' + event.color + 'cc);';
       }
 
@@ -465,22 +493,36 @@
     html += '<div class="legend-item"><div class="legend-swatch today"></div><span>Бугун</span></div>';
     html += '<div class="legend-item"><div class="legend-swatch friday"></div><span>Жума</span></div>';
     html += '<div class="legend-item"><div class="legend-swatch important"></div><span>Муҳим кун</span></div>';
+    html += '<div class="legend-item"><div class="legend-swatch dot"></div><span>Душ./Пай. рўзаси</span></div>';
     html += '</div>';
 
     html += '</div>'; // cal-shell
 
-    // Бу ойдаги муҳим кунлар
-    if (monthEvents.length > 0) {
+    // Бу ойдаги муҳим кунлар (йиллик + ойлик такрорий)
+    const monthRows = monthEvents.slice();
+    for (let i = 0; i < monthlyEvents.length; i++) monthRows.push(monthlyEvents[i]);
+    if (monthRows.length > 0) {
       html += '<div class="month-events">';
       html += '<div class="month-events-title">Бу ойдаги муҳим кунлар</div>';
-      for (let me = 0; me < monthEvents.length; me++) {
-        const ev = monthEvents[me];
-        const evGreg = hijriToGregorian(hYear, hMonth, ev.hDay);
+      for (let me = 0; me < monthRows.length; me++) {
+        const ev = monthRows[me];
+        let dayNum, meta;
+        if (ev.frequency === 'monthly') {
+          dayNum = ev.hDays[0]; // штампда биринчи кун (масалан 13)
+          const firstG = hijriToGregorian(hYear, hMonth, ev.hDays[0]);
+          const lastG = hijriToGregorian(hYear, hMonth, ev.hDays[ev.hDays.length - 1]);
+          meta = ev.hDays.join(', ') + ' ' + escapeHtml(hijriMonths[hMonth - 1])
+               + ' · ' + firstG.getDate() + '–' + lastG.getDate() + ' ' + escapeHtml(gregorianMonthsShort[firstG.getMonth()]) + ' ' + firstG.getFullYear();
+        } else {
+          dayNum = ev.hDay;
+          const evGreg = hijriToGregorian(hYear, hMonth, ev.hDay);
+          meta = ev.hDay + ' ' + escapeHtml(hijriMonths[hMonth - 1]) + ' · ' + evGreg.getDate() + ' ' + escapeHtml(gregorianMonthsShort[evGreg.getMonth()]) + ' ' + evGreg.getFullYear();
+        }
         html += '<button class="event-row" onclick="showDay(\'' + escapeHtml(ev.id) + '\')">';
-        html += '<div class="event-day-num" style="background: linear-gradient(135deg, ' + ev.color + ', ' + ev.color + 'cc);">' + ev.hDay + '</div>';
+        html += '<div class="event-day-num" style="background: linear-gradient(135deg, ' + ev.color + ', ' + ev.color + 'cc);">' + dayNum + '</div>';
         html += '<div class="event-info">';
         html += '<div class="event-name">' + escapeHtml(ev.name) + '</div>';
-        html += '<div class="event-meta">' + ev.hDay + ' ' + escapeHtml(hijriMonths[hMonth - 1]) + ' · ' + evGreg.getDate() + ' ' + escapeHtml(gregorianMonthsShort[evGreg.getMonth()]) + ' ' + evGreg.getFullYear() + '</div>';
+        html += '<div class="event-meta">' + meta + '</div>';
         html += '</div>';
         html += '<div class="event-arrow">→</div>';
         html += '</button>';
