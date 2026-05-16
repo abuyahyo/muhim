@@ -455,12 +455,6 @@ main {
 @media (min-width: 640px) {
   .section-title { font-size: 32px; }
 }
-.section-meta {
-  font-size: 13px;
-  color: var(--ink-mute);
-  font-weight: 500;
-}
-
 /* === КАРТОЧКАЛАР === */
 .cards-grid {
   display: grid;
