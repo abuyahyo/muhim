@@ -900,26 +900,15 @@ main {
 }
 .cal-cell.empty { background: transparent; }
 .cal-cell.friday { background: var(--friday-bg); }
-.cal-cell.important {
-  cursor: pointer;
-  color: white;
-}
-.cal-cell.important:hover {
-  transform: scale(1.08);
-  box-shadow: 0 8px 20px -8px currentColor;
-}
-.cal-cell.friday {
-  cursor: pointer;
-}
+.cal-cell.important { cursor: pointer; }
+.cal-cell.important:hover { transform: scale(1.06); }
+.cal-cell.friday { cursor: pointer; }
 .cal-cell.today {
   box-shadow: 0 0 0 3px var(--sea-500), 0 8px 20px -4px rgba(14, 165, 233, 0.4);
   background: var(--surface);
 }
 .cal-cell.today.friday {
   background: var(--friday-bg);
-}
-.cal-cell.today.important {
-  box-shadow: 0 0 0 3px white, 0 0 0 5px var(--sea-500);
 }
 .cal-h-day {
   font-family: var(--font-num);
@@ -928,8 +917,16 @@ main {
   color: var(--ink);
   line-height: 1;
 }
-.cal-cell.important .cal-h-day { color: white; }
 .cal-cell.friday .cal-h-day { color: var(--friday-text-strong); }
+.cal-dot {
+  position: absolute;
+  bottom: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
 
 .cal-legend {
   margin-top: 24px;
@@ -957,7 +954,20 @@ main {
   box-shadow: 0 0 0 2px var(--sea-500);
 }
 .legend-swatch.friday { background: var(--friday-bg); }
-.legend-swatch.important { background: linear-gradient(135deg, var(--sea-500), var(--sea-700)); }
+.legend-swatch.important {
+  background: transparent;
+  position: relative;
+}
+.legend-swatch.important::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--sea-500);
+}
 
 /* === БУ ОЙДАГИ МУҲИМ КУНЛАР === */
 .month-events {

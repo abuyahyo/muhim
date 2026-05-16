@@ -466,18 +466,19 @@
       if (yearlyEvent || monthlyEvent) cls += ' important';
       if (isToday) cls += ' today';
 
-      // Жума ҳужайраси .friday-нинг бг'сини сақлайди; йиллик ва ойлик
-      // event'лар учун ўз ранги тўлдирилади.
-      let style = '';
-      if ((yearlyEvent || monthlyEvent) && !isFriday) {
+      // Йиллик/ойлик event'лар учун — кичик ранг нуқта (ҳужайра тоза қолади).
+      // Жума ўз .friday бг'сини сақлайди.
+      let dot = '';
+      if (yearlyEvent || monthlyEvent) {
         const ev = yearlyEvent || monthlyEvent;
-        style = 'background: linear-gradient(135deg, ' + ev.color + ', ' + ev.color + 'cc);';
+        dot = '<span class="cal-dot" style="background:' + ev.color + ';"></span>';
       }
 
       const onclick = linkEvent ? 'onclick="showDay(\'' + escapeHtml(linkEvent.id) + '\')"' : '';
 
-      html += '<button class="' + cls + '" style="' + style + '" ' + onclick + '>';
+      html += '<button class="' + cls + '" ' + onclick + '>';
       html += '<div class="cal-h-day">' + dd + '</div>';
+      html += dot;
       html += '</button>';
     }
     html += '</div>';
