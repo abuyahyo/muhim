@@ -310,7 +310,7 @@
 
     if (day.note) {
       html += '<div class="detail-block">';
-      html += '<div class="detail-block-label">Илмий шарҳ</div>';
+      html += '<div class="detail-block-label">' + escapeHtml(day.noteTitle || 'Илмий шарҳ') + '</div>';
       html += '<div class="detail-text">' + escapeHtml(day.note) + '</div>';
       html += '</div>';
     }
