@@ -814,10 +814,9 @@ main {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 28px;
-  flex-wrap: wrap;
-  gap: 16px;
+  gap: 12px;
 }
-.cal-title-block { min-width: 0; }
+.cal-title-block { min-width: 0; flex: 1; }
 .cal-eyebrow {
   font-size: 11px;
   font-weight: 700;
@@ -842,7 +841,7 @@ main {
   font-weight: 500;
   margin-top: 4px;
 }
-.cal-controls { display: flex; gap: 8px; }
+.cal-controls { display: flex; gap: 8px; flex-shrink: 0; }
 .cal-btn {
   /* Apple HIG минимум touch target (44×44) */
   width: 44px;
