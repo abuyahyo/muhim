@@ -570,6 +570,35 @@
     html += '</div>';
 
     document.getElementById('view-calendar').innerHTML = html;
+    attachCalendarSwipe();
+  }
+
+  // Свайп билан ойни алмаштириш: чап → кейинги ой, ўнг → олдинги ой.
+  // Вертикал ҳаракат устун бўлса (скролл) — ҳеч нарса қилмаймиз.
+  // Touch-only — sichqonchada тортиш керакмас.
+  function attachCalendarSwipe() {
+    const shell = document.querySelector('#view-calendar .cal-shell');
+    if (!shell) return;
+    let startX = 0, startY = 0, startT = 0, tracking = false;
+    shell.addEventListener('touchstart', function (e) {
+      if (e.touches.length !== 1) { tracking = false; return; }
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      startT = Date.now();
+      tracking = true;
+    }, { passive: true });
+    shell.addEventListener('touchend', function (e) {
+      if (!tracking) return;
+      tracking = false;
+      const t = e.changedTouches[0];
+      if (!t) return;
+      const dx = t.clientX - startX;
+      const dy = t.clientY - startY;
+      const dt = Date.now() - startT;
+      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5 && dt < 600) {
+        if (dx < 0) calNext(); else calPrev();
+      }
+    }, { passive: true });
   }
 
   // === НАВИГАЦИЯ (Hash routing) ===
