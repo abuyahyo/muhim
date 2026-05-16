@@ -265,7 +265,8 @@ header {
 main {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 28px 20px 60px;
+  /* Пастки сузувчи nav учун жой қолдирамиз (footer ўчирилди) */
+  padding: 28px 20px calc(110px + env(safe-area-inset-bottom));
 }
 
 /* === БОШ САҲИФА HERO === */
@@ -1087,33 +1088,6 @@ main {
 .event-arrow {
   color: var(--ink-mute);
   font-size: 18px;
-}
-
-/* === FOOTER === */
-footer {
-  text-align: center;
-  /* Пастки sticky nav учун қўшимча жой — bottom-nav ~84px + safe area */
-  padding: 40px 20px calc(100px + env(safe-area-inset-bottom));
-  border-top: 1px solid var(--line);
-  margin-top: 40px;
-  background: var(--surface);
-}
-.foot-mark {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--r-md);
-  background: linear-gradient(135deg, var(--sea-500), var(--sea-700));
-  margin: 0 auto 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 18px;
-}
-.foot-text {
-  font-size: 14px;
-  color: var(--ink-soft);
-  margin-bottom: 4px;
 }
 
 .fade-in { animation: fadeIn 0.4s ease-out; }
