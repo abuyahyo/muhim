@@ -210,18 +210,13 @@
     html += '</div>';
     html += '</div></div></section>';
 
-    // БУГУНГИ event'лар — йиллик/ойлик/ҳафталик мос келганлари
-    const todayDow = today.getDay();
+    // Бугун баннери — фақат йилда бир мартагина келадиган муҳим кунлар учун.
+    // Жума ва Аййамул Бийз каби такрорий event'лар бу банерда чиқмайди.
     const todayEvents = [];
     for (let i = 0; i < importantDays.length; i++) {
       const d = importantDays[i];
-      if (!d.frequency || d.frequency === 'yearly') {
-        if (d.hMonth === hijri.month && d.hDay === hijri.day) todayEvents.push(d);
-      } else if (d.frequency === 'monthly') {
-        if (d.hDays.indexOf(hijri.day) !== -1) todayEvents.push(d);
-      } else if (d.frequency === 'weekly') {
-        const targets = d.weekDays || [d.weekDay];
-        if (targets.indexOf(todayDow) !== -1) todayEvents.push(d);
+      if ((!d.frequency || d.frequency === 'yearly') && d.hMonth === hijri.month && d.hDay === hijri.day) {
+        todayEvents.push(d);
       }
     }
     if (todayEvents.length) {
