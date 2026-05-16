@@ -44,13 +44,29 @@
     });
   }
 
+  // === ОЛИМ ИСМЛАРИ НОРМАЛИЗАЦИЯСИ ===
+  // "Бухорий" ва "Муслим" исмлари олдига автоматик "Имом" қойилади.
+  // Аллақачон "Имом " бўлса, қайта қойилмайди. Lookbehind ишлатилади,
+  // шунинг учун бир неча марта чақирилса ҳам идемпотент.
+  function normalizeScholarNames(s) {
+    if (!s) return s;
+    return String(s)
+      .replace(/(?<!Имом\s)Бухорий/g, 'Имом Бухорий')
+      .replace(/(?<!Имом\s)Муслим/g, 'Имом Муслим');
+  }
+
+  // Шарҳ/манба/матнларни бир нечта қадамдан ўтказиш учун ёрдамчи.
+  function safeText(s) {
+    return escapeHtml(normalizeScholarNames(s));
+  }
+
   // === ИЗОҲ ===
   // Оят ёки ҳадисга ихтиёрий шарҳ. <details> элементи орқали JS'сиз
   // тугма ҳолатида туради, босилгач кенгаяди.
   function renderCommentary(text) {
     if (!text) return '';
     return '<details class="commentary"><summary>Изоҳ</summary>'
-         + '<div class="commentary-body">' + escapeHtml(text) + '</div>'
+         + '<div class="commentary-body">' + safeText(text) + '</div>'
          + '</details>';
   }
 
@@ -217,8 +233,8 @@
         const verse = day.verses[v];
         html += '<div class="detail-block">';
         if (verse.arabic) html += '<div class="arabic" style="font-size:26px;text-align:right;line-height:1.9;margin-bottom:16px;color:var(--ink);" dir="rtl">' + escapeHtml(verse.arabic) + '</div>';
-        html += '<div class="detail-text">«' + escapeHtml(verse.translation) + '»</div>';
-        html += '<div class="source-attrib">' + escapeHtml(verse.source) + '</div>';
+        html += '<div class="detail-text">«' + safeText(verse.translation) + '»</div>';
+        html += '<div class="source-attrib">' + safeText(verse.source) + '</div>';
         html += renderCommentary(verse.commentary);
         html += '</div>';
       }
@@ -236,9 +252,9 @@
       for (let h = 0; h < day.hadiths.length; h++) {
         const hadith = day.hadiths[h];
         html += '<div class="detail-block">';
-        html += '<div class="detail-block-label">' + escapeHtml(hadith.source) + '</div>';
-        html += '<div class="detail-text" style="margin-bottom:12px;">«' + escapeHtml(hadith.text) + '»</div>';
-        if (hadith.narrator) html += '<div style="font-size:13px;color:var(--ink-mute);font-weight:600;">— ' + escapeHtml(hadith.narrator) + '</div>';
+        html += '<div class="detail-block-label">' + safeText(hadith.source) + '</div>';
+        html += '<div class="detail-text" style="margin-bottom:12px;">«' + safeText(hadith.text) + '»</div>';
+        if (hadith.narrator) html += '<div style="font-size:13px;color:var(--ink-mute);font-weight:600;">— ' + safeText(hadith.narrator) + '</div>';
         html += renderCommentary(hadith.commentary);
         html += '</div>';
       }
