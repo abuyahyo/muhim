@@ -217,7 +217,7 @@
         const verse = day.verses[v];
         html += '<div class="detail-block">';
         if (verse.arabic) html += '<div class="arabic" style="font-size:26px;text-align:right;line-height:1.9;margin-bottom:16px;color:var(--ink);" dir="rtl">' + escapeHtml(verse.arabic) + '</div>';
-        html += '<div class="detail-text">' + escapeHtml(verse.translation) + '</div>';
+        html += '<div class="detail-text">«' + escapeHtml(verse.translation) + '»</div>';
         html += '<div class="source-attrib">— ' + escapeHtml(verse.source) + '</div>';
         html += renderCommentary(verse.commentary);
         html += '</div>';
