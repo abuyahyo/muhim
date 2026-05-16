@@ -186,7 +186,10 @@
       return c;
     }).sort(function (a, b) { return a.daysLeft - b.daysLeft; });
 
-    const nextDay = sorted[0];
+    // "Яқинлашаётган кун" — фақат йилда бир мартагина келадиган event'лар
+    // орасидан энг яқинини оламиз. Жума ва Душ./Пай. каби такрорийлар
+    // пастдаги ўз бўлимида аллақачон тузук кўриниб турибди.
+    const nextDay = sorted.find(function (d) { return !d.frequency || d.frequency === 'yearly'; });
     const yearly = sorted.filter(function (d) { return !d.frequency || d.frequency === 'yearly'; });
     // Такрорий event'лар учун data.js дагидек тартиб — "qancha kun qoldi"
     // сортировкаси Душ./Пай.ни ҳамиша биринчи қилиб юбораркан, бу беҳосаб
