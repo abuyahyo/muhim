@@ -131,9 +131,10 @@ body {
 .arabic { font-family: 'Amiri', serif; }
 
 /* === СУЗУВЧИ ТЕМА ТУГМАСИ === */
+/* Кунлар/Тақвим pill'и билан бир хил баландликда — пастки ўнг бурчак */
 .theme-toggle {
   position: fixed;
-  top: calc(20px + env(safe-area-inset-top));
+  bottom: calc(20px + env(safe-area-inset-bottom));
   right: 20px;
   width: 44px;
   height: 44px;
@@ -266,7 +267,7 @@ body {
 main {
   max-width: 1200px;
   margin: 0 auto;
-  /* Тепада сузувчи theme toggle, пастда сузувчи nav учун жой */
+  /* Пастки сузувчи nav + тема тугмаси учун жой */
   padding:
     calc(28px + env(safe-area-inset-top)) 20px
     calc(110px + env(safe-area-inset-bottom));
