@@ -287,6 +287,52 @@ main {
   font-weight: 500;
 }
 
+/* === БУГУНГИ event-лар банери === */
+.today-banner {
+  margin-bottom: 24px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.today-banner-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 700;
+}
+.today-banner-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.today-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  background: var(--bg);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: var(--r-full);
+  color: var(--ink);
+  font: 500 14px var(--font-sans, inherit);
+  cursor: pointer;
+  transition: var(--t-fast);
+}
+.today-chip:hover {
+  border-color: var(--sea-500);
+  transform: translateY(-1px);
+}
+.today-chip-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
 /* === ЯҚИНЛАШАЁТГАН КУН === */
 .upcoming {
   margin-bottom: 32px;
