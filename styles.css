@@ -918,11 +918,15 @@ main {
   line-height: 1;
 }
 .cal-cell.friday .cal-h-day { color: var(--friday-text-strong); }
-.cal-dot {
+.cal-dots {
   position: absolute;
   bottom: 7px;
   left: 50%;
   transform: translateX(-50%);
+  display: flex;
+  gap: 3px;
+}
+.cal-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
