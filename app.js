@@ -85,6 +85,20 @@
     });
   }
 
+  // === ЧАСТОТА ЁРЛИҒИ ===
+  // Карточкадаги тег матни ва унга мос CSS синфи. Олдин 'байрам/муҳим'
+  // ёзиларди — энди такрор-частотага ўтилди.
+  function freqLabel(day) {
+    if (day.frequency === 'weekly') return 'Ҳар ҳафта';
+    if (day.frequency === 'monthly') return 'Ҳар ой';
+    return 'Ҳар йил';
+  }
+  function freqTagClass(day) {
+    if (day.frequency === 'weekly') return 'tag-weekly';
+    if (day.frequency === 'monthly') return 'tag-monthly';
+    return 'tag-yearly';
+  }
+
   // === ИЗОҲ ===
   // Оят ёки ҳадисга ихтиёрий шарҳ. <details> элементи орқали JS'сиз
   // тугма ҳолатида туради, босилгач кенгаяди.
@@ -125,7 +139,7 @@
     for (let i = 0; i < items.length; i++) {
       const d = items[i];
       const gDate = d.nextDate;
-      const tagCls = d.category === 'байрам' ? 'tag-bayram' : 'tag-muhim';
+      const tagCls = freqTagClass(d);
       let cdCls = 'day-card-countdown';
       let cdText;
       if (d.daysLeft === 0) { cdText = '● Бугун'; cdCls += ' today'; }
@@ -149,7 +163,7 @@
       html += '<div class="day-card-month-pill">' + monthPill + '</div>';
       html += '</div>';
       html += '<div class="day-card-body">';
-      html += '<span class="day-card-tag ' + tagCls + '">' + escapeHtml(d.category) + '</span>';
+      html += '<span class="day-card-tag ' + tagCls + '">' + escapeHtml(freqLabel(d)) + '</span>';
       html += '<div class="day-card-name">' + escapeHtml(d.name) + '</div>';
       html += '<div class="day-card-short">' + escapeHtml(d.short) + '</div>';
       html += '<div class="day-card-footer">';
@@ -215,13 +229,13 @@
         countdownLabel = 'кун қолди';
       }
 
-      const tagClass = nextDay.category === 'байрам' ? 'tag-bayram' : 'tag-muhim';
+      const tagClass = freqTagClass(nextDay);
 
       html += '<section class="upcoming">';
       html += '<button class="upcoming-card" onclick="showDay(\'' + escapeHtml(nextDay.id) + '\')">';
       html += '<div class="upcoming-visual" style="background: linear-gradient(135deg, ' + nextDay.color + ', ' + nextDay.color + 'cc);">' + nextDay.nextHijri.day + '</div>';
       html += '<div class="upcoming-info">';
-      html += '<span class="upcoming-tag ' + tagClass + '">' + escapeHtml(nextDay.category) + '</span>';
+      html += '<span class="upcoming-tag ' + tagClass + '">' + escapeHtml(freqLabel(nextDay)) + '</span>';
       html += '<div class="upcoming-name">' + escapeHtml(nextDay.name) + '</div>';
       html += '<div class="upcoming-short">' + escapeHtml(nextDay.short) + '</div>';
       html += '</div>';
@@ -256,7 +270,7 @@
 
     html += '<div class="detail-hero" style="background: linear-gradient(135deg, ' + day.color + ' 0%, ' + day.color + 'dd 50%, ' + day.color + 'aa 100%);">';
     html += '<div class="detail-content">';
-    html += '<span class="detail-cat">' + escapeHtml(day.category) + '</span>';
+    html += '<span class="detail-cat">' + escapeHtml(freqLabel(day)) + '</span>';
     html += '<div class="detail-name">' + escapeHtml(day.name) + '</div>';
     html += '<div class="detail-dates">';
 

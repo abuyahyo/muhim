@@ -517,8 +517,9 @@ main {
   border-radius: var(--r-xs);
   margin-bottom: 10px;
 }
-.tag-bayram { background: #fef3c7; color: #92400e; }
-.tag-muhim { background: var(--sea-100); color: var(--sea-700); }
+.tag-yearly { background: var(--sea-100); color: var(--sea-700); }
+.tag-monthly { background: #ecfccb; color: #3f6212; }
+.tag-weekly { background: #fef3c7; color: #92400e; }
 .day-card-name {
   font-family: 'DM Sans', system-ui, sans-serif;
   font-size: 20px;
