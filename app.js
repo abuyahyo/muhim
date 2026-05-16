@@ -47,19 +47,17 @@
   // === ҲОЛАТ ===
   let hijriCalView = getCurrentHijri();
 
-  // Юлдузлар — IIFE бошланишида бир мартагина генерация қилинади,
-  // ҳар renderHome() да эмас (детерминистик кўриниш).
-  const STARS_HTML = (function buildStars() {
-    let s = '';
-    for (let i = 0; i < 12; i++) {
-      const sz = 2 + Math.random() * 3;
-      const top = Math.random() * 100;
-      const left = Math.random() * 100;
-      const delay = Math.random() * 3;
-      s += '<div class="star" style="width:' + sz + 'px;height:' + sz + 'px;top:' + top + '%;left:' + left + '%;animation-delay:' + delay + 's;"></div>';
-    }
-    return s;
-  })();
+  // Юлдузлар — қатъий тарзда жойлашган, ҳар page reload'да бир хил
+  // кўринади. Math.random() рандомлик берса, фойдаланувчи саҳифани
+  // янгилаганда юлдузлар "сакраб" қолади — енгил визуал шовқин.
+  const STARS_HTML = [
+    [3.4, 12, 18, 0.3], [2.1, 28, 72, 1.4], [4.2, 45, 8, 2.7],
+    [2.8, 8, 55, 0.9], [3.1, 62, 88, 2.1], [2.4, 78, 22, 0.5],
+    [4.5, 35, 41, 1.8], [2.7, 90, 65, 2.4], [3.6, 18, 92, 1.1],
+    [2.3, 55, 30, 0.7], [3.8, 72, 50, 2.9], [2.9, 5, 80, 1.6]
+  ].map(function (s) {
+    return '<div class="star" style="width:' + s[0] + 'px;height:' + s[0] + 'px;top:' + s[1] + '%;left:' + s[2] + '%;animation-delay:' + s[3] + 's;"></div>';
+  }).join('');
 
   // === БОШ САҲИФА ===
   function renderHome() {
