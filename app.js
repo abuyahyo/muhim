@@ -188,7 +188,15 @@
 
     const nextDay = sorted[0];
     const yearly = sorted.filter(function (d) { return !d.frequency || d.frequency === 'yearly'; });
-    const recurring = sorted.filter(function (d) { return d.frequency === 'monthly' || d.frequency === 'weekly'; });
+    // Такрорий event'лар учун data.js дагидек тартиб — "qancha kun qoldi"
+    // сортировкаси Душ./Пай.ни ҳамиша биринчи қилиб юбораркан, бу беҳосаб
+    // эди. Маълумотлардаги тартибни сақлаймиз.
+    const recurring = sorted.filter(function (d) { return d.frequency === 'monthly' || d.frequency === 'weekly'; })
+      .sort(function (a, b) {
+        const ai = importantDays.findIndex(function (x) { return x.id === a.id; });
+        const bi = importantDays.findIndex(function (x) { return x.id === b.id; });
+        return ai - bi;
+      });
 
     let html = '<div class="fade-in">';
 
