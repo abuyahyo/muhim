@@ -1,0 +1,281 @@
+/* === ЖОЙЛАР ИЛОВАСИ — ДИЗАЙН ТИЗИМИ === */
+:root {
+  --bg: #020617;
+  --surface: #0f172a;
+  --surface-2: #1e293b;
+  --line: #1e293b;
+  --ink: #f1f5f9;
+  --ink-soft: #cbd5e1;
+  --ink-mute: #94a3b8;
+  --sea-500: #0ea5e9;
+  --sea-700: #0369a1;
+
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+  --r-2xl: 28px;
+  --r-full: 999px;
+  --t-fast: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.25s, opacity 0.25s;
+
+  --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-arabic: 'Amiri', serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { min-height: 100%; }
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+button { font: inherit; color: inherit; }
+a { color: inherit; text-decoration: none; }
+
+main {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 32px 18px calc(120px + env(safe-area-inset-bottom));
+}
+.hidden { display: none !important; }
+.fade-in { animation: fadeIn 0.35s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* === БОШ САҲИФА — head === */
+.page-head { margin-bottom: 32px; }
+.page-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sea-500);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.page-title {
+  font-family: var(--font-sans);
+  font-size: clamp(40px, 9vw, 64px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 14px;
+}
+.page-lede {
+  color: var(--ink-mute);
+  font-size: 15px;
+  max-width: 480px;
+  line-height: 1.5;
+}
+
+/* === Жойлар "stack" — катта вертикал карточкалар === */
+.places-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.place-card {
+  --accent: var(--sea-500);
+  display: grid;
+  grid-template-columns: 96px 1fr 24px;
+  gap: 16px;
+  align-items: center;
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-2xl);
+  cursor: pointer;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  transition: var(--t-fast);
+}
+.place-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--accent), transparent 60%);
+  opacity: 0.12;
+  pointer-events: none;
+}
+.place-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+.place-art {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--r-lg);
+  background: linear-gradient(135deg, var(--accent), var(--accent) 50%, rgba(0,0,0,0.4));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.place-art svg { width: 80%; height: 80%; }
+.place-body { min-width: 0; }
+.place-arabic {
+  font-family: var(--font-arabic);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  margin-bottom: 2px;
+  direction: rtl;
+  text-align: left;
+}
+.place-name {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+.place-loc {
+  font-size: 13px;
+  color: var(--ink-mute);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.place-short {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+.place-arrow {
+  color: var(--ink-mute);
+  font-size: 22px;
+  font-weight: 600;
+  align-self: center;
+}
+
+/* === ДЕТАЛЬ САҲИФА === */
+.detail-wrap { max-width: 760px; margin: 0 auto; }
+.detail-topbar { margin-bottom: 20px; }
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  padding: 10px 18px;
+  border-radius: var(--r-full);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: var(--t-fast);
+}
+.back-btn:hover { border-color: var(--sea-500); color: var(--ink); }
+
+.detail-hero {
+  padding: 36px 28px 32px;
+  border-radius: var(--r-2xl);
+  color: white;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.detail-art {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 18px;
+}
+.detail-art svg { width: 100%; height: 100%; }
+.detail-arabic {
+  font-family: var(--font-arabic);
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  direction: rtl;
+}
+.detail-name {
+  font-size: clamp(28px, 6vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+.detail-loc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  font-weight: 500;
+}
+
+.detail-block { margin-bottom: 28px; }
+.block-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+  color: var(--ink);
+}
+.block-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.quote-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--sea-500);
+  padding: 18px 18px 16px;
+  border-radius: var(--r-md);
+  margin-bottom: 12px;
+}
+.quote-source {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sea-500);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.quote-text {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+.quote-attr {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--ink-mute);
+  font-weight: 500;
+}
+
+/* === Bottom-nav (muhim'га қайтиш link) === */
+.bottom-nav {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--line);
+  border-radius: var(--r-full);
+  padding: 6px;
+  display: inline-flex;
+  z-index: 50;
+  box-shadow:
+    0 4px 12px -4px rgba(0, 0, 0, 0.55),
+    0 24px 48px -12px rgba(0, 0, 0, 0.7);
+}
+.bottom-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--r-full);
+  background: transparent;
+  color: var(--ink-mute);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--t-fast);
+}
+.bottom-nav-btn:hover { color: var(--sea-500); }
+.bottom-nav-icon { font-size: 16px; line-height: 1; }
+
+/* Кенгайтириш — 640px ва ундан кенг */
+@media (min-width: 640px) {
+  .place-card { grid-template-columns: 120px 1fr 28px; gap: 22px; padding: 22px; }
+  .place-art { width: 120px; height: 120px; }
+}

@@ -275,7 +275,7 @@
     html += renderDayGrid('Йилда бир мартагина келадиган муҳим кунлар', yearly);
     if (recurring.length) html += renderDayGrid('Ҳар ҳафта ва ҳар ойда қайталанадиган муҳим кунлар', recurring);
 
-    // Бошқа иловалармиз — Вақтлар ва Жойлар "тез орада" холатида.
+    // Бошқа иловалармиз — Жойлар тайёр, Вақтлар "тез орада".
     html += '<section class="other-apps">';
     html += '<div class="other-apps-title">Бошқа иловалармиз</div>';
     html += '<div class="other-apps-grid">';
@@ -284,11 +284,11 @@
     html += '<span class="other-app-name">Вақтлар</span>';
     html += '<span class="other-app-tag">Тез орада</span>';
     html += '</button>';
-    html += '<button class="other-app-card" onclick="showSoon(\'Жойлар\')">';
+    html += '<a class="other-app-card" href="joylar/">';
     html += '<span class="other-app-icon" aria-hidden="true">◎</span>';
     html += '<span class="other-app-name">Жойлар</span>';
-    html += '<span class="other-app-tag">Тез орада</span>';
-    html += '</button>';
+    html += '<span class="other-app-tag live">Очиш →</span>';
+    html += '</a>';
     html += '</div></section>';
 
     html += '</div>';
