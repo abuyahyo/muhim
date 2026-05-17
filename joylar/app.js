@@ -40,10 +40,10 @@
     document.getElementById('view-list').innerHTML = html;
   }
 
-  // SVG иллюстрациялар — joylar/svg.js'да жойлашган.
+  // Ҳар жой учун ҳақиқий фотолар `img/<id>.webp` (transparent PNG basini
+  // webp'қа айлантирилган). Ўлчам максимум 1200px кенг.
   function iconFor(id) {
-    if (!window.JoylarSvg || typeof JoylarSvg[id] !== 'function') return '';
-    return JoylarSvg[id]();
+    return '<img src="img/' + id + '.webp" alt="" loading="lazy"/>';
   }
 
   // === ДЕТАЛЬ САҲИФА ===
@@ -57,11 +57,13 @@
     html += '<button class="back-btn" onclick="goBack()">← Орқага</button>';
     html += '</div>';
 
-    html += '<div class="detail-hero" style="background: linear-gradient(160deg, ' + p.color + ' 0%, ' + p.color + 'cc 50%, ' + p.color + '88 100%);">';
+    html += '<div class="detail-hero" style="background: linear-gradient(180deg, ' + p.color + ' 0%, ' + p.color + 'cc 100%);">';
     html += '<div class="detail-art">' + iconFor(p.id) + '</div>';
+    html += '<div class="detail-hero-text">';
     html += '<div class="detail-arabic">' + escapeHtml(p.arabic) + '</div>';
     html += '<div class="detail-name">' + escapeHtml(p.name) + '</div>';
     html += '<div class="detail-loc">📍 ' + escapeHtml(p.city) + ' · ' + escapeHtml(p.country) + '</div>';
+    html += '</div>';
     html += '</div>';
 
     html += '<section class="detail-block"><div class="block-title">Ҳақида</div>';
