@@ -700,7 +700,10 @@
 
     buildCardImage(day).then(function (file) {
       if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
-        navigator.share(Object.assign({ files: [file] }, baseShare)).catch(function () {});
+        // Telegram/WhatsApp каби илловалар share'дан расм ёки URLдан
+        // фақат бирини олиб қолади (одатда URLни). Расм юборилаётганда
+        // URLни киритмаймиз — ҳавола расм ичида аллақачон ёзилган.
+        navigator.share({ files: [file], title: day.name }).catch(function () {});
         return;
       }
       // Расмсиз варианти
