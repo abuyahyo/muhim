@@ -292,7 +292,15 @@
     const gDate = occ.date;
 
     let html = '<div class="fade-in detail-wrap">';
+    html += '<div class="detail-topbar">';
     html += '<button class="back-btn" onclick="goBack()">← Орқага</button>';
+    html += '<button class="share-btn" onclick="shareDay(\'' + escapeHtml(day.id) + '\')" aria-label="Улашиш" title="Улашиш">';
+    html += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
+    html += '<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>';
+    html += '<polyline points="16 6 12 2 8 6"/>';
+    html += '<line x1="12" y1="2" x2="12" y2="15"/>';
+    html += '</svg></button>';
+    html += '</div>';
 
     html += '<div class="detail-hero" style="background: linear-gradient(135deg, ' + day.color + ' 0%, ' + day.color + 'dd 50%, ' + day.color + 'aa 100%);">';
     html += '<div class="detail-content">';
@@ -677,6 +685,41 @@
   window.calPrev = calPrev;
   window.calNext = calNext;
   window.calToday = calToday;
+  window.shareDay = shareDay;
+
+  // Кун-карточкасини улашиш — Web Share API орқали тизимнинг native ulashish
+  // ойнаси очилади; қўлланилмаса clipboard'га нусха олиб тост кўрсатамиз.
+  function shareDay(dayId) {
+    let day = null;
+    for (let i = 0; i < importantDays.length; i++) {
+      if (importantDays[i].id === dayId) { day = importantDays[i]; break; }
+    }
+    if (!day) return;
+    const url = location.origin + location.pathname + '#/day/' + encodeURIComponent(dayId);
+    const shareData = { title: day.name, text: day.short || day.name, url: url };
+    if (navigator.share) {
+      navigator.share(shareData).catch(function () {});
+      return;
+    }
+    const fallback = day.name + ' — ' + (day.short || '') + '\n' + url;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(fallback).then(function () {
+        showToast('Нусха олинди');
+      }).catch(function () {
+        showToast('Нусха олиб бўлмади');
+      });
+    } else {
+      showToast('Браузер ulashish-ни қўлламайди');
+    }
+  }
+
+  function showToast(msg) {
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(function () { t.remove(); }, 2200);
+  }
 
   // БОШЛАШ
   window.addEventListener('hashchange', route);
