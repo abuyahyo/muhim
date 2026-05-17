@@ -1110,3 +1110,41 @@ button:focus-visible,
     transform: none;
   }
 }
+
+/* === Update banner (PWA — янги версия мавжуд) === */
+.update-banner {
+  position: fixed;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom) + 96px);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px 10px 18px;
+  background: var(--sea-500);
+  color: white;
+  border-radius: var(--r-full);
+  box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  font-size: 14px;
+  font-weight: 600;
+  max-width: calc(100vw - 32px);
+  animation: bannerSlide 0.3s ease-out;
+}
+.update-banner button {
+  background: white;
+  color: var(--sea-700);
+  border: none;
+  padding: 7px 14px;
+  border-radius: var(--r-full);
+  font: 700 13px var(--font-sans, inherit);
+  cursor: pointer;
+  transition: var(--t-fast);
+}
+.update-banner button:hover {
+  background: var(--sea-50);
+}
+@keyframes bannerSlide {
+  from { opacity: 0; transform: translate(-50%, 20px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
