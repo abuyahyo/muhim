@@ -687,8 +687,8 @@
   window.calToday = calToday;
   window.shareDay = shareDay;
 
-  // Кун-карточкасини улашиш — Web Share API орқали тизимнинг native ulashish
-  // ойнаси очилади; қўлланилмаса clipboard'га нусха олиб тост кўрсатамиз.
+  // Кун-карточкасини улашиш — Web Share API орқали native ulashish ойнаси
+  // очилади. Иложи бўлса — карточка-расм ҳам бирга юборилади (canShare files).
   function shareDay(dayId) {
     let day = null;
     for (let i = 0; i < importantDays.length; i++) {
@@ -696,21 +696,177 @@
     }
     if (!day) return;
     const url = location.origin + location.pathname + '#/day/' + encodeURIComponent(dayId);
-    const shareData = { title: day.name, text: day.short || day.name, url: url };
-    if (navigator.share) {
-      navigator.share(shareData).catch(function () {});
-      return;
-    }
-    const fallback = day.name + ' — ' + (day.short || '') + '\n' + url;
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(fallback).then(function () {
-        showToast('Нусха олинди');
-      }).catch(function () {
-        showToast('Нусха олиб бўлмади');
+    const baseShare = { title: day.name, text: day.short || day.name, url: url };
+
+    buildCardImage(day).then(function (file) {
+      if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+        navigator.share(Object.assign({ files: [file] }, baseShare)).catch(function () {});
+        return;
+      }
+      // Расмсиз варианти
+      if (navigator.share) {
+        navigator.share(baseShare).catch(function () {});
+        return;
+      }
+      const fallback = day.name + ' — ' + (day.short || '') + '\n' + url;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(fallback).then(function () {
+          showToast('Нусха олинди');
+        }).catch(function () {
+          showToast('Нусха олиб бўлмади');
+        });
+      } else {
+        showToast('Браузер ulashish-ни қўлламайди');
+      }
+    });
+  }
+
+  // Кун карточкасини 1080×1350 canvas'га чизиб, PNG `File` сифатида қайтаради.
+  // Шрифтлар Google Fonts'дан юкланган бўлсин — canvas синхрон ишлашидан олдин
+  // `document.fonts.load` чақирилади.
+  function buildCardImage(day) {
+    const W = 1080, H = 1350;
+    const canvas = document.createElement('canvas');
+    canvas.width = W;
+    canvas.height = H;
+    const ctx = canvas.getContext('2d');
+    const fontsReady = (document.fonts && document.fonts.load)
+      ? Promise.all([
+          document.fonts.load('800 96px "DM Sans"'),
+          document.fonts.load('700 28px "DM Sans"'),
+          document.fonts.load('500 26px "DM Sans"'),
+          document.fonts.load('600 36px "DM Sans"')
+        ]).catch(function () {})
+      : Promise.resolve();
+
+    return fontsReady.then(function () {
+      drawCard(ctx, day, W, H);
+      return new Promise(function (resolve) {
+        canvas.toBlob(function (blob) {
+          if (!blob) { resolve(null); return; }
+          resolve(new File([blob], 'kun.png', { type: 'image/png' }));
+        }, 'image/png');
       });
-    } else {
-      showToast('Браузер ulashish-ни қўлламайди');
+    });
+  }
+
+  function drawCard(ctx, day, W, H) {
+    // Градиент фон — деталь-hero бошқа жойда қандай чизилса шу тарзда.
+    const grad = ctx.createLinearGradient(0, 0, W, H);
+    grad.addColorStop(0, day.color);
+    grad.addColorStop(0.5, day.color + 'dd');
+    grad.addColorStop(1, day.color + 'aa');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Юлдузли субтил тасвир (декоратив)
+    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+    for (let i = 0; i < 30; i++) {
+      const x = (i * 137 + 53) % W;
+      const y = (i * 211 + 91) % (H * 0.7);
+      const r = (i % 3) + 1.5;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fill();
     }
+
+    const padX = 80;
+
+    // Тег пилл
+    const tagText = freqLabel(day).toUpperCase();
+    ctx.font = '700 30px "DM Sans", system-ui, sans-serif';
+    const tagW = ctx.measureText(tagText).width + 56;
+    const tagH = 64;
+    const tagY = 100;
+    ctx.fillStyle = 'rgba(255,255,255,0.18)';
+    roundRect(ctx, padX, tagY, tagW, tagH, 32);
+    ctx.fill();
+    ctx.fillStyle = '#ffffff';
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'left';
+    ctx.fillText(tagText, padX + 28, tagY + tagH / 2 + 2);
+
+    // Кун номи (керак бўлса 2 қаторга)
+    ctx.font = '800 104px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.textBaseline = 'top';
+    wrapText(ctx, day.name, padX, tagY + tagH + 60, W - padX * 2, 116);
+
+    // Маълумот блоклари — ҳижрий ва милодий
+    const occ = nextOccurrence(day);
+    const hijriLine = formatHijriLine(day, occ);
+    const gregLine = formatGregLine(day, occ);
+    drawInfoBlock(ctx, padX, 720, W - padX * 2, 'ҲИЖРИЙ', hijriLine);
+    drawInfoBlock(ctx, padX, 920, W - padX * 2, 'МИЛОДИЙ', gregLine);
+
+    // Сайт номи пастда
+    ctx.font = '500 28px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('abuyahyo.github.io/muhim', W / 2, H - 80);
+  }
+
+  function drawInfoBlock(ctx, x, y, w, label, value) {
+    const h = 160;
+    ctx.fillStyle = 'rgba(255,255,255,0.14)';
+    roundRect(ctx, x, y, w, h, 28);
+    ctx.fill();
+    ctx.font = '700 26px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.75)';
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'left';
+    ctx.fillText(label, x + 36, y + 28);
+    ctx.font = '700 52px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(value, x + 36, y + 72);
+  }
+
+  function formatHijriLine(day, occ) {
+    if (day.frequency === 'weekly') {
+      const dows = day.weekDays || [day.weekDay];
+      return dows.map(function (d) { return weekDaysFull[d]; }).join(' ва ');
+    }
+    if (day.frequency === 'monthly') {
+      return (day.hDays || []).join(', ');
+    }
+    return occ.hijri.day + ' ' + hijriMonths[occ.hijri.month - 1];
+  }
+
+  function formatGregLine(day, occ) {
+    const d = occ.date;
+    return d.getDate() + ' ' + gregorianMonths[d.getMonth()] + ' ' + d.getFullYear();
+  }
+
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+  }
+
+  function wrapText(ctx, text, x, y, maxW, lineH) {
+    const words = text.split(' ');
+    let line = '';
+    let yy = y;
+    for (let i = 0; i < words.length; i++) {
+      const test = line ? line + ' ' + words[i] : words[i];
+      if (ctx.measureText(test).width > maxW && line) {
+        ctx.fillText(line, x, yy);
+        line = words[i];
+        yy += lineH;
+      } else {
+        line = test;
+      }
+    }
+    if (line) ctx.fillText(line, x, yy);
   }
 
   function showToast(msg) {
