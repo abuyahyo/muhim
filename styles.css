@@ -1235,6 +1235,14 @@ button:focus-visible,
   background: var(--bg);
   border-radius: var(--r-full);
 }
+.other-app-tag.live {
+  color: var(--sea-500);
+  background: rgba(14, 165, 233, 0.12);
+  letter-spacing: 0.06em;
+}
+a.other-app-card {
+  text-decoration: none;
+}
 
 /* === Toast (улашиш fallback нусха олинди ва ҳ.к.) === */
 .toast {
