@@ -102,13 +102,13 @@ body {
 .bottom-nav-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
+  gap: 7px;
+  padding: 10px 14px;
   border: none;
   border-radius: var(--r-full);
   background: transparent;
   color: var(--ink-mute);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: var(--t-fast);
@@ -130,7 +130,8 @@ body {
 .bottom-nav-label { letter-spacing: 0.2px; }
 
 @media (max-width: 380px) {
-  .bottom-nav-btn { padding: 10px 16px; font-size: 13px; }
+  .bottom-nav-btn { padding: 9px 10px; font-size: 12px; gap: 5px; }
+  .bottom-nav-icon { font-size: 14px; }
 }
 
 /* === МАЙН === */

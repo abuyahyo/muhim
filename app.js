@@ -686,6 +686,13 @@
   window.calNext = calNext;
   window.calToday = calToday;
   window.shareDay = shareDay;
+  window.showSoon = showSoon;
+
+  // Бошқа иловалар (Вақтлар / Жойлар) ҳозирча тайёр эмас — фойдаланувчига
+  // "тез орада" тостни кўрсатиб қойямиз.
+  function showSoon(name) {
+    showToast(name + ' — тез орада');
+  }
 
   // Кун-карточкасини улашиш — Web Share API орқали native ulashish ойнаси
   // очилади. Иложи бўлса — карточка-расм ҳам бирга юборилади (canShare files).
