@@ -15,7 +15,12 @@
   'use strict';
 
   function gregorianToHijri(gDate) {
-    const jd = Math.floor((gDate.getTime() / 86400000) + 2440587.5);
+    // Кирувчи Date'нинг локал санасини UTC тушдан позицияга солиб JD-ни
+    // ҳисоблаймиз. `Math.floor(... + 0.5)` JD-чегараси тушда бошланганидан,
+    // локал кун давомидаги ҳар қандай вақт битта JD-га тушиб қолади (туш-
+    // дан олдин floor бир кун олдинги JD'га тушиб қолишини бартараф этади).
+    const safeMs = Date.UTC(gDate.getFullYear(), gDate.getMonth(), gDate.getDate(), 12, 0, 0);
+    const jd = Math.floor((safeMs / 86400000) + 2440587.5);
     const l = jd - 1948440 + 10632;
     const n = Math.floor((l - 1) / 10631);
     const l2 = l - 10631 * n + 354;
