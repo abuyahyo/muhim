@@ -173,12 +173,6 @@ main {
   letter-spacing: -0.02em;
   margin-bottom: 10px;
 }
-.detail-loc {
-  font-size: 14px;
-  color: rgba(255,255,255,0.85);
-  font-weight: 500;
-}
-
 .detail-block { margin-bottom: 28px; }
 .block-title {
   font-size: 18px;

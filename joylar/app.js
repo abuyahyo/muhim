@@ -60,7 +60,6 @@
     html += '<div class="detail-art">' + iconFor(p.id) + '</div>';
     html += '<div class="detail-hero-text">';
     html += '<div class="detail-name">' + escapeHtml(p.name) + '</div>';
-    html += '<div class="detail-loc">📍 ' + escapeHtml(p.city) + ' · ' + escapeHtml(p.country) + '</div>';
     html += '</div>';
     html += '</div>';
 
