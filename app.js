@@ -427,8 +427,6 @@
     // Душанба = 0, ..., Якшанба = 6 (хафта Душанбадан бошланади)
     const startWeekDay = (firstGreg.getDay() + 6) % 7;
 
-    const lastGreg = hijriToGregorian(hYear, hMonth, daysInMonth);
-
     const todayHijri = getCurrentHijri();
     const isCurrentMonth = (todayHijri.year === hYear && todayHijri.month === hMonth);
 
@@ -485,18 +483,8 @@
     html += '<button class="cal-btn" onclick="calNext()" aria-label="Кейинги ой">→</button>';
     html += '</div></div>';
 
-    // Милодий маълумот
-    let gregInfo;
-    if (firstGreg.getMonth() === lastGreg.getMonth()) {
-      gregInfo = firstGreg.getDate() + '–' + lastGreg.getDate() + ' ' + gregorianMonths[firstGreg.getMonth()] + ' ' + firstGreg.getFullYear();
-    } else if (firstGreg.getFullYear() === lastGreg.getFullYear()) {
-      gregInfo = firstGreg.getDate() + ' ' + gregorianMonthsShort[firstGreg.getMonth()] + ' – ' + lastGreg.getDate() + ' ' + gregorianMonthsShort[lastGreg.getMonth()] + ' ' + lastGreg.getFullYear();
-    } else {
-      gregInfo = firstGreg.getDate() + ' ' + gregorianMonthsShort[firstGreg.getMonth()] + ' ' + firstGreg.getFullYear() + ' – ' + lastGreg.getDate() + ' ' + gregorianMonthsShort[lastGreg.getMonth()] + ' ' + lastGreg.getFullYear();
-    }
-    html += '<div class="cal-greg-info">';
-    html +=   '<div class="cal-greg-info-icon">М</div>';
-    html +=   '<div class="cal-greg-info-text">Милодий бўйича: ' + escapeHtml(gregInfo) + '</div>';
+    // Ҳужайрада Милодий рақамни кўрсатиш/беркитиш
+    html += '<div class="cal-greg-bar">';
     html +=   '<button class="cal-greg-toggle' + (showGregDays ? ' is-on' : '') + '" '
          +         'onclick="toggleGregDays()" '
          +         'aria-pressed="' + showGregDays + '" '
