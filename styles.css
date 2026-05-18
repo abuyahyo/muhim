@@ -805,12 +805,13 @@ main {
 }
 .cal-top {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 28px;
-  gap: 12px;
+  gap: 12px 16px;
 }
-.cal-title-block { min-width: 0; flex: 1; }
+.cal-title-block { flex: 1 1 220px; min-width: 0; }
 .cal-eyebrow {
   font-size: 11px;
   font-weight: 700;
@@ -826,8 +827,8 @@ main {
   color: var(--ink);
   letter-spacing: -0.02em;
   line-height: 1;
-  /* Жуда узун ой номи бўлса (масалан "Жумодул аввал") синсин */
-  overflow-wrap: anywhere;
+  /* Жуда узун ой номи бўлса (масалан "Жумодул аввал") сўз чегарасида синсин */
+  overflow-wrap: break-word;
 }
 .cal-year {
   font-size: 14px;
