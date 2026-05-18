@@ -490,7 +490,7 @@
          +         'aria-pressed="' + showGregDays + '" '
          +         'title="Ҳужайрада Милодий рақамни кўрсатиш/беркитиш">';
     html +=     '<span class="cal-greg-toggle-dot" aria-hidden="true"></span>';
-    html +=     '<span>Милодий кунлар</span>';
+    html +=     '<span>Милодий кунларни ёқиш</span>';
     html +=   '</button>';
     html += '</div>';
 
