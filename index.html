@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="nav.css">
 </head>
 <body>
 
@@ -21,15 +22,23 @@
   <div id="view-calendar" class="hidden"></div>
 </main>
 
-<nav class="bottom-nav" aria-label="Асосий навигация">
-  <button class="bottom-nav-btn active" id="nav-home" onclick="showHome()">
-    <span class="bottom-nav-icon" aria-hidden="true">◇</span>
-    <span class="bottom-nav-label">Кунлар</span>
+<nav class="app-nav" aria-label="Асосий навигация">
+  <button class="app-nav-btn active" id="nav-home" onclick="showHome()">
+    <span class="app-nav-icon" aria-hidden="true">◇</span>
+    <span class="app-nav-label">Кунлар</span>
   </button>
-  <button class="bottom-nav-btn" id="nav-cal" onclick="showCalendar()">
-    <span class="bottom-nav-icon" aria-hidden="true">▦</span>
-    <span class="bottom-nav-label">Тақвим</span>
+  <button class="app-nav-btn" id="nav-cal" onclick="showCalendar()">
+    <span class="app-nav-icon" aria-hidden="true">▦</span>
+    <span class="app-nav-label">Тақвим</span>
   </button>
+  <a class="app-nav-btn" href="joylar/">
+    <span class="app-nav-icon" aria-hidden="true">◎</span>
+    <span class="app-nav-label">Жойлар</span>
+  </a>
+  <a class="app-nav-btn" href="vaqtlar/">
+    <span class="app-nav-icon" aria-hidden="true">◷</span>
+    <span class="app-nav-label">Вақтлар</span>
+  </a>
 </nav>
 
 <script src="data.js"></script>

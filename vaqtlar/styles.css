@@ -428,40 +428,6 @@ main {
   font-weight: 500;
 }
 
-/* === Bottom-nav (muhim'га қайтиш link) === */
-.bottom-nav {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: calc(20px + env(safe-area-inset-bottom));
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  border: 1px solid var(--line);
-  border-radius: var(--r-full);
-  padding: 6px;
-  display: inline-flex;
-  z-index: 50;
-  box-shadow:
-    0 4px 12px -4px rgba(0, 0, 0, 0.55),
-    0 24px 48px -12px rgba(0, 0, 0, 0.7);
-}
-.bottom-nav-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: var(--r-full);
-  background: transparent;
-  color: var(--ink-mute);
-  font-size: 14px;
-  font-weight: 600;
-  transition: var(--t-fast);
-}
-.bottom-nav-btn:hover { color: var(--sea-500); }
-.bottom-nav-icon { font-size: 16px; line-height: 1; }
-
 /* === Кенгайтириш — 640px ва ундан кенг === */
 @media (min-width: 640px) {
   .today-hero {

@@ -1,0 +1,60 @@
+/* === Умумий пастги навигация — уч app учун === */
+/* Барча CSS variables app'нинг ўз styles.css'ида аниқланган деб ҳисобланади:
+   --surface, --line, --ink-mute, --sea-300, --sea-500, --sea-700,
+   --r-full, --t-fast. Fallback'лар хато қилмаслик учун қўйилган. */
+
+.app-nav {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  background: var(--surface-translucent, rgba(15, 23, 42, 0.85));
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--line, #1e293b);
+  border-radius: var(--r-full, 999px);
+  padding: 6px;
+  display: inline-flex;
+  gap: 4px;
+  box-shadow:
+    0 4px 12px -4px rgba(0, 0, 0, 0.55),
+    0 24px 48px -12px rgba(0, 0, 0, 0.7);
+  z-index: 50;
+  max-width: calc(100vw - 24px);
+}
+.app-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: var(--r-full, 999px);
+  background: transparent;
+  color: var(--ink-mute, #94a3b8);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--t-fast, color 0.2s, background-color 0.2s);
+  font-family: inherit;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.app-nav-btn:hover { color: var(--sea-300, #7dd3fc); }
+.app-nav-btn.active {
+  background: linear-gradient(135deg, var(--sea-500, #0ea5e9) 0%, var(--sea-700, #0369a1) 100%);
+  color: white;
+  box-shadow: 0 6px 18px -6px var(--sea-500, #0ea5e9);
+}
+.app-nav-btn.active:hover { color: white; }
+.app-nav-icon { font-size: 15px; line-height: 1; }
+.app-nav-label { letter-spacing: 0.2px; }
+
+@media (max-width: 460px) {
+  .app-nav-btn { padding: 9px 12px; font-size: 12px; gap: 5px; }
+  .app-nav-icon { font-size: 14px; }
+}
+@media (max-width: 360px) {
+  .app-nav-btn { padding: 9px 10px; gap: 4px; }
+  .app-nav-label { display: none; }
+  .app-nav-icon { font-size: 17px; }
+}
