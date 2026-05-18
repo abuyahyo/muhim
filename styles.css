@@ -805,13 +805,12 @@ main {
 }
 .cal-top {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 28px;
-  gap: 12px 16px;
+  margin-bottom: 24px;
+  gap: 16px;
 }
-.cal-title-block { flex: 1 1 220px; min-width: 0; }
+.cal-title-block { text-align: center; min-width: 0; }
 .cal-eyebrow {
   font-size: 11px;
   font-weight: 700;
@@ -827,7 +826,6 @@ main {
   color: var(--ink);
   letter-spacing: -0.02em;
   line-height: 1;
-  /* Жуда узун ой номи бўлса (масалан "Жумодул аввал") сўз чегарасида синсин */
   overflow-wrap: break-word;
 }
 .cal-year {
@@ -836,7 +834,7 @@ main {
   font-weight: 500;
   margin-top: 4px;
 }
-.cal-controls { display: flex; gap: 8px; flex-shrink: 0; flex-wrap: wrap; }
+.cal-controls { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
 .cal-picker {
   height: 44px;
   border-radius: var(--r-lg);
@@ -889,8 +887,8 @@ main {
 
 .cal-greg-bar {
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 14px;
+  justify-content: center;
+  margin-bottom: 16px;
 }
 
 .cal-weekdays {
