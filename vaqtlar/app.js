@@ -175,8 +175,7 @@
       const p = prayers[i];
       const t = times[p.id];
       const isCurrent = (p.id === cn.currentId);
-      const isNext = (p.id === cn.nextId);
-      const cls = 'prayer-row' + (isCurrent ? ' is-current' : '') + (isNext ? ' is-next' : '');
+      const cls = 'prayer-row' + (isCurrent ? ' is-current' : '');
       html += '<button class="' + cls + '" onclick="showPrayer(\'' + p.id + '\')">';
       html += '<span class="prayer-dot" aria-hidden="true"></span>';
       html += '<span class="prayer-name">' + escapeHtml(p.name) + '</span>';

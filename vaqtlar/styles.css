@@ -179,12 +179,6 @@ main {
   border-color: var(--accent);
 }
 .prayer-row.is-current .prayer-name { color: var(--ink); }
-.prayer-row.is-next {
-  border-color: var(--accent);
-}
-.prayer-row.is-next .prayer-time {
-  color: var(--accent);
-}
 
 /* === Саҳарлик / Ифтор жуфт карточкаси === */
 .ramadan-pair {
