@@ -2,9 +2,24 @@
 (function () {
   'use strict';
 
-  const { prayers, spiritual } = VaqtlarData;
+  const { prayers, spiritual, cities } = VaqtlarData;
   const STORAGE_KEY = 'vaqtlar.settings.v1';
   const DEFAULT_LOC = { lat: 41.2995, lon: 69.2401, name: 'Тошкент' }; // фолбэк
+  const KAABA = { lat: 21.4225, lon: 39.8262 };
+
+  // === Қибла йўналиши (great-circle bearing шимолдан соат стрелкаси бўйича) ===
+  function qiblaBearing(lat, lon) {
+    const toRad = function (d) { return d * Math.PI / 180; };
+    const φ1 = toRad(lat), φ2 = toRad(KAABA.lat);
+    const Δλ = toRad(KAABA.lon - lon);
+    const y = Math.sin(Δλ) * Math.cos(φ2);
+    const x = Math.cos(φ1) * Math.sin(φ2) - Math.sin(φ1) * Math.cos(φ2) * Math.cos(Δλ);
+    return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
+  }
+  function cardinalUz(deg) {
+    const dirs = ['Шимол', 'Шим-Шар', 'Шарқ', 'Жан-Шар', 'Жануб', 'Жан-Ғар', 'Ғарб', 'Шим-Ғар'];
+    return dirs[Math.round(deg / 45) % 8];
+  }
 
   // === Settings (localStorage) ===
   function loadSettings() {
@@ -234,6 +249,31 @@
       html += '</div></section>';
     }
 
+    // Қибла йўналиши
+    const qBear = qiblaBearing(loc.lat, loc.lon);
+    html += '<section class="qibla-section">';
+    html += '<div class="times-section-title">Қибла йўналиши</div>';
+    html += '<div class="qibla-card">';
+    html += '<div class="qibla-compass" id="qibla-compass" data-qibla="' + qBear.toFixed(2) + '">';
+    html +=   '<div class="qibla-rose">';
+    html +=     '<span class="qibla-card-north">Ш</span>';
+    html +=     '<span class="qibla-card-east">Шар</span>';
+    html +=     '<span class="qibla-card-south">Ж</span>';
+    html +=     '<span class="qibla-card-west">Ғ</span>';
+    html +=     '<div class="qibla-arrow" id="qibla-arrow" style="transform: rotate(' + qBear.toFixed(2) + 'deg);">';
+    html +=       '<span class="qibla-arrow-head">▲</span>';
+    html +=     '</div>';
+    html +=   '</div>';
+    html += '</div>';
+    html += '<div class="qibla-meta">';
+    html +=   '<div class="qibla-bearing">' + Math.round(qBear) + '°</div>';
+    html +=   '<div class="qibla-dir">' + escapeHtml(cardinalUz(qBear)) + ' томон</div>';
+    html +=   '<div class="qibla-hint" id="qibla-hint">Шимолдан соат стрелкаси бўйича — телефонни N компасига солинг.</div>';
+    html +=   '<button class="qibla-live-btn" id="qibla-live-btn" onclick="enableQiblaLive()">Жонли компас</button>';
+    html += '</div>';
+    html += '</div>';
+    html += '</section>';
+
     // Sozlamalar (collapsible)
     html += '<section class="settings-section">';
     html += '<details class="settings-details">';
@@ -268,6 +308,14 @@
     html += '<label class="setting-label">Жойлашув</label>';
     html += '<div class="setting-options">';
     html += '<button class="opt-btn" onclick="redetectLocation()">Қайта аниқлаш</button>';
+    html += '</div>';
+    html += '<div class="city-chips">';
+    for (let i = 0; i < cities.length; i++) {
+      const c = cities[i];
+      const active = (loc.name === c.name && Math.abs(loc.lat - c.lat) < 0.05);
+      html += '<button class="city-chip' + (active ? ' active' : '') + '" '
+           + 'onclick="setCity(' + i + ')">' + escapeHtml(c.name) + '</button>';
+    }
     html += '</div>';
     html += '<div class="setting-hint">' + escapeHtml(loc.name) + ' — '
          + loc.lat.toFixed(3) + '°, ' + loc.lon.toFixed(3) + '°</div>';
@@ -401,6 +449,69 @@
       renderHome();
     });
   }
+  function setCity(idx) {
+    const c = cities[idx];
+    if (!c) return;
+    settings.location = { lat: c.lat, lon: c.lon, name: c.name };
+    saveSettings(settings);
+    renderHome();
+  }
+
+  // === Жонли қибла компас (DeviceOrientation) ===
+  // iOS 13+ — фойдаланувчи bosishi keрак, шунда permission сўралади.
+  // Android — рухсатсиз ишлайди.
+  let qiblaHandler = null;
+  function enableQiblaLive() {
+    const DOE = window.DeviceOrientationEvent;
+    if (!DOE) {
+      qiblaHintText('Қурилма йўналиш сенсорини қувватламайди.');
+      return;
+    }
+    const startListening = function () {
+      const arrow = document.getElementById('qibla-arrow');
+      const compass = document.getElementById('qibla-compass');
+      if (!arrow || !compass) return;
+      const qibla = parseFloat(compass.getAttribute('data-qibla'));
+      // webkitCompassHeading (iOS) — magnetic north, ўз тескари ҳаракатсиз
+      // alpha (Android) — соат стрелкасига тескари; 360-alpha билан тўғрилаймиз.
+      stopQiblaLive();
+      qiblaHandler = function (e) {
+        let heading = null;
+        if (typeof e.webkitCompassHeading === 'number') {
+          heading = e.webkitCompassHeading;
+        } else if (typeof e.alpha === 'number') {
+          heading = (360 - e.alpha) % 360;
+        }
+        if (heading == null) return;
+        const angle = qibla - heading;
+        arrow.style.transform = 'rotate(' + angle.toFixed(2) + 'deg)';
+      };
+      window.addEventListener('deviceorientationabsolute', qiblaHandler, true);
+      window.addEventListener('deviceorientation', qiblaHandler, true);
+      qiblaHintText('Стрелка тепага қараганда — юзингиз Қиблa томон.');
+      const btn = document.getElementById('qibla-live-btn');
+      if (btn) btn.style.display = 'none';
+    };
+    if (typeof DOE.requestPermission === 'function') {
+      DOE.requestPermission().then(function (res) {
+        if (res === 'granted') startListening();
+        else qiblaHintText('Сенсорга рухсат берилмади.');
+      }).catch(function () { qiblaHintText('Сенсорга рухсат берилмади.'); });
+    } else {
+      startListening();
+    }
+  }
+  function stopQiblaLive() {
+    if (qiblaHandler) {
+      window.removeEventListener('deviceorientationabsolute', qiblaHandler, true);
+      window.removeEventListener('deviceorientation', qiblaHandler, true);
+      qiblaHandler = null;
+    }
+  }
+  function qiblaHintText(msg) {
+    const el = document.getElementById('qibla-hint');
+    if (el) el.textContent = msg;
+  }
 
   // Қайтариш — глобал.
   window.showHome = showHome;
@@ -410,6 +521,8 @@
   window.setMadhab = setMadhab;
   window.setMethod = setMethod;
   window.redetectLocation = redetectLocation;
+  window.setCity = setCity;
+  window.enableQiblaLive = enableQiblaLive;
 
   // === Boot ===
   window.addEventListener('hashchange', route);
