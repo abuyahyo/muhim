@@ -234,63 +234,6 @@ main {
   font-weight: 500;
 }
 
-/* === НАМОЗ WIDGET (бош саҳифа) === */
-.prayer-widget { margin-bottom: 18px; }
-.prayer-widget-card {
-  display: grid;
-  grid-template-columns: 1fr auto 18px;
-  align-items: center;
-  gap: 18px;
-  padding: 16px 20px;
-  background: linear-gradient(135deg, #082f49 0%, #0c4a6e 100%);
-  border: 1px solid var(--sea-700, #0369a1);
-  border-radius: 18px;
-  color: #f1f5f9;
-  text-decoration: none;
-  transition: transform 0.2s, border-color 0.2s;
-}
-.prayer-widget-card:hover {
-  transform: translateY(-1px);
-  border-color: var(--sea-500, #0ea5e9);
-}
-.prayer-widget-meta { min-width: 0; }
-.prayer-widget-eyebrow {
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.72);
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-.prayer-widget-name {
-  font-size: 19px;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  margin-bottom: 4px;
-}
-.prayer-widget-countdown {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.85);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-}
-.prayer-widget-time {
-  font-size: clamp(28px, 6vw, 36px);
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
-  line-height: 1;
-}
-.prayer-widget-arrow {
-  font-size: 18px;
-  color: rgba(255, 255, 255, 0.7);
-  font-weight: 700;
-}
-@media (max-width: 380px) {
-  .prayer-widget-card { padding: 14px 16px; gap: 12px; }
-  .prayer-widget-name { font-size: 17px; }
-}
-
 /* === БУГУНГИ event-лар банери === */
 .today-banner {
   margin-bottom: 24px;
