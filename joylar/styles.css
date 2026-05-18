@@ -217,6 +217,20 @@ main {
 
 /* Кенгайтириш — 640px ва ундан кенг */
 @media (min-width: 640px) {
-  .place-card { grid-template-columns: 120px 1fr 28px; gap: 22px; padding: 22px; }
-  .place-art { width: 120px; height: 120px; }
+  .place-card {
+    display: grid;
+    grid-template-columns: 160px 1fr 28px;
+    align-items: center;
+    gap: 24px;
+    padding: 22px;
+  }
+  .place-art {
+    width: 160px;
+    height: 200px;
+    aspect-ratio: auto;
+    max-height: none;
+    border-radius: var(--r-lg);
+  }
+  .place-body { padding: 0; }
+  .place-arrow { display: block; font-size: 24px; color: var(--ink-mute); justify-self: end; }
 }
