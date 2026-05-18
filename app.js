@@ -107,6 +107,19 @@
   // === ҲОЛАТ ===
   let hijriCalView = getCurrentHijri();
 
+  // Тақвим устуворлиги: ҳар ҳужайрада Милодий рақамни ҳам кўрсатиш/беркитиш.
+  const CAL_PREF_KEY = 'cal.showGregDays.v1';
+  let showGregDays = (function () {
+    try { return localStorage.getItem(CAL_PREF_KEY) !== '0'; }
+    catch (e) { return true; }
+  })();
+  function toggleGregDays() {
+    showGregDays = !showGregDays;
+    try { localStorage.setItem(CAL_PREF_KEY, showGregDays ? '1' : '0'); }
+    catch (e) {}
+    renderCalendar();
+  }
+
   // Юлдузлар — қатъий тарзда жойлашган, ҳар page reload'да бир хил
   // кўринади. Math.random() рандомлик берса, фойдаланувчи саҳифани
   // янгилаганда юлдузлар "сакраб" қолади — енгил визуал шовқин.
@@ -453,7 +466,7 @@
     let html = '<div class="fade-in">';
 
     // Тақвим шакли
-    html += '<div class="cal-shell">';
+    html += '<div class="cal-shell' + (showGregDays ? ' show-greg' : '') + '">';
     html += '<div class="cal-top">';
     html += '<div class="cal-title-block">';
     html += '<div class="cal-eyebrow">Ҳижрий тақвим</div>';
@@ -475,7 +488,17 @@
     } else {
       gregInfo = firstGreg.getDate() + ' ' + gregorianMonthsShort[firstGreg.getMonth()] + ' ' + firstGreg.getFullYear() + ' – ' + lastGreg.getDate() + ' ' + gregorianMonthsShort[lastGreg.getMonth()] + ' ' + lastGreg.getFullYear();
     }
-    html += '<div class="cal-greg-info"><div class="cal-greg-info-icon">М</div><div>Милодий бўйича: ' + escapeHtml(gregInfo) + '</div></div>';
+    html += '<div class="cal-greg-info">';
+    html +=   '<div class="cal-greg-info-icon">М</div>';
+    html +=   '<div class="cal-greg-info-text">Милодий бўйича: ' + escapeHtml(gregInfo) + '</div>';
+    html +=   '<button class="cal-greg-toggle' + (showGregDays ? ' is-on' : '') + '" '
+         +         'onclick="toggleGregDays()" '
+         +         'aria-pressed="' + showGregDays + '" '
+         +         'title="Ҳужайрада Милодий рақамни кўрсатиш/беркитиш">';
+    html +=     '<span class="cal-greg-toggle-dot" aria-hidden="true"></span>';
+    html +=     '<span>Милодий кунлар</span>';
+    html +=   '</button>';
+    html += '</div>';
 
     // Ҳафта кунлари (Душанбадан бошланади). weekDays массиви Якшанба=0
     // тартибида сақланади (`getDay()` индексига мос); экранда Душанбадан
@@ -525,6 +548,7 @@
       const onclick = linkEvent ? 'onclick="showDay(\'' + escapeHtml(linkEvent.id) + '\')"' : '';
 
       html += '<button class="' + cls + '" ' + onclick + '>';
+      html += '<div class="cal-g-day">' + cellGreg.getDate() + '</div>';
       html += '<div class="cal-h-day">' + dd + '</div>';
       html += dots;
       html += '</button>';
@@ -693,6 +717,7 @@
   window.calPrev = calPrev;
   window.calNext = calNext;
   window.calToday = calToday;
+  window.toggleGregDays = toggleGregDays;
   window.shareDay = shareDay;
 
   // Кун-карточкасини улашиш — Web Share API орқали native ulashish ойнаси
