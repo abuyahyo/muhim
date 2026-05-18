@@ -2,8 +2,16 @@
 // Stand astronomik алгоритм (PrayTimes.org формуласи).
 // Кириш: сана, lat, lon, метод (Фажр/Иссиҳ угалари), мазҳаб (Аср фактори).
 // Чиқиш: Date object'лар — Бомдод / Қуёш / Пешин / Аср / Шом / Хуфтон.
+// Browser ва Node учун дуал экспорт.
 
-window.PrayerTimes = (function () {
+(function (root, factory) {
+  const api = factory();
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = api;
+  } else {
+    root.PrayerTimes = api;
+  }
+}(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
   // Градус asosli trigonometria
@@ -125,4 +133,4 @@ window.PrayerTimes = (function () {
   }
 
   return { calculate, tahajjudWindow, METHODS };
-})();
+}));
