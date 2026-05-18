@@ -337,33 +337,6 @@ main {
   font-weight: 500;
 }
 
-/* === Шаҳар чiplari (settings) === */
-.city-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 10px;
-}
-.city-chip {
-  padding: 6px 12px;
-  border-radius: var(--r-full);
-  border: 1px solid var(--line);
-  background: var(--surface);
-  color: var(--ink-mute);
-  font-size: 13px;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  transition: var(--t-fast);
-  white-space: nowrap;
-}
-.city-chip:hover { border-color: var(--sea-500); color: var(--ink); }
-.city-chip.active {
-  background: linear-gradient(135deg, var(--sea-500) 0%, var(--sea-700) 100%);
-  color: white;
-  border-color: var(--sea-500);
-}
-
 /* === Қибла компас === */
 .qibla-section { margin-bottom: 28px; }
 .qibla-card {
