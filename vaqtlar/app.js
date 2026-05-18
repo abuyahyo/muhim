@@ -194,6 +194,18 @@
       html += '<div class="times-section-title">Маънавий вақтлар</div>';
       html += '<div class="spiritual-list">';
 
+      html += '<button class="spiritual-card" onclick="showSpiritual(\'azkar\')" style="--accent: #0f766e;">';
+      html += '<div class="spiritual-head">';
+      html += '<div class="spiritual-name">Эрталабки / Кечқурунги зикрлар</div>';
+      html += '<div class="spiritual-tag">Икки вақт</div>';
+      html += '</div>';
+      html += '<div class="spiritual-range">'
+           + 'Тонг: ' + fmtTime(times.fajr) + ' → ' + fmtTime(times.sunrise)
+           + ' · Кеч: ' + fmtTime(times.asr) + ' → ' + fmtTime(times.maghrib)
+           + '</div>';
+      html += '<div class="spiritual-note">Расулуллоҳнинг доимий зикр вақтлари — Қоф 39-40</div>';
+      html += '</button>';
+
       html += '<button class="spiritual-card" onclick="showSpiritual(\'tahajjud\')" style="--accent: #312e81;">';
       html += '<div class="spiritual-head">';
       html += '<div class="spiritual-name">Таҳажжуд</div>';
