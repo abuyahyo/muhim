@@ -73,10 +73,9 @@
     const h = Math.floor(total / 3600);
     const m = Math.floor((total % 3600) / 60);
     const s = total % 60;
-    const u = function (txt) { return ' <span class="countdown-unit">' + txt + '</span> '; };
-    if (h > 0) return h + u('соат') + m + u('дақиқа');
-    if (m > 0) return m + u('дақиқа') + s + u('сония');
-    return s + u('сония');
+    const pad = function (n) { return String(n).padStart(2, '0'); };
+    if (h > 0) return pad(h) + ':' + pad(m) + ':' + pad(s);
+    return pad(m) + ':' + pad(s);
   }
 
   function hijriString(date) {
@@ -162,9 +161,14 @@
     html += '<div class="today-hijri">' + escapeHtml(hijriString(now)) + '</div>';
     html += '</div>';
     html += '<div class="countdown-block">';
-    html += '<div class="countdown-eyebrow">Кейинги — ' + escapeHtml(nextLabel) + '</div>';
+    html += '<div class="countdown-eyebrow">';
+    html +=   '<span>Кейинги</span>';
+    html +=   '<span class="countdown-eyebrow-name">' + escapeHtml(nextLabel) + '</span>';
+    if (cn.nextTime) {
+      html += '<span class="countdown-eyebrow-at">' + escapeHtml(fmtTime(cn.nextTime)) + '</span>';
+    }
+    html += '</div>';
     html += '<div class="countdown-time" id="countdown-time">' + fmtHHMM(countdownMs) + '</div>';
-    html += '<div class="countdown-at">' + (cn.nextTime ? fmtTime(cn.nextTime) : '') + '</div>';
     html += '</div>';
     html += '</section>';
 

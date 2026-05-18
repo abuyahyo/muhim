@@ -80,10 +80,10 @@ main {
 }
 .today-meta {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: baseline;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
 }
 .today-greg {
   font-size: 14px;
@@ -97,33 +97,32 @@ main {
   font-weight: 600;
   letter-spacing: 0.04em;
 }
-.countdown-block { text-align: left; }
+.countdown-block { text-align: center; }
 .countdown-eyebrow {
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.7);
-  font-weight: 700;
-  margin-bottom: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--ink-mute);
+  font-weight: 600;
+  margin-bottom: 10px;
 }
-.countdown-time {
-  font-size: clamp(34px, 7vw, 48px);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
+.countdown-eyebrow-name {
   color: var(--ink);
+  font-weight: 700;
+}
+.countdown-eyebrow-name::before { content: '·'; margin-right: 8px; color: var(--ink-mute); font-weight: 400; }
+.countdown-eyebrow-at {
+  color: var(--ink-mute);
   font-variant-numeric: tabular-nums;
 }
-.countdown-unit {
-  font-weight: 400;
-  color: var(--ink-mute);
-  font-size: 0.7em;
-}
-.countdown-at {
-  margin-top: 4px;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
-  font-weight: 600;
+.countdown-eyebrow-at::before { content: '·'; margin-right: 8px; color: var(--ink-mute); font-weight: 400; }
+.countdown-time {
+  font-size: clamp(48px, 14vw, 84px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
 
@@ -528,11 +527,8 @@ main {
 /* === Кенгайтириш — 640px ва ундан кенг === */
 @media (min-width: 640px) {
   .today-hero {
-    grid-template-columns: 1fr auto;
-    align-items: end;
+    padding: 28px 28px 32px;
   }
-  .today-meta { flex-direction: column; align-items: flex-start; }
-  .countdown-block { text-align: right; }
 }
 
 @media (max-width: 380px) {
