@@ -137,8 +137,6 @@
     html += '<header class="page-head">';
     html += '<div class="page-eyebrow">Муҳим</div>';
     html += '<h1 class="page-title">Вақтлар</h1>';
-    html += '<p class="page-lede">Беш вақт намоз ҳамда муҳим маънавий вақтлар — '
-         + escapeHtml(loc.name) + '.</p>';
     html += '</header>';
 
     // Бугунги санa + countdown
