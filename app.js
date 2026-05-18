@@ -120,6 +120,19 @@
     renderCalendar();
   }
 
+  // Тақвимдаги муҳим кунлар нуқталарини кўрсатиш/беркитиш.
+  const CAL_DOTS_KEY = 'cal.showEventDots.v1';
+  let showEventDots = (function () {
+    try { return localStorage.getItem(CAL_DOTS_KEY) !== '0'; }
+    catch (e) { return true; }
+  })();
+  function toggleEventDots() {
+    showEventDots = !showEventDots;
+    try { localStorage.setItem(CAL_DOTS_KEY, showEventDots ? '1' : '0'); }
+    catch (e) {}
+    renderCalendar();
+  }
+
   // Юлдузлар — қатъий тарзда жойлашган, ҳар page reload'да бир хил
   // кўринади. Math.random() рандомлик берса, фойдаланувчи саҳифани
   // янгилаганда юлдузлар "сакраб" қолади — енгил визуал шовқин.
@@ -464,7 +477,10 @@
     let html = '<div class="fade-in">';
 
     // Тақвим шакли
-    html += '<div class="cal-shell' + (showGregDays ? ' show-greg' : '') + '">';
+    html += '<div class="cal-shell'
+         + (showGregDays ? ' show-greg' : '')
+         + (showEventDots ? ' show-dots' : '')
+         + '">';
     html += '<div class="cal-top">';
     html += '<div class="cal-title-block">';
     html += '<div class="cal-eyebrow">Ҳижрий тақвим</div>';
@@ -483,7 +499,7 @@
     html += '<button class="cal-btn" onclick="calNext()" aria-label="Кейинги ой">→</button>';
     html += '</div></div>';
 
-    // Ҳужайрада Милодий рақамни кўрсатиш/беркитиш
+    // Кўриниш toggleлари — Милодий рақамлар ва муҳим кунлар нуқталари
     html += '<div class="cal-greg-bar">';
     html +=   '<button class="cal-greg-toggle' + (showGregDays ? ' is-on' : '') + '" '
          +         'onclick="toggleGregDays()" '
@@ -491,6 +507,13 @@
          +         'title="Ҳужайрада Милодий рақамни кўрсатиш/беркитиш">';
     html +=     '<span class="cal-greg-toggle-dot" aria-hidden="true"></span>';
     html +=     '<span>Милодий кунларни ёқиш</span>';
+    html +=   '</button>';
+    html +=   '<button class="cal-greg-toggle' + (showEventDots ? ' is-on' : '') + '" '
+         +         'onclick="toggleEventDots()" '
+         +         'aria-pressed="' + showEventDots + '" '
+         +         'title="Муҳим кунлар рангли нуқталарини кўрсатиш/беркитиш">';
+    html +=     '<span class="cal-greg-toggle-dot" aria-hidden="true"></span>';
+    html +=     '<span>Муҳим кун нуқталари</span>';
     html +=   '</button>';
     html += '</div>';
 
@@ -721,6 +744,7 @@
   window.calToday = calToday;
   window.calJumpMonth = calJumpMonth;
   window.toggleGregDays = toggleGregDays;
+  window.toggleEventDots = toggleEventDots;
   window.shareDay = shareDay;
 
   // Кун-карточкасини улашиш — Web Share API орқали native ulashish ойнаси
