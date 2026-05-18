@@ -402,6 +402,52 @@ main {
 @media (min-width: 640px) {
   .section-title { font-size: 32px; }
 }
+
+/* === Йиғилувчи кунлар бўлими (details/summary) === */
+.day-grid-fold { margin-bottom: 28px; }
+.day-grid-fold > .cards-grid { margin-top: 20px; }
+.day-grid-summary {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  cursor: pointer;
+  list-style: none;
+  transition: var(--t-fast);
+}
+.day-grid-summary::-webkit-details-marker { display: none; }
+.day-grid-summary:hover { border-color: var(--sea-500); }
+.day-grid-summary-title {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  flex: 1;
+  line-height: 1.25;
+}
+@media (min-width: 640px) {
+  .day-grid-summary-title { font-size: 22px; }
+}
+.day-grid-summary-meta {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-mute);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.day-grid-summary-chev {
+  font-size: 16px;
+  color: var(--ink-mute);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+.day-grid-fold[open] .day-grid-summary-chev { transform: rotate(180deg); }
+.day-grid-fold[open] .day-grid-summary { border-color: var(--sea-700); }
+
 /* === КАРТОЧКАЛАР === */
 .cards-grid {
   display: grid;
