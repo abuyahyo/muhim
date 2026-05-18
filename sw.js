@@ -22,6 +22,8 @@ const PRECACHE = [
   './vaqtlar/prayer.js',
   './manifest.json',
   './icon.svg',
+  './apple-touch-icon.png',
+  './icon-512.png',
 ];
 
 self.addEventListener('install', (event) => {
