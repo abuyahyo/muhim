@@ -85,101 +85,6 @@
     });
   }
 
-  // === НАМОЗ WIDGET (vaqtlar/prayer.js'дан фойдаланиш) ===
-  // Бош саҳифада "Кейинги намоз" компакт карточкаси. /vaqtlar/'дa сақланган
-  // созламаларни ва жойлашувни ўқиб ишлайди — агар йўқ бўлса Тошкент'и
-  // дефолт ишлатилади. Геолокация бу ердан сўралмайди (фақат /vaqtlar/'да).
-  const VAQTLAR_DEFAULT_LOC = { lat: 41.2995, lon: 69.2401, name: 'Тошкент' };
-  const PRAYER_LABELS = {
-    fajr: 'Бомдод', sunrise: 'Қуёш', dhuhr: 'Пешин',
-    asr: 'Аср', maghrib: 'Шом', isha: 'Хуфтон',
-  };
-
-  function getVaqtlarSettings() {
-    try {
-      const raw = localStorage.getItem('vaqtlar.settings.v1');
-      if (raw) {
-        const s = JSON.parse(raw);
-        return {
-          madhab: s.madhab || 'Hanafi',
-          method: s.method || 'MWL',
-          location: s.location || VAQTLAR_DEFAULT_LOC,
-        };
-      }
-    } catch (e) {}
-    return { madhab: 'Hanafi', method: 'MWL', location: VAQTLAR_DEFAULT_LOC };
-  }
-
-  function nextPrayerInfo(now) {
-    if (typeof PrayerTimes === 'undefined') return null;
-    const s = getVaqtlarSettings();
-    const opts = { madhab: s.madhab, method: s.method };
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const t = PrayerTimes.calculate(today, s.location.lat, s.location.lon, opts);
-    const seq = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
-    for (let i = 0; i < seq.length; i++) {
-      if (now < t[seq[i]]) {
-        return { id: seq[i], name: PRAYER_LABELS[seq[i]], time: t[seq[i]] };
-      }
-    }
-    // Хуфтондан кейин — эртанги Бомдод.
-    const tomorrow = new Date(today); tomorrow.setDate(today.getDate() + 1);
-    const tt = PrayerTimes.calculate(tomorrow, s.location.lat, s.location.lon, opts);
-    return { id: 'fajr', name: 'Эртанги ' + PRAYER_LABELS.fajr, time: tt.fajr };
-  }
-
-  function fmtPrayerTime(d) {
-    return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
-  }
-
-  function fmtCountdown(ms) {
-    const total = Math.max(0, Math.floor(ms / 1000));
-    const h = Math.floor(total / 3600);
-    const m = Math.floor((total % 3600) / 60);
-    if (h > 0) return h + ' соат ' + m + ' дақиқа';
-    if (m > 0) return m + ' дақиқа ' + (total % 60) + ' сония';
-    return total + ' сония';
-  }
-
-  function renderPrayerWidget() {
-    const info = nextPrayerInfo(new Date());
-    if (!info) return '';
-    const ms = info.time - new Date();
-    let html = '';
-    html += '<section class="prayer-widget">';
-    html += '<a class="prayer-widget-card" href="vaqtlar/">';
-    html += '<div class="prayer-widget-meta">';
-    html += '<div class="prayer-widget-eyebrow">Кейинги намоз</div>';
-    html += '<div class="prayer-widget-name">' + escapeHtml(info.name) + '</div>';
-    html += '<div class="prayer-widget-countdown" data-target="' + info.time.getTime() + '">'
-         + fmtCountdown(ms) + '</div>';
-    html += '</div>';
-    html += '<div class="prayer-widget-time">' + escapeHtml(fmtPrayerTime(info.time)) + '</div>';
-    html += '<div class="prayer-widget-arrow">→</div>';
-    html += '</a></section>';
-    return html;
-  }
-
-  let prayerTimer = null;
-  function startPrayerTimer() {
-    stopPrayerTimer();
-    prayerTimer = setInterval(function () {
-      const el = document.querySelector('.prayer-widget-countdown');
-      if (!el) { stopPrayerTimer(); return; }
-      const target = parseInt(el.getAttribute('data-target'), 10);
-      const ms = target - Date.now();
-      if (ms <= 0) {
-        stopPrayerTimer();
-        if (typeof renderHome === 'function') renderHome();
-        return;
-      }
-      el.textContent = fmtCountdown(ms);
-    }, 1000);
-  }
-  function stopPrayerTimer() {
-    if (prayerTimer) { clearInterval(prayerTimer); prayerTimer = null; }
-  }
-
   // === ЧАСТОТА ЁРЛИҒИ ===
   // Карточкадаги тег матни ва унга мос CSS синфи. Олдин 'байрам/муҳим'
   // ёзиларди — энди такрор-частотага ўтилди.
@@ -314,9 +219,6 @@
     html += '<div class="gregorian-week">' + escapeHtml(weekDaysFull[today.getDay()]) + ' · ' + today.getFullYear() + '</div>';
     html += '</div>';
     html += '</div></div></section>';
-
-    // Намоз widget'и — Hero'дан кейин, муҳим кунлардан олдин.
-    html += renderPrayerWidget();
 
     // Бугун баннери — фақат йилда бир мартагина келадиган муҳим кунлар учун.
     // Жума ва Аййамул Бийз каби такрорий event'лар бу банерда чиқмайди.
@@ -721,8 +623,6 @@
 
   function route() {
     const r = parseHash();
-    // Намоз timer'и фақат Бош саҳифа очиқ турганда — бошқа view'ларда тўхтатамиз.
-    stopPrayerTimer();
     if (r.name === 'day') {
       setActiveView('day');
       renderDay(r.id);
@@ -733,7 +633,6 @@
     } else {
       setActiveView('home');
       renderHome();
-      startPrayerTimer();
     }
     window.scrollTo(0, 0);
   }
