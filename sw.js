@@ -10,7 +10,7 @@
 // `VERSION`ни ҳар жиддий ўзгаришда инкремент қилинг — буни ўзгартирилса
 // SW қайта ўрнатилади ва эски кеш тозаланади. Активация янги версия
 // тайёрланганда `SKIP_WAITING` хабари orqали тезлаштирилади (banner).
-const VERSION = 'v23';
+const VERSION = 'v24';
 const STATIC_CACHE = `static-${VERSION}`;
 const PRECACHE = [
   './',
@@ -23,6 +23,7 @@ const PRECACHE = [
   './vaqtlar/prayer.js',
   './manifest.json',
   './icon.svg',
+  './favicon-32.png',
   './apple-touch-icon.png',
   './icon-512.png',
 ];
