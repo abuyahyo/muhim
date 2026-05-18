@@ -164,8 +164,7 @@
       const isCurrent = (p.id === cn.currentId);
       const isNext = (p.id === cn.nextId);
       const cls = 'prayer-row' + (isCurrent ? ' is-current' : '') + (isNext ? ' is-next' : '');
-      html += '<button class="' + cls + '" onclick="showPrayer(\'' + p.id + '\')" '
-           + 'style="--accent: ' + p.color + ';">';
+      html += '<button class="' + cls + '" onclick="showPrayer(\'' + p.id + '\')">';
       html += '<span class="prayer-dot" aria-hidden="true"></span>';
       html += '<span class="prayer-name">' + escapeHtml(p.name) + '</span>';
       html += '<span class="prayer-eyebrow">' + escapeHtml(p.eyebrow) + '</span>';
