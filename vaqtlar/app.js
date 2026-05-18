@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  const { prayers, spiritual, cities } = VaqtlarData;
+  const { prayers, spiritual } = VaqtlarData;
   const STORAGE_KEY = 'vaqtlar.settings.v1';
   const DEFAULT_LOC = { lat: 41.2995, lon: 69.2401, name: 'Тошкент' }; // фолбэк
   const KAABA = { lat: 21.4225, lon: 39.8262 };
@@ -304,23 +304,6 @@
     }
     html += '</div></div>';
 
-    html += '<div class="setting-row">';
-    html += '<label class="setting-label">Жойлашув</label>';
-    html += '<div class="setting-options">';
-    html += '<button class="opt-btn" onclick="redetectLocation()">Қайта аниқлаш</button>';
-    html += '</div>';
-    html += '<div class="city-chips">';
-    for (let i = 0; i < cities.length; i++) {
-      const c = cities[i];
-      const active = (loc.name === c.name && Math.abs(loc.lat - c.lat) < 0.05);
-      html += '<button class="city-chip' + (active ? ' active' : '') + '" '
-           + 'onclick="setCity(' + i + ')">' + escapeHtml(c.name) + '</button>';
-    }
-    html += '</div>';
-    html += '<div class="setting-hint">' + escapeHtml(loc.name) + ' — '
-         + loc.lat.toFixed(3) + '°, ' + loc.lon.toFixed(3) + '°</div>';
-    html += '</div>';
-
     html += '</div></details>';
     html += '</section>';
 
@@ -440,22 +423,6 @@
   // === Settings actions ===
   function setMadhab(v) { settings.madhab = v; saveSettings(settings); renderHome(); }
   function setMethod(v) { settings.method = v; saveSettings(settings); renderHome(); }
-  function redetectLocation() {
-    detectLocation().then(function (loc) {
-      if (loc) {
-        settings.location = loc;
-        saveSettings(settings);
-      }
-      renderHome();
-    });
-  }
-  function setCity(idx) {
-    const c = cities[idx];
-    if (!c) return;
-    settings.location = { lat: c.lat, lon: c.lon, name: c.name };
-    saveSettings(settings);
-    renderHome();
-  }
 
   // === Жонли қибла компас (DeviceOrientation) ===
   // iOS 13+ — фойдаланувчи bosishi keрак, шунда permission сўралади.
@@ -520,8 +487,6 @@
   window.goBack = goBack;
   window.setMadhab = setMadhab;
   window.setMethod = setMethod;
-  window.redetectLocation = redetectLocation;
-  window.setCity = setCity;
   window.enableQiblaLive = enableQiblaLive;
 
   // === Boot ===
