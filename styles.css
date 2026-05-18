@@ -887,29 +887,10 @@ main {
   border-color: var(--sea-200);
 }
 
-.cal-greg-info {
-  background: linear-gradient(135deg, var(--sea-50), var(--sea-100));
-  border-radius: var(--r-xl);
-  padding: 14px 18px;
-  margin-bottom: 20px;
-  font-size: 13px;
-  color: var(--sea-800);
-  font-weight: 500;
+.cal-greg-bar {
   display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.cal-greg-info-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: var(--r-sm);
-  background: var(--sea-500);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  flex-shrink: 0;
+  justify-content: flex-end;
+  margin-bottom: 14px;
 }
 
 .cal-weekdays {
@@ -998,25 +979,24 @@ main {
 .cal-cell.today .cal-g-day { color: var(--sea-500); }
 
 /* === Милодий рақам toggle === */
-.cal-greg-info-text { flex: 1; min-width: 0; }
 .cal-greg-toggle {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 12px;
-  border: 1px solid var(--sea-300, #7dd3fc);
+  padding: 8px 14px;
+  border: 1px solid var(--line);
   border-radius: var(--r-full);
-  background: rgba(255, 255, 255, 0.55);
-  color: var(--sea-800, #075985);
-  font-size: 12px;
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-size: 13px;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
   transition: var(--t-fast);
   white-space: nowrap;
-  flex-shrink: 0;
 }
-.cal-greg-toggle:hover { background: rgba(255, 255, 255, 0.85); }
+.cal-greg-toggle:hover { border-color: var(--sea-500); color: var(--ink); }
+.cal-greg-toggle.is-on { border-color: var(--sea-500); color: var(--ink); }
 .cal-greg-toggle-dot {
   width: 9px;
   height: 9px;
