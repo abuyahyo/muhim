@@ -488,7 +488,6 @@
     html += '<div class="cal-year">' + hYear + ' ҳижрий йил</div>';
     html += '</div>';
     html += '<div class="cal-controls">';
-    html += '<button class="cal-btn" onclick="calPrev()" aria-label="Олдинги ой">←</button>';
     html += '<select class="cal-picker" aria-label="Ой танлаш" onchange="calJumpMonth(this.value)">';
     for (let mi = 1; mi <= 12; mi++) {
       html += '<option value="' + mi + '"' + (mi === hMonth ? ' selected' : '') + '>'
@@ -496,7 +495,6 @@
     }
     html += '</select>';
     html += '<button class="cal-btn wide" onclick="calToday()">Бугун</button>';
-    html += '<button class="cal-btn" onclick="calNext()" aria-label="Кейинги ой">→</button>';
     html += '</div></div>';
 
     // Кўриниш toggleлари — Милодий рақамлар ва муҳим кунлар нуқталари
@@ -698,28 +696,8 @@
   function showCalendar() { location.hash = '#/calendar'; }
   function goBack() { history.back(); }
 
-  // Ой алмаштириш URL ни replaceState билан янгилайди — ҳар тугмада
+  // Ой алмаштириш URL ни replaceState билан янгилайди — ҳар ўзгартирилишда
   // browser history га ёзилмайди (back бирданига чиқиш олиб боради).
-  function calPrev() {
-    if (hijriCalView.month === 1) {
-      hijriCalView = { year: hijriCalView.year - 1, month: 12 };
-    } else {
-      hijriCalView = { year: hijriCalView.year, month: hijriCalView.month - 1 };
-    }
-    history.replaceState(null, '', calendarHash());
-    renderCalendar();
-  }
-
-  function calNext() {
-    if (hijriCalView.month === 12) {
-      hijriCalView = { year: hijriCalView.year + 1, month: 1 };
-    } else {
-      hijriCalView = { year: hijriCalView.year, month: hijriCalView.month + 1 };
-    }
-    history.replaceState(null, '', calendarHash());
-    renderCalendar();
-  }
-
   function calToday() {
     hijriCalView = getCurrentHijri();
     history.replaceState(null, '', calendarHash());
@@ -739,8 +717,6 @@
   window.showDay = showDay;
   window.showCalendar = showCalendar;
   window.goBack = goBack;
-  window.calPrev = calPrev;
-  window.calNext = calNext;
   window.calToday = calToday;
   window.calJumpMonth = calJumpMonth;
   window.toggleGregDays = toggleGregDays;
