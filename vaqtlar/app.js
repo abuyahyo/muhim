@@ -167,7 +167,6 @@
       html += '<button class="' + cls + '" onclick="showPrayer(\'' + p.id + '\')">';
       html += '<span class="prayer-dot" aria-hidden="true"></span>';
       html += '<span class="prayer-name">' + escapeHtml(p.name) + '</span>';
-      html += '<span class="prayer-eyebrow">' + escapeHtml(p.eyebrow) + '</span>';
       html += '<span class="prayer-time">' + fmtTime(t) + '</span>';
       html += '</button>';
     }
