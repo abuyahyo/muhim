@@ -18,7 +18,6 @@
   --t-fast: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.25s, opacity 0.25s;
 
   --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
-  --font-arabic: 'Amiri', serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -106,15 +105,6 @@ main {
   display: block;
 }
 .place-body { padding: 18px 20px 20px; min-width: 0; }
-.place-arabic {
-  font-family: var(--font-arabic);
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--ink-soft);
-  margin-bottom: 4px;
-  direction: rtl;
-  text-align: left;
-}
 .place-name {
   font-size: 22px;
   font-weight: 800;
@@ -176,13 +166,6 @@ main {
 .detail-hero-text {
   padding: 24px 24px 28px;
   text-align: center;
-}
-.detail-arabic {
-  font-family: var(--font-arabic);
-  font-size: 36px;
-  font-weight: 700;
-  margin-bottom: 6px;
-  direction: rtl;
 }
 .detail-name {
   font-size: clamp(28px, 6vw, 40px);
