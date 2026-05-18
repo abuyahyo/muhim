@@ -122,13 +122,9 @@
   // === КУН КАРТОЧКАЛАРИ ГРИДИ ===
   // Бош саҳифадаги бир секция учун. Йиллик ва такрорий
   // кунлар алоҳида секцияларда бир хил тузилмадан фойдаланади.
-  function renderDayGrid(title, items) {
+  function renderDayGrid(title, items, collapsed) {
     if (!items.length) return '';
-    let html = '<section>';
-    html += '<div class="section-head">';
-    html += '<div class="section-title">' + escapeHtml(title) + '</div>';
-    html += '</div>';
-    html += '<div class="cards-grid">';
+    let cards = '';
 
     for (let i = 0; i < items.length; i++) {
       const d = items[i];
@@ -154,21 +150,33 @@
               + '</div>';
       }
 
-      html += '<button class="day-card" onclick="showDay(\'' + escapeHtml(d.id) + '\')">';
-      html += '<div class="day-card-banner" style="background: linear-gradient(135deg, ' + d.color + ', ' + d.color + 'cc);">';
-      html += stamp;
-      html += '</div>';
-      html += '<div class="day-card-body">';
-      html += '<div class="day-card-name">' + escapeHtml(d.name) + '</div>';
-      html += '<div class="day-card-short">' + escapeHtml(d.short) + '</div>';
-      html += '<div class="day-card-footer">';
-      html += '<span class="day-card-greg">' + gDate.getDate() + ' ' + escapeHtml(gregorianMonthsShort[gDate.getMonth()]) + ' ' + gDate.getFullYear() + '</span>';
-      html += '<span class="' + cdCls + '">' + cdText + '</span>';
-      html += '</div></div></button>';
+      cards += '<button class="day-card" onclick="showDay(\'' + escapeHtml(d.id) + '\')">';
+      cards += '<div class="day-card-banner" style="background: linear-gradient(135deg, ' + d.color + ', ' + d.color + 'cc);">';
+      cards += stamp;
+      cards += '</div>';
+      cards += '<div class="day-card-body">';
+      cards += '<div class="day-card-name">' + escapeHtml(d.name) + '</div>';
+      cards += '<div class="day-card-short">' + escapeHtml(d.short) + '</div>';
+      cards += '<div class="day-card-footer">';
+      cards += '<span class="day-card-greg">' + gDate.getDate() + ' ' + escapeHtml(gregorianMonthsShort[gDate.getMonth()]) + ' ' + gDate.getFullYear() + '</span>';
+      cards += '<span class="' + cdCls + '">' + cdText + '</span>';
+      cards += '</div></div></button>';
     }
 
-    html += '</div></section>';
-    return html;
+    if (collapsed) {
+      return '<details class="day-grid-fold">'
+           + '<summary class="day-grid-summary">'
+           +   '<span class="day-grid-summary-title">' + escapeHtml(title) + '</span>'
+           +   '<span class="day-grid-summary-meta">' + items.length + ' та</span>'
+           +   '<span class="day-grid-summary-chev" aria-hidden="true">▾</span>'
+           + '</summary>'
+           + '<div class="cards-grid">' + cards + '</div>'
+           + '</details>';
+    }
+    return '<section>'
+         + '<div class="section-head"><div class="section-title">' + escapeHtml(title) + '</div></div>'
+         + '<div class="cards-grid">' + cards + '</div>'
+         + '</section>';
   }
 
   // === БОШ САҲИФА ===
@@ -272,7 +280,7 @@
       html += '</button></section>';
     }
 
-    html += renderDayGrid('Йилда бир мартагина келадиган муҳим кунлар', yearly);
+    html += renderDayGrid('Йилда бир мартагина келадиган муҳим кунлар', yearly, true);
     if (recurring.length) html += renderDayGrid('Ҳар ҳафта ва ҳар ойда қайталанадиган муҳим кунлар', recurring);
 
     html += '</div>';
