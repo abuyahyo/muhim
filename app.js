@@ -279,11 +279,11 @@
     html += '<section class="other-apps">';
     html += '<div class="other-apps-title">Бошқа иловалармиз</div>';
     html += '<div class="other-apps-grid">';
-    html += '<button class="other-app-card" onclick="showSoon(\'Вақтлар\')">';
+    html += '<a class="other-app-card" href="vaqtlar/">';
     html += '<span class="other-app-icon" aria-hidden="true">◷</span>';
     html += '<span class="other-app-name">Вақтлар</span>';
-    html += '<span class="other-app-tag">Тез орада</span>';
-    html += '</button>';
+    html += '<span class="other-app-tag live">Очиш →</span>';
+    html += '</a>';
     html += '<a class="other-app-card" href="joylar/">';
     html += '<span class="other-app-icon" aria-hidden="true">◎</span>';
     html += '<span class="other-app-name">Жойлар</span>';
@@ -702,13 +702,6 @@
   window.calNext = calNext;
   window.calToday = calToday;
   window.shareDay = shareDay;
-  window.showSoon = showSoon;
-
-  // Бошқа иловалар (Вақтлар / Жойлар) ҳозирча тайёр эмас — фойдаланувчига
-  // "тез орада" тостни кўрсатиб қойямиз.
-  function showSoon(name) {
-    showToast(name + ' — тез орада');
-  }
 
   // Кун-карточкасини улашиш — Web Share API орқали native ulashish ойнаси
   // очилади. Иложи бўлса — карточка-расм ҳам бирга юборилади (canShare files).

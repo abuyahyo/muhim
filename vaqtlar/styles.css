@@ -1,0 +1,494 @@
+/* === ВАҚТЛАР ИЛОВАСИ — ДИЗАЙН ТИЗИМИ === */
+:root {
+  --bg: #020617;
+  --surface: #0f172a;
+  --surface-2: #1e293b;
+  --line: #1e293b;
+  --line-2: #334155;
+  --ink: #f1f5f9;
+  --ink-soft: #cbd5e1;
+  --ink-mute: #94a3b8;
+  --sea-500: #0ea5e9;
+  --sea-700: #0369a1;
+  --amber-400: #fbbf24;
+
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+  --r-2xl: 28px;
+  --r-full: 999px;
+  --t-fast: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.25s, opacity 0.25s;
+
+  --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { min-height: 100%; }
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+button { font: inherit; color: inherit; cursor: pointer; border: none; background: none; }
+a { color: inherit; text-decoration: none; }
+
+main {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 32px 18px calc(120px + env(safe-area-inset-bottom));
+}
+.hidden { display: none !important; }
+.fade-in { animation: fadeIn 0.35s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* === БОШ САҲИФА — head === */
+.page-head { margin-bottom: 28px; }
+.page-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sea-500);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.page-title {
+  font-family: var(--font-sans);
+  font-size: clamp(40px, 9vw, 64px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 14px;
+}
+.page-lede {
+  color: var(--ink-mute);
+  font-size: 15px;
+  max-width: 480px;
+  line-height: 1.5;
+}
+
+/* === Бугун — hero блоки (санa + countdown) === */
+.today-hero {
+  background: linear-gradient(135deg, #082f49 0%, #0c4a6e 100%);
+  border: 1px solid var(--sea-700);
+  border-radius: var(--r-2xl);
+  padding: 22px 24px 26px;
+  margin-bottom: 28px;
+  display: grid;
+  gap: 18px;
+}
+.today-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.today-greg {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.today-hijri {
+  font-size: 13px;
+  color: var(--amber-400);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.countdown-block { text-align: left; }
+.countdown-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.countdown-time {
+  font-size: clamp(34px, 7vw, 48px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.countdown-at {
+  margin-top: 4px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* === Бўлим сарлавҳалари === */
+.times-section { margin-bottom: 28px; }
+.times-section-title {
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sea-500);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+/* === Намоз вақтлари рўйхати === */
+.prayers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.prayer-row {
+  --accent: var(--sea-500);
+  display: grid;
+  grid-template-columns: 14px 1fr auto;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    'dot name time'
+    'dot eyebrow time';
+  align-items: center;
+  gap: 2px 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: 14px 18px;
+  text-align: left;
+  transition: var(--t-fast);
+}
+.prayer-row:hover {
+  border-color: var(--accent);
+  transform: translateX(2px);
+}
+.prayer-dot {
+  grid-area: dot;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  align-self: center;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.prayer-name {
+  grid-area: name;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.prayer-eyebrow {
+  grid-area: eyebrow;
+  font-size: 12px;
+  color: var(--ink-mute);
+  font-weight: 500;
+}
+.prayer-time {
+  grid-area: time;
+  font-size: 22px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+.prayer-row.is-current {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 16%, var(--surface)) 0%, var(--surface) 100%);
+  border-color: var(--accent);
+}
+.prayer-row.is-current .prayer-name { color: var(--ink); }
+.prayer-row.is-next {
+  border-color: var(--accent);
+}
+.prayer-row.is-next .prayer-time {
+  color: var(--accent);
+}
+
+/* === Саҳарлик / Ифтор жуфт карточкаси === */
+.ramadan-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.ramadan-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: 16px 18px;
+  border-left: 3px solid var(--amber-400);
+}
+.ramadan-label {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--amber-400);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.ramadan-time {
+  font-size: 26px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.ramadan-note {
+  font-size: 12px;
+  color: var(--ink-mute);
+  font-weight: 500;
+}
+
+/* === Маънавий вақтлар === */
+.spiritual-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.spiritual-card {
+  --accent: var(--sea-500);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--r-xl);
+  padding: 16px 18px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: var(--t-fast);
+}
+.spiritual-card:hover {
+  border-color: var(--accent);
+  transform: translateX(2px);
+}
+.spiritual-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.spiritual-name {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.spiritual-tag {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  padding: 4px 10px;
+  border-radius: var(--r-full);
+}
+.spiritual-range {
+  font-size: 18px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.spiritual-note {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+
+/* === Созламалар (details/summary) === */
+.settings-section { margin-bottom: 28px; }
+.settings-details {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: 4px 18px;
+}
+.settings-summary {
+  cursor: pointer;
+  padding: 14px 0;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.settings-summary::-webkit-details-marker { display: none; }
+.settings-summary:hover { color: var(--ink); }
+.settings-body {
+  padding: 4px 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  border-top: 1px solid var(--line);
+  margin-top: 4px;
+  padding-top: 18px;
+}
+.setting-row { display: flex; flex-direction: column; gap: 8px; }
+.setting-label {
+  font-size: 13px;
+  color: var(--ink-mute);
+  font-weight: 600;
+}
+.setting-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.opt-btn {
+  padding: 8px 14px;
+  border-radius: var(--r-full);
+  background: var(--surface-2);
+  border: 1px solid var(--line-2);
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 600;
+  transition: var(--t-fast);
+}
+.opt-btn:hover { border-color: var(--sea-500); color: var(--ink); }
+.opt-btn.active {
+  background: var(--sea-500);
+  border-color: var(--sea-500);
+  color: white;
+}
+.setting-hint {
+  font-size: 12px;
+  color: var(--ink-mute);
+  font-weight: 500;
+}
+
+/* === ДЕТАЛЬ САҲИФА === */
+.detail-wrap { max-width: 760px; margin: 0 auto; }
+.detail-topbar { margin-bottom: 20px; }
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  padding: 10px 18px;
+  border-radius: var(--r-full);
+  font-size: 14px;
+  font-weight: 600;
+  transition: var(--t-fast);
+}
+.back-btn:hover { border-color: var(--sea-500); color: var(--ink); }
+
+.detail-hero {
+  padding: 28px 26px 32px;
+  border-radius: var(--r-2xl);
+  color: white;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.detail-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.detail-name {
+  font-size: clamp(34px, 7vw, 48px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin-bottom: 10px;
+}
+.detail-time {
+  font-size: clamp(36px, 9vw, 56px);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  margin-top: 14px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.detail-block { margin-bottom: 28px; }
+.block-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+  color: var(--ink);
+}
+.block-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.quote-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--sea-500);
+  padding: 18px 18px 16px;
+  border-radius: var(--r-md);
+  margin-bottom: 12px;
+}
+.quote-source {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sea-500);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.quote-text {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+.quote-attr {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--ink-mute);
+  font-weight: 500;
+}
+
+/* === Bottom-nav (muhim'га қайтиш link) === */
+.bottom-nav {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--line);
+  border-radius: var(--r-full);
+  padding: 6px;
+  display: inline-flex;
+  z-index: 50;
+  box-shadow:
+    0 4px 12px -4px rgba(0, 0, 0, 0.55),
+    0 24px 48px -12px rgba(0, 0, 0, 0.7);
+}
+.bottom-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--r-full);
+  background: transparent;
+  color: var(--ink-mute);
+  font-size: 14px;
+  font-weight: 600;
+  transition: var(--t-fast);
+}
+.bottom-nav-btn:hover { color: var(--sea-500); }
+.bottom-nav-icon { font-size: 16px; line-height: 1; }
+
+/* === Кенгайтириш — 640px ва ундан кенг === */
+@media (min-width: 640px) {
+  .today-hero {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+  }
+  .today-meta { flex-direction: column; align-items: flex-start; }
+  .countdown-block { text-align: right; }
+}
+
+/* === Тор экран — Аср/Шомдек узун эyebrow матн ўралиб қолмаслиги === */
+@media (max-width: 380px) {
+  .prayer-row { padding: 12px 14px; gap: 2px 10px; }
+  .prayer-name { font-size: 16px; }
+  .prayer-time { font-size: 20px; }
+  .ramadan-pair { grid-template-columns: 1fr; }
+}
