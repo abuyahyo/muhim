@@ -26,7 +26,6 @@
             + 'style="--accent: ' + p.color + ';">';
       html += '<div class="place-art">' + iconFor(p.id) + '</div>';
       html += '<div class="place-body">';
-      html += '<div class="place-arabic">' + escapeHtml(p.arabic) + '</div>';
       html += '<div class="place-name">' + escapeHtml(p.name) + '</div>';
       html += '<div class="place-loc">' + escapeHtml(p.city) + ' · ' + escapeHtml(p.country) + '</div>';
       html += '<div class="place-short">' + escapeHtml(p.short) + '</div>';
@@ -60,7 +59,6 @@
     html += '<div class="detail-hero" style="background: linear-gradient(180deg, ' + p.color + ' 0%, ' + p.color + 'cc 100%);">';
     html += '<div class="detail-art">' + iconFor(p.id) + '</div>';
     html += '<div class="detail-hero-text">';
-    html += '<div class="detail-arabic">' + escapeHtml(p.arabic) + '</div>';
     html += '<div class="detail-name">' + escapeHtml(p.name) + '</div>';
     html += '<div class="detail-loc">📍 ' + escapeHtml(p.city) + ' · ' + escapeHtml(p.country) + '</div>';
     html += '</div>';
