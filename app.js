@@ -497,24 +497,6 @@
     html += '<button class="cal-btn wide" onclick="calToday()">Бугун</button>';
     html += '</div></div>';
 
-    // Кўриниш toggleлари — Милодий рақамлар ва муҳим кунлар нуқталари
-    html += '<div class="cal-greg-bar">';
-    html +=   '<button class="cal-greg-toggle' + (showGregDays ? ' is-on' : '') + '" '
-         +         'onclick="toggleGregDays()" '
-         +         'aria-pressed="' + showGregDays + '" '
-         +         'title="Ҳужайрада Милодий рақамни кўрсатиш/беркитиш">';
-    html +=     '<span class="cal-greg-toggle-dot" aria-hidden="true"></span>';
-    html +=     '<span>Милодий кунларни ёқиш</span>';
-    html +=   '</button>';
-    html +=   '<button class="cal-greg-toggle' + (showEventDots ? ' is-on' : '') + '" '
-         +         'onclick="toggleEventDots()" '
-         +         'aria-pressed="' + showEventDots + '" '
-         +         'title="Муҳим кунлар рангли нуқталарини кўрсатиш/беркитиш">';
-    html +=     '<span class="cal-greg-toggle-dot" aria-hidden="true"></span>';
-    html +=     '<span>Муҳим кун нуқталари</span>';
-    html +=   '</button>';
-    html += '</div>';
-
     // Ҳафта кунлари (Душанбадан бошланади). weekDays массиви Якшанба=0
     // тартибида сақланади (`getDay()` индексига мос); экранда Душанбадан
     // кўрсатиш учун `(w + 1) % 7` орқали оламиз.
@@ -568,6 +550,24 @@
       html += dots;
       html += '</button>';
     }
+    html += '</div>';
+
+    // Кўриниш toggleлари — Милодий рақамлар ва муҳим кунлар нуқталари (тақвимдан кейин)
+    html += '<div class="cal-greg-bar">';
+    html +=   '<button class="cal-greg-toggle' + (showGregDays ? ' is-on' : '') + '" '
+         +         'onclick="toggleGregDays()" '
+         +         'aria-pressed="' + showGregDays + '" '
+         +         'title="Ҳужайрада Милодий рақамни кўрсатиш/беркитиш">';
+    html +=     '<span class="cal-greg-toggle-dot" aria-hidden="true"></span>';
+    html +=     '<span>Милодий кунларни ёқиш</span>';
+    html +=   '</button>';
+    html +=   '<button class="cal-greg-toggle' + (showEventDots ? ' is-on' : '') + '" '
+         +         'onclick="toggleEventDots()" '
+         +         'aria-pressed="' + showEventDots + '" '
+         +         'title="Муҳим кунлар рангли нуқталарини кўрсатиш/беркитиш">';
+    html +=     '<span class="cal-greg-toggle-dot" aria-hidden="true"></span>';
+    html +=     '<span>Муҳим кун нуқталари</span>';
+    html +=   '</button>';
     html += '</div>';
 
     html += '</div>'; // cal-shell
