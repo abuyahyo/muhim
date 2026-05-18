@@ -281,7 +281,7 @@
     }
 
     html += renderDayGrid('Йилда бир мартагина келадиган муҳим кунлар', yearly, true);
-    if (recurring.length) html += renderDayGrid('Ҳар ҳафта ва ҳар ойда қайталанадиган муҳим кунлар', recurring);
+    if (recurring.length) html += renderDayGrid('Ҳар ҳафта ва ҳар ойда қайталанадиган муҳим кунлар', recurring, true);
 
     html += '</div>';
 
