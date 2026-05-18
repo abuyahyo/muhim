@@ -959,6 +959,50 @@ main {
   height: 7px;
   border-radius: 50%;
 }
+/* === Милодий рақам — ҳужайра ўнг-юқори бурчагида === */
+.cal-g-day {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  font-family: var(--font-num);
+  font-size: clamp(9px, 2vw, 12px);
+  font-weight: 600;
+  color: var(--ink-mute);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+.cal-shell:not(.show-greg) .cal-g-day { display: none; }
+.cal-cell.today .cal-g-day { color: var(--sea-500); }
+
+/* === Милодий рақам toggle === */
+.cal-greg-info-text { flex: 1; min-width: 0; }
+.cal-greg-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--sea-300, #7dd3fc);
+  border-radius: var(--r-full);
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--sea-800, #075985);
+  font-size: 12px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: var(--t-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.cal-greg-toggle:hover { background: rgba(255, 255, 255, 0.85); }
+.cal-greg-toggle-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ink-mute);
+  transition: background-color 0.2s;
+}
+.cal-greg-toggle.is-on .cal-greg-toggle-dot { background: var(--sea-500); }
 
 
 /* === БУ ОЙДАГИ МУҲИМ КУНЛАР === */
