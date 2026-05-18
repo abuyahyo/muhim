@@ -180,6 +180,7 @@
       html += '<span class="prayer-dot" aria-hidden="true"></span>';
       html += '<span class="prayer-name">' + escapeHtml(p.name) + '</span>';
       html += '<span class="prayer-time">' + fmtTime(t) + '</span>';
+      html += '<span class="prayer-chev" aria-hidden="true">›</span>';
       html += '</button>';
     }
     html += '</div>';
