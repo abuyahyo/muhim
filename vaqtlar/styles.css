@@ -114,6 +114,11 @@ main {
   color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
+.countdown-unit {
+  font-weight: 400;
+  color: var(--ink-mute);
+  font-size: 0.7em;
+}
 .countdown-at {
   margin-top: 4px;
   font-size: 14px;

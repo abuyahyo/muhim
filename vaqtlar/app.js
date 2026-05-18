@@ -73,9 +73,10 @@
     const h = Math.floor(total / 3600);
     const m = Math.floor((total % 3600) / 60);
     const s = total % 60;
-    if (h > 0) return h + ' соат ' + m + ' дақиқа';
-    if (m > 0) return m + ' дақиқа ' + s + ' сония';
-    return s + ' сония';
+    const u = function (txt) { return ' <span class="countdown-unit">' + txt + '</span> '; };
+    if (h > 0) return h + u('соат') + m + u('дақиқа');
+    if (m > 0) return m + u('дақиқа') + s + u('сония');
+    return s + u('сония');
   }
 
   function hijriString(date) {
@@ -328,7 +329,7 @@
         renderHome(); // вақт ўтди — қайта рендер.
         return;
       }
-      el.textContent = fmtHHMM(ms);
+      el.innerHTML = fmtHHMM(ms);
     }, 1000);
   }
 
