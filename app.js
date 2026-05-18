@@ -481,13 +481,6 @@
            + escapeHtml(hijriMonths[mi - 1]) + '</option>';
     }
     html += '</select>';
-    html += '<select class="cal-picker" aria-label="Йил танлаш" onchange="calJumpYear(this.value)">';
-    const todayHY = getCurrentHijri().year;
-    for (let yi = todayHY - 10; yi <= todayHY + 10; yi++) {
-      html += '<option value="' + yi + '"' + (yi === hYear ? ' selected' : '') + '>'
-           + yi + '</option>';
-    }
-    html += '</select>';
     html += '<button class="cal-btn wide" onclick="calToday()">Бугун</button>';
     html += '<button class="cal-btn" onclick="calNext()" aria-label="Кейинги ой">→</button>';
     html += '</div></div>';
@@ -730,14 +723,6 @@
     renderCalendar();
   }
 
-  function calJumpYear(y) {
-    const year = parseInt(y, 10);
-    if (!year) return;
-    hijriCalView = { year, month: hijriCalView.month };
-    history.replaceState(null, '', calendarHash());
-    renderCalendar();
-  }
-
   // Инлайн onclick ҳандлерлари учун глобал экспорт
   window.showHome = showHome;
   window.showDay = showDay;
@@ -747,7 +732,6 @@
   window.calNext = calNext;
   window.calToday = calToday;
   window.calJumpMonth = calJumpMonth;
-  window.calJumpYear = calJumpYear;
   window.toggleGregDays = toggleGregDays;
   window.shareDay = shareDay;
 
