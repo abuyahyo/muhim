@@ -213,11 +213,7 @@
       html += '</button>';
 
       html += '<button class="spiritual-card" onclick="showSpiritual(\'mustajob\')" style="--accent: #047857;">';
-      html += '<div class="spiritual-head">';
       html += '<div class="spiritual-name">Мустажоб соатлар</div>';
-      html += '<div class="spiritual-tag">Дуо қабул вақтлари</div>';
-      html += '</div>';
-      html += '<div class="spiritual-note">Жума соати, азон-иқомат ораси, ёмғир пайти</div>';
       html += '</button>';
 
       html += '</div></section>';
