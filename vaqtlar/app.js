@@ -198,12 +198,8 @@
       html += '</button>';
 
       html += '<button class="spiritual-card" onclick="showSpiritual(\'tahajjud\')" style="--accent: #312e81;">';
-      html += '<div class="spiritual-head">';
       html += '<div class="spiritual-name">Таҳажжуд</div>';
-      html += '<div class="spiritual-tag">Туннинг охирги 1/3</div>';
-      html += '</div>';
       html += '<div class="spiritual-range">' + fmtTime(tahajjud.start) + ' → ' + fmtTime(tahajjud.end) + '</div>';
-      html += '<div class="spiritual-note">Аллоҳ дунё осмонига тушиб дуоларни қабул қилади</div>';
       html += '</button>';
 
       html += '<button class="spiritual-card" onclick="showSpiritual(\'sahar\')" style="--accent: #92400e;">';
