@@ -251,7 +251,7 @@
     html += '</div></div>';
 
     html += '<div class="setting-row">';
-    html += '<label class="setting-label">Ҳисоблаш усули (Бомдод/Хуфтон бурчаги)</label>';
+    html += '<label class="setting-label">Ҳисоблаш усули</label>';
     html += '<div class="setting-options">';
     const methods = [
       { id: 'MWL', label: 'MWL' },
