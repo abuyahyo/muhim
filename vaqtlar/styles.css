@@ -78,25 +78,6 @@ main {
   display: grid;
   gap: 18px;
 }
-.today-meta {
-  display: flex;
-  justify-content: center;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.today-greg {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.78);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-.today-hijri {
-  font-size: 13px;
-  color: var(--amber-400);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
 .countdown-block { text-align: center; }
 .countdown-eyebrow {
   display: inline-flex;
