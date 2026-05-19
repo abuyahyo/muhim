@@ -267,6 +267,17 @@
     }
     html += '</div></div>';
 
+    html += '<div class="setting-row">';
+    html += '<label class="setting-label">Шаҳар</label>';
+    html += '<div class="city-search">';
+    html +=   '<input class="city-input" type="search" autocomplete="off" '
+         +     'placeholder="Шаҳар номини ёзинг…" oninput="cityQuery(this.value)" />';
+    html +=   '<div class="city-results" id="city-results"></div>';
+    html += '</div>';
+    html += '<div class="setting-hint">Жорий: ' + escapeHtml(loc.name)
+         +   ' · ' + loc.lat.toFixed(3) + '°, ' + loc.lon.toFixed(3) + '°</div>';
+    html += '</div>';
+
     html += '</div></details>';
     html += '</section>';
 
@@ -412,6 +423,67 @@
   function setMadhab(v) { settings.madhab = v; saveSettings(settings); renderHome(); }
   function setMethod(v) { settings.method = v; saveSettings(settings); renderHome(); }
 
+  // === Шаҳар қидириш — Nominatim (OpenStreetMap) === //
+  // Дунёнинг исталган шаҳри: автокомплит, 600мс debounce, AbortController
+  // билан зўрма-зўр сўровни бекор қилади. Nominatim — 1 сўров/сония лимит.
+  let cityResults = [];
+  let cityDebounce = null;
+  let cityAbort = null;
+  function cityQuery(q) {
+    q = (q || '').trim();
+    const box = document.getElementById('city-results');
+    if (!box) return;
+    if (cityDebounce) clearTimeout(cityDebounce);
+    if (q.length < 2) {
+      box.innerHTML = '';
+      box.classList.remove('open');
+      return;
+    }
+    box.innerHTML = '<div class="city-result-status">Қидирилмоқда…</div>';
+    box.classList.add('open');
+    cityDebounce = setTimeout(function () {
+      if (cityAbort) cityAbort.abort();
+      cityAbort = new AbortController();
+      const url = 'https://nominatim.openstreetmap.org/search?format=json&limit=6&accept-language=uz,en&q='
+                + encodeURIComponent(q);
+      fetch(url, { signal: cityAbort.signal, headers: { 'Accept': 'application/json' } })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          cityResults = Array.isArray(data) ? data : [];
+          if (!cityResults.length) {
+            box.innerHTML = '<div class="city-result-status">Топилмади</div>';
+            return;
+          }
+          let h = '';
+          for (let i = 0; i < cityResults.length; i++) {
+            const it = cityResults[i];
+            const short = (it.display_name || '').split(',')[0].trim();
+            h += '<button class="city-result" onclick="setCityFromGeo(' + i + ')">';
+            h +=   '<div class="city-result-name">' + escapeHtml(short) + '</div>';
+            h +=   '<div class="city-result-meta">' + escapeHtml(it.display_name || '') + '</div>';
+            h += '</button>';
+          }
+          box.innerHTML = h;
+        })
+        .catch(function (err) {
+          if (err && err.name === 'AbortError') return;
+          box.innerHTML = '<div class="city-result-status">Хатолик — тармоқни текширинг</div>';
+        });
+    }, 600);
+  }
+  function setCityFromGeo(idx) {
+    const it = cityResults[idx];
+    if (!it) return;
+    const name = (it.display_name || '').split(',')[0].trim();
+    settings.location = {
+      lat: parseFloat(it.lat),
+      lon: parseFloat(it.lon),
+      name: name || 'Жорий жой',
+    };
+    saveSettings(settings);
+    renderHome();
+  }
+
   // === Жонли қибла компас (DeviceOrientation) ===
   // iOS 13+ — фойдаланувчи bosishi keрак, шунда permission сўралади.
   // Android — рухсатсиз ишлайди.
@@ -475,6 +547,8 @@
   window.goBack = goBack;
   window.setMadhab = setMadhab;
   window.setMethod = setMethod;
+  window.cityQuery = cityQuery;
+  window.setCityFromGeo = setCityFromGeo;
   window.enableQiblaLive = enableQiblaLive;
 
   // === Boot ===
