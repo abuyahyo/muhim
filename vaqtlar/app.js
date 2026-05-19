@@ -187,20 +187,8 @@
       html += '</div>';
       html += '</button>';
 
-      html += '<button class="spiritual-card spiritual-card-wide" onclick="showSpiritual(\'sahar\')" style="--accent: #92400e;">';
+      html += '<button class="spiritual-card" onclick="showSpiritual(\'sahar\')" style="--accent: #92400e;">';
       html += '<div class="spiritual-name">Саҳарлик / Ифтор</div>';
-      html += '<div class="ramadan-pair">';
-      html +=   '<div class="ramadan-card">';
-      html +=     '<div class="ramadan-label">Саҳарлик тугаши</div>';
-      html +=     '<div class="ramadan-time">' + fmtTime(times.fajr) + '</div>';
-      html +=     '<div class="ramadan-note">Бомдод вақти бошланиши</div>';
-      html +=   '</div>';
-      html +=   '<div class="ramadan-card">';
-      html +=     '<div class="ramadan-label">Ифтор</div>';
-      html +=     '<div class="ramadan-time">' + fmtTime(times.maghrib) + '</div>';
-      html +=     '<div class="ramadan-note">Шом азони билан</div>';
-      html +=   '</div>';
-      html += '</div>';
       html += '</button>';
 
       html += '<button class="spiritual-card" onclick="showSpiritual(\'mustajob\')" style="--accent: #047857;">';
@@ -342,6 +330,26 @@
       html +=   '<div class="azkar-window">';
       html +=     '<div class="azkar-window-label">Кечқурунги зикрлар вақти</div>';
       html +=     '<div class="azkar-window-time">' + fmtTime(t.asr) + ' → ' + fmtTime(t.maghrib) + '</div>';
+      html +=   '</div>';
+      html += '</div>';
+      html += '</section>';
+    }
+
+    if (p.id === 'sahar') {
+      const loc = settings.location || DEFAULT_LOC;
+      const opts = { madhab: settings.madhab, method: settings.method };
+      const t = PrayerTimes.calculate(new Date(), loc.lat, loc.lon, opts);
+      html += '<section class="detail-block"><div class="block-title">Бугунги вақтлар</div>';
+      html += '<div class="ramadan-pair">';
+      html +=   '<div class="ramadan-card">';
+      html +=     '<div class="ramadan-label">Саҳарлик тугаши</div>';
+      html +=     '<div class="ramadan-time">' + fmtTime(t.fajr) + '</div>';
+      html +=     '<div class="ramadan-note">Бомдод вақти бошланиши</div>';
+      html +=   '</div>';
+      html +=   '<div class="ramadan-card">';
+      html +=     '<div class="ramadan-label">Ифтор</div>';
+      html +=     '<div class="ramadan-time">' + fmtTime(t.maghrib) + '</div>';
+      html +=     '<div class="ramadan-note">Шом азони билан</div>';
       html +=   '</div>';
       html += '</div>';
       html += '</section>';
