@@ -342,6 +342,14 @@
     html += '<p class="block-text">' + escapeHtml(p.description) + '</p>';
     html += '</section>';
 
+    if (p.externalUrl) {
+      html += '<section class="detail-block"><a class="detail-cta" '
+           +   'href="' + escapeHtml(p.externalUrl) + '" target="_blank" rel="noopener">'
+           +   '<span class="detail-cta-label">' + escapeHtml(p.externalLabel || 'Зикрларни ўқиш') + '</span>'
+           +   '<span class="detail-cta-arrow" aria-hidden="true">↗</span>'
+           + '</a></section>';
+    }
+
     if (p.verses && p.verses.length) {
       html += '<section class="detail-block"><div class="block-title">Қуръон оятлари</div>';
       for (let i = 0; i < p.verses.length; i++) {
