@@ -170,23 +170,6 @@
     html += '</div>';
     html += '</section>';
 
-    // Саҳарлик / Ифтор — Бомдод ва Шом'дан олинади.
-    html += '<section class="times-section">';
-    html += '<div class="times-section-title">Рўза вақти</div>';
-    html += '<div class="ramadan-pair">';
-    html += '<div class="ramadan-card">';
-    html += '<div class="ramadan-label">Саҳарлик тугаши</div>';
-    html += '<div class="ramadan-time">' + fmtTime(times.fajr) + '</div>';
-    html += '<div class="ramadan-note">Бомдод вақти бошланиши</div>';
-    html += '</div>';
-    html += '<div class="ramadan-card">';
-    html += '<div class="ramadan-label">Ифтор</div>';
-    html += '<div class="ramadan-time">' + fmtTime(times.maghrib) + '</div>';
-    html += '<div class="ramadan-note">Шом азони билан</div>';
-    html += '</div>';
-    html += '</div>';
-    html += '</section>';
-
     // Таҳажжуд ойнаси
     if (tahajjud) {
       html += '<section class="times-section">';
@@ -204,12 +187,20 @@
       html += '</div>';
       html += '</button>';
 
-      html += '<button class="spiritual-card" onclick="showSpiritual(\'sahar\')" style="--accent: #92400e;">';
-      html += '<div class="spiritual-head">';
+      html += '<button class="spiritual-card spiritual-card-wide" onclick="showSpiritual(\'sahar\')" style="--accent: #92400e;">';
       html += '<div class="spiritual-name">Саҳарлик / Ифтор</div>';
-      html += '<div class="spiritual-tag">Рамазон</div>';
+      html += '<div class="ramadan-pair">';
+      html +=   '<div class="ramadan-card">';
+      html +=     '<div class="ramadan-label">Саҳарлик тугаши</div>';
+      html +=     '<div class="ramadan-time">' + fmtTime(times.fajr) + '</div>';
+      html +=     '<div class="ramadan-note">Бомдод вақти бошланиши</div>';
+      html +=   '</div>';
+      html +=   '<div class="ramadan-card">';
+      html +=     '<div class="ramadan-label">Ифтор</div>';
+      html +=     '<div class="ramadan-time">' + fmtTime(times.maghrib) + '</div>';
+      html +=     '<div class="ramadan-note">Шом азони билан</div>';
+      html +=   '</div>';
       html += '</div>';
-      html += '<div class="spiritual-note">Тановулнинг барака топадиган икки вақти</div>';
       html += '</button>';
 
       html += '<button class="spiritual-card" onclick="showSpiritual(\'mustajob\')" style="--accent: #047857;">';
