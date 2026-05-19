@@ -274,8 +274,7 @@
          +     'placeholder="Шаҳар номини ёзинг…" oninput="cityQuery(this.value)" />';
     html +=   '<div class="city-results" id="city-results"></div>';
     html += '</div>';
-    html += '<div class="setting-hint">Жорий: ' + escapeHtml(loc.name)
-         +   ' · ' + loc.lat.toFixed(3) + '°, ' + loc.lon.toFixed(3) + '°</div>';
+    html += '<div class="setting-hint">Жорий: ' + escapeHtml(loc.name) + '</div>';
     html += '</div>';
 
     html += '</div></details>';
