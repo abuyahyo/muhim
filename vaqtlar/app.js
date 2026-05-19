@@ -341,7 +341,7 @@
       html +=     '<div class="azkar-window-time">' + fmtTime(t.fajr) + ' → ' + fmtTime(t.sunrise) + '</div>';
       html +=   '</div>';
       html +=   '<div class="azkar-window">';
-      html +=     '<div class="azkar-window-label">Кеч</div>';
+      html +=     '<div class="azkar-window-label">Кечқурунги зикрлар вақти</div>';
       html +=     '<div class="azkar-window-time">' + fmtTime(t.asr) + ' → ' + fmtTime(t.maghrib) + '</div>';
       html +=   '</div>';
       html += '</div>';
