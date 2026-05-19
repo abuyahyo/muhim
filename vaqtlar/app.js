@@ -337,7 +337,7 @@
       html += '<section class="detail-block"><div class="block-title">Бугунги вақтлар</div>';
       html += '<div class="azkar-windows">';
       html +=   '<div class="azkar-window">';
-      html +=     '<div class="azkar-window-label">Тонг</div>';
+      html +=     '<div class="azkar-window-label">Эрталабки зикрлар вақти</div>';
       html +=     '<div class="azkar-window-time">' + fmtTime(t.fajr) + ' → ' + fmtTime(t.sunrise) + '</div>';
       html +=   '</div>';
       html +=   '<div class="azkar-window">';
