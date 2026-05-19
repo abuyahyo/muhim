@@ -28,7 +28,6 @@
       html += '<div class="place-body">';
       html += '<div class="place-name">' + escapeHtml(p.name) + '</div>';
       html += '<div class="place-loc">' + escapeHtml(p.city) + ' · ' + escapeHtml(p.country) + '</div>';
-      html += '<div class="place-short">' + escapeHtml(p.short) + '</div>';
       html += '</div>';
       html += '<div class="place-arrow">→</div>';
       html += '</button>';

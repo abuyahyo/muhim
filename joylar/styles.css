@@ -117,11 +117,6 @@ main {
   margin-bottom: 10px;
   font-weight: 500;
 }
-.place-short {
-  font-size: 14px;
-  color: var(--ink-soft);
-  line-height: 1.5;
-}
 .place-arrow { display: none; }
 
 /* === ДЕТАЛЬ САҲИФА === */
