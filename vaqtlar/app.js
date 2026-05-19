@@ -198,8 +198,10 @@
       html += '</button>';
 
       html += '<button class="spiritual-card" onclick="showSpiritual(\'tahajjud\')" style="--accent: #312e81;">';
-      html += '<div class="spiritual-name">Таҳажжуд</div>';
-      html += '<div class="spiritual-range">' + fmtTime(tahajjud.start) + ' → ' + fmtTime(tahajjud.end) + '</div>';
+      html += '<div class="spiritual-head">';
+      html +=   '<div class="spiritual-name">Таҳажжуд</div>';
+      html +=   '<div class="spiritual-range">' + fmtTime(tahajjud.start) + ' → ' + fmtTime(tahajjud.end) + '</div>';
+      html += '</div>';
       html += '</button>';
 
       html += '<button class="spiritual-card" onclick="showSpiritual(\'sahar\')" style="--accent: #92400e;">';
