@@ -74,18 +74,6 @@
     return pad(m) + ':' + pad(s);
   }
 
-  function hijriString(date) {
-    if (!window.HijriCalc) return '';
-    const h = window.HijriCalc.gregorianToHijri(date);
-    const months = ['Муҳаррам','Сафар','Рабиул-аввал','Рабиул-охир','Жумодал-уло','Жумодал-ухро','Ражаб','Шаъбон','Рамазон','Шаввол','Зулқаъда','Зулҳижжа'];
-    return h.day + ' ' + months[h.month - 1] + ' ' + h.year + ' ҳ.';
-  }
-
-  function gregorianString(date) {
-    const months = ['январ','феврал','март','апрел','май','июн','июл','август','сентябр','октябр','ноябр','декабр'];
-    return date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
-  }
-
   // Жорий вақт қайси намоз вақтига кириб турганини аниқлаш.
   // Аср фарзи кириб бўлгач — у вақт "ҳозирги" бўлади (Шом гача).
   // Қайтаради: ҳозирги намоз индекси (prayers ичида) + кейингиси Date.
@@ -150,12 +138,8 @@
     html += '<h1 class="page-title">Вақтлар</h1>';
     html += '</header>';
 
-    // Бугунги санa + countdown
+    // Кейинги намоз ва countdown
     html += '<section class="today-hero">';
-    html += '<div class="today-meta">';
-    html += '<div class="today-greg">' + escapeHtml(gregorianString(now)) + '</div>';
-    html += '<div class="today-hijri">' + escapeHtml(hijriString(now)) + '</div>';
-    html += '</div>';
     html += '<div class="countdown-block">';
     html += '<div class="countdown-eyebrow">';
     html +=   '<span>Кейинги</span>';
