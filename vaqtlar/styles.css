@@ -376,26 +376,7 @@ main {
   text-shadow: 0 0 12px color-mix(in srgb, var(--sea-500) 50%, transparent);
   line-height: 1;
 }
-.qibla-meta { display: flex; flex-direction: column; gap: 4px; }
-.qibla-bearing {
-  font-size: 36px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  font-variant-numeric: tabular-nums;
-  color: var(--ink);
-}
-.qibla-dir {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--sea-500);
-  letter-spacing: 0.04em;
-}
-.qibla-hint {
-  font-size: 12.5px;
-  color: var(--ink-mute);
-  margin-top: 6px;
-  line-height: 1.4;
-}
+.qibla-meta { display: flex; align-items: center; }
 .qibla-live-btn {
   align-self: flex-start;
   margin-top: 10px;

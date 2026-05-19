@@ -16,10 +16,6 @@
     const x = Math.cos(φ1) * Math.sin(φ2) - Math.sin(φ1) * Math.cos(φ2) * Math.cos(Δλ);
     return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
   }
-  function cardinalUz(deg) {
-    const dirs = ['Шимол', 'Шим-Шар', 'Шарқ', 'Жан-Шар', 'Жануб', 'Жан-Ғар', 'Ғарб', 'Шим-Ғар'];
-    return dirs[Math.round(deg / 45) % 8];
-  }
 
   // === Settings (localStorage) ===
   function loadSettings() {
@@ -266,9 +262,6 @@
     html +=   '</div>';
     html += '</div>';
     html += '<div class="qibla-meta">';
-    html +=   '<div class="qibla-bearing">' + Math.round(qBear) + '°</div>';
-    html +=   '<div class="qibla-dir">' + escapeHtml(cardinalUz(qBear)) + ' томон</div>';
-    html +=   '<div class="qibla-hint" id="qibla-hint">Шимолдан соат стрелкаси бўйича — телефонни N компасига солинг.</div>';
     html +=   '<button class="qibla-live-btn" id="qibla-live-btn" onclick="enableQiblaLive()">Жонли компас</button>';
     html += '</div>';
     html += '</div>';
