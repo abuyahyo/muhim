@@ -260,10 +260,6 @@
     html += '<div class="qibla-card">';
     html += '<div class="qibla-compass" id="qibla-compass" data-qibla="' + qBear.toFixed(2) + '">';
     html +=   '<div class="qibla-rose">';
-    html +=     '<span class="qibla-card-north">Ш</span>';
-    html +=     '<span class="qibla-card-east">Шар</span>';
-    html +=     '<span class="qibla-card-south">Ж</span>';
-    html +=     '<span class="qibla-card-west">Ғ</span>';
     html +=     '<div class="qibla-arrow" id="qibla-arrow" style="transform: rotate(' + qBear.toFixed(2) + 'deg);">';
     html +=       '<span class="qibla-arrow-head">▲</span>';
     html +=     '</div>';

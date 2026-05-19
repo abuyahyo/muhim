@@ -360,20 +360,6 @@ main {
   border: 2px solid var(--line-2, #334155);
   box-shadow: inset 0 0 0 1px var(--line);
 }
-.qibla-card-north,
-.qibla-card-east,
-.qibla-card-south,
-.qibla-card-west {
-  position: absolute;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  color: var(--ink-mute);
-}
-.qibla-card-north { top: 6px;    left: 50%; transform: translateX(-50%); color: #ef4444; }
-.qibla-card-east  { right: 8px;  top: 50%;  transform: translateY(-50%); }
-.qibla-card-south { bottom: 6px; left: 50%; transform: translateX(-50%); }
-.qibla-card-west  { left: 8px;   top: 50%;  transform: translateY(-50%); }
 .qibla-arrow {
   position: absolute;
   inset: 0;
