@@ -198,10 +198,6 @@
       html += '<div class="spiritual-name">Эрталабки / Кечқурунги зикрлар</div>';
       html += '<div class="spiritual-tag">Икки вақт</div>';
       html += '</div>';
-      html += '<div class="spiritual-range">'
-           + 'Тонг: ' + fmtTime(times.fajr) + ' → ' + fmtTime(times.sunrise)
-           + ' · Кеч: ' + fmtTime(times.asr) + ' → ' + fmtTime(times.maghrib)
-           + '</div>';
       html += '<div class="spiritual-note">Расулуллоҳнинг доимий зикр вақтлари — Қоф 39-40</div>';
       html += '</button>';
 
@@ -341,6 +337,24 @@
     html += '<section class="detail-block"><div class="block-title">Ҳақида</div>';
     html += '<p class="block-text">' + escapeHtml(p.description) + '</p>';
     html += '</section>';
+
+    if (p.id === 'azkar') {
+      const loc = settings.location || DEFAULT_LOC;
+      const opts = { madhab: settings.madhab, method: settings.method };
+      const t = PrayerTimes.calculate(new Date(), loc.lat, loc.lon, opts);
+      html += '<section class="detail-block"><div class="block-title">Бугунги вақтлар</div>';
+      html += '<div class="azkar-windows">';
+      html +=   '<div class="azkar-window">';
+      html +=     '<div class="azkar-window-label">Тонг</div>';
+      html +=     '<div class="azkar-window-time">' + fmtTime(t.fajr) + ' → ' + fmtTime(t.sunrise) + '</div>';
+      html +=   '</div>';
+      html +=   '<div class="azkar-window">';
+      html +=     '<div class="azkar-window-label">Кеч</div>';
+      html +=     '<div class="azkar-window-time">' + fmtTime(t.asr) + ' → ' + fmtTime(t.maghrib) + '</div>';
+      html +=   '</div>';
+      html += '</div>';
+      html += '</section>';
+    }
 
     if (p.externalUrl) {
       html += '<section class="detail-block"><a class="detail-cta" '
