@@ -91,6 +91,24 @@ main {
     calc(110px + env(safe-area-inset-bottom));
 }
 
+/* === Саҳифа сарлавҳаси (eyebrow + катта ном) === */
+.page-head { margin-bottom: 28px; }
+.page-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sea-500);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.page-title {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(40px, 9vw, 64px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
 /* === БОШ САҲИФА HERO === */
 .hero {
   background: linear-gradient(135deg, var(--deep-1) 0%, var(--deep-2) 50%, var(--sea-600) 100%);

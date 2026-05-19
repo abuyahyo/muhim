@@ -237,6 +237,11 @@
 
     let html = '<div class="fade-in">';
 
+    html += '<header class="page-head">';
+    html += '<div class="page-eyebrow">Муҳим</div>';
+    html += '<h1 class="page-title">Кунлар</h1>';
+    html += '</header>';
+
     html += '<section class="hero">';
     html += '<div class="hero-stars">' + STARS_HTML + '</div>';
     html += '<div class="hero-content">';
