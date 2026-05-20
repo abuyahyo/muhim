@@ -344,7 +344,7 @@
     html += '</svg></button>';
     html += '</div>';
 
-    html += '<div class="detail-hero" style="background: linear-gradient(135deg, ' + day.color + ' 0%, ' + day.color + 'dd 50%, ' + day.color + 'aa 100%);">';
+    html += '<div class="detail-hero">';
     html += '<div class="detail-content">';
     html += '<span class="detail-cat">' + escapeHtml(freqLabel(day)) + '</span>';
     html += '<div class="detail-name">' + escapeHtml(day.name) + '</div>';
