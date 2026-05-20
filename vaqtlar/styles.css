@@ -550,6 +550,7 @@ main {
   font-size: 15px;
   line-height: 1.6;
   color: var(--ink-soft);
+  white-space: pre-line;
 }
 .quote-card {
   background: var(--surface);
