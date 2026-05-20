@@ -127,20 +127,6 @@ main {
 .hero--dusk    { background: linear-gradient(135deg, #312e81 0%, #db2777 45%, #f97316 100%); }
 .hero--evening { background: linear-gradient(135deg, #020617 0%, #4c1d95 55%, #f97316 100%); }
 .hero--night   { background: linear-gradient(135deg, #020617 0%, #0c1839 50%, #1e3a8a 100%); }
-
-.hero-moon {
-  position: absolute;
-  top: 18px;
-  right: 22px;
-  font-size: 36px;
-  line-height: 1;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.35));
-  pointer-events: none;
-  z-index: 1;
-}
-@media (min-width: 640px) {
-  .hero-moon { font-size: 44px; top: 22px; right: 26px; }
-}
 .hero::before {
   content: '';
   position: absolute;
