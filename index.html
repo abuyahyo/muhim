@@ -2,6 +2,12 @@
 <html lang="uz-Cyrl">
 <head>
 <meta charset="UTF-8">
+<script>
+// Биринчи кирганда (URL'да hash йўқ бўлса) Вақтлар бўлимига юбориш.
+// Бундан кейин фойдаланувчи Кунлар табини босса hash сетлаб қолади —
+// шарт ёлғон бўлиб, бу йўналтириш бошланмайди.
+if (!location.hash) { location.replace('vaqtlar/'); }
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#020617">
 <title>Исломий Тақвим</title>
