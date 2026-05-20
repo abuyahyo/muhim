@@ -657,7 +657,7 @@ main {
   position: relative;
   overflow: hidden;
   margin-bottom: 24px;
-  background: linear-gradient(135deg, var(--sea-700) 0%, var(--sea-600) 50%, var(--sea-500) 100%);
+  background: linear-gradient(135deg, var(--sea-700) 0%, var(--sea-500) 100%);
 }
 @media (min-width: 640px) {
   .detail-hero { padding: 56px 48px; }
