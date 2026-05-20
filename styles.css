@@ -75,6 +75,46 @@ body {
   color: var(--ink);
   min-height: 100vh;
   overflow-x: hidden;
+  /* Liquid-glass пастки фон: ранг-баранг blob'лар, blur ишлаб берсин. */
+  background-image:
+    radial-gradient(at 8% 10%, rgba(14, 165, 233, 0.18), transparent 45%),
+    radial-gradient(at 90% 0%, rgba(124, 58, 237, 0.18), transparent 45%),
+    radial-gradient(at 50% 110%, rgba(20, 184, 166, 0.15), transparent 50%),
+    radial-gradient(at 100% 60%, rgba(244, 114, 182, 0.12), transparent 50%);
+  background-attachment: fixed;
+}
+
+/* Liquid-glass юзалар — translucent + backdrop blur. Бренд карточкаси
+   ҳамма ерда `--surface`'дан фойдаланиб турарди, шу учун уни шиша
+   ҳолатига ўтказамиз. backdrop-filter қувватламайдиган браузерларда
+   --surface'нинг fallback сifatida қуйидаги дарк ранг ишлайди. */
+@supports (backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px)) {
+  :root {
+    --surface: rgba(255, 255, 255, 0.05);
+    --surface-translucent: rgba(15, 23, 42, 0.55);
+  }
+  .day-card,
+  .upcoming-card,
+  .day-grid-summary,
+  .other-app-card,
+  .ramadan-card,
+  .quote-card,
+  .toast,
+  .update-banner,
+  .place-card,
+  .spiritual-card,
+  .prayer-row,
+  .azkar-window,
+  .qibla-card,
+  .opt-btn,
+  .city-input,
+  .city-results,
+  .cal-picker,
+  .cal-btn,
+  .cal-greg-toggle {
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+  }
 }
 
 .display { font-family: 'DM Sans', system-ui, sans-serif; }
