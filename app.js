@@ -245,8 +245,27 @@
     html += '<h1 class="page-title">Кунлар</h1>';
     html += '</header>';
 
-    html += '<section class="hero">';
+    // Соатга кўра hero рангини созлаш + ҳижрий кунга мос ой фазаси.
+    const hr = today.getHours();
+    let heroMood = 'night';
+    if (hr >= 4 && hr < 7) heroMood = 'dawn';
+    else if (hr >= 7 && hr < 17) heroMood = 'day';
+    else if (hr >= 17 && hr < 19) heroMood = 'dusk';
+    else if (hr >= 19 && hr < 23) heroMood = 'evening';
+    const moonPhase = (function (d) {
+      if (d <= 1)  return '🌑';
+      if (d <= 6)  return '🌒';
+      if (d <= 8)  return '🌓';
+      if (d <= 13) return '🌔';
+      if (d <= 16) return '🌕';
+      if (d <= 21) return '🌖';
+      if (d <= 23) return '🌗';
+      return '🌘';
+    })(hijri.day);
+
+    html += '<section class="hero hero--' + heroMood + '">';
     html += '<div class="hero-stars">' + STARS_HTML + '</div>';
+    html += '<div class="hero-moon" aria-hidden="true">' + moonPhase + '</div>';
     html += '<div class="hero-content">';
     html += '<div class="hero-label"><span class="live-dot"></span><span>Бугунги сана</span></div>';
     html += '<div class="hero-grid">';
