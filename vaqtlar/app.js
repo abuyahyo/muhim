@@ -180,6 +180,16 @@
       html += '<div class="spiritual-name">Эрталабки / Кечқурунги зикрлар</div>';
       html += '</button>';
 
+      // Зуҳо (Чошт) ойнаси — қуёш чиқишидан ~20 дақиқа кейин, Пешиндан ~5 дақиқа олдин.
+      const duhaStart = new Date(times.sunrise.getTime() + 20 * 60 * 1000);
+      const duhaEnd = new Date(times.dhuhr.getTime() - 5 * 60 * 1000);
+      html += '<button class="spiritual-card" onclick="showSpiritual(\'duha\')" style="--accent: #ca8a04;">';
+      html += '<div class="spiritual-head">';
+      html +=   '<div class="spiritual-name">Зуҳо</div>';
+      html +=   '<div class="spiritual-range">' + fmtTime(duhaStart) + ' → ' + fmtTime(duhaEnd) + '</div>';
+      html += '</div>';
+      html += '</button>';
+
       html += '<button class="spiritual-card" onclick="showSpiritual(\'tahajjud\')" style="--accent: #312e81;">';
       html += '<div class="spiritual-head">';
       html +=   '<div class="spiritual-name">Таҳажжуд</div>';
