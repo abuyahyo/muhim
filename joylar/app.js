@@ -54,7 +54,7 @@
     html += '<button class="back-btn" onclick="goBack()">← Орқага</button>';
     html += '</div>';
 
-    html += '<div class="detail-hero" style="background: linear-gradient(180deg, ' + p.color + ' 0%, ' + p.color + 'cc 100%);">';
+    html += '<div class="detail-hero">';
     html += '<div class="detail-art">' + iconFor(p.id) + '</div>';
     html += '<div class="detail-hero-text">';
     html += '<div class="detail-name">' + escapeHtml(p.name) + '</div>';
