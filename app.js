@@ -148,7 +148,7 @@
   // === КУН КАРТОЧКАЛАРИ ГРИДИ ===
   // Бош саҳифадаги бир секция учун. Йиллик ва такрорий
   // кунлар алоҳида секцияларда бир хил тузилмадан фойдаланади.
-  function renderDayGrid(title, items, collapsed) {
+  function renderDayGrid(eyebrow, title, items, collapsed) {
     if (!items.length) return '';
     let cards = '';
 
@@ -192,8 +192,11 @@
     if (collapsed) {
       return '<details class="day-grid-fold">'
            + '<summary class="day-grid-summary">'
-           +   '<span class="day-grid-summary-title">' + escapeHtml(title) + '</span>'
-           +   '<span class="day-grid-summary-meta">' + items.length + ' та</span>'
+           +   '<div class="day-grid-summary-text">'
+           +     '<div class="day-grid-summary-eyebrow">' + escapeHtml(eyebrow) + '</div>'
+           +     '<div class="day-grid-summary-title">' + escapeHtml(title) + '</div>'
+           +   '</div>'
+           +   '<span class="day-grid-summary-meta">' + items.length + '</span>'
            +   '<span class="day-grid-summary-chev" aria-hidden="true">▾</span>'
            + '</summary>'
            + '<div class="cards-grid">' + cards + '</div>'
@@ -311,8 +314,8 @@
       html += '</button></section>';
     }
 
-    html += renderDayGrid('Йилда бир марта келадиган муҳим кунлар', yearly, true);
-    if (recurring.length) html += renderDayGrid('Ҳар ҳафта ва ҳар ойда қайталанадиган муҳим кунлар', recurring, true);
+    html += renderDayGrid('Йиллик', 'Муҳим кунлар', yearly, true);
+    if (recurring.length) html += renderDayGrid('Ҳар ҳафта · Ой', 'Такрорий кунлар', recurring, true);
 
     html += '</div>';
 
