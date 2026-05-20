@@ -55,11 +55,11 @@
     html += '</div>';
 
     html += '<div class="detail-hero">';
-    html += '<div class="detail-art">' + iconFor(p.id) + '</div>';
-    html += '<div class="detail-hero-text">';
+    html += '<div class="detail-arabic">' + escapeHtml(p.arabic || '') + '</div>';
     html += '<div class="detail-name">' + escapeHtml(p.name) + '</div>';
     html += '</div>';
-    html += '</div>';
+
+    html += '<div class="detail-photo">' + iconFor(p.id) + '</div>';
 
     html += '<section class="detail-block"><div class="block-title">Ҳақида</div>';
     html += '<p class="block-text">' + escapeHtml(p.description) + '</p>';
