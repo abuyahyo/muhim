@@ -371,9 +371,9 @@ main {
 .upcoming-countdown {
   text-align: center;
   padding: 16px 20px;
-  background: linear-gradient(135deg, var(--sea-50), var(--sea-100));
+  background: color-mix(in srgb, var(--sea-500) 18%, var(--surface));
   border-radius: var(--r-xl);
-  border: 1px solid var(--sea-200);
+  border: 1px solid var(--sea-700);
 }
 @media (max-width: 640px) {
   .upcoming-countdown {
@@ -387,13 +387,13 @@ main {
   font-family: var(--font-num);
   font-size: 36px;
   font-weight: 400;
-  color: var(--sea-700);
+  color: #ffffff;
   line-height: 1;
 }
 .countdown-label {
   font-size: 11px;
   font-weight: 600;
-  color: var(--sea-600);
+  color: var(--sea-300);
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-top: 4px;
