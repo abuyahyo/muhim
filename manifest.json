@@ -2,7 +2,7 @@
   "name": "Исломий Тақвим",
   "short_name": "Тақвим",
   "description": "Ҳижрий тақвим ва муҳим кунлар",
-  "start_url": "./",
+  "start_url": "./vaqtlar/",
   "scope": "./",
   "display": "standalone",
   "background_color": "#020617",
