@@ -315,8 +315,7 @@
     html += '<button class="back-btn" onclick="goBack()">← Орқага</button>';
     html += '</div>';
 
-    html += '<div class="detail-hero" style="background: linear-gradient(180deg, '
-         + p.color + ' 0%, ' + p.color + 'cc 100%);">';
+    html += '<div class="detail-hero">';
     html += '<div class="detail-name">' + escapeHtml(p.name) + '</div>';
     if (timeStr) {
       html += '<div class="detail-time">' + escapeHtml(timeStr) + '</div>';
