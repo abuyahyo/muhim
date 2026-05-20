@@ -331,15 +331,17 @@
       const loc = settings.location || DEFAULT_LOC;
       const opts = { madhab: settings.madhab, method: settings.method };
       const t = PrayerTimes.calculate(new Date(), loc.lat, loc.lon, opts);
+      // Эрталабки: Бомдоддан Зуҳо бошланишига қадар (қуёш чиқишидан +20 дақиқа).
+      const morningEnd = new Date(t.sunrise.getTime() + 20 * 60 * 1000);
       html += '<section class="detail-block"><div class="block-title">Бугунги вақтлар</div>';
       html += '<div class="azkar-windows">';
       html +=   '<div class="azkar-window">';
       html +=     '<div class="azkar-window-label">Эрталабки зикрлар вақти</div>';
-      html +=     '<div class="azkar-window-time">' + fmtTime(t.fajr) + ' → ' + fmtTime(t.sunrise) + '</div>';
+      html +=     '<div class="azkar-window-time">' + fmtTime(t.fajr) + ' → ' + fmtTime(morningEnd) + '</div>';
       html +=   '</div>';
       html +=   '<div class="azkar-window">';
       html +=     '<div class="azkar-window-label">Кечқурунги зикрлар вақти</div>';
-      html +=     '<div class="azkar-window-time">' + fmtTime(t.asr) + ' → ' + fmtTime(t.maghrib) + '</div>';
+      html +=     '<div class="azkar-window-time">' + fmtTime(t.asr) + ' → ' + fmtTime(t.isha) + '</div>';
       html +=   '</div>';
       html += '</div>';
       html += '</section>';
