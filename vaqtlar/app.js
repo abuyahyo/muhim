@@ -176,32 +176,32 @@
       html += '<div class="times-section-title">Маънавий вақтлар</div>';
       html += '<div class="spiritual-list">';
 
-      html += '<button class="spiritual-card" onclick="showSpiritual(\'azkar\')" style="--accent: #0f766e;">';
+      html += '<button class="spiritual-card" onclick="showSpiritual(\'azkar\')">';
       html += '<div class="spiritual-name">Эрталабки / Кечқурунги зикрлар</div>';
       html += '</button>';
 
       // Зуҳо (Чошт) ойнаси — қуёш чиқишидан ~20 дақиқа кейин, Пешиндан ~5 дақиқа олдин.
       const duhaStart = new Date(times.sunrise.getTime() + 20 * 60 * 1000);
       const duhaEnd = new Date(times.dhuhr.getTime() - 5 * 60 * 1000);
-      html += '<button class="spiritual-card" onclick="showSpiritual(\'duha\')" style="--accent: #ca8a04;">';
+      html += '<button class="spiritual-card" onclick="showSpiritual(\'duha\')">';
       html += '<div class="spiritual-head">';
       html +=   '<div class="spiritual-name">Зуҳо</div>';
       html +=   '<div class="spiritual-range">' + fmtTime(duhaStart) + ' → ' + fmtTime(duhaEnd) + '</div>';
       html += '</div>';
       html += '</button>';
 
-      html += '<button class="spiritual-card" onclick="showSpiritual(\'tahajjud\')" style="--accent: #312e81;">';
+      html += '<button class="spiritual-card" onclick="showSpiritual(\'tahajjud\')">';
       html += '<div class="spiritual-head">';
       html +=   '<div class="spiritual-name">Таҳажжуд</div>';
       html +=   '<div class="spiritual-range">' + fmtTime(tahajjud.start) + ' → ' + fmtTime(tahajjud.end) + '</div>';
       html += '</div>';
       html += '</button>';
 
-      html += '<button class="spiritual-card" onclick="showSpiritual(\'sahar\')" style="--accent: #92400e;">';
+      html += '<button class="spiritual-card" onclick="showSpiritual(\'sahar\')">';
       html += '<div class="spiritual-name">Саҳарлик / Ифтор</div>';
       html += '</button>';
 
-      html += '<button class="spiritual-card" onclick="showSpiritual(\'mustajob\')" style="--accent: #047857;">';
+      html += '<button class="spiritual-card" onclick="showSpiritual(\'mustajob\')">';
       html += '<div class="spiritual-name">Мустажоб соатлар</div>';
       html += '</button>';
 
