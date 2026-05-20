@@ -16,7 +16,6 @@
     html += '<header class="page-head">';
     html += '<div class="page-eyebrow">Муҳим</div>';
     html += '<h1 class="page-title">Жойлар</h1>';
-    html += '<p class="page-lede">Исломнинг учта улуғ масжиди — ҳар бирининг тарихи, оят ва ҳадислари.</p>';
     html += '</header>';
 
     html += '<div class="places-stack">';
