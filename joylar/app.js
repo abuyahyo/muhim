@@ -22,8 +22,7 @@
     html += '<div class="places-stack">';
     for (let i = 0; i < places.length; i++) {
       const p = places[i];
-      html += '<button class="place-card" onclick="showPlace(\'' + escapeHtml(p.id) + '\')" '
-            + 'style="--accent: ' + p.color + ';">';
+      html += '<button class="place-card" onclick="showPlace(\'' + escapeHtml(p.id) + '\')">';
       html += '<div class="place-art">' + iconFor(p.id) + '</div>';
       html += '<div class="place-body">';
       html += '<div class="place-name">' + escapeHtml(p.name) + '</div>';
