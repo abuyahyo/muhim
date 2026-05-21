@@ -228,10 +228,7 @@
       html += '</button>';
 
       html += '<button class="spiritual-card" onclick="showSpiritual(\'tahajjud\')">';
-      html += '<div class="spiritual-head">';
-      html +=   '<div class="spiritual-name">Таҳажжуд</div>';
-      html +=   '<div class="spiritual-range">' + fmtTime(tahajjud.start) + ' → ' + fmtTime(tahajjud.end) + '</div>';
-      html += '</div>';
+      html += '<div class="spiritual-name">Таҳажжуд</div>';
       html += '</button>';
 
       html += '<button class="spiritual-card" onclick="showSpiritual(\'sahar\')">';
@@ -381,6 +378,22 @@
       html +=   '</div>';
       html += '</div>';
       html += '</section>';
+    }
+
+    if (p.id === 'tahajjud') {
+      const loc = settings.location || DEFAULT_LOC;
+      const opts = { madhab: settings.madhab, method: settings.method };
+      const tah = PrayerTimes.tahajjudWindow(new Date(), loc.lat, loc.lon, opts);
+      if (tah) {
+        html += '<section class="detail-block"><div class="block-title">Бугунги вақт</div>';
+        html += '<div class="azkar-windows">';
+        html +=   '<div class="azkar-window">';
+        html +=     '<div class="azkar-window-label">Таҳажжуд вақти</div>';
+        html +=     '<div class="azkar-window-time">' + fmtTime(tah.start) + ' → ' + fmtTime(tah.end) + '</div>';
+        html +=   '</div>';
+        html += '</div>';
+        html += '</section>';
+      }
     }
 
     if (p.id === 'sahar') {
