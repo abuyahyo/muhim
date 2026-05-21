@@ -115,18 +115,13 @@ main {
 .today-hero--evening { background: linear-gradient(135deg, #020617 0%, #4c1d95 55%, #f97316 100%); }
 .today-hero--night   { background: linear-gradient(135deg, #020617 0%, #0c1839 50%, #1e3a8a 100%); }
 
-/* Соатга мос акцент — нуқталар, hover, "is-current" хайлайт ва маънавий
-   карта чегаралари шу ўзгарувчидан ранг олади. */
-.mood--dawn    .prayer-row,
-.mood--dawn    .spiritual-card { --accent: #f59e0b; }
-.mood--day     .prayer-row,
-.mood--day     .spiritual-card { --accent: #38bdf8; }
-.mood--dusk    .prayer-row,
-.mood--dusk    .spiritual-card { --accent: #f97316; }
-.mood--evening .prayer-row,
-.mood--evening .spiritual-card { --accent: #a855f7; }
-.mood--night   .prayer-row,
-.mood--night   .spiritual-card { --accent: #6366f1; }
+/* Соатга мос акцент — нуқталар, hover, "is-current" хайлайт, Қибла
+   йўналиш стрелкаси ва бошқа --sea-* ишлатадиган элементлар шу
+   ўзгарувчилардан ранг олади. */
+.mood--dawn    { --sea-500: #f59e0b; --sea-700: #b45309; }
+.mood--dusk    { --sea-500: #f97316; --sea-700: #c2410c; }
+.mood--evening { --sea-500: #a855f7; --sea-700: #7e22ce; }
+.mood--night   { --sea-500: #6366f1; --sea-700: #4338ca; }
 .countdown-block { text-align: center; }
 .countdown-eyebrow {
   display: inline-flex;
