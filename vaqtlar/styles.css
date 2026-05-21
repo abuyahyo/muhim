@@ -604,6 +604,7 @@ main {
   line-height: 1.55;
   color: var(--ink-soft);
   font-style: italic;
+  white-space: pre-line;
 }
 .quote-attr {
   margin-top: 10px;
