@@ -228,7 +228,7 @@
       html += '</button>';
 
       html += '<button class="spiritual-card" onclick="showSpiritual(\'tahajjud\')">';
-      html += '<div class="spiritual-name">Таҳажжуд</div>';
+      html += '<div class="spiritual-name">Таҳажжуд ва Қиёмул-лайл</div>';
       html += '</button>';
 
       html += '<button class="spiritual-card" onclick="showSpiritual(\'sahar\')">';
