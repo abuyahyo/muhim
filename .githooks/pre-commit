@@ -3,7 +3,7 @@
 # Шу orqали SW автомат равишда юзерларга янги версияни тарқатади (banner кўрсатилади).
 set -e
 
-WATCHED='^(index\.html|app\.js|data\.js|hijri\.js|styles\.css|nav\.css|manifest\.json|vaqtlar/prayer\.js|sw\.js)$'
+WATCHED='^(index\.html|app\.js|data\.js|hijri\.js|styles\.css|nav\.css|manifest\.json|sw\.js|(vaqtlar|joylar)/.*\.(js|css|html))$'
 
 staged="$(git diff --cached --name-only)"
 if ! grep -qE "$WATCHED" <<<"$staged"; then
