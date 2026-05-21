@@ -180,6 +180,15 @@ main {
 .hero--dusk    { background: linear-gradient(135deg, #312e81 0%, #db2777 45%, #f97316 100%); }
 .hero--evening { background: linear-gradient(135deg, #020617 0%, #4c1d95 55%, #f97316 100%); }
 .hero--night   { background: linear-gradient(135deg, #020617 0%, #0c1839 50%, #1e3a8a 100%); }
+
+/* Соатга мос акцент — Кунлар, Тақвим ва Кун детал саҳифалари. Денгиз
+   ранг ўзгарувчилари қайта аниқланади: ҳаво ранги hover, нуқта,
+   "бугун" хайлайти каби барча акцентларга ўтади. */
+.mood--dawn    { --sea-300: #fcd34d; --sea-500: #f59e0b; --sea-700: #b45309; --focus-ring-color: #f59e0b; }
+.mood--dusk    { --sea-300: #fdba74; --sea-500: #f97316; --sea-700: #c2410c; --focus-ring-color: #f97316; }
+.mood--evening { --sea-300: #d8b4fe; --sea-500: #a855f7; --sea-700: #7e22ce; --focus-ring-color: #a855f7; }
+.mood--night   { --sea-300: #a5b4fc; --sea-500: #6366f1; --sea-700: #4338ca; --focus-ring-color: #6366f1; }
+
 .hero::before {
   content: '';
   position: absolute;

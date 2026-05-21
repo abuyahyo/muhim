@@ -10,9 +10,19 @@
     });
   }
 
+  // Соатга кўра ҳаво ранги — Кунлар ва Вақтлар саҳифалари билан бир хил.
+  function currentMood() {
+    const hr = new Date().getHours();
+    if (hr >= 4 && hr < 7) return 'dawn';
+    if (hr >= 7 && hr < 17) return 'day';
+    if (hr >= 17 && hr < 19) return 'dusk';
+    if (hr >= 19 && hr < 23) return 'evening';
+    return 'night';
+  }
+
   // === БОШ САҲИФА — жойлар рўйхати ===
   function renderList() {
-    let html = '<div class="fade-in">';
+    let html = '<div class="fade-in mood--' + currentMood() + '">';
     html += '<header class="page-head">';
     html += '<div class="page-eyebrow">Муҳим</div>';
     html += '<h1 class="page-title">Жойлар</h1>';
@@ -48,7 +58,7 @@
     for (let i = 0; i < places.length; i++) if (places[i].id === id) { p = places[i]; break; }
     if (!p) return;
 
-    let html = '<div class="fade-in detail-wrap">';
+    let html = '<div class="fade-in detail-wrap mood--' + currentMood() + '">';
     html += '<div class="detail-topbar">';
     html += '<button class="back-btn" onclick="goBack()">← Орқага</button>';
     html += '</div>';

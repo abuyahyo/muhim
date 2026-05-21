@@ -20,6 +20,12 @@
   --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
 }
 
+/* Соатга мос акцент — Кунлар ва Вақтлар саҳифалари билан бир хил. */
+.mood--dawn    { --sea-500: #f59e0b; --sea-700: #b45309; }
+.mood--dusk    { --sea-500: #f97316; --sea-700: #c2410c; }
+.mood--evening { --sea-500: #a855f7; --sea-700: #7e22ce; }
+.mood--night   { --sea-500: #6366f1; --sea-700: #4338ca; }
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { min-height: 100%; }
 body {
