@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# sw.js'даги VERSION'ни PWA precache рўйхатидаги бирор файл ўзгарганда +1 қилади.
+# Шу orqали SW автомат равишда юзерларга янги версияни тарқатади (banner кўрсатилади).
+set -e
+
+WATCHED='^(index\.html|app\.js|data\.js|hijri\.js|styles\.css|nav\.css|manifest\.json|vaqtlar/prayer\.js|sw\.js)$'
+
+staged="$(git diff --cached --name-only)"
+if ! grep -qE "$WATCHED" <<<"$staged"; then
+  exit 0
+fi
+
+current="$(grep -oE "v[0-9]+" sw.js | head -1)"
+if [ -z "$current" ]; then
+  echo "pre-commit: sw.js'да VERSION топилмади" >&2
+  exit 1
+fi
+
+num="${current#v}"
+next=$((num + 1))
+
+sed -i.bak -E "s/^const VERSION = 'v[0-9]+';/const VERSION = 'v${next}';/" sw.js
+rm -f sw.js.bak
+
+git add sw.js
+echo "pre-commit: sw.js VERSION → v${next}"

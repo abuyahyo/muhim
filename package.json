@@ -4,6 +4,7 @@
   "private": true,
   "description": "Исломий тақвим — ҳижрий сана ва муҳим кунлар",
   "scripts": {
+    "prepare": "git config core.hooksPath .githooks 2>/dev/null || true",
     "test": "vitest run",
     "test:watch": "vitest"
   },
