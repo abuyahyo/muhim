@@ -213,6 +213,10 @@
       html += '<div class="times-section-title">Маънавий вақтлар</div>';
       html += '<div class="spiritual-list">';
 
+      html += '<button class="spiritual-card" onclick="showSpiritual(\'tahajjud\')">';
+      html += '<div class="spiritual-name">Таҳажжуд ва Қиёмул-лайл</div>';
+      html += '</button>';
+
       html += '<button class="spiritual-card" onclick="showSpiritual(\'azkar\')">';
       html += '<div class="spiritual-name">Эрталабки / Кечқурунги зикрлар</div>';
       html += '</button>';
@@ -225,10 +229,6 @@
       html +=   '<div class="spiritual-name">Зуҳо</div>';
       html +=   '<div class="spiritual-range">' + fmtTime(duhaStart) + ' → ' + fmtTime(duhaEnd) + '</div>';
       html += '</div>';
-      html += '</button>';
-
-      html += '<button class="spiritual-card" onclick="showSpiritual(\'tahajjud\')">';
-      html += '<div class="spiritual-name">Таҳажжуд ва Қиёмул-лайл</div>';
       html += '</button>';
 
       html += '<button class="spiritual-card" onclick="showSpiritual(\'sahar\')">';
