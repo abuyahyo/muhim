@@ -383,10 +383,18 @@
     if (p.id === 'tahajjud') {
       const loc = settings.location || DEFAULT_LOC;
       const opts = { madhab: settings.madhab, method: settings.method };
-      const tah = PrayerTimes.tahajjudWindow(new Date(), loc.lat, loc.lon, opts);
-      if (tah) {
-        html += '<section class="detail-block"><div class="block-title">Бугунги вақт</div>';
+      const today = new Date();
+      const tomorrow = new Date(today); tomorrow.setDate(today.getDate() + 1);
+      const tToday = PrayerTimes.calculate(today, loc.lat, loc.lon, opts);
+      const tTomorrow = PrayerTimes.calculate(tomorrow, loc.lat, loc.lon, opts);
+      const tah = PrayerTimes.tahajjudWindow(today, loc.lat, loc.lon, opts);
+      if (tah && tToday.isha && tTomorrow.fajr) {
+        html += '<section class="detail-block"><div class="block-title">Бугунги вақтлар</div>';
         html += '<div class="azkar-windows">';
+        html +=   '<div class="azkar-window">';
+        html +=     '<div class="azkar-window-label">Қиёмул-лайл вақти</div>';
+        html +=     '<div class="azkar-window-time">' + fmtTime(tToday.isha) + ' → ' + fmtTime(tTomorrow.fajr) + '</div>';
+        html +=   '</div>';
         html +=   '<div class="azkar-window">';
         html +=     '<div class="azkar-window-label">Таҳажжуд вақти</div>';
         html +=     '<div class="azkar-window-time">' + fmtTime(tah.start) + ' → ' + fmtTime(tah.end) + '</div>';
