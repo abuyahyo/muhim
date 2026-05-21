@@ -21,6 +21,18 @@
     return gregorianToHijri(new Date());
   }
 
+  // Соатга кўра ҳаво ранги — 4–7: dawn, 7–17: day, 17–19: dusk,
+  // 19–23: evening, 23–4: night. Барча асосий саҳифалар шу мооддан
+  // ранг олади: hero градиенти, акцент чизиқлари, нуқта индикаторлари.
+  function currentMood() {
+    const hr = new Date().getHours();
+    if (hr >= 4 && hr < 7) return 'dawn';
+    if (hr >= 7 && hr < 17) return 'day';
+    if (hr >= 17 && hr < 19) return 'dusk';
+    if (hr >= 19 && hr < 23) return 'evening';
+    return 'night';
+  }
+
   // Кейинги такрорини ҳисоблаш — ҳар частота учун.
   // Қайтаради: { date: Date, daysLeft: int, hijri: {year, month, day} }
   //
@@ -238,22 +250,14 @@
         return ai - bi;
       });
 
-    let html = '<div class="fade-in">';
+    let html = '<div class="fade-in mood--' + currentMood() + '">';
 
     html += '<header class="page-head">';
     html += '<div class="page-eyebrow">Муҳим</div>';
     html += '<h1 class="page-title">Кунлар</h1>';
     html += '</header>';
 
-    // Соатга кўра hero рангини созлаш.
-    const hr = today.getHours();
-    let heroMood = 'night';
-    if (hr >= 4 && hr < 7) heroMood = 'dawn';
-    else if (hr >= 7 && hr < 17) heroMood = 'day';
-    else if (hr >= 17 && hr < 19) heroMood = 'dusk';
-    else if (hr >= 19 && hr < 23) heroMood = 'evening';
-
-    html += '<section class="hero hero--' + heroMood + '">';
+    html += '<section class="hero hero--' + currentMood() + '">';
     html += '<div class="hero-stars">' + STARS_HTML + '</div>';
     html += '<div class="hero-content">';
     html += '<div class="hero-label"><span class="live-dot"></span><span>Бугунги сана</span></div>';
@@ -341,7 +345,7 @@
     const occ = nextOccurrence(day);
     const gDate = occ.date;
 
-    let html = '<div class="fade-in detail-wrap">';
+    let html = '<div class="fade-in detail-wrap mood--' + currentMood() + '">';
     html += '<div class="detail-topbar">';
     html += '<button class="back-btn" onclick="goBack()">← Орқага</button>';
     html += '<button class="share-btn" onclick="shareDay(\'' + escapeHtml(day.id) + '\')" aria-label="Улашиш" title="Улашиш">';
@@ -490,7 +494,7 @@
       if (importantDays[i].id === 'jumua') { jumuaEntry = importantDays[i]; break; }
     }
 
-    let html = '<div class="fade-in">';
+    let html = '<div class="fade-in mood--' + currentMood() + '">';
 
     // Тақвим шакли
     html += '<div class="cal-shell'
