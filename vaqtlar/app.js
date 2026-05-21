@@ -167,7 +167,17 @@
       : prayers.find(p => p.id === cn.nextId).name;
     const countdownMs = cn.nextTime ? (cn.nextTime - now) : 0;
 
-    let html = '<div class="fade-in">';
+    // Соатга кўра ҳаво ранги — countdown карточкаси, нуқталар ва бошқа
+    // акцентлар учун. 4–7: dawn, 7–17: day, 17–19: dusk, 19–23: evening,
+    // 23–4: night.
+    const hr = now.getHours();
+    let heroMood = 'night';
+    if (hr >= 4 && hr < 7) heroMood = 'dawn';
+    else if (hr >= 7 && hr < 17) heroMood = 'day';
+    else if (hr >= 17 && hr < 19) heroMood = 'dusk';
+    else if (hr >= 19 && hr < 23) heroMood = 'evening';
+
+    let html = '<div class="fade-in mood--' + heroMood + '">';
 
     // Header
     html += '<header class="page-head">';
@@ -176,12 +186,6 @@
     html += '</header>';
 
     // Кейинги намоз ва countdown — соатга мос ҳаво ранги ўйнаб туради.
-    const hr = now.getHours();
-    let heroMood = 'night';
-    if (hr >= 4 && hr < 7) heroMood = 'dawn';
-    else if (hr >= 7 && hr < 17) heroMood = 'day';
-    else if (hr >= 17 && hr < 19) heroMood = 'dusk';
-    else if (hr >= 19 && hr < 23) heroMood = 'evening';
     html += '<section class="today-hero today-hero--' + heroMood + '">';
     html += '<div class="countdown-block">';
     html += '<div class="countdown-eyebrow">';
