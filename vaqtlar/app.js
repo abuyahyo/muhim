@@ -74,6 +74,43 @@
     return pad(m) + ':' + pad(s);
   }
 
+  // "<сура> сураси, N-оят" ёки "<сура> сураси, N-M-оят" шаклидаги
+  // манбани сура номи ва оят оралиғига ажратади.
+  function parseVerseSource(source) {
+    const m = String(source).match(/^(.+?)\s+сураси,\s*(\d+)(?:-(\d+))?-оят\s*$/);
+    if (!m) return null;
+    const start = parseInt(m[2], 10);
+    const end = m[3] ? parseInt(m[3], 10) : start;
+    return { surah: m[1].trim(), start: start, end: end };
+  }
+
+  // Битта сурадан кетма-кет келадиган оятларни битта картага бирлаштиради.
+  function groupVerses(verses) {
+    const groups = [];
+    let current = null;
+    for (let i = 0; i < verses.length; i++) {
+      const v = verses[i];
+      const parsed = parseVerseSource(v.source);
+      if (parsed && current && current.surah === parsed.surah && parsed.start === current.end + 1) {
+        current.end = parsed.end;
+        current.translations.push(v.translation);
+        continue;
+      }
+      if (current) groups.push(current);
+      current = parsed
+        ? { surah: parsed.surah, start: parsed.start, end: parsed.end, translations: [v.translation] }
+        : { source: v.source, translations: [v.translation] };
+    }
+    if (current) groups.push(current);
+    return groups.map(function (g) {
+      if (g.surah) {
+        const range = g.start === g.end ? (g.start + '-оят') : (g.start + '-' + g.end + '-оят');
+        return { source: g.surah + ' сураси, ' + range, translation: g.translations.join(' ') };
+      }
+      return { source: g.source, translation: g.translations.join(' ') };
+    });
+  }
+
   // Жорий вақт қайси намоз вақтига кириб турганини аниқлаш.
   // Аср фарзи кириб бўлгач — у вақт "ҳозирги" бўлади (Шом гача).
   // Қайтаради: ҳозирги намоз индекси (prayers ичида) + кейингиси Date.
@@ -376,8 +413,9 @@
 
     if (p.verses && p.verses.length) {
       html += '<section class="detail-block"><div class="block-title">Қуръон оятлари</div>';
-      for (let i = 0; i < p.verses.length; i++) {
-        const v = p.verses[i];
+      const grouped = groupVerses(p.verses);
+      for (let i = 0; i < grouped.length; i++) {
+        const v = grouped[i];
         html += '<div class="quote-card">';
         html += '<div class="quote-source">' + escapeHtml(v.source) + '</div>';
         html += '<div class="quote-text">«' + escapeHtml(v.translation) + '»</div>';
