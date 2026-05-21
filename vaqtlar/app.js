@@ -175,8 +175,14 @@
     html += '<h1 class="page-title">Вақтлар</h1>';
     html += '</header>';
 
-    // Кейинги намоз ва countdown
-    html += '<section class="today-hero">';
+    // Кейинги намоз ва countdown — соатга мос ҳаво ранги ўйнаб туради.
+    const hr = now.getHours();
+    let heroMood = 'night';
+    if (hr >= 4 && hr < 7) heroMood = 'dawn';
+    else if (hr >= 7 && hr < 17) heroMood = 'day';
+    else if (hr >= 17 && hr < 19) heroMood = 'dusk';
+    else if (hr >= 19 && hr < 23) heroMood = 'evening';
+    html += '<section class="today-hero today-hero--' + heroMood + '">';
     html += '<div class="countdown-block">';
     html += '<div class="countdown-eyebrow">';
     html +=   '<span>Кейинги</span>';
