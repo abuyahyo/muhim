@@ -218,7 +218,7 @@
       html += '</button>';
 
       html += '<button class="spiritual-card" onclick="showSpiritual(\'azkar\')">';
-      html += '<div class="spiritual-name">Эрталабки / Кечқурунги зикрлар</div>';
+      html += '<div class="spiritual-name">Эрталабки ва Кечқурунги зикрлар</div>';
       html += '</button>';
 
       // Зуҳо (Чошт) ойнаси — қуёш чиқишидан ~20 дақиқа кейин, Пешиндан ~5 дақиқа олдин.
