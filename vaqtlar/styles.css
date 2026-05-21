@@ -114,6 +114,19 @@ main {
 .today-hero--dusk    { background: linear-gradient(135deg, #312e81 0%, #db2777 45%, #f97316 100%); }
 .today-hero--evening { background: linear-gradient(135deg, #020617 0%, #4c1d95 55%, #f97316 100%); }
 .today-hero--night   { background: linear-gradient(135deg, #020617 0%, #0c1839 50%, #1e3a8a 100%); }
+
+/* Соатга мос акцент — нуқталар, hover, "is-current" хайлайт ва маънавий
+   карта чегаралари шу ўзгарувчидан ранг олади. */
+.mood--dawn    .prayer-row,
+.mood--dawn    .spiritual-card { --accent: #f59e0b; }
+.mood--day     .prayer-row,
+.mood--day     .spiritual-card { --accent: #38bdf8; }
+.mood--dusk    .prayer-row,
+.mood--dusk    .spiritual-card { --accent: #f97316; }
+.mood--evening .prayer-row,
+.mood--evening .spiritual-card { --accent: #a855f7; }
+.mood--night   .prayer-row,
+.mood--night   .spiritual-card { --accent: #6366f1; }
 .countdown-block { text-align: center; }
 .countdown-eyebrow {
   display: inline-flex;
