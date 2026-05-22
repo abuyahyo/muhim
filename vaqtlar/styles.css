@@ -530,13 +530,32 @@ main {
 .share-btn svg { display: block; }
 
 .detail-hero {
+  position: relative;
   padding: 28px 26px 32px;
   border-radius: var(--r-2xl);
   color: white;
   margin-bottom: 24px;
   text-align: center;
   background: linear-gradient(180deg, var(--sea-700) 0%, var(--sea-500) 100%);
+  overflow: hidden;
 }
+.detail-hero-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.55;
+}
+.detail-hero-star {
+  position: absolute;
+  background: #ffffff;
+  border-radius: 50%;
+  animation: detail-twinkle 3s infinite;
+}
+@keyframes detail-twinkle {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.95; transform: scale(1.25); }
+}
+.detail-hero-body { position: relative; z-index: 1; }
 .detail-name {
   font-size: clamp(34px, 7vw, 48px);
   font-weight: 800;
