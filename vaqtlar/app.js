@@ -728,10 +728,10 @@
   function coverTruncatesDescription(ctx, p) {
     let cursorY = 220;
     if (p.eyebrow) cursorY += 60 + 60;
-    ctx.font = '800 132px "DM Sans", system-ui, sans-serif';
-    const nameLines = layoutLines(ctx, p.name, SHARE_W - SHARE_PAD_X * 2);
-    const useNameLines = Math.min(nameLines.length, 2);
-    cursorY += useNameLines * 148 + 40;
+    const fit = fitNameFont(ctx, p.name, SHARE_W - SHARE_PAD_X * 2, 2, 132, 72, '800');
+    const useNameLines = Math.min(fit.lines.length, 3);
+    const nameLineH = Math.round(fit.size * 1.12);
+    cursorY += useNameLines * nameLineH + 40;
     ctx.font = '500 30px "DM Sans", system-ui, sans-serif';
     const lines = layoutLines(ctx, p.description, SHARE_W - SHARE_PAD_X * 2);
     const lineH = 42;
@@ -830,12 +830,15 @@
     ctx.fillStyle = '#ffffff';
     ctx.textBaseline = 'top';
     ctx.textAlign = 'left';
-    const nameLines = layoutLines(ctx, p.name, SHARE_W - SHARE_PAD_X * 2);
-    const useNameLines = Math.min(nameLines.length, 2);
+    // Узун номлар учун шрифтни автомат кичрайтириб иккита қаторга
+    // сиғдирамиз.
+    const fit = fitNameFont(ctx, p.name, SHARE_W - SHARE_PAD_X * 2, 2, 132, 72, '800');
+    const useNameLines = Math.min(fit.lines.length, 3);
+    const lineH = Math.round(fit.size * 1.12);
     for (let i = 0; i < useNameLines; i++) {
-      ctx.fillText(nameLines[i], SHARE_PAD_X, cursorY + i * 148);
+      ctx.fillText(fit.lines[i], SHARE_PAD_X, cursorY + i * lineH);
     }
-    cursorY += useNameLines * 148 + 40;
+    cursorY += useNameLines * lineH + 40;
     if (p.description) {
       ctx.font = '500 30px "DM Sans", system-ui, sans-serif';
       ctx.fillStyle = 'rgba(255,255,255,0.92)';
@@ -863,9 +866,29 @@
     ctx.textBaseline = 'top';
     ctx.textAlign = 'left';
     if (p.eyebrow) ctx.fillText(p.eyebrow.toUpperCase(), SHARE_PAD_X, 110);
-    ctx.font = '800 64px "DM Sans", system-ui, sans-serif';
+    // Узун ном бўлса шрифт кичрайиб иккита қаторгача сиғади.
+    const fit = fitNameFont(ctx, p.name, SHARE_W - SHARE_PAD_X * 2, 2, 64, 40, '800');
     ctx.fillStyle = '#ffffff';
-    ctx.fillText(p.name, SHARE_PAD_X, 145);
+    const lineH = Math.round(fit.size * 1.1);
+    const limit = Math.min(fit.lines.length, 2);
+    for (let i = 0; i < limit; i++) {
+      ctx.fillText(fit.lines[i], SHARE_PAD_X, 145 + i * lineH);
+    }
+  }
+
+  // Энг катта шрифт ўлчамини топади (start'дан min'гача 8px қадам билан
+  // камайтиради) — ном maxLines қаторда сиғадиган бўлгунча. Қайтаради:
+  // { size, lines }. Минимал ўлчамда ҳам сиғмаса, у ўлчам қайтарилади.
+  function fitNameFont(ctx, name, maxW, maxLines, startSize, minSize, weight) {
+    let size = startSize;
+    while (size >= minSize) {
+      ctx.font = weight + ' ' + size + 'px "DM Sans", system-ui, sans-serif';
+      const lines = layoutLines(ctx, name, maxW);
+      if (lines.length <= maxLines) return { size: size, lines: lines };
+      size -= 8;
+    }
+    ctx.font = weight + ' ' + minSize + 'px "DM Sans", system-ui, sans-serif';
+    return { size: minSize, lines: layoutLines(ctx, name, maxW) };
   }
 
   function drawShareContent(ctx, items) {
