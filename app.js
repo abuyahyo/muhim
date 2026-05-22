@@ -629,7 +629,7 @@
          +         'aria-pressed="' + showGregDays + '" '
          +         'title="Ҳужайрада Милодий рақамни кўрсатиш/беркитиш">';
     html +=     '<span class="cal-greg-toggle-dot" aria-hidden="true"></span>';
-    html +=     '<span>Милодий кунларни ёқиш</span>';
+    html +=     '<span>Милодий кунларни</span>';
     html +=   '</button>';
     html +=   '<button class="cal-greg-toggle' + (showEventDots ? ' is-on' : '') + '" '
          +         'onclick="toggleEventDots()" '
