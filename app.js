@@ -49,16 +49,6 @@
   function moonIllumination(phase) {
     return (1 - Math.cos(2 * Math.PI * phase)) / 2;
   }
-  function moonPhaseName(phase) {
-    if (phase < 0.03 || phase > 0.97) return 'Янги ой (Муҳақ)';
-    if (phase < 0.22) return 'Янги ҳилол';
-    if (phase < 0.28) return 'Биринчи чорак';
-    if (phase < 0.47) return 'Кенгайувчи ой (Аҳдаб)';
-    if (phase < 0.53) return 'Тўлин ой (Бадр)';
-    if (phase < 0.72) return 'Тораювчи ой';
-    if (phase < 0.78) return 'Сўнгги чорак';
-    return 'Сўнгги ҳилол';
-  }
   // Ой фазаси SVG'си. Қоронғи фон + ёруғ ярим диск + терминатор
   // эллипси орқали кресент/гиббус шакли қурилади.
   function moonPhaseSVG(phase) {
@@ -552,7 +542,6 @@
     html += '<div class="moon-card-art">' + moonPhaseSVG(phaseNow) + '</div>';
     html += '<div class="moon-card-body">';
     html += '<div class="moon-card-eyebrow">Бугунги ой фазаси</div>';
-    html += '<div class="moon-card-name">' + escapeHtml(moonPhaseName(phaseNow)) + '</div>';
     html += '<div class="moon-card-illum">Ёритилиш — ' + illumPct + '%</div>';
     html += '</div>';
     html += '</section>';
