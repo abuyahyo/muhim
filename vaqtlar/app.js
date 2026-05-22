@@ -644,30 +644,38 @@
     if (el) el.textContent = msg;
   }
 
-  // === УЛАШИШ — намоз/маънавий вақт ҳақидаги расм ===
-  // Web Share API орқали native шеринг ойнаси очилади. Расмда фарз вақт
-  // ёзилмайди (жойга боғлиқ), фақат ном, тавсиф ва биринчи оят кетади —
-  // бошқа жойлардаги юзерлар учун ҳам мос бўлиши учун.
+  // === УЛАШИШ — намоз/маънавий вақт ҳақидаги расмлар (1+ карусел) ===
+  // Web Share API орқали native шеринг ойнаси очилади. Тавсиф, барча
+  // оятлар ва барча ҳадислар бирор саҳифа сиғмаса, бир неча 1080×1350
+  // расимга бўлинади — Instagram карусел сифатида. Намознинг вақти
+  // атайин ёзилмайди — жойга боғлиқ бўлгани учун чалғитувчи бўлмаслиги
+  // керак.
+  const SHARE_W = 1080;
+  const SHARE_H = 1350;
+  const SHARE_PAD_X = 80;
+  const SHARE_CONTENT_TOP = 240;
+  const SHARE_CONTENT_BOTTOM = 1240;
+  const SHARE_BLOCK_GAP = 16;
+
   function shareSubject(id, kind) {
     const list = kind === 'spiritual' ? spiritual : prayers;
     const p = list.find(x => x.id === id);
     if (!p) return;
-    buildSubjectImage(p).then(function (file) {
+    buildSubjectImages(p).then(function (files) {
+      const filtered = (files || []).filter(Boolean);
       const base = { title: p.name, text: p.short || p.description || '' };
-      if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
-        navigator.share(Object.assign({ files: [file] }, base)).catch(function () {});
+      if (filtered.length && navigator.canShare && navigator.canShare({ files: filtered })) {
+        navigator.share(Object.assign({ files: filtered }, base)).catch(function () {});
+      } else if (filtered.length && navigator.canShare && navigator.canShare({ files: [filtered[0]] })) {
+        // Кўп файлни қувватламайдиган илова бўлса — биринчи расимни юбориш.
+        navigator.share(Object.assign({ files: [filtered[0]] }, base)).catch(function () {});
       } else if (navigator.share) {
         navigator.share(base).catch(function () {});
       }
     });
   }
 
-  function buildSubjectImage(p) {
-    const W = 1080, H = 1350;
-    const canvas = document.createElement('canvas');
-    canvas.width = W;
-    canvas.height = H;
-    const ctx = canvas.getContext('2d');
+  function buildSubjectImages(p) {
     const fontsReady = (document.fonts && document.fonts.load)
       ? Promise.all([
           document.fonts.load('800 96px "DM Sans"'),
@@ -677,152 +685,199 @@
         ]).catch(function () {})
       : Promise.resolve();
     return fontsReady.then(function () {
-      drawSubjectCard(ctx, p, W, H);
-      return new Promise(function (resolve) {
-        canvas.toBlob(function (blob) {
-          if (!blob) { resolve(null); return; }
-          resolve(new File([blob], (p.id || 'namoz') + '.png', { type: 'image/png' }));
-        }, 'image/png');
-      });
+      const measureCanvas = document.createElement('canvas');
+      const measureCtx = measureCanvas.getContext('2d');
+      const items = collectShareItems(measureCtx, p);
+      const pages = packSharePages(items);
+      // Cover саҳифа доимо биринчи.
+      const allPages = [{ kind: 'cover' }].concat(pages);
+      const total = allPages.length;
+      return Promise.all(allPages.map(function (page, idx) {
+        return renderSharePage(p, page, idx + 1, total);
+      }));
     });
   }
 
-  function drawSubjectCard(ctx, p, W, H) {
-    // Градиент фон — намоз ранги асосида
-    const color = p.color || '#0369a1';
-    const grad = ctx.createLinearGradient(0, 0, W, H);
-    grad.addColorStop(0, color);
-    grad.addColorStop(0.5, withAlpha(color, 'dd'));
-    grad.addColorStop(1, withAlpha(color, 'aa'));
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, W, H);
+  function collectShareItems(ctx, p) {
+    const innerW = SHARE_W - SHARE_PAD_X * 2 - 72; // блок ичида 36+36 padding
+    const items = [];
+    if (p.description) {
+      items.push(measureBlock(ctx, 'ҲАҚИДА', p.description, innerW));
+    }
+    (p.verses || []).forEach(function (v) {
+      items.push(measureBlock(ctx, String(v.source || '').toUpperCase(), '«' + v.translation + '»', innerW));
+    });
+    (p.hadiths || []).forEach(function (h) {
+      const block = measureBlock(ctx, String(h.source || '').toUpperCase(), '«' + h.text + '»', innerW);
+      if (h.narrator) {
+        block.narrator = h.narrator;
+        block.height += 36;
+      }
+      items.push(block);
+    });
+    return items;
+  }
 
-    // Декоратив юлдузлар
+  function measureBlock(ctx, label, text, innerW) {
+    const padTop = 22, labelGap = 38, padBottom = 22, lineH = 36;
+    ctx.font = '500 28px "DM Sans", system-ui, sans-serif';
+    const lines = layoutLines(ctx, text, innerW);
+    return {
+      label: label,
+      lines: lines,
+      height: padTop + labelGap + lines.length * lineH + padBottom
+    };
+  }
+
+  function packSharePages(items) {
+    const pages = [];
+    const budget = SHARE_CONTENT_BOTTOM - SHARE_CONTENT_TOP;
+    let page = { kind: 'content', items: [] };
+    let used = 0;
+    items.forEach(function (item) {
+      const inc = item.height + (page.items.length ? SHARE_BLOCK_GAP : 0);
+      if (page.items.length > 0 && used + inc > budget) {
+        pages.push(page);
+        page = { kind: 'content', items: [] };
+        used = 0;
+      }
+      page.items.push(item);
+      used += page.items.length === 1 ? item.height : inc;
+    });
+    if (page.items.length) pages.push(page);
+    return pages;
+  }
+
+  function renderSharePage(p, page, pageNum, totalPages) {
+    const canvas = document.createElement('canvas');
+    canvas.width = SHARE_W;
+    canvas.height = SHARE_H;
+    const ctx = canvas.getContext('2d');
+    drawShareBackground(ctx, p);
+    if (page.kind === 'cover') {
+      drawShareCover(ctx, p);
+    } else {
+      drawShareHeaderCompact(ctx, p);
+      drawShareContent(ctx, page.items);
+    }
+    drawShareFooter(ctx, pageNum, totalPages);
+    return new Promise(function (resolve) {
+      canvas.toBlob(function (blob) {
+        if (!blob) { resolve(null); return; }
+        resolve(new File([blob], (p.id || 'namoz') + '-' + pageNum + '.png', { type: 'image/png' }));
+      }, 'image/png');
+    });
+  }
+
+  function drawShareBackground(ctx, p) {
+    const color = p.color || '#0369a1';
+    const grad = ctx.createLinearGradient(0, 0, SHARE_W, SHARE_H);
+    grad.addColorStop(0, color);
+    grad.addColorStop(0.5, color + 'dd');
+    grad.addColorStop(1, color + 'aa');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, SHARE_W, SHARE_H);
     ctx.fillStyle = 'rgba(255,255,255,0.15)';
     for (let i = 0; i < 30; i++) {
-      const x = (i * 137 + 53) % W;
-      const y = (i * 211 + 91) % (H * 0.5);
+      const x = (i * 137 + 53) % SHARE_W;
+      const y = (i * 211 + 91) % (SHARE_H * 0.5);
       const r = (i % 3) + 1.5;
       ctx.beginPath();
       ctx.arc(x, y, r, 0, Math.PI * 2);
       ctx.fill();
     }
+  }
 
-    const padX = 80;
-    let cursorY = 100;
-
-    // Тег пилл — eyebrow (Тонг намози / Кеча намози ва ҳ.к.)
+  function drawShareCover(ctx, p) {
+    let cursorY = 220;
     if (p.eyebrow) {
       const tagText = p.eyebrow.toUpperCase();
       ctx.font = '700 28px "DM Sans", system-ui, sans-serif';
       const tagW = ctx.measureText(tagText).width + 48;
       const tagH = 60;
       ctx.fillStyle = 'rgba(255,255,255,0.18)';
-      roundRect(ctx, padX, cursorY, tagW, tagH, 30);
+      roundRect(ctx, SHARE_PAD_X, cursorY, tagW, tagH, 30);
       ctx.fill();
       ctx.fillStyle = '#ffffff';
       ctx.textBaseline = 'middle';
       ctx.textAlign = 'left';
-      ctx.fillText(tagText, padX + 24, cursorY + tagH / 2 + 1);
-      cursorY += tagH + 50;
+      ctx.fillText(tagText, SHARE_PAD_X + 24, cursorY + tagH / 2 + 1);
+      cursorY += tagH + 60;
     }
-
-    // Намоз номи
-    ctx.font = '800 116px "DM Sans", system-ui, sans-serif';
+    ctx.font = '800 132px "DM Sans", system-ui, sans-serif';
     ctx.fillStyle = '#ffffff';
     ctx.textBaseline = 'top';
     ctx.textAlign = 'left';
-    const nameLines = layoutLines(ctx, p.name, W - padX * 2);
+    const nameLines = layoutLines(ctx, p.name, SHARE_W - SHARE_PAD_X * 2);
     const useNameLines = Math.min(nameLines.length, 2);
     for (let i = 0; i < useNameLines; i++) {
-      ctx.fillText(nameLines[i], padX, cursorY + i * 128);
+      ctx.fillText(nameLines[i], SHARE_PAD_X, cursorY + i * 148);
     }
-    cursorY += useNameLines * 128 + 30;
-
-    // Тавсиф блоки — баландлиги матнга мос
-    if (p.description) {
-      const maxBottom = (p.verses && p.verses.length) ? 1100 : 1240;
-      cursorY = drawShareDescriptionBlock(ctx, padX, cursorY, W - padX * 2, maxBottom, 'ҲАҚИДА', p.description);
-      cursorY += 20;
+    cursorY += useNameLines * 148 + 40;
+    if (p.short) {
+      ctx.font = '500 32px "DM Sans", system-ui, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.92)';
+      const lines = layoutLines(ctx, p.short, SHARE_W - SHARE_PAD_X * 2);
+      const showLines = Math.min(lines.length, 4);
+      for (let i = 0; i < showLines; i++) {
+        ctx.fillText(lines[i], SHARE_PAD_X, cursorY + i * 44);
+      }
     }
-
-    // Биринчи оят (ихтиёрий, тавсиф ва биринчи оят учун жой бўлса)
-    if (p.verses && p.verses.length && cursorY < 1100) {
-      const v = p.verses[0];
-      drawShareVerseBlock(ctx, padX, cursorY, W - padX * 2, 1240, v);
-    }
-
-    // Сайт номи пастда
-    ctx.font = '500 28px "DM Sans", system-ui, sans-serif';
-    ctx.fillStyle = 'rgba(255,255,255,0.7)';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('abuyahyo.github.io/muhim/vaqtlar', W / 2, H - 80);
   }
 
-  function drawShareDescriptionBlock(ctx, x, y, w, maxBottom, label, text) {
-    const padTop = 22, labelGap = 38, padBottom = 22, lineH = 36;
+  function drawShareHeaderCompact(ctx, p) {
+    ctx.font = '700 22px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.75)';
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'left';
+    if (p.eyebrow) ctx.fillText(p.eyebrow.toUpperCase(), SHARE_PAD_X, 110);
+    ctx.font = '800 64px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(p.name, SHARE_PAD_X, 145);
+  }
+
+  function drawShareContent(ctx, items) {
+    let cursorY = SHARE_CONTENT_TOP;
+    items.forEach(function (item, idx) {
+      drawShareBlock(ctx, SHARE_PAD_X, cursorY, SHARE_W - SHARE_PAD_X * 2, item);
+      cursorY += item.height + SHARE_BLOCK_GAP;
+    });
+  }
+
+  function drawShareBlock(ctx, x, y, w, item) {
+    const padTop = 22, labelGap = 38, lineH = 36;
     const textX = x + 36;
-    const textW = w - 72;
-    ctx.font = '500 28px "DM Sans", system-ui, sans-serif';
-    const lines = layoutLines(ctx, text, textW);
-    const availLines = Math.max(1, Math.floor((maxBottom - y - padTop - labelGap - padBottom) / lineH));
-    const useLines = Math.min(lines.length, availLines);
-    const blockH = padTop + labelGap + useLines * lineH + padBottom;
     ctx.fillStyle = 'rgba(255,255,255,0.14)';
-    roundRect(ctx, x, y, w, blockH, 28);
+    roundRect(ctx, x, y, w, item.height, 28);
     ctx.fill();
     ctx.font = '700 22px "DM Sans", system-ui, sans-serif';
     ctx.fillStyle = 'rgba(255,255,255,0.75)';
     ctx.textBaseline = 'top';
     ctx.textAlign = 'left';
-    ctx.fillText(label, textX, y + padTop);
+    ctx.fillText(item.label, textX, y + padTop);
     ctx.font = '500 28px "DM Sans", system-ui, sans-serif';
     ctx.fillStyle = '#ffffff';
     const textY = y + padTop + labelGap;
-    for (let i = 0; i < useLines; i++) {
-      let txt = lines[i];
-      if (i === useLines - 1 && lines.length > useLines) {
-        while (ctx.measureText(txt + '…').width > textW && txt.length > 0) {
-          txt = txt.slice(0, -1);
-        }
-        txt += '…';
-      }
-      ctx.fillText(txt, textX, textY + i * lineH);
+    for (let i = 0; i < item.lines.length; i++) {
+      ctx.fillText(item.lines[i], textX, textY + i * lineH);
     }
-    return y + blockH;
+    if (item.narrator) {
+      ctx.font = '600 22px "DM Sans", system-ui, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.fillText('— ' + item.narrator, textX, textY + item.lines.length * lineH + 4);
+    }
   }
 
-  function drawShareVerseBlock(ctx, x, y, w, maxBottom, verse) {
-    const padTop = 22, srcGap = 30, padBottom = 22, lineH = 36;
-    const textX = x + 36;
-    const textW = w - 72;
-    ctx.font = '500 26px "DM Sans", system-ui, sans-serif';
-    const lines = layoutLines(ctx, '«' + verse.translation + '»', textW);
-    const availLines = Math.max(1, Math.floor((maxBottom - y - padTop - srcGap - padBottom) / lineH));
-    const useLines = Math.min(lines.length, availLines);
-    const blockH = padTop + srcGap + useLines * lineH + padBottom;
-    ctx.fillStyle = 'rgba(255,255,255,0.14)';
-    roundRect(ctx, x, y, w, blockH, 28);
-    ctx.fill();
-    ctx.font = '700 22px "DM Sans", system-ui, sans-serif';
-    ctx.fillStyle = 'rgba(255,255,255,0.75)';
-    ctx.textBaseline = 'top';
+  function drawShareFooter(ctx, pageNum, totalPages) {
+    ctx.font = '500 24px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
     ctx.textAlign = 'left';
-    ctx.fillText(String(verse.source || '').toUpperCase(), textX, y + padTop);
-    ctx.font = '500 26px "DM Sans", system-ui, sans-serif';
-    ctx.fillStyle = '#ffffff';
-    const textY = y + padTop + srcGap;
-    for (let i = 0; i < useLines; i++) {
-      let txt = lines[i];
-      if (i === useLines - 1 && lines.length > useLines) {
-        while (ctx.measureText(txt + '…').width > textW && txt.length > 0) {
-          txt = txt.slice(0, -1);
-        }
-        txt += '…';
-      }
-      ctx.fillText(txt, textX, textY + i * lineH);
+    ctx.textBaseline = 'middle';
+    if (totalPages > 1) {
+      ctx.fillText(pageNum + ' / ' + totalPages, SHARE_PAD_X, SHARE_H - 80);
     }
+    ctx.textAlign = 'right';
+    ctx.fillText('abuyahyo.github.io/muhim/vaqtlar', SHARE_W - SHARE_PAD_X, SHARE_H - 80);
   }
 
   function layoutLines(ctx, text, maxW) {
@@ -854,10 +909,6 @@
     ctx.lineTo(x, y + r);
     ctx.quadraticCurveTo(x, y, x + r, y);
     ctx.closePath();
-  }
-
-  function withAlpha(hex, suffix) {
-    return hex + suffix;
   }
 
   // Қайтариш — глобал.
