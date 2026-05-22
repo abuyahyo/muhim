@@ -33,6 +33,23 @@
     return 'night';
   }
 
+  // Узун рўйхатни қисқартиради: биринчи 3 тасини доимо кўрсатиб, қолганини
+  // «Кўпроқ кўрсатиш» тугмаси ортида яширади (HTML details/summary).
+  function renderQuoteList(items, renderItem) {
+    const VISIBLE = 3;
+    let out = '';
+    const limit = Math.min(items.length, VISIBLE);
+    for (let i = 0; i < limit; i++) out += renderItem(items[i]);
+    if (items.length > VISIBLE) {
+      const remaining = items.length - VISIBLE;
+      out += '<details class="quote-more">';
+      out += '<summary class="quote-more-summary">Кўпроқ кўрсатиш (' + remaining + ')</summary>';
+      for (let i = VISIBLE; i < items.length; i++) out += renderItem(items[i]);
+      out += '</details>';
+    }
+    return out;
+  }
+
   // === ОЙ ФАЗАСИ ===
   // Синодик ой ~ 29.530588 кун. 2000-01-06 18:14 UTC — маълум янги ой.
   // Шу нуқтадан бошлаб phase 0..1 ҳисобланади: 0=янги ой, 0.5=тўлин,
@@ -449,15 +466,15 @@
       html += '<div class="placeholder-text">Бу кунга оид Қуръон оятлари кейинроқ киритилади, инша Аллоҳ.</div>';
       html += '</div>';
     } else {
-      for (let v = 0; v < day.verses.length; v++) {
-        const verse = day.verses[v];
-        html += '<div class="detail-block">';
-        if (verse.arabic) html += '<div class="arabic" style="font-size:26px;text-align:right;line-height:1.9;margin-bottom:16px;color:var(--ink);" dir="rtl">' + escapeHtml(verse.arabic) + '</div>';
-        html += '<div class="detail-text">«' + escapeHtml(verse.translation) + '»</div>';
-        html += '<div class="source-attrib">' + escapeHtml(verse.source) + '</div>';
-        html += renderCommentary(verse.commentary);
-        html += '</div>';
-      }
+      html += renderQuoteList(day.verses, function (verse) {
+        let card = '<div class="detail-block">';
+        if (verse.arabic) card += '<div class="arabic" style="font-size:26px;text-align:right;line-height:1.9;margin-bottom:16px;color:var(--ink);" dir="rtl">' + escapeHtml(verse.arabic) + '</div>';
+        card += '<div class="detail-text">«' + escapeHtml(verse.translation) + '»</div>';
+        card += '<div class="source-attrib">' + escapeHtml(verse.source) + '</div>';
+        card += renderCommentary(verse.commentary);
+        card += '</div>';
+        return card;
+      });
     }
 
     }
@@ -472,15 +489,15 @@
       html += '<div class="placeholder-text">Бу кунга оид саҳиҳ ҳадислар кейинроқ киритилади, инша Аллоҳ.</div>';
       html += '</div>';
     } else {
-      for (let h = 0; h < day.hadiths.length; h++) {
-        const hadith = day.hadiths[h];
-        html += '<div class="detail-block">';
-        html += '<div class="detail-block-label">' + escapeHtml(hadith.source) + '</div>';
-        html += '<div class="detail-text" style="margin-bottom:12px;">«' + escapeHtml(hadith.text) + '»</div>';
-        if (hadith.narrator) html += '<div style="font-size:13px;color:var(--ink-mute);font-weight:600;">— ' + escapeHtml(hadith.narrator) + '</div>';
-        html += renderCommentary(hadith.commentary);
-        html += '</div>';
-      }
+      html += renderQuoteList(day.hadiths, function (hadith) {
+        let card = '<div class="detail-block">';
+        card += '<div class="detail-block-label">' + escapeHtml(hadith.source) + '</div>';
+        card += '<div class="detail-text" style="margin-bottom:12px;">«' + escapeHtml(hadith.text) + '»</div>';
+        if (hadith.narrator) card += '<div style="font-size:13px;color:var(--ink-mute);font-weight:600;">— ' + escapeHtml(hadith.narrator) + '</div>';
+        card += renderCommentary(hadith.commentary);
+        card += '</div>';
+        return card;
+      });
     }
     }
 

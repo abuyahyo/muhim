@@ -897,6 +897,27 @@ main {
   color: var(--ink-mute);
 }
 
+/* «Кўпроқ кўрсатиш» тугмаси — узун оят/ҳадис рўйхатлари учун. */
+.quote-more { display: block; }
+.quote-more-summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 14px 18px;
+  margin: 8px 0 20px;
+  background: var(--surface);
+  border: 1px dashed var(--line);
+  border-radius: var(--r-md);
+  text-align: center;
+  color: var(--sea-500);
+  font-size: 14px;
+  font-weight: 700;
+  transition: var(--t-fast);
+}
+.quote-more-summary::-webkit-details-marker { display: none; }
+.quote-more-summary::marker { display: none; }
+.quote-more-summary:hover { border-color: var(--sea-500); }
+.quote-more[open] > .quote-more-summary { display: none; }
+
 /* === ОЙ ФАЗАСИ КАРТАСИ === */
 .moon-card {
   display: grid;

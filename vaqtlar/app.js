@@ -124,7 +124,7 @@
   // Узун рўйхатни қисқартиради: биринчи 4 тасини доимо кўрсатиб, қолганини
   // «Кўпроқ кўрсатиш» тугмаси ортида яширади (HTML details/summary).
   function renderQuoteList(items, renderItem) {
-    const VISIBLE = 4;
+    const VISIBLE = 3;
     let out = '';
     const limit = Math.min(items.length, VISIBLE);
     for (let i = 0; i < limit; i++) out += renderItem(items[i]);
