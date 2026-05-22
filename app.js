@@ -900,12 +900,62 @@
     drawInfoBlock(ctx, padX, 720, W - padX * 2, 'ҲИЖРИЙ', hijriLine);
     drawInfoBlock(ctx, padX, 920, W - padX * 2, 'МИЛОДИЙ', gregLine);
 
+    // Кун ҳақида қисқа тавсиф
+    if (day.description) {
+      drawDescriptionBlock(ctx, padX, 1110, W - padX * 2, 130, day.description);
+    }
+
     // Сайт номи пастда
     ctx.font = '500 28px "DM Sans", system-ui, sans-serif';
     ctx.fillStyle = 'rgba(255,255,255,0.7)';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText('abuyahyo.github.io/muhim', W / 2, H - 80);
+  }
+
+  function drawDescriptionBlock(ctx, x, y, w, maxH, text) {
+    ctx.fillStyle = 'rgba(255,255,255,0.14)';
+    roundRect(ctx, x, y, w, maxH, 28);
+    ctx.fill();
+    ctx.font = '700 22px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.75)';
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'left';
+    ctx.fillText('КУН ҲАҚИДА', x + 36, y + 22);
+    ctx.font = '500 28px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = '#ffffff';
+    const textX = x + 36;
+    const textY = y + 60;
+    const textW = w - 72;
+    const lineH = 36;
+    const maxLines = Math.floor((maxH - 60 - 22) / lineH);
+    wrapTextEllipsis(ctx, text, textX, textY, textW, lineH, maxLines);
+  }
+
+  function wrapTextEllipsis(ctx, text, x, y, maxW, lineH, maxLines) {
+    const words = String(text).replace(/\n+/g, ' ').split(/\s+/);
+    const lines = [];
+    let line = '';
+    for (let i = 0; i < words.length; i++) {
+      const test = line ? line + ' ' + words[i] : words[i];
+      if (ctx.measureText(test).width > maxW && line) {
+        lines.push(line);
+        line = words[i];
+      } else {
+        line = test;
+      }
+    }
+    if (line) lines.push(line);
+    for (let li = 0; li < lines.length && li < maxLines; li++) {
+      let txt = lines[li];
+      if (li === maxLines - 1 && lines.length > maxLines) {
+        while (ctx.measureText(txt + '…').width > maxW && txt.length > 0) {
+          txt = txt.slice(0, -1);
+        }
+        txt += '…';
+      }
+      ctx.fillText(txt, x, y + li * lineH);
+    }
   }
 
   function drawInfoBlock(ctx, x, y, w, label, value) {
