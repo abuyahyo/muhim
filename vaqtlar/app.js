@@ -753,7 +753,8 @@
 
   function packSharePages(items) {
     const pages = [];
-    const budget = SHARE_CONTENT_BOTTOM - SHARE_CONTENT_TOP;
+    // 2-қаторли компакт ҳедер жой эгаллашига захира — 100px.
+    const budget = SHARE_CONTENT_BOTTOM - SHARE_CONTENT_TOP - 100;
     let page = { kind: 'content', items: [] };
     let used = 0;
     items.forEach(function (item) {
@@ -779,8 +780,8 @@
     if (page.kind === 'cover') {
       drawShareCover(ctx, p);
     } else {
-      drawShareHeaderCompact(ctx, p);
-      drawShareContent(ctx, page.items);
+      const headerBottom = drawShareHeaderCompact(ctx, p);
+      drawShareContent(ctx, page.items, headerBottom + 30);
     }
     drawShareFooter(ctx, pageNum, totalPages);
     return new Promise(function (resolve) {
@@ -860,6 +861,7 @@
     }
   }
 
+  // Қайтаради: компакт ҳедернинг пастки чегараси (y).
   function drawShareHeaderCompact(ctx, p) {
     ctx.font = '700 22px "DM Sans", system-ui, sans-serif';
     ctx.fillStyle = 'rgba(255,255,255,0.75)';
@@ -874,6 +876,7 @@
     for (let i = 0; i < limit; i++) {
       ctx.fillText(fit.lines[i], SHARE_PAD_X, 145 + i * lineH);
     }
+    return 145 + limit * lineH;
   }
 
   // Энг катта шрифт ўлчамини топади (start'дан min'гача 8px қадам билан
@@ -891,8 +894,8 @@
     return { size: minSize, lines: layoutLines(ctx, name, maxW) };
   }
 
-  function drawShareContent(ctx, items) {
-    let cursorY = SHARE_CONTENT_TOP;
+  function drawShareContent(ctx, items, startY) {
+    let cursorY = Math.max(startY || SHARE_CONTENT_TOP, SHARE_CONTENT_TOP);
     items.forEach(function (item, idx) {
       drawShareBlock(ctx, SHARE_PAD_X, cursorY, SHARE_W - SHARE_PAD_X * 2, item);
       cursorY += item.height + SHARE_BLOCK_GAP;
