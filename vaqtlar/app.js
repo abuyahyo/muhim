@@ -74,6 +74,17 @@
     return pad(m) + ':' + pad(s);
   }
 
+  // Соатга кўра ҳаво ранги — Кунлар/Жойлар билан бир хил.
+  // 4–7: dawn, 7–17: day, 17–19: dusk, 19–23: evening, 23–4: night.
+  function currentMood() {
+    const hr = new Date().getHours();
+    if (hr >= 4 && hr < 7) return 'dawn';
+    if (hr >= 7 && hr < 17) return 'day';
+    if (hr >= 17 && hr < 19) return 'dusk';
+    if (hr >= 19 && hr < 23) return 'evening';
+    return 'night';
+  }
+
   // "<сура> сураси, N-оят" ёки "<сура> сураси, N-M-оят" шаклидаги
   // манбани сура номи ва оят оралиғига ажратади.
   function parseVerseSource(source) {
@@ -167,15 +178,7 @@
       : prayers.find(p => p.id === cn.nextId).name;
     const countdownMs = cn.nextTime ? (cn.nextTime - now) : 0;
 
-    // Соатга кўра ҳаво ранги — countdown карточкаси, нуқталар ва бошқа
-    // акцентлар учун. 4–7: dawn, 7–17: day, 17–19: dusk, 19–23: evening,
-    // 23–4: night.
-    const hr = now.getHours();
-    let heroMood = 'night';
-    if (hr >= 4 && hr < 7) heroMood = 'dawn';
-    else if (hr >= 7 && hr < 17) heroMood = 'day';
-    else if (hr >= 17 && hr < 19) heroMood = 'dusk';
-    else if (hr >= 19 && hr < 23) heroMood = 'evening';
+    const heroMood = currentMood();
 
     let html = '<div class="fade-in mood--' + heroMood + '">';
 
@@ -354,7 +357,7 @@
       timeStr = fmtTime(t[id]);
     }
 
-    let html = '<div class="fade-in detail-wrap">';
+    let html = '<div class="fade-in detail-wrap mood--' + currentMood() + '">';
     html += '<div class="detail-topbar">';
     html += '<button class="back-btn" onclick="goBack()">← Орқага</button>';
     html += '</div>';
