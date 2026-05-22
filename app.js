@@ -564,7 +564,6 @@
            + escapeHtml(hijriMonths[mi - 1]) + '</option>';
     }
     html += '</select>';
-    html += '<button class="cal-btn wide" onclick="calToday()">Бугун</button>';
     html += '</div></div>';
 
     // Ҳафта кунлари (Душанбадан бошланади). weekDays массиви Якшанба=0
@@ -768,12 +767,6 @@
 
   // Ой алмаштириш URL ни replaceState билан янгилайди — ҳар ўзгартирилишда
   // browser history га ёзилмайди (back бирданига чиқиш олиб боради).
-  function calToday() {
-    hijriCalView = getCurrentHijri();
-    history.replaceState(null, '', calendarHash());
-    renderCalendar();
-  }
-
   function calJumpMonth(m) {
     const month = parseInt(m, 10);
     if (!month || month < 1 || month > 12) return;
@@ -787,7 +780,6 @@
   window.showDay = showDay;
   window.showCalendar = showCalendar;
   window.goBack = goBack;
-  window.calToday = calToday;
   window.calJumpMonth = calJumpMonth;
   window.toggleGregDays = toggleGregDays;
   window.toggleEventDots = toggleEventDots;
