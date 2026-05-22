@@ -96,8 +96,7 @@
   }
 
   // Битта сурадан кетма-кет келадиган оятларни битта картага бирлаштиради.
-  function groupVerses(verses) {
-    const groups = [];
+  function groupVerses(verses) {    const groups = [];
     let current = null;
     for (let i = 0; i < verses.length; i++) {
       const v = verses[i];
@@ -120,6 +119,23 @@
       }
       return { source: g.source, translation: g.translations.join(' ') };
     });
+  }
+
+  // Узун рўйхатни қисқартиради: биринчи 4 тасини доимо кўрсатиб, қолганини
+  // «Кўпроқ кўрсатиш» тугмаси ортида яширади (HTML details/summary).
+  function renderQuoteList(items, renderItem) {
+    const VISIBLE = 4;
+    let out = '';
+    const limit = Math.min(items.length, VISIBLE);
+    for (let i = 0; i < limit; i++) out += renderItem(items[i]);
+    if (items.length > VISIBLE) {
+      const remaining = items.length - VISIBLE;
+      out += '<details class="quote-more">';
+      out += '<summary class="quote-more-summary">Кўпроқ кўрсатиш (' + remaining + ')</summary>';
+      for (let i = VISIBLE; i < items.length; i++) out += renderItem(items[i]);
+      out += '</details>';
+    }
+    return out;
   }
 
   // Жорий вақт қайси намоз вақтига кириб турганини аниқлаш.
@@ -448,26 +464,26 @@
     if (p.verses && p.verses.length) {
       html += '<section class="detail-block"><div class="block-title">Қуръон оятлари</div>';
       const grouped = groupVerses(p.verses);
-      for (let i = 0; i < grouped.length; i++) {
-        const v = grouped[i];
-        html += '<div class="quote-card">';
-        html += '<div class="quote-source">' + escapeHtml(v.source) + '</div>';
-        html += '<div class="quote-text">«' + escapeHtml(v.translation) + '»</div>';
-        html += '</div>';
-      }
+      html += renderQuoteList(grouped, function (v) {
+        let card = '<div class="quote-card">';
+        card += '<div class="quote-source">' + escapeHtml(v.source) + '</div>';
+        card += '<div class="quote-text">«' + escapeHtml(v.translation) + '»</div>';
+        card += '</div>';
+        return card;
+      });
       html += '</section>';
     }
 
     if (p.hadiths && p.hadiths.length) {
       html += '<section class="detail-block"><div class="block-title">Ҳадислар</div>';
-      for (let i = 0; i < p.hadiths.length; i++) {
-        const h = p.hadiths[i];
-        html += '<div class="quote-card">';
-        html += '<div class="quote-source">' + escapeHtml(h.source) + '</div>';
-        html += '<div class="quote-text">«' + escapeHtml(h.text) + '»</div>';
-        if (h.narrator) html += '<div class="quote-attr">— ' + escapeHtml(h.narrator) + '</div>';
-        html += '</div>';
-      }
+      html += renderQuoteList(p.hadiths, function (h) {
+        let card = '<div class="quote-card">';
+        card += '<div class="quote-source">' + escapeHtml(h.source) + '</div>';
+        card += '<div class="quote-text">«' + escapeHtml(h.text) + '»</div>';
+        if (h.narrator) card += '<div class="quote-attr">— ' + escapeHtml(h.narrator) + '</div>';
+        card += '</div>';
+        return card;
+      });
       html += '</section>';
     }
 
