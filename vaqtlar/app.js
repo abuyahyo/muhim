@@ -663,14 +663,15 @@
     if (!p) return;
     buildSubjectImages(p).then(function (files) {
       const filtered = (files || []).filter(Boolean);
-      const base = { title: p.name, text: p.short || p.description || '' };
+      // Файл юборилганда матн/title қўшилмайди — Telegram каби илловалар
+      // уни алоҳида хабар сифатида ёзиб қойилмаслиги учун.
       if (filtered.length && navigator.canShare && navigator.canShare({ files: filtered })) {
-        navigator.share(Object.assign({ files: filtered }, base)).catch(function () {});
+        navigator.share({ files: filtered }).catch(function () {});
       } else if (filtered.length && navigator.canShare && navigator.canShare({ files: [filtered[0]] })) {
         // Кўп файлни қувватламайдиган илова бўлса — биринчи расимни юбориш.
-        navigator.share(Object.assign({ files: [filtered[0]] }, base)).catch(function () {});
+        navigator.share({ files: [filtered[0]] }).catch(function () {});
       } else if (navigator.share) {
-        navigator.share(base).catch(function () {});
+        navigator.share({ title: p.name, text: p.short || p.description || '' }).catch(function () {});
       }
     });
   }
