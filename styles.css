@@ -897,6 +897,69 @@ main {
   color: var(--ink-mute);
 }
 
+/* === ОЙ ФАЗАСИ КАРТАСИ === */
+.moon-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 22px;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-2xl);
+  padding: 22px 24px;
+  margin-bottom: 24px;
+}
+.moon-card-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.moon-card-art svg {
+  filter: drop-shadow(0 8px 24px rgba(248, 250, 252, 0.15));
+}
+.moon-card-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sea-500);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.moon-card-name {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.moon-card-illum {
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+}
+.moon-card-next {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.moon-next-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+}
+.moon-next-label { color: var(--ink-mute); font-weight: 600; }
+.moon-next-val { color: var(--ink); font-weight: 700; font-variant-numeric: tabular-nums; }
+.moon-card-note {
+  font-size: 11px;
+  color: var(--ink-mute);
+  line-height: 1.5;
+}
+@media (max-width: 480px) {
+  .moon-card { grid-template-columns: 1fr; justify-items: center; text-align: center; padding: 20px; gap: 14px; }
+  .moon-next-row { justify-content: space-between; width: 100%; }
+}
+
 /* === ҲИЖРИЙ ТАҚВИМ === */
 .cal-shell {
   background: var(--surface);
