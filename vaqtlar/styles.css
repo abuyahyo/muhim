@@ -492,7 +492,13 @@ main {
 
 /* === ДЕТАЛЬ САҲИФА === */
 .detail-wrap { max-width: 760px; margin: 0 auto; }
-.detail-topbar { margin-bottom: 20px; }
+.detail-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
 .back-btn {
   display: inline-flex;
   align-items: center;
@@ -507,6 +513,21 @@ main {
   transition: var(--t-fast);
 }
 .back-btn:hover { border-color: var(--sea-500); color: var(--ink); }
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  border-radius: var(--r-full);
+  cursor: pointer;
+  transition: var(--t-fast);
+}
+.share-btn:hover { border-color: var(--sea-500); color: var(--ink); }
+.share-btn svg { display: block; }
 
 .detail-hero {
   padding: 28px 26px 32px;

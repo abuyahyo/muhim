@@ -376,6 +376,13 @@
     let html = '<div class="fade-in detail-wrap mood--' + currentMood() + '">';
     html += '<div class="detail-topbar">';
     html += '<button class="back-btn" onclick="goBack()">← Орқага</button>';
+    html += '<button class="share-btn" onclick="shareSubject(\'' + escapeHtml(id) + '\', \'' + escapeHtml(kind) + '\')" aria-label="Улашиш" title="Улашиш">';
+    html +=   '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
+    html +=     '<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>';
+    html +=     '<polyline points="16 6 12 2 8 6"/>';
+    html +=     '<line x1="12" y1="2" x2="12" y2="15"/>';
+    html +=   '</svg>';
+    html += '</button>';
     html += '</div>';
 
     html += '<div class="detail-hero">';
@@ -637,10 +644,227 @@
     if (el) el.textContent = msg;
   }
 
+  // === УЛАШИШ — намоз/маънавий вақт ҳақидаги расм ===
+  // Web Share API орқали native шеринг ойнаси очилади. Расмда фарз вақт
+  // ёзилмайди (жойга боғлиқ), фақат ном, тавсиф ва биринчи оят кетади —
+  // бошқа жойлардаги юзерлар учун ҳам мос бўлиши учун.
+  function shareSubject(id, kind) {
+    const list = kind === 'spiritual' ? spiritual : prayers;
+    const p = list.find(x => x.id === id);
+    if (!p) return;
+    buildSubjectImage(p).then(function (file) {
+      const base = { title: p.name, text: p.short || p.description || '' };
+      if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+        navigator.share(Object.assign({ files: [file] }, base)).catch(function () {});
+      } else if (navigator.share) {
+        navigator.share(base).catch(function () {});
+      }
+    });
+  }
+
+  function buildSubjectImage(p) {
+    const W = 1080, H = 1350;
+    const canvas = document.createElement('canvas');
+    canvas.width = W;
+    canvas.height = H;
+    const ctx = canvas.getContext('2d');
+    const fontsReady = (document.fonts && document.fonts.load)
+      ? Promise.all([
+          document.fonts.load('800 96px "DM Sans"'),
+          document.fonts.load('700 28px "DM Sans"'),
+          document.fonts.load('500 28px "DM Sans"'),
+          document.fonts.load('600 36px "DM Sans"')
+        ]).catch(function () {})
+      : Promise.resolve();
+    return fontsReady.then(function () {
+      drawSubjectCard(ctx, p, W, H);
+      return new Promise(function (resolve) {
+        canvas.toBlob(function (blob) {
+          if (!blob) { resolve(null); return; }
+          resolve(new File([blob], (p.id || 'namoz') + '.png', { type: 'image/png' }));
+        }, 'image/png');
+      });
+    });
+  }
+
+  function drawSubjectCard(ctx, p, W, H) {
+    // Градиент фон — намоз ранги асосида
+    const color = p.color || '#0369a1';
+    const grad = ctx.createLinearGradient(0, 0, W, H);
+    grad.addColorStop(0, color);
+    grad.addColorStop(0.5, withAlpha(color, 'dd'));
+    grad.addColorStop(1, withAlpha(color, 'aa'));
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Декоратив юлдузлар
+    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+    for (let i = 0; i < 30; i++) {
+      const x = (i * 137 + 53) % W;
+      const y = (i * 211 + 91) % (H * 0.5);
+      const r = (i % 3) + 1.5;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    const padX = 80;
+    let cursorY = 100;
+
+    // Тег пилл — eyebrow (Тонг намози / Кеча намози ва ҳ.к.)
+    if (p.eyebrow) {
+      const tagText = p.eyebrow.toUpperCase();
+      ctx.font = '700 28px "DM Sans", system-ui, sans-serif';
+      const tagW = ctx.measureText(tagText).width + 48;
+      const tagH = 60;
+      ctx.fillStyle = 'rgba(255,255,255,0.18)';
+      roundRect(ctx, padX, cursorY, tagW, tagH, 30);
+      ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.textBaseline = 'middle';
+      ctx.textAlign = 'left';
+      ctx.fillText(tagText, padX + 24, cursorY + tagH / 2 + 1);
+      cursorY += tagH + 50;
+    }
+
+    // Намоз номи
+    ctx.font = '800 116px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'left';
+    const nameLines = layoutLines(ctx, p.name, W - padX * 2);
+    const useNameLines = Math.min(nameLines.length, 2);
+    for (let i = 0; i < useNameLines; i++) {
+      ctx.fillText(nameLines[i], padX, cursorY + i * 128);
+    }
+    cursorY += useNameLines * 128 + 30;
+
+    // Тавсиф блоки — баландлиги матнга мос
+    if (p.description) {
+      const maxBottom = (p.verses && p.verses.length) ? 1100 : 1240;
+      cursorY = drawShareDescriptionBlock(ctx, padX, cursorY, W - padX * 2, maxBottom, 'ҲАҚИДА', p.description);
+      cursorY += 20;
+    }
+
+    // Биринчи оят (ихтиёрий, тавсиф ва биринчи оят учун жой бўлса)
+    if (p.verses && p.verses.length && cursorY < 1100) {
+      const v = p.verses[0];
+      drawShareVerseBlock(ctx, padX, cursorY, W - padX * 2, 1240, v);
+    }
+
+    // Сайт номи пастда
+    ctx.font = '500 28px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('abuyahyo.github.io/muhim/vaqtlar', W / 2, H - 80);
+  }
+
+  function drawShareDescriptionBlock(ctx, x, y, w, maxBottom, label, text) {
+    const padTop = 22, labelGap = 38, padBottom = 22, lineH = 36;
+    const textX = x + 36;
+    const textW = w - 72;
+    ctx.font = '500 28px "DM Sans", system-ui, sans-serif';
+    const lines = layoutLines(ctx, text, textW);
+    const availLines = Math.max(1, Math.floor((maxBottom - y - padTop - labelGap - padBottom) / lineH));
+    const useLines = Math.min(lines.length, availLines);
+    const blockH = padTop + labelGap + useLines * lineH + padBottom;
+    ctx.fillStyle = 'rgba(255,255,255,0.14)';
+    roundRect(ctx, x, y, w, blockH, 28);
+    ctx.fill();
+    ctx.font = '700 22px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.75)';
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'left';
+    ctx.fillText(label, textX, y + padTop);
+    ctx.font = '500 28px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = '#ffffff';
+    const textY = y + padTop + labelGap;
+    for (let i = 0; i < useLines; i++) {
+      let txt = lines[i];
+      if (i === useLines - 1 && lines.length > useLines) {
+        while (ctx.measureText(txt + '…').width > textW && txt.length > 0) {
+          txt = txt.slice(0, -1);
+        }
+        txt += '…';
+      }
+      ctx.fillText(txt, textX, textY + i * lineH);
+    }
+    return y + blockH;
+  }
+
+  function drawShareVerseBlock(ctx, x, y, w, maxBottom, verse) {
+    const padTop = 22, srcGap = 30, padBottom = 22, lineH = 36;
+    const textX = x + 36;
+    const textW = w - 72;
+    ctx.font = '500 26px "DM Sans", system-ui, sans-serif';
+    const lines = layoutLines(ctx, '«' + verse.translation + '»', textW);
+    const availLines = Math.max(1, Math.floor((maxBottom - y - padTop - srcGap - padBottom) / lineH));
+    const useLines = Math.min(lines.length, availLines);
+    const blockH = padTop + srcGap + useLines * lineH + padBottom;
+    ctx.fillStyle = 'rgba(255,255,255,0.14)';
+    roundRect(ctx, x, y, w, blockH, 28);
+    ctx.fill();
+    ctx.font = '700 22px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.75)';
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'left';
+    ctx.fillText(String(verse.source || '').toUpperCase(), textX, y + padTop);
+    ctx.font = '500 26px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = '#ffffff';
+    const textY = y + padTop + srcGap;
+    for (let i = 0; i < useLines; i++) {
+      let txt = lines[i];
+      if (i === useLines - 1 && lines.length > useLines) {
+        while (ctx.measureText(txt + '…').width > textW && txt.length > 0) {
+          txt = txt.slice(0, -1);
+        }
+        txt += '…';
+      }
+      ctx.fillText(txt, textX, textY + i * lineH);
+    }
+  }
+
+  function layoutLines(ctx, text, maxW) {
+    const words = String(text).replace(/\n+/g, ' ').split(/\s+/);
+    const lines = [];
+    let line = '';
+    for (let i = 0; i < words.length; i++) {
+      const test = line ? line + ' ' + words[i] : words[i];
+      if (ctx.measureText(test).width > maxW && line) {
+        lines.push(line);
+        line = words[i];
+      } else {
+        line = test;
+      }
+    }
+    if (line) lines.push(line);
+    return lines;
+  }
+
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+  }
+
+  function withAlpha(hex, suffix) {
+    return hex + suffix;
+  }
+
   // Қайтариш — глобал.
   window.showHome = showHome;
   window.showPrayer = showPrayer;
   window.showSpiritual = showSpiritual;
+  window.shareSubject = shareSubject;
   window.goBack = goBack;
   window.setMadhab = setMadhab;
   window.setMethod = setMethod;
