@@ -33,6 +33,65 @@
     return 'night';
   }
 
+  // === ОЙ ФАЗАСИ ===
+  // Синодик ой ~ 29.530588 кун. 2000-01-06 18:14 UTC — маълум янги ой.
+  // Шу нуқтадан бошлаб phase 0..1 ҳисобланади: 0=янги ой, 0.5=тўлин,
+  // 1=янги. Бу астрономик ҳисоб — диний ҳилол кўриш билан 1-2 кун
+  // фарқ қилиши мумкин.
+  const SYNODIC = 29.530588853;
+  const MOON_EPOCH = Date.UTC(2000, 0, 6, 18, 14, 0);
+  function moonPhase(date) {
+    const ms = SYNODIC * 86400 * 1000;
+    let p = ((date.getTime() - MOON_EPOCH) % ms) / ms;
+    if (p < 0) p += 1;
+    return p;
+  }
+  function moonIllumination(phase) {
+    return (1 - Math.cos(2 * Math.PI * phase)) / 2;
+  }
+  function moonPhaseName(phase) {
+    if (phase < 0.03 || phase > 0.97) return 'Янги ой (Муҳақ)';
+    if (phase < 0.22) return 'Янги ҳилол';
+    if (phase < 0.28) return 'Биринчи чорак';
+    if (phase < 0.47) return 'Кенгайувчи ой (Аҳдаб)';
+    if (phase < 0.53) return 'Тўлин ой (Бадр)';
+    if (phase < 0.72) return 'Тораювчи ой';
+    if (phase < 0.78) return 'Сўнгги чорак';
+    return 'Сўнгги ҳилол';
+  }
+  // Кейинги тарга-фазагача (0=янги ой, 0.5=тўлин) қанча кун қолганини
+  // санайди ва кутиладиган санани қайтаради.
+  function nextPhaseDate(phase, target, now) {
+    let delta = target - phase;
+    if (delta <= 0) delta += 1;
+    const days = delta * SYNODIC;
+    return new Date(now.getTime() + days * 86400 * 1000);
+  }
+  // Ой фазаси SVG'си. Қоронғи фон + ёруғ ярим диск + терминатор
+  // эллипси орқали кресент/гиббус шакли қурилади.
+  function moonPhaseSVG(phase) {
+    const R = 50;
+    const isWaxing = phase < 0.5;
+    const isCrescent = (phase < 0.25 || phase > 0.75);
+    const rx = R * Math.abs(Math.cos(2 * Math.PI * phase));
+    const lit = '#f8fafc';
+    const shadow = '#0f172a';
+    const litHalf = isWaxing
+      ? 'M 0,-' + R + ' A ' + R + ',' + R + ' 0 0,1 0,' + R + ' L 0,-' + R + ' Z'
+      : 'M 0,-' + R + ' A ' + R + ',' + R + ' 0 0,0 0,' + R + ' L 0,-' + R + ' Z';
+    const ellipseFill = isCrescent ? shadow : lit;
+    return '<svg viewBox="-' + (R + 4) + ' -' + (R + 4) + ' ' + (R * 2 + 8) + ' ' + (R * 2 + 8) + '" width="120" height="120" aria-hidden="true">'
+      +   '<defs><clipPath id="moon-clip"><circle cx="0" cy="0" r="' + R + '"/></clipPath></defs>'
+      +   '<circle cx="0" cy="0" r="' + R + '" fill="' + shadow + '"/>'
+      +   '<path d="' + litHalf + '" fill="' + lit + '" clip-path="url(#moon-clip)"/>'
+      +   '<ellipse cx="0" cy="0" rx="' + rx + '" ry="' + R + '" fill="' + ellipseFill + '" clip-path="url(#moon-clip)"/>'
+      +   '<circle cx="0" cy="0" r="' + R + '" fill="none" stroke="rgba(255,255,255,0.1)"/>'
+      + '</svg>';
+  }
+  function fmtGregDate(d) {
+    return d.getDate() + ' ' + gregorianMonths[d.getMonth()];
+  }
+
   // Кейинги такрорини ҳисоблаш — ҳар частота учун.
   // Қайтаради: { date: Date, daysLeft: int, hijri: {year, month, day} }
   //
@@ -495,6 +554,34 @@
     }
 
     let html = '<div class="fade-in mood--' + currentMood() + '">';
+
+    // Ой фазаси картаси (астрономик маълумот — диний ҳилол кўришдан фарқли).
+    const nowForMoon = new Date();
+    const phaseNow = moonPhase(nowForMoon);
+    const illumPct = Math.round(moonIllumination(phaseNow) * 100);
+    const nextNew = nextPhaseDate(phaseNow, 0, nowForMoon);
+    const nextFull = nextPhaseDate(phaseNow, 0.5, nowForMoon);
+    const daysToNew = Math.max(0, Math.round((nextNew - nowForMoon) / 86400000));
+    const daysToFull = Math.max(0, Math.round((nextFull - nowForMoon) / 86400000));
+    html += '<section class="moon-card">';
+    html += '<div class="moon-card-art">' + moonPhaseSVG(phaseNow) + '</div>';
+    html += '<div class="moon-card-body">';
+    html += '<div class="moon-card-eyebrow">Бугунги ой фазаси</div>';
+    html += '<div class="moon-card-name">' + escapeHtml(moonPhaseName(phaseNow)) + '</div>';
+    html += '<div class="moon-card-illum">Ёритилиш — ' + illumPct + '%</div>';
+    html += '<div class="moon-card-next">';
+    html +=   '<div class="moon-next-row">';
+    html +=     '<span class="moon-next-label">Янги ой</span>';
+    html +=     '<span class="moon-next-val">' + escapeHtml(fmtGregDate(nextNew)) + ' · ' + daysToNew + ' кун</span>';
+    html +=   '</div>';
+    html +=   '<div class="moon-next-row">';
+    html +=     '<span class="moon-next-label">Тўлин ой</span>';
+    html +=     '<span class="moon-next-val">' + escapeHtml(fmtGregDate(nextFull)) + ' · ' + daysToFull + ' кун</span>';
+    html +=   '</div>';
+    html += '</div>';
+    html += '<div class="moon-card-note">Астрономик ҳисоб. Диний ҳилол кўришдан 1-2 кун фарқ қилиши мумкин.</div>';
+    html += '</div>';
+    html += '</section>';
 
     // Тақвим шакли
     html += '<div class="cal-shell'
