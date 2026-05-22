@@ -928,20 +928,15 @@ main {
   font-weight: 700;
   margin-bottom: 6px;
 }
-.moon-card-name {
-  font-size: 22px;
-  font-weight: 800;
+.moon-card-illum {
+  font-size: 18px;
+  font-weight: 700;
   letter-spacing: -0.01em;
   color: var(--ink);
-  margin-bottom: 4px;
-}
-.moon-card-illum {
-  font-size: 14px;
-  color: var(--ink-soft);
 }
 @media (max-width: 480px) {
   .moon-card { gap: 16px; padding: 18px 20px; }
-  .moon-card-name { font-size: 18px; }
+  .moon-card-illum { font-size: 16px; }
 }
 
 /* === ҲИЖРИЙ ТАҚВИМ === */
