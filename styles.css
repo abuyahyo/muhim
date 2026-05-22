@@ -935,29 +935,9 @@ main {
 .moon-card-illum {
   font-size: 14px;
   color: var(--ink-soft);
-  margin-bottom: 14px;
-}
-.moon-card-next {
-  display: grid;
-  gap: 6px;
-  margin-bottom: 10px;
-}
-.moon-next-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  font-size: 13px;
-}
-.moon-next-label { color: var(--ink-mute); font-weight: 600; }
-.moon-next-val { color: var(--ink); font-weight: 700; font-variant-numeric: tabular-nums; }
-.moon-card-note {
-  font-size: 11px;
-  color: var(--ink-mute);
-  line-height: 1.5;
 }
 @media (max-width: 480px) {
   .moon-card { grid-template-columns: 1fr; justify-items: center; text-align: center; padding: 20px; gap: 14px; }
-  .moon-next-row { justify-content: space-between; width: 100%; }
 }
 
 /* === ҲИЖРИЙ ТАҚВИМ === */
