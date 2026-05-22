@@ -189,6 +189,25 @@ main {
   border-radius: var(--r-md);
   margin-bottom: 12px;
 }
+.quote-more { display: block; }
+.quote-more-summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  background: var(--surface);
+  border: 1px dashed var(--line);
+  border-radius: var(--r-md);
+  text-align: center;
+  color: var(--sea-500);
+  font-size: 14px;
+  font-weight: 700;
+  transition: var(--t-fast);
+}
+.quote-more-summary::-webkit-details-marker { display: none; }
+.quote-more-summary::marker { display: none; }
+.quote-more-summary:hover { border-color: var(--sea-500); }
+.quote-more[open] > .quote-more-summary { display: none; }
 .quote-source {
   font-size: 12px;
   letter-spacing: 0.1em;
