@@ -701,7 +701,10 @@
   function collectShareItems(ctx, p) {
     const innerW = SHARE_W - SHARE_PAD_X * 2 - 72; // блок ичида 36+36 padding
     const items = [];
-    if (p.description) {
+    // Тавсиф обложкада тўлиқ кўрсатилади. Агар обложкада сиғмаса
+    // (`coverTruncatesDescription` true қайтарса), қолганлари аввалги
+    // контент саҳифаси бошида блок сифатида чиқади.
+    if (p.description && coverTruncatesDescription(ctx, p)) {
       items.push(measureBlock(ctx, 'ҲАҚИДА', p.description, innerW));
     }
     (p.verses || []).forEach(function (v) {
@@ -716,6 +719,24 @@
       items.push(block);
     });
     return items;
+  }
+
+  // Обложка drawShareCover'нинг қаторлар сонини симул қилади ва агар
+  // тавсиф у ерга тўлиқ сиғмаса true қайтаради — шунда тавсиф контент
+  // саҳифаларида ҳам блок сифатида қайтарилади.
+  function coverTruncatesDescription(ctx, p) {
+    let cursorY = 220;
+    if (p.eyebrow) cursorY += 60 + 60;
+    ctx.font = '800 132px "DM Sans", system-ui, sans-serif';
+    const nameLines = layoutLines(ctx, p.name, SHARE_W - SHARE_PAD_X * 2);
+    const useNameLines = Math.min(nameLines.length, 2);
+    cursorY += useNameLines * 148 + 40;
+    ctx.font = '500 30px "DM Sans", system-ui, sans-serif';
+    const lines = layoutLines(ctx, p.description, SHARE_W - SHARE_PAD_X * 2);
+    const lineH = 42;
+    const maxBottom = SHARE_CONTENT_BOTTOM - 20;
+    const availLines = Math.max(1, Math.floor((maxBottom - cursorY) / lineH));
+    return lines.length > availLines;
   }
 
   function measureBlock(ctx, label, text, innerW) {
@@ -814,13 +835,23 @@
       ctx.fillText(nameLines[i], SHARE_PAD_X, cursorY + i * 148);
     }
     cursorY += useNameLines * 148 + 40;
-    if (p.short) {
-      ctx.font = '500 32px "DM Sans", system-ui, sans-serif';
+    if (p.description) {
+      ctx.font = '500 30px "DM Sans", system-ui, sans-serif';
       ctx.fillStyle = 'rgba(255,255,255,0.92)';
-      const lines = layoutLines(ctx, p.short, SHARE_W - SHARE_PAD_X * 2);
-      const showLines = Math.min(lines.length, 4);
+      const lineH = 42;
+      const maxBottom = SHARE_CONTENT_BOTTOM - 20;
+      const availLines = Math.max(1, Math.floor((maxBottom - cursorY) / lineH));
+      const lines = layoutLines(ctx, p.description, SHARE_W - SHARE_PAD_X * 2);
+      const showLines = Math.min(lines.length, availLines);
       for (let i = 0; i < showLines; i++) {
-        ctx.fillText(lines[i], SHARE_PAD_X, cursorY + i * 44);
+        let txt = lines[i];
+        if (i === showLines - 1 && lines.length > showLines) {
+          while (ctx.measureText(txt + '…').width > SHARE_W - SHARE_PAD_X * 2 && txt.length > 0) {
+            txt = txt.slice(0, -1);
+          }
+          txt += '…';
+        }
+        ctx.fillText(txt, SHARE_PAD_X, cursorY + i * lineH);
       }
     }
   }
