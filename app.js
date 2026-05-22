@@ -891,18 +891,18 @@
     ctx.font = '800 104px "DM Sans", system-ui, sans-serif';
     ctx.fillStyle = '#ffffff';
     ctx.textBaseline = 'top';
-    wrapText(ctx, day.name, padX, tagY + tagH + 60, W - padX * 2, 116);
+    wrapTextEllipsis(ctx, day.name, padX, tagY + tagH + 60, W - padX * 2, 116, 2);
 
     // Маълумот блоклари — ҳижрий ва милодий
     const occ = nextOccurrence(day);
     const hijriLine = formatHijriLine(day, occ);
     const gregLine = formatGregLine(day, occ);
-    drawInfoBlock(ctx, padX, 720, W - padX * 2, 'ҲИЖРИЙ', hijriLine);
-    drawInfoBlock(ctx, padX, 920, W - padX * 2, 'МИЛОДИЙ', gregLine);
+    drawInfoBlock(ctx, padX, 540, W - padX * 2, 'ҲИЖРИЙ', hijriLine);
+    drawInfoBlock(ctx, padX, 720, W - padX * 2, 'МИЛОДИЙ', gregLine);
 
-    // Кун ҳақида қисқа тавсиф
+    // Кун ҳақида қисқа тавсиф (узун матн — кўпроқ қатор сиғади)
     if (day.description) {
-      drawDescriptionBlock(ctx, padX, 1110, W - padX * 2, 130, day.description);
+      drawDescriptionBlock(ctx, padX, 910, W - padX * 2, 290, day.description);
     }
 
     // Сайт номи пастда
@@ -1003,22 +1003,6 @@
     ctx.closePath();
   }
 
-  function wrapText(ctx, text, x, y, maxW, lineH) {
-    const words = text.split(' ');
-    let line = '';
-    let yy = y;
-    for (let i = 0; i < words.length; i++) {
-      const test = line ? line + ' ' + words[i] : words[i];
-      if (ctx.measureText(test).width > maxW && line) {
-        ctx.fillText(line, x, yy);
-        line = words[i];
-        yy += lineH;
-      } else {
-        line = test;
-      }
-    }
-    if (line) ctx.fillText(line, x, yy);
-  }
 
   function showToast(msg) {
     const t = document.createElement('div');
