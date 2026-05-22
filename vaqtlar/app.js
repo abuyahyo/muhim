@@ -85,16 +85,6 @@
     return 'night';
   }
 
-  // Деталь hero учун субтил юлдузлар. Координаталар: [ўлчам, top%, left%,
-  // анимация-кечикиш]. Кунлар саҳифасидаги юлдузлар билан мос.
-  const DETAIL_STARS_HTML = '<div class="detail-hero-stars">' + [
-    [2.8, 18, 14, 0.4], [3.6, 32, 78, 1.6], [2.2, 62, 6, 2.5],
-    [3.1, 12, 56, 0.9], [2.4, 78, 88, 1.2], [3.8, 48, 92, 2.1],
-    [2.6, 84, 36, 0.6], [3.3, 22, 38, 1.9]
-  ].map(function (s) {
-    return '<span class="detail-hero-star" style="width:' + s[0] + 'px;height:' + s[0] + 'px;top:' + s[1] + '%;left:' + s[2] + '%;animation-delay:' + s[3] + 's;"></span>';
-  }).join('') + '</div>';
-
   // "<сура> сураси, N-оят" ёки "<сура> сураси, N-M-оят" шаклидаги
   // манбани сура номи ва оят оралиғига ажратади.
   function parseVerseSource(source) {
@@ -396,13 +386,10 @@
     html += '</div>';
 
     html += '<div class="detail-hero">';
-    html += DETAIL_STARS_HTML;
-    html += '<div class="detail-hero-body">';
     html += '<div class="detail-name">' + escapeHtml(p.name) + '</div>';
     if (timeStr) {
       html += '<div class="detail-time">' + escapeHtml(timeStr) + '</div>';
     }
-    html += '</div>';
     html += '</div>';
 
     html += '<section class="detail-block"><div class="block-title">Ҳақида</div>';
