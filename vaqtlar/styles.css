@@ -331,22 +331,32 @@ main {
   color: var(--ink-mute);
   font-weight: 600;
 }
-.setting-options { display: flex; flex-wrap: wrap; gap: 8px; }
-.opt-btn {
-  padding: 8px 14px;
-  border-radius: var(--r-full);
+.setting-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
   background: var(--surface-2);
   border: 1px solid var(--line-2);
+  border-radius: var(--r-full);
+}
+.opt-btn {
+  flex: 1 1 auto;
+  padding: 9px 14px;
+  border-radius: var(--r-full);
+  background: transparent;
+  border: none;
   color: var(--ink-soft);
   font-size: 13px;
   font-weight: 600;
+  cursor: pointer;
   transition: var(--t-fast);
 }
-.opt-btn:hover { border-color: var(--sea-500); color: var(--ink); }
+.opt-btn:hover { color: var(--ink); }
 .opt-btn.active {
   background: var(--sea-500);
-  border-color: var(--sea-500);
   color: white;
+  box-shadow: 0 2px 10px -2px color-mix(in srgb, var(--sea-500) 55%, transparent);
 }
 .setting-hint {
   font-size: 12px;
