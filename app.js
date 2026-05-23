@@ -187,19 +187,6 @@
     renderCalendar();
   }
 
-  // Тақвимдаги муҳим кунлар нуқталарини кўрсатиш/беркитиш.
-  const CAL_DOTS_KEY = 'cal.showEventDots.v1';
-  let showEventDots = (function () {
-    try { return localStorage.getItem(CAL_DOTS_KEY) !== '0'; }
-    catch (e) { return true; }
-  })();
-  function toggleEventDots() {
-    showEventDots = !showEventDots;
-    try { localStorage.setItem(CAL_DOTS_KEY, showEventDots ? '1' : '0'); }
-    catch (e) {}
-    renderCalendar();
-  }
-
   // Юлдузлар — қатъий тарзда жойлашган, ҳар page reload'да бир хил
   // кўринади. Math.random() рандомлик берса, фойдаланувчи саҳифани
   // янгилаганда юлдузлар "сакраб" қолади — енгил визуал шовқин.
@@ -567,7 +554,6 @@
     // Тақвим шакли
     html += '<div class="cal-shell'
          + (showGregDays ? ' show-greg' : '')
-         + (showEventDots ? ' show-dots' : '')
          + '">';
     html += '<div class="cal-top">';
     html += '<div class="cal-title-block">';
@@ -620,27 +606,17 @@
       if (dotEvents.length) cls += ' important';
       if (isToday) cls += ' today';
 
-      let dots = '';
-      if (dotEvents.length) {
-        dots = '<div class="cal-dots">';
-        for (let i = 0; i < dotEvents.length; i++) {
-          dots += '<span class="cal-dot" style="background:' + dotEvents[i].color + ';"></span>';
-        }
-        dots += '</div>';
-      }
-
       const onclick = linkEvent ? 'onclick="showDay(\'' + escapeHtml(linkEvent.id) + '\')"' : '';
       const tint = dotEvents.length ? ' style="--cell-tint:' + dotEvents[0].color + ';"' : '';
 
       html += '<button class="' + cls + '"' + tint + ' ' + onclick + '>';
       html += '<div class="cal-g-day">' + cellGreg.getDate() + '</div>';
       html += '<div class="cal-h-day">' + dd + '</div>';
-      html += dots;
       html += '</button>';
     }
     html += '</div>';
 
-    // Кўриниш toggleлари — Милодий рақамлар ва муҳим кунлар нуқталари (тақвимдан кейин)
+    // Кўриниш toggleси — Милодий рақамларни кўрсатиш/беркитиш (тақвимдан кейин)
     html += '<div class="cal-greg-bar">';
     html +=   '<button class="cal-greg-toggle' + (showGregDays ? ' is-on' : '') + '" '
          +         'onclick="toggleGregDays()" '
@@ -648,13 +624,6 @@
          +         'title="Ҳужайрада Милодий рақамни кўрсатиш/беркитиш">';
     html +=     '<span class="cal-greg-toggle-dot" aria-hidden="true"></span>';
     html +=     '<span>Милодий кунларни</span>';
-    html +=   '</button>';
-    html +=   '<button class="cal-greg-toggle' + (showEventDots ? ' is-on' : '') + '" '
-         +         'onclick="toggleEventDots()" '
-         +         'aria-pressed="' + showEventDots + '" '
-         +         'title="Муҳим кунлар рангли нуқталарини кўрсатиш/беркитиш">';
-    html +=     '<span class="cal-greg-toggle-dot" aria-hidden="true"></span>';
-    html +=     '<span>Муҳим кун нуқталари</span>';
     html +=   '</button>';
     html += '</div>';
 
@@ -801,7 +770,6 @@
   window.goBack = goBack;
   window.calJumpMonth = calJumpMonth;
   window.toggleGregDays = toggleGregDays;
-  window.toggleEventDots = toggleEventDots;
   window.shareDay = shareDay;
 
   // Кун-карточкасини улашиш — Web Share API орқали native ulashish ойнаси
