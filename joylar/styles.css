@@ -253,3 +253,15 @@ main {
   .place-body { padding: 0; }
   .place-arrow { display: block; font-size: 24px; color: var(--ink-mute); justify-self: end; }
 }
+
+/* Микро-интеракция: босилганда енгил "press" эффекти. */
+.place-card:active,
+.back-btn:active { transform: scale(0.97); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .place-card:active,
+  .back-btn:active { transform: none; }
+}

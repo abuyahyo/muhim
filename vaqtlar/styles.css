@@ -675,3 +675,25 @@ main {
   .prayer-time { font-size: 20px; }
   .ramadan-pair { grid-template-columns: 1fr; }
 }
+
+/* Микро-интеракция: босилганда енгил "press" эффекти. */
+.prayer-row:active,
+.spiritual-card:active,
+.opt-btn:active,
+.qibla-live-btn:active,
+.share-btn:active,
+.quote-more-summary:active {
+  transform: scale(0.97);
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .prayer-row:active,
+  .spiritual-card:active,
+  .opt-btn:active,
+  .qibla-live-btn:active,
+  .share-btn:active,
+  .quote-more-summary:active { transform: none; }
+}
