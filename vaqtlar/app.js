@@ -437,14 +437,14 @@
       const tah = PrayerTimes.tahajjudWindow(today, loc.lat, loc.lon, opts);
       if (tah && tToday.isha && tTomorrow.fajr) {
         html += '<section class="detail-block"><div class="block-title">Бугунги вақтлар</div>';
-        html += '<div class="ramadan-pair">';
-        html +=   '<div class="ramadan-card">';
-        html +=     '<div class="ramadan-label">Қиёмул-лайл</div>';
-        html +=     '<div class="ramadan-time">' + fmtTime(tToday.isha) + ' → ' + fmtTime(tTomorrow.fajr) + '</div>';
+        html += '<div class="azkar-windows">';
+        html +=   '<div class="azkar-window">';
+        html +=     '<div class="azkar-window-label">Қиёмул-лайл вақти</div>';
+        html +=     '<div class="azkar-window-time">' + fmtTime(tToday.isha) + ' → ' + fmtTime(tTomorrow.fajr) + '</div>';
         html +=   '</div>';
-        html +=   '<div class="ramadan-card">';
-        html +=     '<div class="ramadan-label">Таҳажжуд</div>';
-        html +=     '<div class="ramadan-time">' + fmtTime(tah.start) + ' → ' + fmtTime(tah.end) + '</div>';
+        html +=   '<div class="azkar-window">';
+        html +=     '<div class="azkar-window-label">Таҳажжуд вақти</div>';
+        html +=     '<div class="azkar-window-time">' + fmtTime(tah.start) + ' → ' + fmtTime(tah.end) + '</div>';
         html +=   '</div>';
         html += '</div>';
         html += '</section>';
