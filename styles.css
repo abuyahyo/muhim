@@ -324,19 +324,22 @@ main {
 /* === БУГУНГИ event-лар банери === */
 .today-banner {
   margin-bottom: 24px;
-  padding: 14px 16px;
-  background: var(--surface);
+  padding: 16px 18px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--banner-tint, var(--sea-500)) 22%, var(--surface)) 0%, var(--surface) 70%);
+  border: 1px solid color-mix(in srgb, var(--banner-tint, var(--sea-500)) 30%, transparent);
+  border-left: 4px solid var(--banner-tint, var(--sea-500));
   border-radius: var(--r-lg);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 .today-banner-label {
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ink-mute);
-  font-weight: 700;
+  color: var(--banner-tint, var(--sea-500));
+  font-weight: 800;
 }
 .today-banner-chips {
   display: flex;

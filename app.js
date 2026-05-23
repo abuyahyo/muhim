@@ -339,8 +339,8 @@
       }
     }
     if (todayEvents.length) {
-      html += '<section class="today-banner">';
-      html += '<div class="today-banner-label">Бугун</div>';
+      html += '<section class="today-banner" style="--banner-tint:' + todayEvents[0].color + ';">';
+      html += '<div class="today-banner-label">● Бугун</div>';
       html += '<div class="today-banner-chips">';
       for (let i = 0; i < todayEvents.length; i++) {
         const ev = todayEvents[i];
