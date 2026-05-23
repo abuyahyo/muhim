@@ -80,8 +80,14 @@
     html += '<button class="back-btn" onclick="goBack()">← Орқага</button>';
     html += '</div>';
 
-    html += '<div class="detail-hero">';
+    html += '<div class="detail-hero" style="background-image:url(img/' + escapeHtml(p.id) + '.webp);">';
+    html += '<div class="detail-hero-scrim"></div>';
+    html += '<div class="detail-hero-body">';
     html += '<div class="detail-name">' + escapeHtml(p.name) + '</div>';
+    if (p.city || p.country) {
+      html += '<div class="detail-loc">' + escapeHtml([p.city, p.country].filter(Boolean).join(' · ')) + '</div>';
+    }
+    html += '</div>';
     html += '</div>';
 
     html += '<section class="detail-block"><div class="block-title">Ҳақида</div>';
