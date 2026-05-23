@@ -868,22 +868,23 @@ main {
 
 .placeholder {
   border-radius: var(--r-2xl);
-  padding: 36px 24px;
+  padding: 40px 24px;
   text-align: center;
-  border: 1px dashed var(--line);
-  background: var(--bg);
+  border: 1px dashed color-mix(in srgb, var(--sea-500) 30%, var(--line));
+  background: color-mix(in srgb, var(--surface) 50%, transparent);
 }
 .placeholder-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--r-xl);
-  margin: 0 auto 16px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  margin: 0 auto 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
-  background: var(--sea-50);
-  color: var(--sea-700);
+  font-size: 28px;
+  background: color-mix(in srgb, var(--sea-500) 16%, transparent);
+  color: var(--sea-300);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--sea-500) 8%, transparent);
 }
 .placeholder-title {
   font-family: 'DM Sans', system-ui, sans-serif;
