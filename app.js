@@ -187,6 +187,19 @@
     renderCalendar();
   }
 
+  // Муҳим кунларни катак ранги билан белгилашни ёқиш/ўчириш.
+  const CAL_TINT_KEY = 'cal.showCellTint.v1';
+  let showCellTint = (function () {
+    try { return localStorage.getItem(CAL_TINT_KEY) !== '0'; }
+    catch (e) { return true; }
+  })();
+  function toggleCellTint() {
+    showCellTint = !showCellTint;
+    try { localStorage.setItem(CAL_TINT_KEY, showCellTint ? '1' : '0'); }
+    catch (e) {}
+    renderCalendar();
+  }
+
   // Юлдузлар — қатъий тарзда жойлашган, ҳар page reload'да бир хил
   // кўринади. Math.random() рандомлик берса, фойдаланувчи саҳифани
   // янгилаганда юлдузлар "сакраб" қолади — енгил визуал шовқин.
@@ -554,6 +567,7 @@
     // Тақвим шакли
     html += '<div class="cal-shell'
          + (showGregDays ? ' show-greg' : '')
+         + (showCellTint ? ' show-tint' : '')
          + '">';
     html += '<div class="cal-top">';
     html += '<div class="cal-title-block">';
@@ -624,6 +638,13 @@
          +         'title="Ҳужайрада Милодий рақамни кўрсатиш/беркитиш">';
     html +=     '<span class="cal-greg-toggle-dot" aria-hidden="true"></span>';
     html +=     '<span>Милодий кунларни</span>';
+    html +=   '</button>';
+    html +=   '<button class="cal-greg-toggle' + (showCellTint ? ' is-on' : '') + '" '
+         +         'onclick="toggleCellTint()" '
+         +         'aria-pressed="' + showCellTint + '" '
+         +         'title="Муҳим кунларни катак ранги билан белгилаш">';
+    html +=     '<span class="cal-greg-toggle-dot" aria-hidden="true"></span>';
+    html +=     '<span>Катак рангини</span>';
     html +=   '</button>';
     html += '</div>';
 
@@ -770,6 +791,7 @@
   window.goBack = goBack;
   window.calJumpMonth = calJumpMonth;
   window.toggleGregDays = toggleGregDays;
+  window.toggleCellTint = toggleCellTint;
   window.shareDay = shareDay;
 
   // Кун-карточкасини улашиш — Web Share API орқали native ulashish ойнаси

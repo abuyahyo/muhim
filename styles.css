@@ -1120,6 +1120,10 @@ main {
   border-color: color-mix(in srgb, var(--cell-tint, var(--sea-500)) 35%, transparent);
 }
 .cal-cell.important:hover { transform: translateY(-2px); }
+.cal-shell:not(.show-tint) .cal-cell.important:not(.today) {
+  background: color-mix(in srgb, var(--surface) 60%, transparent);
+  border-color: transparent;
+}
 .cal-cell.today {
   background: linear-gradient(160deg, var(--sea-500) 0%, var(--sea-700) 100%);
   border-color: transparent;
