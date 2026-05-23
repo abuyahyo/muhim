@@ -374,6 +374,14 @@ main {
 .upcoming {
   margin-bottom: 32px;
 }
+.upcoming-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sea-500);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
 .upcoming-card {
   background: var(--surface);
   border-radius: var(--r-3xl);
@@ -443,9 +451,9 @@ main {
 .upcoming-countdown {
   text-align: center;
   padding: 16px 20px;
-  background: color-mix(in srgb, var(--sea-500) 18%, var(--surface));
+  background: color-mix(in srgb, var(--up-tint, var(--sea-500)) 18%, var(--surface));
   border-radius: var(--r-xl);
-  border: 1px solid var(--sea-700);
+  border: 1px solid color-mix(in srgb, var(--up-tint, var(--sea-500)) 45%, transparent);
 }
 @media (max-width: 640px) {
   .upcoming-countdown {

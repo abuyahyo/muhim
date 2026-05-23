@@ -368,7 +368,8 @@
       }
 
       html += '<section class="upcoming">';
-      html += '<button class="upcoming-card" onclick="showDay(\'' + escapeHtml(nextDay.id) + '\')">';
+      html += '<div class="upcoming-eyebrow">Яқинлашаётган кун</div>';
+      html += '<button class="upcoming-card" style="--up-tint:' + nextDay.color + ';" onclick="showDay(\'' + escapeHtml(nextDay.id) + '\')">';
       html += '<div class="upcoming-visual" style="background: linear-gradient(135deg, ' + nextDay.color + ', ' + nextDay.color + 'cc);">' + nextDay.nextHijri.day + '</div>';
       html += '<div class="upcoming-info">';
       html += '<div class="upcoming-name">' + escapeHtml(nextDay.name) + '</div>';
