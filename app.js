@@ -637,14 +637,14 @@
          +         'aria-pressed="' + showGregDays + '" '
          +         'title="Ҳужайрада Милодий рақамни кўрсатиш/беркитиш">';
     html +=     '<span class="cal-greg-toggle-dot" aria-hidden="true"></span>';
-    html +=     '<span>Милодий кунларни</span>';
+    html +=     '<span>Милодий кунлар</span>';
     html +=   '</button>';
     html +=   '<button class="cal-greg-toggle' + (showCellTint ? ' is-on' : '') + '" '
          +         'onclick="toggleCellTint()" '
          +         'aria-pressed="' + showCellTint + '" '
          +         'title="Муҳим кунларни катак ранги билан белгилаш">';
     html +=     '<span class="cal-greg-toggle-dot" aria-hidden="true"></span>';
-    html +=     '<span>Катак рангини</span>';
+    html +=     '<span>Катак ранги</span>';
     html +=   '</button>';
     html += '</div>';
 
