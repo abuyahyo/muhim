@@ -155,22 +155,37 @@ main {
 
 .detail-hero {
   position: relative;
-  padding: 48px 28px;
+  min-height: 280px;
+  display: flex;
+  align-items: flex-end;
+  padding: 28px;
   border-radius: var(--r-2xl);
   color: white;
-  text-align: center;
   margin-bottom: 24px;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 50% 38%, rgba(255,255,255,0.22), transparent 60%),
-    linear-gradient(180deg, var(--sea-700) 0%, var(--sea-500) 100%);
+  background-color: var(--sea-900);
+  background-size: cover;
+  background-position: center;
 }
-.detail-hero > * { position: relative; z-index: 1; }
+.detail-hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(2,6,23,0.15) 0%, rgba(2,6,23,0.35) 45%, rgba(2,6,23,0.88) 100%);
+}
+.detail-hero-body { position: relative; z-index: 1; }
 .detail-name {
   font-size: clamp(28px, 6vw, 40px);
   font-weight: 800;
   letter-spacing: -0.02em;
   color: #ffffff;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+}
+.detail-loc {
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.4);
 }
 
 .detail-block { margin-bottom: 28px; }
