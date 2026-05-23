@@ -629,8 +629,9 @@
       }
 
       const onclick = linkEvent ? 'onclick="showDay(\'' + escapeHtml(linkEvent.id) + '\')"' : '';
+      const tint = dotEvents.length ? ' style="--cell-tint:' + dotEvents[0].color + ';"' : '';
 
-      html += '<button class="' + cls + '" ' + onclick + '>';
+      html += '<button class="' + cls + '"' + tint + ' ' + onclick + '>';
       html += '<div class="cal-g-day">' + cellGreg.getDate() + '</div>';
       html += '<div class="cal-h-day">' + dd + '</div>';
       html += dots;
