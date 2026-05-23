@@ -371,7 +371,9 @@
     html += '</div>';
 
     html += '<div class="detail-hero">';
+    if (p.eyebrow) html += '<div class="detail-eyebrow">' + escapeHtml(p.eyebrow) + '</div>';
     html += '<div class="detail-name">' + escapeHtml(p.name) + '</div>';
+    if (p.arabic) html += '<div class="detail-arabic" dir="rtl">' + escapeHtml(p.arabic) + '</div>';
     html += '</div>';
 
     html += '<section class="detail-block"><div class="block-title">Ҳақида</div>';
