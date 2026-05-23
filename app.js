@@ -644,7 +644,7 @@
          +         'aria-pressed="' + showCellTint + '" '
          +         'title="Муҳим кунларни катак ранги билан белгилаш">';
     html +=     '<span class="cal-greg-toggle-dot" aria-hidden="true"></span>';
-    html +=     '<span>Катак рангини</span>';
+    html +=     '<span>Катак ранги</span>';
     html +=   '</button>';
     html += '</div>';
 
