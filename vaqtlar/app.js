@@ -460,12 +460,10 @@
       html +=   '<div class="ramadan-card">';
       html +=     '<div class="ramadan-label">Саҳарлик тугаши</div>';
       html +=     '<div class="ramadan-time">' + fmtTime(t.fajr) + '</div>';
-      html +=     '<div class="ramadan-note">Бомдод вақти бошланиши</div>';
       html +=   '</div>';
       html +=   '<div class="ramadan-card">';
       html +=     '<div class="ramadan-label">Ифтор</div>';
       html +=     '<div class="ramadan-time">' + fmtTime(t.maghrib) + '</div>';
-      html +=     '<div class="ramadan-note">Шом азони билан</div>';
       html +=   '</div>';
       html += '</div>';
       html += '</section>';
