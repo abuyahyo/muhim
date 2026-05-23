@@ -10,7 +10,7 @@
 // `VERSION`ни ҳар жиддий ўзгаришда инкремент қилинг — буни ўзгартирилса
 // SW қайта ўрнатилади ва эски кеш тозаланади. Активация янги версия
 // тайёрланганда `SKIP_WAITING` хабари orqали тезлаштирилади (banner).
-const VERSION = 'v170';
+const VERSION = 'v171';
 const STATIC_CACHE = `static-${VERSION}`;
 const PRECACHE = [
   './',
@@ -20,7 +20,17 @@ const PRECACHE = [
   './data.js',
   './hijri.js',
   './app.js',
+  './vaqtlar/',
+  './vaqtlar/index.html',
+  './vaqtlar/app.js',
+  './vaqtlar/data.js',
+  './vaqtlar/styles.css',
   './vaqtlar/prayer.js',
+  './joylar/',
+  './joylar/index.html',
+  './joylar/app.js',
+  './joylar/data.js',
+  './joylar/styles.css',
   './manifest.json',
   './icon.svg',
   './favicon-32.png',
@@ -29,8 +39,12 @@ const PRECACHE = [
 ];
 
 self.addEventListener('install', (event) => {
+  // Ҳар бир ресурсни алоҳида кешлаймиз — биттаси 404 берса ҳам бутун
+  // ўрнатиш бузилмайди (addAll atomic, шунинг учун ишлатилмайди).
   event.waitUntil(
-    caches.open(STATIC_CACHE).then((cache) => cache.addAll(PRECACHE))
+    caches.open(STATIC_CACHE).then((cache) =>
+      Promise.allSettled(PRECACHE.map((url) => cache.add(url)))
+    )
   );
 });
 
