@@ -484,7 +484,7 @@
     html += '<div style="margin: 28px 0 16px;"><div class="section-title" style="font-size:22px;">Саҳиҳ ҳадислар</div></div>';
     if (day.hadiths.length === 0) {
       html += '<div class="placeholder hadiths">';
-      html += '<div class="placeholder-icon">ﷺ</div>';
+      html += '<div class="placeholder-icon">☾</div>';
       html += '<div class="placeholder-title">Ҳадислар тез орада қўшилади</div>';
       html += '<div class="placeholder-text">Бу кунга оид саҳиҳ ҳадислар кейинроқ киритилади, инша Аллоҳ.</div>';
       html += '</div>';
