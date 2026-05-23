@@ -154,13 +154,18 @@ main {
 .back-btn:hover { border-color: var(--sea-500); color: var(--ink); }
 
 .detail-hero {
+  position: relative;
   padding: 48px 28px;
   border-radius: var(--r-2xl);
   color: white;
   text-align: center;
   margin-bottom: 24px;
-  background: linear-gradient(180deg, var(--sea-700) 0%, var(--sea-500) 100%);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(255,255,255,0.22), transparent 60%),
+    linear-gradient(180deg, var(--sea-700) 0%, var(--sea-500) 100%);
 }
+.detail-hero > * { position: relative; z-index: 1; }
 .detail-name {
   font-size: clamp(28px, 6vw, 40px);
   font-weight: 800;
