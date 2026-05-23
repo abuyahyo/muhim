@@ -837,23 +837,15 @@
       ctx.fillText(fit.lines[i], SHARE_PAD_X, cursorY + i * lineH);
     }
     cursorY += useNameLines * lineH + 40;
-    if (p.description) {
+    // Тавсиф обложкага тўлиқ сиғсагина шу ерда чиқади. Сиғмаса — у
+    // контент саҳифасида блок сифатида кўрсатилади (такрорламаслик учун).
+    if (p.description && !coverTruncatesDescription(ctx, p)) {
       ctx.font = '500 30px "DM Sans", system-ui, sans-serif';
       ctx.fillStyle = 'rgba(255,255,255,0.92)';
-      const lineH = 42;
-      const maxBottom = SHARE_CONTENT_BOTTOM - 20;
-      const availLines = Math.max(1, Math.floor((maxBottom - cursorY) / lineH));
+      const dLineH = 42;
       const lines = layoutLines(ctx, p.description, SHARE_W - SHARE_PAD_X * 2);
-      const showLines = Math.min(lines.length, availLines);
-      for (let i = 0; i < showLines; i++) {
-        let txt = lines[i];
-        if (i === showLines - 1 && lines.length > showLines) {
-          while (ctx.measureText(txt + '…').width > SHARE_W - SHARE_PAD_X * 2 && txt.length > 0) {
-            txt = txt.slice(0, -1);
-          }
-          txt += '…';
-        }
-        ctx.fillText(txt, SHARE_PAD_X, cursorY + i * lineH);
+      for (let i = 0; i < lines.length; i++) {
+        ctx.fillText(lines[i], SHARE_PAD_X, cursorY + i * dLineH);
       }
     }
   }
