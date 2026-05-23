@@ -1336,6 +1336,17 @@ button:focus-visible,
 }
 
 /* === Ҳаракат камайтириш === */
+/* Микро-интеракция: босилганда енгил "press" эффекти (тактил ҳис). */
+.day-card:active,
+.upcoming-card:active,
+.other-app-card:active,
+.today-chip:active,
+.day-grid-summary:active,
+.cal-cell.important:active,
+.event-row:active {
+  transform: scale(0.97);
+}
+
 /* prefers-reduced-motion муҳим a11y талаби: вестибуляр касалликлар
    бўлган фойдаланувчилар анимациядан ёмонлашадилар. */
 @media (prefers-reduced-motion: reduce) {
@@ -1351,7 +1362,14 @@ button:focus-visible,
   .upcoming-card:hover,
   .day-card:hover,
   .event-row:hover,
-  .cal-cell.important:hover {
+  .cal-cell.important:hover,
+  .day-card:active,
+  .upcoming-card:active,
+  .other-app-card:active,
+  .today-chip:active,
+  .day-grid-summary:active,
+  .cal-cell.important:active,
+  .event-row:active {
     transform: none;
   }
 }
