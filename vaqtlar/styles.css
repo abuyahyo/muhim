@@ -538,15 +538,6 @@ main {
   line-height: 1.05;
   margin-bottom: 10px;
 }
-.detail-time {
-  font-size: clamp(36px, 9vw, 56px);
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.03em;
-  margin-top: 14px;
-  color: rgba(255, 255, 255, 0.95);
-}
-
 .detail-block { margin-bottom: 28px; }
 .detail-cta {
   display: flex;

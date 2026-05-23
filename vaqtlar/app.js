@@ -358,15 +358,6 @@
     const p = list.find(x => x.id === id);
     if (!p) return;
 
-    // Намоз учун бугунги вақтини ҳам кўрсатамиз.
-    let timeStr = '';
-    if (kind === 'prayer') {
-      const loc = settings.location || DEFAULT_LOC;
-      const opts = { madhab: settings.madhab, method: settings.method };
-      const t = PrayerTimes.calculate(new Date(), loc.lat, loc.lon, opts);
-      timeStr = fmtTime(t[id]);
-    }
-
     let html = '<div class="fade-in detail-wrap mood--' + currentMood() + '">';
     html += '<div class="detail-topbar">';
     html += '<button class="back-btn" onclick="goBack()">← Орқага</button>';
@@ -381,9 +372,6 @@
 
     html += '<div class="detail-hero">';
     html += '<div class="detail-name">' + escapeHtml(p.name) + '</div>';
-    if (timeStr) {
-      html += '<div class="detail-time">' + escapeHtml(timeStr) + '</div>';
-    }
     html += '</div>';
 
     html += '<section class="detail-block"><div class="block-title">Ҳақида</div>';
