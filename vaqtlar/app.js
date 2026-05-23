@@ -250,14 +250,8 @@
       html += '<div class="spiritual-name">Эрталабки ва Кечқурунги зикрлар</div>';
       html += '</button>';
 
-      // Зуҳо (Чошт) ойнаси — қуёш чиқишидан ~20 дақиқа кейин, Пешиндан ~5 дақиқа олдин.
-      const duhaStart = new Date(times.sunrise.getTime() + 20 * 60 * 1000);
-      const duhaEnd = new Date(times.dhuhr.getTime() - 5 * 60 * 1000);
       html += '<button class="spiritual-card" onclick="showSpiritual(\'duha\')">';
-      html += '<div class="spiritual-head">';
-      html +=   '<div class="spiritual-name">Зуҳо</div>';
-      html +=   '<div class="spiritual-range">' + fmtTime(duhaStart) + ' → ' + fmtTime(duhaEnd) + '</div>';
-      html += '</div>';
+      html += '<div class="spiritual-name">Зуҳо (Чошгоҳ)</div>';
       html += '</button>';
 
       html += '<button class="spiritual-card" onclick="showSpiritual(\'sahar\')">';
@@ -411,6 +405,23 @@
       html +=   '<div class="azkar-window">';
       html +=     '<div class="azkar-window-label">Кечқурунги зикрлар вақти</div>';
       html +=     '<div class="azkar-window-time">' + fmtTime(t.asr) + ' → ' + fmtTime(t.isha) + '</div>';
+      html +=   '</div>';
+      html += '</div>';
+      html += '</section>';
+    }
+
+    if (p.id === 'duha') {
+      const loc = settings.location || DEFAULT_LOC;
+      const opts = { madhab: settings.madhab, method: settings.method };
+      const t = PrayerTimes.calculate(new Date(), loc.lat, loc.lon, opts);
+      // Зуҳо ойнаси: қуёш чиқишидан +20 дақиқадан Пешиндан -5 дақиқагача.
+      const dStart = new Date(t.sunrise.getTime() + 20 * 60 * 1000);
+      const dEnd = new Date(t.dhuhr.getTime() - 5 * 60 * 1000);
+      html += '<section class="detail-block"><div class="block-title">Бугунги вақт</div>';
+      html += '<div class="azkar-windows">';
+      html +=   '<div class="azkar-window">';
+      html +=     '<div class="azkar-window-label">Зуҳо вақти</div>';
+      html +=     '<div class="azkar-window-time">' + fmtTime(dStart) + ' → ' + fmtTime(dEnd) + '</div>';
       html +=   '</div>';
       html += '</div>';
       html += '</section>';

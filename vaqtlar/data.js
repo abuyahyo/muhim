@@ -339,7 +339,7 @@ window.VaqtlarData = (function () {
       },
       {
         id: 'duha',
-        name: 'Зуҳо',
+        name: 'Зуҳо (Чошгоҳ)',
         arabic: 'الضحى',
         eyebrow: 'Чошгоҳ намози',
         short: 'Қуёш кўтарилгандан то Пешин гача — нафл намоз вақти.',
