@@ -220,13 +220,13 @@ main {
   border: 1px solid var(--line);
   border-radius: var(--r-xl);
   padding: 16px 18px;
-  border-left: 3px solid var(--amber-400);
+  border-left: 3px solid var(--sea-700);
 }
 .ramadan-label {
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--amber-400);
+  color: var(--sea-500);
   font-weight: 700;
   margin-bottom: 6px;
 }
@@ -581,12 +581,12 @@ main {
   border: 1px solid var(--line);
   border-radius: var(--r-xl);
   padding: 16px 18px;
-  border-left: 3px solid #0f766e;
+  border-left: 3px solid var(--sea-700);
 }
 .azkar-window-label {
   font-size: 12px;
   letter-spacing: 0.02em;
-  color: #14b8a6;
+  color: var(--sea-500);
   font-weight: 700;
   margin-bottom: 6px;
 }
