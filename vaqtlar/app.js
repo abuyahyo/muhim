@@ -371,7 +371,7 @@
     html += '</div>';
 
     html += '<div class="detail-hero">';
-    html += '<div class="detail-name">' + escapeHtml(p.eyebrow || p.name) + '</div>';
+    html += '<div class="detail-name">' + escapeHtml(p.name) + '</div>';
     html += '</div>';
 
     html += '<section class="detail-block"><div class="block-title">Ҳақида</div>';
