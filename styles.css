@@ -1119,7 +1119,6 @@ main {
   background: color-mix(in srgb, var(--cell-tint, var(--sea-500)) 14%, var(--surface));
   border-color: color-mix(in srgb, var(--cell-tint, var(--sea-500)) 35%, transparent);
 }
-.cal-shell:not(.show-dots) .cal-dots { display: none; }
 .cal-cell.important:hover { transform: translateY(-2px); }
 .cal-cell.today {
   background: linear-gradient(160deg, var(--sea-500) 0%, var(--sea-700) 100%);
@@ -1133,19 +1132,6 @@ main {
   font-weight: 400;
   color: var(--ink);
   line-height: 1;
-}
-.cal-dots {
-  position: absolute;
-  bottom: 7px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 3px;
-}
-.cal-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
 }
 /* === Милодий рақам — ҳужайра ўнг-юқори бурчагида === */
 .cal-g-day {
