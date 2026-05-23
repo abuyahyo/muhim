@@ -121,7 +121,7 @@
     });
   }
 
-  // Узун рўйхатни қисқартиради: биринчи 4 тасини доимо кўрсатиб, қолганини
+  // Узун рўйхатни қисқартиради: биринчи 3 тасини доимо кўрсатиб, қолганини
   // «Кўпроқ кўрсатиш» тугмаси ортида яширади (HTML details/summary).
   function renderQuoteList(items, renderItem) {
     const VISIBLE = 3;
@@ -279,6 +279,7 @@
     html += '</div>';
     html += '<div class="qibla-meta">';
     html +=   '<button class="qibla-live-btn" id="qibla-live-btn" onclick="enableQiblaLive()">Жонли компас</button>';
+    html +=   '<div class="qibla-hint" id="qibla-hint"></div>';
     html += '</div>';
     html += '</div>';
     html += '</section>';
