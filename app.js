@@ -976,7 +976,7 @@
     canvas.height = SHARE_H;
     const ctx = canvas.getContext('2d');
     if (page.kind === 'cover') {
-      drawCard(ctx, day, SHARE_W, SHARE_H);
+      drawDayShareCover(ctx, day);
     } else {
       drawDayShareBackground(ctx, day);
       const headerBottom = drawDayHeaderCompact(ctx, day);
@@ -989,6 +989,32 @@
         resolve(new File([blob], (day.id || 'kun') + '-' + pageNum + '.png', { type: 'image/png' }));
       }, 'image/png');
     });
+  }
+
+  // Карусель муқоваси — фақат тег ва ном (сана блоклари йўқ).
+  function drawDayShareCover(ctx, day) {
+    drawDayShareBackground(ctx, day);
+    let cursorY = 220;
+    const tagText = freqLabel(day).toUpperCase();
+    ctx.font = '700 28px "DM Sans", system-ui, sans-serif';
+    const tagW = ctx.measureText(tagText).width + 48;
+    const tagH = 60;
+    ctx.fillStyle = 'rgba(255,255,255,0.18)';
+    roundRect(ctx, SHARE_PAD_X, cursorY, tagW, tagH, 30);
+    ctx.fill();
+    ctx.fillStyle = '#ffffff';
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'left';
+    ctx.fillText(tagText, SHARE_PAD_X + 24, cursorY + tagH / 2 + 1);
+    cursorY += tagH + 60;
+    ctx.textBaseline = 'top';
+    const fit = fitNameFont(ctx, day.name, SHARE_W - SHARE_PAD_X * 2, 2, 132, 72, '800');
+    const useNameLines = Math.min(fit.lines.length, 3);
+    const lineH = Math.round(fit.size * 1.12);
+    ctx.fillStyle = '#ffffff';
+    for (let i = 0; i < useNameLines; i++) {
+      ctx.fillText(fit.lines[i], SHARE_PAD_X, cursorY + i * lineH);
+    }
   }
 
   function drawDayShareBackground(ctx, day) {
