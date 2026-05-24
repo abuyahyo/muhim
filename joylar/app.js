@@ -78,10 +78,10 @@
     html += '<div class="detail-hero" style="background-image:url(img/' + escapeHtml(p.id) + '.webp);">';
     html += '<div class="detail-hero-scrim"></div>';
     html += '<div class="detail-hero-body">';
+    const loc = [p.city, p.country].filter(Boolean).join(' · ');
+    if (loc) html += '<div class="detail-eyebrow">' + escapeHtml(loc) + '</div>';
     html += '<div class="detail-name">' + escapeHtml(p.name) + '</div>';
-    if (p.city || p.country) {
-      html += '<div class="detail-loc">' + escapeHtml([p.city, p.country].filter(Boolean).join(' · ')) + '</div>';
-    }
+    if (p.short) html += '<div class="detail-tagline">' + escapeHtml(p.short) + '</div>';
     html += '</div>';
     html += '</div>';
 
