@@ -246,26 +246,15 @@
     return h;
   }
 
-  function renderDayGrid(eyebrow, title, items, collapsed) {
+  function renderDayGrid(eyebrow, title, items) {
     if (!items.length) return '';
     let cards = '';
     for (let i = 0; i < items.length; i++) cards += dayCardHtml(items[i]);
-
-    if (collapsed) {
-      return '<details class="day-grid-fold">'
-           + '<summary class="day-grid-summary">'
-           +   '<div class="day-grid-summary-text">'
-           +     '<div class="day-grid-summary-eyebrow">' + escapeHtml(eyebrow) + '</div>'
-           +     '<div class="day-grid-summary-title">' + escapeHtml(title) + '</div>'
-           +   '</div>'
-           +   '<span class="day-grid-summary-meta">' + items.length + '</span>'
-           +   '<span class="day-grid-summary-chev" aria-hidden="true">▾</span>'
-           + '</summary>'
-           + '<div class="upcoming-list">' + cards + '</div>'
-           + '</details>';
-    }
-    return '<section>'
-         + '<div class="section-head"><div class="section-title">' + escapeHtml(title) + '</div></div>'
+    return '<section class="day-section">'
+         + '<div class="day-section-head">'
+         +   '<div class="upcoming-eyebrow">' + escapeHtml(eyebrow) + '</div>'
+         +   '<div class="section-title">' + escapeHtml(title) + '</div>'
+         + '</div>'
          + '<div class="upcoming-list">' + cards + '</div>'
          + '</section>';
   }
@@ -358,8 +347,8 @@
       html += '</div></section>';
     }
 
-    html += renderDayGrid('Йиллик', 'Муҳим кунлар', yearly, true);
-    if (recurring.length) html += renderDayGrid('Ҳар ҳафта · Ой', 'Такрорий кунлар', recurring, true);
+    html += renderDayGrid('Йиллик', 'Муҳим кунлар', yearly);
+    if (recurring.length) html += renderDayGrid('Ҳар ҳафта · Ой', 'Такрорий кунлар', recurring);
 
     html += '</div>';
 
