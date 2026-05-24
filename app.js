@@ -335,10 +335,10 @@
       html += '</div></section>';
     }
 
-    // ЯҚИНЛАШАЁТГАН КУНЛАР — келгуси 3 та йиллик кун, сана ва ҳафта куни билан.
+    // ЯҚИНЛАШАЁТГАН КУНЛАР — барча йиллик кунлар, яқинлик тартибида, сана билан.
     const upcomingDays = yearly.filter(function (d) {
       return d.daysLeft >= 0 && d.daysLeft <= 365;
-    }).slice(0, 3);
+    });
     if (upcomingDays.length) {
       html += '<section class="upcoming">';
       html += '<div class="upcoming-eyebrow">Яқинлашаётган кунлар</div>';
@@ -347,7 +347,6 @@
       html += '</div></section>';
     }
 
-    html += renderDayGrid('Йиллик', 'Муҳим кунлар', yearly);
     if (recurring.length) html += renderDayGrid('Ҳар ҳафта · Ой', 'Такрорий кунлар', recurring);
 
     html += '</div>';
