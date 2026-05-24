@@ -48,25 +48,20 @@
     html += '<div class="places-stack">';
     for (let i = 0; i < places.length; i++) {
       const p = places[i];
+      const loc = [p.city, p.country].filter(Boolean).join(' · ');
       html += '<button class="place-card" onclick="showPlace(\'' + escapeHtml(p.id) + '\')">';
-      html += '<div class="place-art">' + iconFor(p.id) + '</div>';
+      html += '<img class="place-photo" src="img/' + escapeHtml(p.id) + '.webp" alt="" loading="lazy"/>';
+      html += '<div class="place-scrim"></div>';
       html += '<div class="place-body">';
       html += '<div class="place-name">' + escapeHtml(p.name) + '</div>';
-      html += '<div class="place-loc">' + escapeHtml(p.city) + ' · ' + escapeHtml(p.country) + '</div>';
+      if (loc) html += '<div class="place-loc">' + escapeHtml(loc) + '</div>';
       html += '</div>';
-      html += '<div class="place-arrow">→</div>';
       html += '</button>';
     }
     html += '</div>';
     html += '</div>';
 
     document.getElementById('view-list').innerHTML = html;
-  }
-
-  // Ҳар жой учун ҳақиқий фотолар `img/<id>.webp` (transparent PNG basini
-  // webp'қа айлантирилган). Ўлчам максимум 1200px кенг.
-  function iconFor(id) {
-    return '<img src="img/' + id + '.webp" alt="" loading="lazy"/>';
   }
 
   // === ДЕТАЛЬ САҲИФА ===

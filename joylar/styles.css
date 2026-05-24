@@ -81,58 +81,75 @@ main {
   line-height: 1.5;
 }
 
-/* === Жойлар "stack" — катта вертикал карточкалар === */
+/* === Жойлар — фото устида ном (overlay) карточкалар === */
 .places-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 640px) {
+  .places-stack { grid-template-columns: 1fr 1fr; gap: 18px; }
 }
 .place-card {
   --accent: var(--sea-500);
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
   background: #0f172a;
   border: 1px solid var(--line);
   border-radius: var(--r-2xl);
   cursor: pointer;
   text-align: left;
+  color: #fff;
+  font-family: inherit;
+  padding: 0;
   overflow: hidden;
   transition: var(--t-fast);
+}
+.place-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 55%;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.place-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(2,6,23,0.05) 0%, rgba(2,6,23,0.35) 50%, rgba(2,6,23,0.88) 100%);
+}
+.place-body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 18px 20px;
+}
+.place-name {
+  font-size: clamp(20px, 5vw, 26px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #fff;
+  margin-bottom: 4px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+}
+.place-loc {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
 }
 .place-card:hover {
   transform: translateY(-3px);
   border-color: var(--accent);
   box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.6);
 }
-.place-art {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  max-height: 540px;
-  background: linear-gradient(180deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 70%, #0f172a) 100%);
-  overflow: hidden;
-  flex-shrink: 0;
-}
-.place-art img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 60%;
-  display: block;
-}
-.place-body { padding: 18px 20px 20px; min-width: 0; }
-.place-name {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  margin-bottom: 4px;
-}
-.place-loc {
-  font-size: 13px;
-  color: var(--ink-mute);
-  margin-bottom: 10px;
-  font-weight: 500;
-}
-.place-arrow { display: none; }
+.place-card:hover .place-photo { transform: scale(1.05); }
 
 /* === ДЕТАЛЬ САҲИФА === */
 .detail-wrap { max-width: 760px; margin: 0 auto; }
@@ -247,26 +264,6 @@ main {
   font-size: 13px;
   color: var(--ink-mute);
   font-weight: 500;
-}
-
-/* Кенгайтириш — 640px ва ундан кенг */
-@media (min-width: 640px) {
-  .place-card {
-    display: grid;
-    grid-template-columns: 160px 1fr 28px;
-    align-items: center;
-    gap: 24px;
-    padding: 22px;
-  }
-  .place-art {
-    width: 160px;
-    height: 200px;
-    aspect-ratio: auto;
-    max-height: none;
-    border-radius: var(--r-lg);
-  }
-  .place-body { padding: 0; }
-  .place-arrow { display: block; font-size: 24px; color: var(--ink-mute); justify-self: end; }
 }
 
 /* Микро-интеракция: босилганда енгил "press" эффекти. */
