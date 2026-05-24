@@ -991,7 +991,7 @@
     });
   }
 
-  // Карусель муқоваси — фақат тег ва ном (сана блоклари йўқ).
+  // Карусель муқоваси — тег, ном ва «КУН ҲАҚИДА» тавсиф блоки (сана блоклари йўқ).
   function drawDayShareCover(ctx, day) {
     drawDayShareBackground(ctx, day);
     let cursorY = 220;
@@ -1014,6 +1014,43 @@
     ctx.fillStyle = '#ffffff';
     for (let i = 0; i < useNameLines; i++) {
       ctx.fillText(fit.lines[i], SHARE_PAD_X, cursorY + i * lineH);
+    }
+    cursorY += useNameLines * lineH + 48;
+
+    if (day.description) {
+      drawCoverDescription(ctx, SHARE_PAD_X, cursorY, SHARE_W - SHARE_PAD_X * 2, SHARE_CONTENT_BOTTOM, day.description);
+    }
+  }
+
+  // «КУН ҲАҚИДА» блоки — баландлиги матнга мос; узун бўлса maxBottom'гача
+  // кесилиб «…» билан тугатилади.
+  function drawCoverDescription(ctx, x, y, w, maxBottom, text) {
+    const padTop = 28, labelGap = 44, padBottom = 28, lineH = 42;
+    const textX = x + 40;
+    const textW = w - 80;
+    ctx.font = '500 30px "DM Sans", system-ui, sans-serif';
+    const lines = layoutLines(ctx, text, textW);
+    const availLines = Math.max(1, Math.floor((maxBottom - y - padTop - labelGap - padBottom) / lineH));
+    const useLines = Math.min(lines.length, availLines);
+    const blockH = padTop + labelGap + useLines * lineH + padBottom;
+    ctx.fillStyle = 'rgba(255,255,255,0.14)';
+    roundRect(ctx, x, y, w, blockH, 28);
+    ctx.fill();
+    ctx.font = '700 22px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.75)';
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'left';
+    ctx.fillText('КУН ҲАҚИДА', textX, y + padTop);
+    ctx.font = '500 30px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = '#ffffff';
+    const textY = y + padTop + labelGap;
+    for (let i = 0; i < useLines; i++) {
+      let txt = lines[i];
+      if (i === useLines - 1 && lines.length > useLines) {
+        while (ctx.measureText(txt + '…').width > textW && txt.length > 0) txt = txt.slice(0, -1);
+        txt += '…';
+      }
+      ctx.fillText(txt, textX, textY + i * lineH);
     }
   }
 
