@@ -150,20 +150,6 @@ main {
   color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
-.countdown-progress {
-  height: 6px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.18);
-  overflow: hidden;
-  margin: 18px auto 0;
-  max-width: 320px;
-}
-.countdown-progress-fill {
-  height: 100%;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.9);
-  transition: width 0.8s ease;
-}
 
 /* === Бўлим сарлавҳалари === */
 .times-section { margin-bottom: 28px; }
