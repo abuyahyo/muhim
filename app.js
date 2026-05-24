@@ -229,11 +229,10 @@
     return { num: d.daysLeft, label: 'кун қолди' };
   }
 
-  // Битта кун карточкаси — «яқинлашаётган кун» услубида (штамп + ном + сана + саноқ).
+  // Битта кун карточкаси — ном + сана + саноқ.
   function dayCardHtml(d) {
     const cd = dayCountdown(d);
     let h = '<button class="upcoming-card" style="--up-tint:' + d.color + ';" onclick="showDay(\'' + escapeHtml(d.id) + '\')">';
-    h += '<div class="upcoming-visual" style="background: linear-gradient(135deg, ' + d.color + ', ' + d.color + 'cc);">' + d.nextHijri.day + '</div>';
     h += '<div class="upcoming-info">';
     h += '<div class="upcoming-name">' + escapeHtml(d.name) + '</div>';
     h += '<div class="upcoming-short">' + dayDateLine(d) + '</div>';

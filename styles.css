@@ -407,7 +407,7 @@ main {
 }
 @media (min-width: 640px) {
   .upcoming-card {
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 1fr auto;
     padding: 28px 32px;
     gap: 28px;
   }
@@ -416,26 +416,6 @@ main {
   transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
   border-color: var(--sea-200);
-}
-.upcoming-visual {
-  width: 80px;
-  height: 80px;
-  border-radius: var(--r-2xl);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-family: var(--font-num);
-  font-size: 36px;
-  font-weight: 400;
-  position: relative;
-  overflow: hidden;
-}
-.upcoming-visual::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.25), transparent);
 }
 .upcoming-info { min-width: 0; }
 .upcoming-name {
