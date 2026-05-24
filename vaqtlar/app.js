@@ -367,6 +367,15 @@
     const p = list.find(x => x.id === id);
     if (!p) return;
 
+    // Намоз (маънавий эмас) учун — бугунги вақтини оламиз.
+    let prayerTime = null;
+    if (kind !== 'spiritual') {
+      const loc = settings.location || DEFAULT_LOC;
+      const opts = { madhab: settings.madhab, method: settings.method };
+      const t = PrayerTimes.calculate(new Date(), loc.lat, loc.lon, opts);
+      prayerTime = t[p.id];
+    }
+
     let html = '<div class="fade-in detail-wrap mood--' + currentMood() + '">';
     html += '<div class="detail-topbar">';
     html += '<button class="back-btn" onclick="goBack()">← Орқага</button>';
@@ -380,7 +389,11 @@
     html += '</div>';
 
     html += '<div class="detail-hero">';
+    html += '<div class="detail-eyebrow">' + (kind === 'spiritual' ? 'Маънавий вақт' : 'Намоз вақти') + '</div>';
     html += '<div class="detail-name">' + escapeHtml(p.name) + '</div>';
+    if (prayerTime) {
+      html += '<div class="detail-hero-time">' + escapeHtml(fmtTime(prayerTime)) + '</div>';
+    }
     html += '</div>';
 
     html += '<section class="detail-block"><div class="block-title">Ҳақида</div>';
