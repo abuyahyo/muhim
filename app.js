@@ -293,7 +293,6 @@
     // "Яқинлашаётган кун" — фақат йилда бир мартагина келадиган event'лар
     // орасидан энг яқинини оламиз. Жума ва Душ./Пай. каби такрорийлар
     // пастдаги ўз бўлимида аллақачон тузук кўриниб турибди.
-    const nextDay = sorted.find(function (d) { return !d.frequency || d.frequency === 'yearly'; });
     const yearly = sorted.filter(function (d) { return !d.frequency || d.frequency === 'yearly'; });
     // Такрорий event'лар учун data.js дагидек тартиб — "qancha kun qoldi"
     // сортировкаси Душ./Пай.ни ҳамиша биринчи қилиб юбораркан, бу беҳосаб
@@ -352,34 +351,37 @@
       html += '</div></section>';
     }
 
-    // ЯҚИНЛАШАЁТГАН КУН
-    if (nextDay && nextDay.daysLeft >= 0 && nextDay.daysLeft <= 365) {
-      let countdownDisplay = '';
-      let countdownLabel = '';
-      if (nextDay.daysLeft === 0) {
-        countdownDisplay = '0';
-        countdownLabel = 'Бугун';
-      } else if (nextDay.daysLeft === 1) {
-        countdownDisplay = '1';
-        countdownLabel = 'Эртага';
-      } else {
-        countdownDisplay = nextDay.daysLeft;
-        countdownLabel = 'кун қолди';
-      }
-
+    // ЯҚИНЛАШАЁТГАН КУНЛАР — келгуси 3 та йиллик кун, сана ва ҳафта куни билан.
+    const upcomingDays = yearly.filter(function (d) {
+      return d.daysLeft >= 0 && d.daysLeft <= 365;
+    }).slice(0, 3);
+    if (upcomingDays.length) {
       html += '<section class="upcoming">';
-      html += '<div class="upcoming-eyebrow">Яқинлашаётган кун</div>';
-      html += '<button class="upcoming-card" style="--up-tint:' + nextDay.color + ';" onclick="showDay(\'' + escapeHtml(nextDay.id) + '\')">';
-      html += '<div class="upcoming-visual" style="background: linear-gradient(135deg, ' + nextDay.color + ', ' + nextDay.color + 'cc);">' + nextDay.nextHijri.day + '</div>';
-      html += '<div class="upcoming-info">';
-      html += '<div class="upcoming-name">' + escapeHtml(nextDay.name) + '</div>';
-      html += '<div class="upcoming-short">' + escapeHtml(nextDay.short) + '</div>';
-      html += '</div>';
-      html += '<div class="upcoming-countdown">';
-      html += '<div class="countdown-number">' + countdownDisplay + '</div>';
-      html += '<div class="countdown-label">' + countdownLabel + '</div>';
-      html += '</div>';
-      html += '</button></section>';
+      html += '<div class="upcoming-eyebrow">Яқинлашаётган кунлар</div>';
+      html += '<div class="upcoming-list">';
+      for (let i = 0; i < upcomingDays.length; i++) {
+        const u = upcomingDays[i];
+        let cdNum, cdLabel;
+        if (u.daysLeft === 0) { cdNum = '0'; cdLabel = 'Бугун'; }
+        else if (u.daysLeft === 1) { cdNum = '1'; cdLabel = 'Эртага'; }
+        else { cdNum = u.daysLeft; cdLabel = 'кун қолди'; }
+        const g = u.nextDate;
+        const dateLine = escapeHtml(weekDaysFull[g.getDay()]) + ' · '
+          + u.nextHijri.day + ' ' + escapeHtml(hijriMonths[u.nextHijri.month - 1]) + ' · '
+          + g.getDate() + ' ' + escapeHtml(gregorianMonthsShort[g.getMonth()]);
+        html += '<button class="upcoming-card" style="--up-tint:' + u.color + ';" onclick="showDay(\'' + escapeHtml(u.id) + '\')">';
+        html += '<div class="upcoming-visual" style="background: linear-gradient(135deg, ' + u.color + ', ' + u.color + 'cc);">' + u.nextHijri.day + '</div>';
+        html += '<div class="upcoming-info">';
+        html += '<div class="upcoming-name">' + escapeHtml(u.name) + '</div>';
+        html += '<div class="upcoming-short">' + dateLine + '</div>';
+        html += '</div>';
+        html += '<div class="upcoming-countdown">';
+        html += '<div class="countdown-number">' + cdNum + '</div>';
+        html += '<div class="countdown-label">' + cdLabel + '</div>';
+        html += '</div>';
+        html += '</button>';
+      }
+      html += '</div></section>';
     }
 
     html += renderDayGrid('Йиллик', 'Муҳим кунлар', yearly, true);
