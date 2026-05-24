@@ -562,11 +562,28 @@ main {
     linear-gradient(180deg, var(--sea-700) 0%, var(--sea-500) 100%);
 }
 .detail-hero > * { position: relative; z-index: 1; }
+.detail-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 10px;
+}
 .detail-name {
   font-size: clamp(34px, 7vw, 48px);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.05;
+}
+.detail-hero-time {
+  margin-top: 12px;
+  font-size: clamp(40px, 11vw, 64px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
 }
 .detail-block { margin-bottom: 28px; }
 .detail-cta {
