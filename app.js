@@ -915,8 +915,11 @@
     const occ = nextOccurrence(day);
     const hijriLine = formatHijriLine(day, occ);
     const gregLine = formatGregLine(day, occ);
+    // Ҳафта куни — ҳафталик кунларда ҲИЖРИЙ блок аллақачон кўрсатгани учун
+    // фақат йиллик ва ойлик кунларга кўрсатилаётган санага кўра қўшилади.
+    const weekdaySub = day.frequency !== 'weekly' ? weekDaysFull[occ.date.getDay()] : '';
     drawInfoBlock(ctx, padX, 540, W - padX * 2, 'ҲИЖРИЙ', hijriLine);
-    drawInfoBlock(ctx, padX, 720, W - padX * 2, 'МИЛОДИЙ', gregLine);
+    drawInfoBlock(ctx, padX, 720, W - padX * 2, 'МИЛОДИЙ', gregLine, weekdaySub);
 
     // Кун ҳақида тавсиф — баландлиги матнга мос ҳолда динамик ҳисобланади.
     if (day.description) {
@@ -1012,7 +1015,7 @@
     }
   }
 
-  function drawInfoBlock(ctx, x, y, w, label, value) {
+  function drawInfoBlock(ctx, x, y, w, label, value, sub) {
     const h = 160;
     ctx.fillStyle = 'rgba(255,255,255,0.14)';
     roundRect(ctx, x, y, w, h, 28);
@@ -1024,7 +1027,12 @@
     ctx.fillText(label, x + 36, y + 28);
     ctx.font = '700 52px "DM Sans", system-ui, sans-serif';
     ctx.fillStyle = '#ffffff';
-    ctx.fillText(value, x + 36, y + 72);
+    ctx.fillText(value, x + 36, y + 70);
+    if (sub) {
+      ctx.font = '600 28px "DM Sans", system-ui, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.78)';
+      ctx.fillText(sub, x + 36, y + 124);
+    }
   }
 
   function formatHijriLine(day, occ) {
