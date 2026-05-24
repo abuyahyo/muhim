@@ -409,8 +409,10 @@
     if (hasShareContent) {
       html += '<button class="share-btn" onclick="shareDaySheet(\'' + escapeHtml(day.id) + '\')" aria-label="Расмлар тўплами" title="Оят ва ҳадислар билан расмлар">';
       html += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
-      html += '<rect x="3" y="3" width="13" height="13" rx="2"/>';
-      html += '<path d="M8 21h11a2 2 0 0 0 2-2V8"/>';
+      html += '<rect x="6" y="2" width="16" height="16" rx="2"/>';
+      html += '<circle cx="12" cy="8" r="2"/>';
+      html += '<path d="m22 13-1.3-1.3a2.4 2.4 0 0 0-3.4 0L11 18"/>';
+      html += '<path d="M18 22H4a2 2 0 0 1-2-2V6"/>';
       html += '</svg></button>';
     }
     html += '<button class="share-btn" onclick="shareDay(\'' + escapeHtml(day.id) + '\')" aria-label="Улашиш" title="Улашиш">';
