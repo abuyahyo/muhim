@@ -920,15 +920,8 @@
 
     // Ҳафта куни — ҳафталик кунларда ҲИЖРИЙ блок аллақачон кўрсатгани учун
     // фақат йиллик ва ойлик кунларга алоҳида блок сифатида қўшилади.
-    let descY = 900;
     if (day.frequency !== 'weekly') {
       drawInfoBlock(ctx, padX, 900, W - padX * 2, 'ҲАФТА КУНИ', weekDaysFull[occ.date.getDay()]);
-      descY = 1080;
-    }
-
-    // Кун ҳақида тавсиф — баландлиги матнга мос ҳолда динамик ҳисобланади.
-    if (day.description) {
-      drawDescriptionBlock(ctx, padX, descY, W - padX * 2, 1230, day.description);
     }
 
     // Сайт номи пастда
@@ -937,61 +930,6 @@
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText('abuyahyo.github.io/muhim', W / 2, H - 80);
-  }
-
-  // КУН ҲАҚИДА блоки — баландлиги матнга мос ҳисобланади.
-  // maxBottom — пастки чегара (масалан, сайт ёзувидан олдин). Қанча матн
-  // сиғса, ушбу чегарагача чизилади; қолгани «…» билан тугатилади.
-  function drawDescriptionBlock(ctx, x, y, w, maxBottom, text) {
-    const padTop = 22;
-    const labelGap = 38;
-    const padBottom = 22;
-    const lineH = 36;
-    const textX = x + 36;
-    const textW = w - 72;
-    ctx.font = '500 28px "DM Sans", system-ui, sans-serif';
-    const lines = layoutLines(ctx, text, textW);
-    const availLines = Math.max(1, Math.floor((maxBottom - y - padTop - labelGap - padBottom) / lineH));
-    const useLines = Math.min(lines.length, availLines);
-    const blockH = padTop + labelGap + useLines * lineH + padBottom;
-    ctx.fillStyle = 'rgba(255,255,255,0.14)';
-    roundRect(ctx, x, y, w, blockH, 28);
-    ctx.fill();
-    ctx.font = '700 22px "DM Sans", system-ui, sans-serif';
-    ctx.fillStyle = 'rgba(255,255,255,0.75)';
-    ctx.textBaseline = 'top';
-    ctx.textAlign = 'left';
-    ctx.fillText('КУН ҲАҚИДА', textX, y + padTop);
-    ctx.font = '500 28px "DM Sans", system-ui, sans-serif';
-    ctx.fillStyle = '#ffffff';
-    const textY = y + padTop + labelGap;
-    for (let i = 0; i < useLines; i++) {
-      let txt = lines[i];
-      if (i === useLines - 1 && lines.length > useLines) {
-        while (ctx.measureText(txt + '…').width > textW && txt.length > 0) {
-          txt = txt.slice(0, -1);
-        }
-        txt += '…';
-      }
-      ctx.fillText(txt, textX, textY + i * lineH);
-    }
-  }
-
-  function layoutLines(ctx, text, maxW) {
-    const words = String(text).replace(/\n+/g, ' ').split(/\s+/);
-    const lines = [];
-    let line = '';
-    for (let i = 0; i < words.length; i++) {
-      const test = line ? line + ' ' + words[i] : words[i];
-      if (ctx.measureText(test).width > maxW && line) {
-        lines.push(line);
-        line = words[i];
-      } else {
-        line = test;
-      }
-    }
-    if (line) lines.push(line);
-    return lines;
   }
 
   function wrapTextEllipsis(ctx, text, x, y, maxW, lineH, maxLines) {
