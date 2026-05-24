@@ -404,12 +404,22 @@
     let html = '<div class="fade-in detail-wrap mood--' + currentMood() + '">';
     html += '<div class="detail-topbar">';
     html += '<button class="back-btn" onclick="goBack()">← Орқага</button>';
+    html += '<div class="detail-actions">';
+    const hasShareContent = (day.verses && day.verses.length) || (day.hadiths && day.hadiths.length);
+    if (hasShareContent) {
+      html += '<button class="share-btn" onclick="shareDaySheet(\'' + escapeHtml(day.id) + '\')" aria-label="Расмлар тўплами" title="Оят ва ҳадислар билан расмлар">';
+      html += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
+      html += '<rect x="3" y="3" width="13" height="13" rx="2"/>';
+      html += '<path d="M8 21h11a2 2 0 0 0 2-2V8"/>';
+      html += '</svg></button>';
+    }
     html += '<button class="share-btn" onclick="shareDay(\'' + escapeHtml(day.id) + '\')" aria-label="Улашиш" title="Улашиш">';
     html += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
     html += '<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>';
     html += '<polyline points="16 6 12 2 8 6"/>';
     html += '<line x1="12" y1="2" x2="12" y2="15"/>';
     html += '</svg></button>';
+    html += '</div>';
     html += '</div>';
 
     html += '<div class="detail-hero">';
@@ -802,6 +812,7 @@
   window.toggleGregDays = toggleGregDays;
   window.toggleCellTint = toggleCellTint;
   window.shareDay = shareDay;
+  window.shareDaySheet = shareDaySheet;
 
   // Кун-карточкасини улашиш — Web Share API орқали native ulashish ойнаси
   // очилади. Иложи бўлса — карточка-расм ҳам бирга юборилади (canShare files).
@@ -868,6 +879,228 @@
       });
     });
   }
+
+  // === КЎП-САҲИФАЛИ УЛАШИШ (оят ва ҳадислар билан — Instagram карусели) ===
+  const SHARE_W = 1080;
+  const SHARE_H = 1350;
+  const SHARE_PAD_X = 80;
+  const SHARE_CONTENT_TOP = 240;
+  const SHARE_CONTENT_BOTTOM = 1240;
+  const SHARE_BLOCK_GAP = 16;
+
+  function shareDaySheet(dayId) {
+    let day = null;
+    for (let i = 0; i < importantDays.length; i++) {
+      if (importantDays[i].id === dayId) { day = importantDays[i]; break; }
+    }
+    if (!day) return;
+    buildDayImages(day).then(function (files) {
+      const filtered = (files || []).filter(Boolean);
+      if (filtered.length && navigator.canShare && navigator.canShare({ files: filtered })) {
+        navigator.share({ files: filtered }).catch(function () {});
+      } else if (filtered.length && navigator.canShare && navigator.canShare({ files: [filtered[0]] })) {
+        navigator.share({ files: [filtered[0]] }).catch(function () {});
+      } else if (navigator.share) {
+        navigator.share({ title: day.name, text: day.short || day.description || '' }).catch(function () {});
+      }
+    });
+  }
+
+  function buildDayImages(day) {
+    const fontsReady = (document.fonts && document.fonts.load)
+      ? Promise.all([
+          document.fonts.load('800 96px "DM Sans"'),
+          document.fonts.load('700 28px "DM Sans"'),
+          document.fonts.load('500 28px "DM Sans"'),
+          document.fonts.load('600 36px "DM Sans"')
+        ]).catch(function () {})
+      : Promise.resolve();
+    return fontsReady.then(function () {
+      const measureCtx = document.createElement('canvas').getContext('2d');
+      const items = collectDayShareItems(measureCtx, day);
+      const pages = packSharePages(items);
+      const allPages = [{ kind: 'cover' }].concat(pages);
+      const total = allPages.length;
+      return Promise.all(allPages.map(function (page, idx) {
+        return renderDaySharePage(day, page, idx + 1, total);
+      }));
+    });
+  }
+
+  function collectDayShareItems(ctx, day) {
+    const innerW = SHARE_W - SHARE_PAD_X * 2 - 72;
+    const items = [];
+    (day.verses || []).forEach(function (v) {
+      items.push(measureBlock(ctx, String(v.source || '').toUpperCase(), '«' + v.translation + '»', innerW));
+    });
+    (day.hadiths || []).forEach(function (h) {
+      const block = measureBlock(ctx, String(h.source || '').toUpperCase(), '«' + h.text + '»', innerW);
+      if (h.narrator) {
+        block.narrator = h.narrator;
+        block.height += 36;
+      }
+      items.push(block);
+    });
+    return items;
+  }
+
+  function measureBlock(ctx, label, text, innerW) {
+    const padTop = 22, labelGap = 38, padBottom = 22, lineH = 36;
+    ctx.font = '500 28px "DM Sans", system-ui, sans-serif';
+    const lines = layoutLines(ctx, text, innerW);
+    return { label: label, lines: lines, height: padTop + labelGap + lines.length * lineH + padBottom };
+  }
+
+  function packSharePages(items) {
+    const pages = [];
+    const budget = SHARE_CONTENT_BOTTOM - SHARE_CONTENT_TOP - 100;
+    let page = { kind: 'content', items: [] };
+    let used = 0;
+    items.forEach(function (item) {
+      const inc = item.height + (page.items.length ? SHARE_BLOCK_GAP : 0);
+      if (page.items.length > 0 && used + inc > budget) {
+        pages.push(page);
+        page = { kind: 'content', items: [] };
+        used = 0;
+      }
+      page.items.push(item);
+      used += page.items.length === 1 ? item.height : inc;
+    });
+    if (page.items.length) pages.push(page);
+    return pages;
+  }
+
+  function renderDaySharePage(day, page, pageNum, totalPages) {
+    const canvas = document.createElement('canvas');
+    canvas.width = SHARE_W;
+    canvas.height = SHARE_H;
+    const ctx = canvas.getContext('2d');
+    if (page.kind === 'cover') {
+      drawCard(ctx, day, SHARE_W, SHARE_H);
+    } else {
+      drawDayShareBackground(ctx, day);
+      const headerBottom = drawDayHeaderCompact(ctx, day);
+      drawShareContent(ctx, page.items, headerBottom + 30);
+    }
+    drawShareFooter(ctx, pageNum, totalPages, page.kind !== 'cover');
+    return new Promise(function (resolve) {
+      canvas.toBlob(function (blob) {
+        if (!blob) { resolve(null); return; }
+        resolve(new File([blob], (day.id || 'kun') + '-' + pageNum + '.png', { type: 'image/png' }));
+      }, 'image/png');
+    });
+  }
+
+  function drawDayShareBackground(ctx, day) {
+    const color = day.color || '#0369a1';
+    const grad = ctx.createLinearGradient(0, 0, SHARE_W, SHARE_H);
+    grad.addColorStop(0, color);
+    grad.addColorStop(0.5, color + 'dd');
+    grad.addColorStop(1, color + 'aa');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, SHARE_W, SHARE_H);
+    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+    for (let i = 0; i < 30; i++) {
+      const x = (i * 137 + 53) % SHARE_W;
+      const y = (i * 211 + 91) % (SHARE_H * 0.5);
+      const r = (i % 3) + 1.5;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function drawDayHeaderCompact(ctx, day) {
+    ctx.font = '700 22px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.75)';
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'left';
+    ctx.fillText(freqLabel(day).toUpperCase(), SHARE_PAD_X, 110);
+    const fit = fitNameFont(ctx, day.name, SHARE_W - SHARE_PAD_X * 2, 2, 64, 40, '800');
+    ctx.fillStyle = '#ffffff';
+    const lineH = Math.round(fit.size * 1.1);
+    const limit = Math.min(fit.lines.length, 2);
+    for (let i = 0; i < limit; i++) {
+      ctx.fillText(fit.lines[i], SHARE_PAD_X, 145 + i * lineH);
+    }
+    return 145 + limit * lineH;
+  }
+
+  function fitNameFont(ctx, name, maxW, maxLines, startSize, minSize, weight) {
+    let size = startSize;
+    while (size >= minSize) {
+      ctx.font = weight + ' ' + size + 'px "DM Sans", system-ui, sans-serif';
+      const lines = layoutLines(ctx, name, maxW);
+      if (lines.length <= maxLines) return { size: size, lines: lines };
+      size -= 8;
+    }
+    ctx.font = weight + ' ' + minSize + 'px "DM Sans", system-ui, sans-serif';
+    return { size: minSize, lines: layoutLines(ctx, name, maxW) };
+  }
+
+  function drawShareContent(ctx, items, startY) {
+    let cursorY = Math.max(startY || SHARE_CONTENT_TOP, SHARE_CONTENT_TOP);
+    items.forEach(function (item) {
+      drawShareBlock(ctx, SHARE_PAD_X, cursorY, SHARE_W - SHARE_PAD_X * 2, item);
+      cursorY += item.height + SHARE_BLOCK_GAP;
+    });
+  }
+
+  function drawShareBlock(ctx, x, y, w, item) {
+    const padTop = 22, labelGap = 38, lineH = 36;
+    const textX = x + 36;
+    ctx.fillStyle = 'rgba(255,255,255,0.14)';
+    roundRect(ctx, x, y, w, item.height, 28);
+    ctx.fill();
+    ctx.font = '700 22px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.75)';
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'left';
+    ctx.fillText(item.label, textX, y + padTop);
+    ctx.font = '500 28px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = '#ffffff';
+    const textY = y + padTop + labelGap;
+    for (let i = 0; i < item.lines.length; i++) {
+      ctx.fillText(item.lines[i], textX, textY + i * lineH);
+    }
+    if (item.narrator) {
+      ctx.font = '600 22px "DM Sans", system-ui, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.fillText('— ' + item.narrator, textX, textY + item.lines.length * lineH + 4);
+    }
+  }
+
+  function drawShareFooter(ctx, pageNum, totalPages, withSite) {
+    ctx.font = '500 24px "DM Sans", system-ui, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    ctx.textBaseline = 'middle';
+    if (totalPages > 1) {
+      ctx.textAlign = 'left';
+      ctx.fillText(pageNum + ' / ' + totalPages, SHARE_PAD_X, SHARE_H - 80);
+    }
+    if (withSite) {
+      ctx.textAlign = 'right';
+      ctx.fillText('abuyahyo.github.io/muhim', SHARE_W - SHARE_PAD_X, SHARE_H - 80);
+    }
+  }
+
+  function layoutLines(ctx, text, maxW) {
+    const words = String(text).replace(/\n+/g, ' ').split(/\s+/);
+    const lines = [];
+    let line = '';
+    for (let i = 0; i < words.length; i++) {
+      const test = line ? line + ' ' + words[i] : words[i];
+      if (ctx.measureText(test).width > maxW && line) {
+        lines.push(line);
+        line = words[i];
+      } else {
+        line = test;
+      }
+    }
+    if (line) lines.push(line);
+    return lines;
+  }
+
 
   function drawCard(ctx, day, W, H) {
     // Градиент фон — деталь-hero бошқа жойда қандай чизилса шу тарзда.
