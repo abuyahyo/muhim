@@ -1033,10 +1033,10 @@ main {
 .cal-cell {
   aspect-ratio: 1;
   min-width: 0;
-  border-radius: var(--r-md);
+  border-radius: var(--r-lg);
   padding: clamp(2px, 1.2vw, 10px);
-  background: color-mix(in srgb, var(--surface) 60%, transparent);
-  border: 1px solid transparent;
+  background: color-mix(in srgb, var(--surface) 55%, transparent);
+  border: 1px solid color-mix(in srgb, var(--line) 50%, transparent);
   cursor: default;
   position: relative;
   transition: var(--t-fast);
@@ -1049,26 +1049,34 @@ main {
   overflow: hidden;
 }
 .cal-cell.empty { background: transparent; }
-.cal-cell.important {
-  cursor: pointer;
-  background: color-mix(in srgb, var(--cell-tint, var(--sea-500)) 14%, var(--surface));
-  border-color: color-mix(in srgb, var(--cell-tint, var(--sea-500)) 35%, transparent);
+.cal-cell.important { cursor: pointer; }
+/* Махсус кунлар (йиллик/ойлик) — тўлароқ ранг ва аниқроқ чегара. */
+.cal-cell.is-special {
+  background: color-mix(in srgb, var(--cell-tint, var(--sea-500)) 22%, var(--surface));
+  border-color: color-mix(in srgb, var(--cell-tint, var(--sea-500)) 55%, transparent);
+}
+.cal-cell.is-special .cal-h-day { font-weight: 600; }
+/* Ҳафталик такрорий (Жума) — нозик белги. */
+.cal-cell.is-weekly {
+  background: color-mix(in srgb, var(--cell-tint, var(--sea-500)) 9%, var(--surface));
+  border-color: color-mix(in srgb, var(--cell-tint, var(--sea-500)) 22%, transparent);
 }
 .cal-cell.important:hover { transform: translateY(-2px); }
 .cal-shell:not(.show-tint) .cal-cell.important:not(.today) {
   background: color-mix(in srgb, var(--surface) 60%, transparent);
   border-color: transparent;
 }
+.cal-shell:not(.show-tint) .cal-cell.important:not(.today) .cal-h-day { font-weight: 400; }
 .cal-cell.today {
   background: linear-gradient(160deg, var(--sea-500) 0%, var(--sea-700) 100%);
   border-color: transparent;
-  box-shadow: 0 8px 20px -6px color-mix(in srgb, var(--sea-500) 60%, transparent);
+  box-shadow: 0 8px 22px -6px color-mix(in srgb, var(--sea-500) 70%, transparent);
 }
-.cal-cell.today .cal-h-day { color: #ffffff; }
+.cal-cell.today .cal-h-day { color: #ffffff; font-weight: 700; }
 .cal-h-day {
   font-family: var(--font-num);
   font-size: clamp(16px, 4.6vw, 26px);
-  font-weight: 400;
+  font-weight: 500;
   color: var(--ink);
   line-height: 1;
 }
