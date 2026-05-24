@@ -374,6 +374,11 @@ main {
 .upcoming {
   margin-bottom: 32px;
 }
+.upcoming-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 .upcoming-eyebrow {
   font-size: 12px;
   letter-spacing: 0.16em;
