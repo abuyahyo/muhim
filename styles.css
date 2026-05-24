@@ -424,7 +424,7 @@ main {
   top: 0;
   bottom: 0;
   width: 4px;
-  background: var(--up-tint, var(--sea-500));
+  background: var(--sea-500);
 }
 .upcoming-info { min-width: 0; }
 .upcoming-name {
