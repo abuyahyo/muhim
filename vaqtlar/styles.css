@@ -150,6 +150,20 @@ main {
   color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
+.countdown-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+  margin: 18px auto 0;
+  max-width: 320px;
+}
+.countdown-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  transition: width 0.8s ease;
+}
 
 /* === Бўлим сарлавҳалари === */
 .times-section { margin-bottom: 28px; }
@@ -208,6 +222,26 @@ main {
   border-color: var(--accent);
 }
 .prayer-row.is-current .prayer-name { color: var(--ink); }
+.prayer-row.is-next { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+.prayer-row.is-past { opacity: 0.55; }
+.prayer-row.is-past:hover { opacity: 1; }
+.prayer-tag {
+  display: inline-block;
+  margin-left: 8px;
+  vertical-align: middle;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: var(--r-full);
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.prayer-tag--next {
+  color: var(--ink-mute);
+  background: color-mix(in srgb, var(--ink-mute) 16%, transparent);
+}
 
 /* === Саҳарлик / Ифтор жуфт карточкаси === */
 .ramadan-pair {
