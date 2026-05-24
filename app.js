@@ -645,31 +645,27 @@
       html += '<div class="month-events-title">Бу ойдаги муҳим кунлар</div>';
       for (let me = 0; me < monthRows.length; me++) {
         const ev = monthRows[me];
-        let dayNum, meta;
+        let meta;
         if (ev.frequency === 'monthly') {
-          dayNum = ev.hDays[0]; // штампда биринчи кун (масалан 13)
           const firstG = hijriToGregorian(hYear, hMonth, ev.hDays[0]);
           const lastG = hijriToGregorian(hYear, hMonth, ev.hDays[ev.hDays.length - 1]);
           meta = ev.hDays.join(', ') + ' ' + escapeHtml(hijriMonths[hMonth - 1])
                + ' · ' + firstG.getDate() + '–' + lastG.getDate() + ' ' + escapeHtml(gregorianMonthsShort[firstG.getMonth()]) + ' ' + firstG.getFullYear();
         } else if (ev.frequency === 'weekly') {
           // Шу ҳижрий ойда event'нинг ҳафта кунига тушадиган барча кунларини
-          // тўплаб, штампда биринчисини, метада эса рўйхатни кўрсатамиз.
+          // тўплаб метада рўйхат қиламиз.
           const targets = ev.weekDays || [ev.weekDay];
           const matches = [];
           for (let d = 1; d <= daysInMonth; d++) {
             const g = hijriToGregorian(hYear, hMonth, d);
             if (targets.indexOf(g.getDay()) !== -1) matches.push(d);
           }
-          dayNum = matches[0];
           meta = matches.join(', ') + ' ' + escapeHtml(hijriMonths[hMonth - 1]);
         } else {
-          dayNum = ev.hDay;
           const evGreg = hijriToGregorian(hYear, hMonth, ev.hDay);
           meta = ev.hDay + ' ' + escapeHtml(hijriMonths[hMonth - 1]) + ' · ' + evGreg.getDate() + ' ' + escapeHtml(gregorianMonthsShort[evGreg.getMonth()]) + ' ' + evGreg.getFullYear();
         }
         html += '<button class="event-row" onclick="showDay(\'' + escapeHtml(ev.id) + '\')">';
-        html += '<div class="event-day-num" style="background: linear-gradient(135deg, ' + ev.color + ', ' + ev.color + 'cc);">' + dayNum + '</div>';
         html += '<div class="event-info">';
         html += '<div class="event-name">' + escapeHtml(ev.name) + '</div>';
         html += '<div class="event-meta">' + meta + '</div>';
