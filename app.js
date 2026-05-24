@@ -600,8 +600,10 @@
       if (monthlyEvent) dotEvents.push(monthlyEvent);
       if (isFriday && jumuaEntry) dotEvents.push(jumuaEntry);
 
+      // Иерархия: йиллик/ойлик махсус кунлар кучлироқ, ҳафталик (Жума) нозикроқ.
+      const isSpecial = !!(yearlyEvent || monthlyEvent);
       let cls = 'cal-cell';
-      if (dotEvents.length) cls += ' important';
+      if (dotEvents.length) cls += ' important' + (isSpecial ? ' is-special' : ' is-weekly');
       if (isToday) cls += ' today';
 
       const onclick = linkEvent ? 'onclick="showDay(\'' + escapeHtml(linkEvent.id) + '\')"' : '';
