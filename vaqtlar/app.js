@@ -153,16 +153,12 @@
     let currentId = null;
     let nextId = null;
     let nextTime = null;
-    let currentTime = null;
     for (let i = 0; i < sequence.length; i++) {
       if (now < sequence[i].t) {
         nextId = sequence[i].id;
         nextTime = sequence[i].t;
         // Бомдоддан олдин — Хуфтон вақти ҳамон давом этмоқда (кеча).
         currentId = i > 0 ? sequence[i - 1].id : 'isha';
-        // i==0 (Бомдоддан олдин) — ҳозирги вақт боши кечаги Хуфтон;
-        // уни caller тўлдиради.
-        currentTime = i > 0 ? sequence[i - 1].t : null;
         break;
       }
     }
@@ -170,10 +166,9 @@
     if (!nextId) {
       currentId = 'isha';
       nextId = 'fajr-next';
-      currentTime = times.isha;
       // эртанги фажр'ни ҳисоблаб қояйлик (caller параметр сифатида беради).
     }
-    return { currentId, nextId, nextTime, currentTime };
+    return { currentId, nextId, nextTime };
   }
 
   // === БОШ САҲИФА ===
@@ -191,17 +186,6 @@
     const cn = currentAndNext(times, now);
     if (cn.nextId === 'fajr-next') {
       cn.nextTime = tomTimes.fajr;
-    }
-    // Бомдоддан олдин — ҳозирги вақт боши кечаги Хуфтон.
-    if (cn.currentTime === null) {
-      const yesterday = new Date(today); yesterday.setDate(today.getDate() - 1);
-      const yTimes = PrayerTimes.calculate(yesterday, loc.lat, loc.lon, opts);
-      cn.currentTime = yTimes.isha;
-    }
-    // Ҳозирги намоздан кейингисигача ўтган улуш (0..1).
-    let progress = 0;
-    if (cn.currentTime && cn.nextTime && cn.nextTime > cn.currentTime) {
-      progress = Math.min(1, Math.max(0, (now - cn.currentTime) / (cn.nextTime - cn.currentTime)));
     }
 
     // Кейинги намоз номини олиш.
@@ -231,7 +215,6 @@
     }
     html += '</div>';
     html += '<div class="countdown-time" id="countdown-time">' + fmtHHMM(countdownMs) + '</div>';
-    html += '<div class="countdown-progress"><div class="countdown-progress-fill" id="countdown-progress" style="width:' + (progress * 100).toFixed(1) + '%;"></div></div>';
     html += '</div>';
     html += '</section>';
 
@@ -357,31 +340,24 @@
     document.getElementById('view-home').innerHTML = html;
 
     // Countdown'ни ҳар секунда янгилаймиз.
-    startCountdown(cn.nextTime, cn.currentTime);
+    startCountdown(cn.nextTime);
   }
 
   // === Countdown ticker ===
   let countdownTimer = null;
-  function startCountdown(target, start) {
+  function startCountdown(target) {
     if (countdownTimer) clearInterval(countdownTimer);
     if (!target) return;
-    const span = (start && target > start) ? (target - start) : 0;
     countdownTimer = setInterval(function () {
       const el = document.getElementById('countdown-time');
       if (!el) { clearInterval(countdownTimer); return; }
-      const now = new Date();
-      const ms = target - now;
+      const ms = target - new Date();
       if (ms <= 0) {
         clearInterval(countdownTimer);
         renderHome(); // вақт ўтди — қайта рендер.
         return;
       }
       el.innerHTML = fmtHHMM(ms);
-      const bar = document.getElementById('countdown-progress');
-      if (bar && span > 0) {
-        const pr = Math.min(1, Math.max(0, (now - start) / span));
-        bar.style.width = (pr * 100).toFixed(1) + '%';
-      }
     }, 1000);
   }
 
