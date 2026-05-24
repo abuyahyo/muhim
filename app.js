@@ -215,46 +215,41 @@
   // === КУН КАРТОЧКАЛАРИ ГРИДИ ===
   // Бош саҳифадаги бир секция учун. Йиллик ва такрорий
   // кунлар алоҳида секцияларда бир хил тузилмадан фойдаланади.
+  // Кун учун сана сатри: «Ҳафта куни · Ҳижрий · Милодий».
+  function dayDateLine(d) {
+    const g = d.nextDate;
+    return escapeHtml(weekDaysFull[g.getDay()]) + ' · '
+      + d.nextHijri.day + ' ' + escapeHtml(hijriMonths[d.nextHijri.month - 1]) + ' · '
+      + g.getDate() + ' ' + escapeHtml(gregorianMonthsShort[g.getMonth()]);
+  }
+
+  function dayCountdown(d) {
+    if (d.daysLeft === 0) return { num: '0', label: 'Бугун' };
+    if (d.daysLeft === 1) return { num: '1', label: 'Эртага' };
+    return { num: d.daysLeft, label: 'кун қолди' };
+  }
+
+  // Битта кун карточкаси — «яқинлашаётган кун» услубида (штамп + ном + сана + саноқ).
+  function dayCardHtml(d) {
+    const cd = dayCountdown(d);
+    let h = '<button class="upcoming-card" style="--up-tint:' + d.color + ';" onclick="showDay(\'' + escapeHtml(d.id) + '\')">';
+    h += '<div class="upcoming-visual" style="background: linear-gradient(135deg, ' + d.color + ', ' + d.color + 'cc);">' + d.nextHijri.day + '</div>';
+    h += '<div class="upcoming-info">';
+    h += '<div class="upcoming-name">' + escapeHtml(d.name) + '</div>';
+    h += '<div class="upcoming-short">' + dayDateLine(d) + '</div>';
+    h += '</div>';
+    h += '<div class="upcoming-countdown">';
+    h += '<div class="countdown-number">' + cd.num + '</div>';
+    h += '<div class="countdown-label">' + cd.label + '</div>';
+    h += '</div>';
+    h += '</button>';
+    return h;
+  }
+
   function renderDayGrid(eyebrow, title, items, collapsed) {
     if (!items.length) return '';
     let cards = '';
-
-    for (let i = 0; i < items.length; i++) {
-      const d = items[i];
-      const gDate = d.nextDate;
-      let cdCls = 'day-card-countdown';
-      let cdText;
-      if (d.daysLeft === 0) { cdText = '● Бугун'; cdCls += ' today'; }
-      else if (d.daysLeft === 1) { cdText = 'Эртага'; }
-      else { cdText = d.daysLeft + ' кун қолди'; }
-
-      // Баннер ичида рақам ва ой бирлаштирилган "дата-штамп":
-      //   27
-      //   РАМАЗОН
-      // Ҳафталик кунлар учун эса штамп ичида ҳафта куни номи катта ҳарфда.
-      let stamp;
-      if (d.frequency === 'weekly') {
-        stamp = '<div class="day-card-stamp"><div class="day-card-weekday">'
-              + escapeHtml(weekDaysFull[d.nextWeekDay]) + '</div></div>';
-      } else {
-        stamp = '<div class="day-card-stamp">'
-              + '<div class="day-card-number">' + d.nextHijri.day + '</div>'
-              + '<div class="day-card-month">' + escapeHtml(hijriMonths[d.nextHijri.month - 1]) + '</div>'
-              + '</div>';
-      }
-
-      cards += '<button class="day-card" onclick="showDay(\'' + escapeHtml(d.id) + '\')">';
-      cards += '<div class="day-card-banner" style="background: linear-gradient(135deg, ' + d.color + ', ' + d.color + 'cc);">';
-      cards += stamp;
-      cards += '</div>';
-      cards += '<div class="day-card-body">';
-      cards += '<div class="day-card-name">' + escapeHtml(d.name) + '</div>';
-      cards += '<div class="day-card-short">' + escapeHtml(d.short) + '</div>';
-      cards += '<div class="day-card-footer">';
-      cards += '<span class="day-card-greg">' + gDate.getDate() + ' ' + escapeHtml(gregorianMonthsShort[gDate.getMonth()]) + ' ' + gDate.getFullYear() + '</span>';
-      cards += '<span class="' + cdCls + '">' + cdText + '</span>';
-      cards += '</div></div></button>';
-    }
+    for (let i = 0; i < items.length; i++) cards += dayCardHtml(items[i]);
 
     if (collapsed) {
       return '<details class="day-grid-fold">'
@@ -266,12 +261,12 @@
            +   '<span class="day-grid-summary-meta">' + items.length + '</span>'
            +   '<span class="day-grid-summary-chev" aria-hidden="true">▾</span>'
            + '</summary>'
-           + '<div class="cards-grid">' + cards + '</div>'
+           + '<div class="upcoming-list">' + cards + '</div>'
            + '</details>';
     }
     return '<section>'
          + '<div class="section-head"><div class="section-title">' + escapeHtml(title) + '</div></div>'
-         + '<div class="cards-grid">' + cards + '</div>'
+         + '<div class="upcoming-list">' + cards + '</div>'
          + '</section>';
   }
 
@@ -359,28 +354,7 @@
       html += '<section class="upcoming">';
       html += '<div class="upcoming-eyebrow">Яқинлашаётган кунлар</div>';
       html += '<div class="upcoming-list">';
-      for (let i = 0; i < upcomingDays.length; i++) {
-        const u = upcomingDays[i];
-        let cdNum, cdLabel;
-        if (u.daysLeft === 0) { cdNum = '0'; cdLabel = 'Бугун'; }
-        else if (u.daysLeft === 1) { cdNum = '1'; cdLabel = 'Эртага'; }
-        else { cdNum = u.daysLeft; cdLabel = 'кун қолди'; }
-        const g = u.nextDate;
-        const dateLine = escapeHtml(weekDaysFull[g.getDay()]) + ' · '
-          + u.nextHijri.day + ' ' + escapeHtml(hijriMonths[u.nextHijri.month - 1]) + ' · '
-          + g.getDate() + ' ' + escapeHtml(gregorianMonthsShort[g.getMonth()]);
-        html += '<button class="upcoming-card" style="--up-tint:' + u.color + ';" onclick="showDay(\'' + escapeHtml(u.id) + '\')">';
-        html += '<div class="upcoming-visual" style="background: linear-gradient(135deg, ' + u.color + ', ' + u.color + 'cc);">' + u.nextHijri.day + '</div>';
-        html += '<div class="upcoming-info">';
-        html += '<div class="upcoming-name">' + escapeHtml(u.name) + '</div>';
-        html += '<div class="upcoming-short">' + dateLine + '</div>';
-        html += '</div>';
-        html += '<div class="upcoming-countdown">';
-        html += '<div class="countdown-number">' + cdNum + '</div>';
-        html += '<div class="countdown-label">' + cdLabel + '</div>';
-        html += '</div>';
-        html += '</button>';
-      }
+      for (let i = 0; i < upcomingDays.length; i++) html += dayCardHtml(upcomingDays[i]);
       html += '</div></section>';
     }
 

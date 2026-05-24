@@ -508,7 +508,7 @@ main {
 
 /* === Йиғилувчи кунлар бўлими (details/summary) === */
 .day-grid-fold { margin-bottom: 28px; }
-.day-grid-fold > .cards-grid { margin-top: 20px; }
+.day-grid-fold > .upcoming-list { margin-top: 20px; }
 .day-grid-summary {
   display: flex;
   align-items: center;
