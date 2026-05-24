@@ -782,7 +782,7 @@ main {
   gap: 16px;
 }
 @media (min-width: 480px) {
-  .detail-dates { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .detail-dates { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 24px; }
 }
 .detail-date-block {
   padding: 16px 20px;

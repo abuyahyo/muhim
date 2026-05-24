@@ -442,6 +442,15 @@
     html += '<div class="detail-date-label">' + rightLabel + '</div>';
     html += '<div class="detail-date-value">' + gDate.getDate() + ' ' + escapeHtml(gregorianMonths[gDate.getMonth()]) + ' ' + gDate.getFullYear() + '</div>';
     html += '</div>';
+
+    // Ҳафта куни — ҳафталик кунларда чап блокда аллақачон кўрсатилгани учун
+    // фақат йиллик ва ойлик кунларга қўшилади (кўрсатилаётган санага кўра).
+    if (day.frequency !== 'weekly') {
+      html += '<div class="detail-date-block">';
+      html += '<div class="detail-date-label">Ҳафта куни</div>';
+      html += '<div class="detail-date-value">' + escapeHtml(weekDaysFull[gDate.getDay()]) + '</div>';
+      html += '</div>';
+    }
     html += '</div></div></div>';
 
     html += '<div class="detail-block">';
