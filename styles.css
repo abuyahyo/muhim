@@ -706,6 +706,11 @@ main {
   border-color: var(--sea-300);
   color: var(--sea-700);
 }
+.detail-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 .share-btn {
   width: 44px;
   height: 44px;
