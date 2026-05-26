@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import HijriCalc from '../hijri.js';
+import HijriCalc from '../kunlar/hijri.js';
 
 const { gregorianToHijri, hijriToGregorian, hijriMonthLength } = HijriCalc;
 
