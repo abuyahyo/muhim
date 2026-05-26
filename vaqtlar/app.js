@@ -906,8 +906,16 @@
   }
 
   function drawShareContent(ctx, items, startY) {
-    let cursorY = Math.max(startY || SHARE_CONTENT_TOP, SHARE_CONTENT_TOP);
-    items.forEach(function (item, idx) {
+    const areaTop = Math.max(startY || SHARE_CONTENT_TOP, SHARE_CONTENT_TOP);
+    let totalH = 0;
+    for (let i = 0; i < items.length; i++) {
+      totalH += items[i].height + (i ? SHARE_BLOCK_GAP : 0);
+    }
+    // Матн кам бўлса — қолган бўш жойда вертикал марказга суриб қўямиз.
+    const avail = SHARE_CONTENT_BOTTOM - areaTop;
+    let cursorY = areaTop;
+    if (totalH < avail) cursorY = Math.round(areaTop + (avail - totalH) / 2);
+    items.forEach(function (item) {
       drawShareBlock(ctx, SHARE_PAD_X, cursorY, SHARE_W - SHARE_PAD_X * 2, item);
       cursorY += item.height + SHARE_BLOCK_GAP;
     });
