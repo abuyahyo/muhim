@@ -440,15 +440,9 @@
 
     // Оятлар — `verses` майдони мавжуд бўлмаса, секция умуман чиқмайди
     // (масалан Мавлуд каби, бу кунга оид Қуръон ояти йўқлиги аниқ бўлганда).
-    if (day.verses) {
+    // Оятлар — фақат мавжуд бўлганда кўрсатилади (бўш бўлса бўлим чиқмайди).
+    if (day.verses && day.verses.length) {
     html += '<div style="margin: 28px 0 16px;"><div class="section-title" style="font-size:22px;">Қуръон оятлари</div></div>';
-    if (day.verses.length === 0) {
-      html += '<div class="placeholder verses">';
-      html += '<div class="placeholder-icon">۞</div>';
-      html += '<div class="placeholder-title">Оятлар тез орада қўшилади</div>';
-      html += '<div class="placeholder-text">Бу кунга оид Қуръон оятлари кейинроқ киритилади, инша Аллоҳ.</div>';
-      html += '</div>';
-    } else {
       html += renderQuoteList(day.verses, function (verse) {
         let card = '<div class="detail-block">';
         if (verse.arabic) card += '<div class="arabic" style="font-size:26px;text-align:right;line-height:1.9;margin-bottom:16px;color:var(--ink);" dir="rtl">' + escapeHtml(verse.arabic) + '</div>';
@@ -460,18 +454,9 @@
       });
     }
 
-    }
-
-    // Ҳадислар — `hadiths` майдони мавжуд бўлмаса, секция чиқмайди.
-    if (day.hadiths) {
+    // Ҳадислар — фақат мавжуд бўлганда кўрсатилади.
+    if (day.hadiths && day.hadiths.length) {
     html += '<div style="margin: 28px 0 16px;"><div class="section-title" style="font-size:22px;">Саҳиҳ ҳадислар</div></div>';
-    if (day.hadiths.length === 0) {
-      html += '<div class="placeholder hadiths">';
-      html += '<div class="placeholder-icon">☾</div>';
-      html += '<div class="placeholder-title">Ҳадислар тез орада қўшилади</div>';
-      html += '<div class="placeholder-text">Бу кунга оид саҳиҳ ҳадислар кейинроқ киритилади, инша Аллоҳ.</div>';
-      html += '</div>';
-    } else {
       html += renderQuoteList(day.hadiths, function (hadith) {
         let card = '<div class="detail-block">';
         card += '<div class="detail-block-label">' + escapeHtml(hadith.source) + '</div>';
@@ -481,7 +466,6 @@
         card += '</div>';
         return card;
       });
-    }
     }
 
     html += '</div>';
