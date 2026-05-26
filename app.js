@@ -122,7 +122,7 @@
       for (let i = 0; i < sortedDays.length; i++) {
         if (current.day <= sortedDays[i]) {
           const date = hijriToGregorian(current.year, current.month, sortedDays[i]);
-          const daysLeft = Math.ceil((date - today) / 86400000);
+          const daysLeft = Math.round((new Date(date.getFullYear(), date.getMonth(), date.getDate()) - today) / 86400000);
           return { date: date, daysLeft: daysLeft, hijri: { year: current.year, month: current.month, day: sortedDays[i] } };
         }
       }
@@ -131,7 +131,7 @@
       let nextYear = current.year;
       if (nextMonth > 12) { nextMonth = 1; nextYear += 1; }
       const date = hijriToGregorian(nextYear, nextMonth, sortedDays[0]);
-      const daysLeft = Math.ceil((date - today) / 86400000);
+      const daysLeft = Math.round((new Date(date.getFullYear(), date.getMonth(), date.getDate()) - today) / 86400000);
       return { date: date, daysLeft: daysLeft, hijri: { year: nextYear, month: nextMonth, day: sortedDays[0] } };
     }
 
@@ -141,7 +141,7 @@
       year = current.year + 1;
     }
     const date = hijriToGregorian(year, day.hMonth, day.hDay);
-    const daysLeft = Math.ceil((date - today) / 86400000);
+    const daysLeft = Math.round((new Date(date.getFullYear(), date.getMonth(), date.getDate()) - today) / 86400000);
     return { date: date, daysLeft: daysLeft, hijri: { year: year, month: day.hMonth, day: day.hDay } };
   }
 
