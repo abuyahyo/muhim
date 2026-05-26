@@ -294,6 +294,15 @@
     html += '<h1 class="page-title">Кунлар</h1>';
     html += '</header>';
 
+    // Бугунги муҳим кун(лар) — йиллик event бугунги ҳижрий санага тўғри келса.
+    const todayEvents = [];
+    for (let i = 0; i < importantDays.length; i++) {
+      const d = importantDays[i];
+      if ((!d.frequency || d.frequency === 'yearly') && d.hMonth === hijri.month && d.hDay === hijri.day) {
+        todayEvents.push(d);
+      }
+    }
+
     html += '<section class="hero hero--' + currentMood() + '">';
     html += '<div class="hero-stars">' + STARS_HTML + '</div>';
     html += '<div class="hero-content">';
@@ -309,30 +318,17 @@
     html += '<div class="gregorian-date">' + today.getDate() + ' ' + escapeHtml(gregorianMonths[today.getMonth()]) + '</div>';
     html += '<div class="gregorian-week">' + escapeHtml(weekDaysFull[today.getDay()]) + ' · ' + today.getFullYear() + '</div>';
     html += '</div>';
-    html += '</div></div></section>';
-
-    // Бугун баннери — фақат йилда бир мартагина келадиган муҳим кунлар учун.
-    // Жума ва Аййамул Бийз каби такрорий event'лар бу банерда чиқмайди.
-    const todayEvents = [];
-    for (let i = 0; i < importantDays.length; i++) {
-      const d = importantDays[i];
-      if ((!d.frequency || d.frequency === 'yearly') && d.hMonth === hijri.month && d.hDay === hijri.day) {
-        todayEvents.push(d);
-      }
-    }
+    html += '</div>';
     if (todayEvents.length) {
-      html += '<section class="today-banner" style="--banner-tint:' + todayEvents[0].color + ';">';
-      html += '<div class="today-banner-label">● Бугун</div>';
-      html += '<div class="today-banner-chips">';
+      html += '<div class="hero-today">';
+      html += '<span class="hero-today-label">● Бугун</span>';
       for (let i = 0; i < todayEvents.length; i++) {
         const ev = todayEvents[i];
-        html += '<button class="today-chip" onclick="showDay(\'' + escapeHtml(ev.id) + '\')">';
-        html += '<span class="today-chip-dot" style="background:' + ev.color + ';"></span>';
-        html += '<span>' + escapeHtml(ev.name) + '</span>';
-        html += '</button>';
+        html += '<button class="hero-today-chip" onclick="showDay(\'' + escapeHtml(ev.id) + '\')">' + escapeHtml(ev.name) + '</button>';
       }
-      html += '</div></section>';
+      html += '</div>';
     }
+    html += '</div></section>';
 
     // ЯҚИНЛАШАЁТГАН КУНЛАР — барча йиллик кунлар, яқинлик тартибида, сана билан.
     const upcomingDays = yearly.filter(function (d) {
