@@ -294,15 +294,6 @@
     html += '<h1 class="page-title">Кунлар</h1>';
     html += '</header>';
 
-    // Бугунги муҳим кун(лар) — йиллик event бугунги ҳижрий санага тўғри келса.
-    const todayEvents = [];
-    for (let i = 0; i < importantDays.length; i++) {
-      const d = importantDays[i];
-      if ((!d.frequency || d.frequency === 'yearly') && d.hMonth === hijri.month && d.hDay === hijri.day) {
-        todayEvents.push(d);
-      }
-    }
-
     html += '<section class="hero hero--' + currentMood() + '">';
     html += '<div class="hero-stars">' + STARS_HTML + '</div>';
     html += '<div class="hero-content">';
@@ -319,20 +310,6 @@
     html += '<div class="gregorian-week">' + escapeHtml(weekDaysFull[today.getDay()]) + ' · ' + today.getFullYear() + '</div>';
     html += '</div>';
     html += '</div>';
-    if (todayEvents.length) {
-      html += '<div class="hero-today">';
-      html += '<span class="hero-today-label">Бугун муҳим кун</span>';
-      html += '<div class="hero-today-list">';
-      for (let i = 0; i < todayEvents.length; i++) {
-        const ev = todayEvents[i];
-        html += '<button class="hero-today-chip" onclick="showDay(\'' + escapeHtml(ev.id) + '\')">';
-        html += '<svg class="hero-today-star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.7 6.1 6.6.6-5 4.4 1.5 6.5L12 17.3 6.7 20.6l1.5-6.5-5-4.4 6.6-.6z"/></svg>';
-        html += '<span>' + escapeHtml(ev.name) + '</span>';
-        html += '</button>';
-      }
-      html += '</div>';
-      html += '</div>';
-    }
     html += '</div></section>';
 
     // ЯҚИНЛАШАЁТГАН КУНЛАР — барча йиллик кунлар, яқинлик тартибида, сана билан.

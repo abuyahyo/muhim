@@ -263,45 +263,6 @@ main {
   .hero { padding: 48px 44px; }
   .hero-grid { grid-template-columns: 1.3fr 1fr; gap: 40px; }
 }
-.hero-today {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 22px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-}
-.hero-today-label {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.8);
-}
-.hero-today-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.hero-today-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  font-family: inherit;
-  font-size: 17px;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.22);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: var(--r-full);
-  padding: 11px 20px;
-  cursor: pointer;
-  transition: var(--t-fast);
-}
-.hero-today-star { width: 18px; height: 18px; color: #fde68a; flex-shrink: 0; }
-.hero-today-chip:hover { background: rgba(255, 255, 255, 0.30); }
-.hero-today-chip:active { transform: scale(0.97); }
 .hijri-main {
   display: flex;
   flex-direction: column;
