@@ -424,10 +424,12 @@
     }
     html += '</div></div></div>';
 
-    html += '<div class="detail-block">';
-    html += '<div class="detail-block-label">Кун ҳақида</div>';
-    html += '<div class="detail-text">' + escapeHtml(day.description) + '</div>';
-    html += '</div>';
+    if (day.description) {
+      html += '<div class="detail-block">';
+      html += '<div class="detail-block-label">Кун ҳақида</div>';
+      html += '<div class="detail-text">' + escapeHtml(day.description) + '</div>';
+      html += '</div>';
+    }
 
     if (day.note) {
       html += '<div class="detail-block">';
