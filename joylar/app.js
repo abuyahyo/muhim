@@ -85,9 +85,11 @@
     html += '</div>';
     html += '</div>';
 
-    html += '<section class="detail-block"><div class="block-title">Ҳақида</div>';
-    html += '<p class="block-text">' + escapeHtml(p.description) + '</p>';
-    html += '</section>';
+    if (p.description) {
+      html += '<section class="detail-block"><div class="block-title">Ҳақида</div>';
+      html += '<p class="block-text">' + escapeHtml(p.description) + '</p>';
+      html += '</section>';
+    }
 
     if (p.verses && p.verses.length) {
       html += '<section class="detail-block"><div class="block-title">Қуръон оятлари</div>';
