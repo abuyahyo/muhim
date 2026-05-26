@@ -861,10 +861,10 @@
       items.push(measureBlock(ctx, String(day.noteTitle || 'Зарур изоҳ').toUpperCase(), day.note, innerW));
     }
     (day.verses || []).forEach(function (v) {
-      items.push(measureBlock(ctx, String(v.source || '').toUpperCase(), '«' + v.translation + '»', innerW));
+      items.push(measureBlock(ctx, String(v.source || '').toUpperCase(), '«' + v.translation + '»', innerW, v.commentary));
     });
     (day.hadiths || []).forEach(function (h) {
-      const block = measureBlock(ctx, String(h.source || '').toUpperCase(), '«' + h.text + '»', innerW);
+      const block = measureBlock(ctx, String(h.source || '').toUpperCase(), '«' + h.text + '»', innerW, h.commentary);
       if (h.narrator) {
         block.narrator = h.narrator;
         block.height += 36;
@@ -874,11 +874,17 @@
     return items;
   }
 
-  function measureBlock(ctx, label, text, innerW) {
+  function measureBlock(ctx, label, text, innerW, commentary) {
     const padTop = 22, labelGap = 38, padBottom = 22, lineH = 36;
     ctx.font = '500 28px "DM Sans", system-ui, sans-serif';
     const lines = layoutLines(ctx, text, innerW);
-    return { label: label, lines: lines, height: padTop + labelGap + lines.length * lineH + padBottom };
+    const block = { label: label, lines: lines, height: padTop + labelGap + lines.length * lineH + padBottom };
+    if (commentary) {
+      ctx.font = '500 25px "DM Sans", system-ui, sans-serif';
+      block.commentary = layoutLines(ctx, commentary, innerW);
+      block.height += 18 + 30 + block.commentary.length * 34;
+    }
+    return block;
   }
 
   function packSharePages(items) {
@@ -1060,14 +1066,28 @@
     ctx.fillText(item.label, textX, y + padTop);
     ctx.font = '500 28px "DM Sans", system-ui, sans-serif';
     ctx.fillStyle = '#ffffff';
-    const textY = y + padTop + labelGap;
+    let ty = y + padTop + labelGap;
     for (let i = 0; i < item.lines.length; i++) {
-      ctx.fillText(item.lines[i], textX, textY + i * lineH);
+      ctx.fillText(item.lines[i], textX, ty + i * lineH);
     }
+    ty += item.lines.length * lineH;
     if (item.narrator) {
       ctx.font = '600 22px "DM Sans", system-ui, sans-serif';
       ctx.fillStyle = 'rgba(255,255,255,0.7)';
-      ctx.fillText('— ' + item.narrator, textX, textY + item.lines.length * lineH + 4);
+      ctx.fillText('— ' + item.narrator, textX, ty + 4);
+      ty += 36;
+    }
+    if (item.commentary && item.commentary.length) {
+      ty += 18;
+      ctx.font = '700 20px "DM Sans", system-ui, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.6)';
+      ctx.fillText('ИЗОҲ', textX, ty);
+      ty += 30;
+      ctx.font = '500 25px "DM Sans", system-ui, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.9)';
+      for (let i = 0; i < item.commentary.length; i++) {
+        ctx.fillText(item.commentary[i], textX, ty + i * 34);
+      }
     }
   }
 
