@@ -85,15 +85,18 @@
     html += '</div>';
     html += '</div>';
 
-    html += '<section class="detail-block"><div class="block-title">Ҳақида</div>';
-    html += '<p class="block-text">' + escapeHtml(p.description) + '</p>';
-    html += '</section>';
+    if (p.description) {
+      html += '<section class="detail-block"><div class="block-title">Ҳақида</div>';
+      html += '<p class="block-text">' + escapeHtml(p.description) + '</p>';
+      html += '</section>';
+    }
 
     if (p.verses && p.verses.length) {
       html += '<section class="detail-block"><div class="block-title">Қуръон оятлари</div>';
       html += renderQuoteList(p.verses, function (v) {
         let card = '<div class="quote-card">';
         card += '<div class="quote-source">' + escapeHtml(v.source) + '</div>';
+        if (v.arabic) card += '<div class="quote-arabic" dir="rtl">' + escapeHtml(v.arabic) + '</div>';
         card += '<div class="quote-text">«' + escapeHtml(v.translation) + '»</div>';
         card += '</div>';
         return card;
@@ -112,6 +115,15 @@
         return card;
       });
       html += '</section>';
+    }
+
+    if (p.notes && p.notes.length) {
+      for (let i = 0; i < p.notes.length; i++) {
+        const n = p.notes[i];
+        html += '<section class="detail-block"><div class="block-title">' + escapeHtml(n.title) + '</div>';
+        html += '<p class="block-text">' + escapeHtml(n.text) + '</p>';
+        html += '</section>';
+      }
     }
 
     html += '</div>';
