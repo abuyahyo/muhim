@@ -346,9 +346,9 @@
     html += '<div class="detail-topbar">';
     html += '<button class="back-btn" onclick="goBack()">← Орқага</button>';
     html += '<div class="detail-actions">';
-    const hasShareContent = (day.verses && day.verses.length) || (day.hadiths && day.hadiths.length);
+    const hasShareContent = !!day.note || (day.verses && day.verses.length) || (day.hadiths && day.hadiths.length);
     if (hasShareContent) {
-      html += '<button class="share-btn" onclick="shareDaySheet(\'' + escapeHtml(day.id) + '\')" aria-label="Расмлар тўплами" title="Оят ва ҳадислар билан расмлар">';
+      html += '<button class="share-btn" onclick="shareDaySheet(\'' + escapeHtml(day.id) + '\')" aria-label="Расмлар тўплами" title="Тўлиқ маълумотли расмлар тўплами">';
       html += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
       html += '<rect x="6" y="2" width="16" height="16" rx="2"/>';
       html += '<circle cx="12" cy="8" r="2"/>';
