@@ -857,6 +857,9 @@
   function collectDayShareItems(ctx, day) {
     const innerW = SHARE_W - SHARE_PAD_X * 2 - 72;
     const items = [];
+    if (day.note) {
+      items.push(measureBlock(ctx, String(day.noteTitle || 'Зарур изоҳ').toUpperCase(), day.note, innerW));
+    }
     (day.verses || []).forEach(function (v) {
       items.push(measureBlock(ctx, String(v.source || '').toUpperCase(), '«' + v.translation + '»', innerW));
     });
