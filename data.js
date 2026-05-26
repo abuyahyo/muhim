@@ -290,7 +290,7 @@ const AppData = {
       ] },
     { id: 'fitr', hMonth: 10, hDay: 1, name: 'Рамазон Ҳайити',
       short: 'Ийдул Фитр',
-      description: 'Шаввол ойининг биринчи куни — Рамазон рўзаси якунланиши муносабати билан мусулмонлар нишонлайдиган байрам.',
+      description: '',
       color: '#d97706', verses: [], hadiths: [] },
     { id: 'arafa', hMonth: 12, hDay: 9, name: 'Арафа Куни',
       short: 'Зулҳижжа ойининг 9-куни',
