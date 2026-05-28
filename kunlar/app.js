@@ -499,6 +499,8 @@
     }
 
     let html = '<div class="fade-in mood--' + currentMood() + '">';
+    html += '<div class="cal-layout">';
+    html += '<div class="cal-col-main">';
 
     // Ой фазаси картаси (астрономик маълумот).
     const nowForMoon = new Date();
@@ -599,6 +601,7 @@
     html += '</div>';
 
     html += '</div>'; // cal-shell
+    html += '</div>'; // cal-col-main
 
     // Бу ойдаги муҳим кунлар (йиллик + ойлик + ҳафталик такрорий)
     const monthRows = monthEvents.slice();
@@ -646,7 +649,8 @@
       html += '</div>';
     }
 
-    html += '</div>';
+    html += '</div>'; // cal-layout
+    html += '</div>'; // fade-in
 
     document.getElementById('view-calendar').innerHTML = html;
   }
