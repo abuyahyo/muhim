@@ -98,6 +98,7 @@
         card += '<div class="quote-source">' + escapeHtml(v.source) + '</div>';
         if (v.arabic) card += '<div class="quote-arabic" dir="rtl">' + escapeHtml(v.arabic) + '</div>';
         card += '<div class="quote-text">«' + escapeHtml(v.translation) + '»</div>';
+        if (v.commentary) card += '<div class="quote-commentary">' + escapeHtml(v.commentary) + '</div>';
         card += '</div>';
         return card;
       });
@@ -111,6 +112,7 @@
         card += '<div class="quote-source">' + escapeHtml(h.source) + '</div>';
         card += '<div class="quote-text">«' + escapeHtml(h.text) + '»</div>';
         if (h.narrator) card += '<div class="quote-attr">— ' + escapeHtml(h.narrator) + '</div>';
+        if (h.commentary) card += '<div class="quote-commentary">' + escapeHtml(h.commentary) + '</div>';
         card += '</div>';
         return card;
       });
