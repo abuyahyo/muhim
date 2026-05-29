@@ -144,6 +144,30 @@ window.JoylarData = (function () {
         ]
       },
       {
+        id: 'qubo',
+        name: 'Масжидул Қубо',
+        arabic: 'مسجد قباء',
+        city: 'Мадина',
+        country: 'Саудия Арабистони',
+        short: 'Исломдаги илк қурилган масжид',
+        description: '',
+        color: '#0f766e',
+        verses: [],
+        hadiths: []
+      },
+      {
+        id: 'arafat',
+        name: 'Арафот тоғи',
+        arabic: 'جبل عرفات',
+        city: 'Макка',
+        country: 'Саудия Арабистони',
+        short: 'Ҳаж кунининг туриш макони',
+        description: '',
+        color: '#9a3412',
+        verses: [],
+        hadiths: []
+      },
+      {
         id: 'all',
         name: 'Барча масжидлар',
         arabic: 'المساجد',

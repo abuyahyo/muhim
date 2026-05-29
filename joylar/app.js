@@ -49,8 +49,8 @@
     for (let i = 0; i < places.length; i++) {
       const p = places[i];
       const loc = [p.city, p.country].filter(Boolean).join(' · ');
-      html += '<button class="place-card" onclick="showPlace(\'' + escapeHtml(p.id) + '\')">';
-      html += '<img class="place-photo" src="img/' + escapeHtml(p.id) + '.webp" alt="" loading="lazy"/>';
+      html += '<button class="place-card" style="--pc:' + escapeHtml(p.color || '#0f172a') + '" onclick="showPlace(\'' + escapeHtml(p.id) + '\')">';
+      html += '<img class="place-photo" src="img/' + escapeHtml(p.id) + '.webp" alt="" loading="lazy" onerror="this.remove()"/>';
       html += '<div class="place-scrim"></div>';
       html += '<div class="place-body">';
       html += '<div class="place-name">' + escapeHtml(p.name) + '</div>';
@@ -75,7 +75,7 @@
     html += '<button class="back-btn" onclick="goBack()">← Орқага</button>';
     html += '</div>';
 
-    html += '<div class="detail-hero" style="background-image:url(img/' + escapeHtml(p.id) + '.webp);">';
+    html += '<div class="detail-hero" style="background-color:' + escapeHtml(p.color || '#0f172a') + ';background-image:url(img/' + escapeHtml(p.id) + '.webp);">';
     html += '<div class="detail-hero-scrim"></div>';
     html += '<div class="detail-hero-body">';
     const loc = [p.city, p.country].filter(Boolean).join(' · ');
