@@ -287,6 +287,15 @@ main {
   color: var(--ink-mute);
   font-weight: 500;
 }
+.quote-commentary {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-mute);
+  white-space: pre-line;
+}
 
 /* Микро-интеракция: босилганда енгил "press" эффекти. */
 .place-card:active,
