@@ -145,7 +145,7 @@ window.JoylarData = (function () {
       },
       {
         id: 'qubo',
-        name: 'Масжидул Қубо',
+        name: 'Қубо Масжиди',
         arabic: 'مسجد قباء',
         city: 'Мадина',
         country: 'Саудия Арабистони',
