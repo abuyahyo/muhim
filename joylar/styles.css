@@ -153,7 +153,13 @@ main {
 
 /* === ДЕТАЛЬ САҲИФА === */
 .detail-wrap { max-width: 760px; margin: 0 auto; }
-.detail-topbar { margin-bottom: 20px; }
+.detail-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
 .back-btn {
   display: inline-flex;
   align-items: center;
@@ -169,6 +175,47 @@ main {
   transition: var(--t-fast);
 }
 .back-btn:hover { border-color: var(--sea-500); color: var(--ink); }
+.detail-actions { display: flex; align-items: center; gap: 12px; }
+.share-btn {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  border-radius: 50%;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-family: inherit;
+  transition: var(--t-fast);
+}
+.share-btn:hover { border-color: var(--sea-500); color: var(--ink); }
+.share-btn:active { transform: scale(0.97); }
+.share-btn svg { width: 18px; height: 18px; }
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom) + 96px);
+  transform: translate(-50%, 0);
+  background: var(--surface);
+  color: var(--ink);
+  padding: 10px 16px;
+  border-radius: var(--r-full);
+  border: 1px solid var(--line);
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  pointer-events: none;
+  animation: toastFade 2.2s ease-in-out forwards;
+}
+@keyframes toastFade {
+  0%       { opacity: 0; transform: translate(-50%, 10px); }
+  10%, 80% { opacity: 1; transform: translate(-50%, 0); }
+  100%     { opacity: 0; transform: translate(-50%, -10px); }
+}
 
 .detail-hero {
   position: relative;
