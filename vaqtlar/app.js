@@ -173,6 +173,10 @@
 
   // === БОШ САҲИФА ===
   function renderHome() {
+    // Созламалар панели очиқ бўлса, қайта чизишдан кейин ҳам очиқ қолсин.
+    const prevDetails = document.querySelector('.settings-details');
+    const settingsOpen = prevDetails ? prevDetails.open : false;
+
     const loc = settings.location || DEFAULT_LOC;
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -294,7 +298,7 @@
 
     // Sozlamalar (collapsible)
     html += '<section class="settings-section">';
-    html += '<details class="settings-details">';
+    html += '<details class="settings-details"' + (settingsOpen ? ' open' : '') + '>';
     html += '<summary class="settings-summary">⚙ Созламалар</summary>';
     html += '<div class="settings-body">';
 
