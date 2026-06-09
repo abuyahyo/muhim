@@ -13,41 +13,13 @@
     weekDaysFull,
     importantDays
   } = AppData;
+  const { escapeHtml, currentMood, renderQuoteList } = MuhimShared;
 
   const { gregorianToHijri, hijriToGregorian, hijriMonthLength } = HijriCalc;
 
   // === ҚЎШИМЧА КАЛЕНДАР ЁРДАМЧИЛАРИ ===
   function getCurrentHijri() {
     return gregorianToHijri(new Date());
-  }
-
-  // Соатга кўра ҳаво ранги — 4–7: dawn, 7–17: day, 17–19: dusk,
-  // 19–23: evening, 23–4: night. Барча асосий саҳифалар шу мооддан
-  // ранг олади: hero градиенти, акцент чизиқлари, нуқта индикаторлари.
-  function currentMood() {
-    const hr = new Date().getHours();
-    if (hr >= 4 && hr < 7) return 'dawn';
-    if (hr >= 7 && hr < 17) return 'day';
-    if (hr >= 17 && hr < 19) return 'dusk';
-    if (hr >= 19 && hr < 23) return 'evening';
-    return 'night';
-  }
-
-  // Узун рўйхатни қисқартиради: биринчи 3 тасини доимо кўрсатиб, қолганини
-  // «Кўпроқ кўрсатиш» тугмаси ортида яширади (HTML details/summary).
-  function renderQuoteList(items, renderItem) {
-    const VISIBLE = 3;
-    let out = '';
-    const limit = Math.min(items.length, VISIBLE);
-    for (let i = 0; i < limit; i++) out += renderItem(items[i]);
-    if (items.length > VISIBLE) {
-      const remaining = items.length - VISIBLE;
-      out += '<details class="quote-more">';
-      out += '<summary class="quote-more-summary">Кўпроқ кўрсатиш (' + remaining + ')</summary>';
-      for (let i = VISIBLE; i < items.length; i++) out += renderItem(items[i]);
-      out += '</details>';
-    }
-    return out;
   }
 
   // === ОЙ ФАЗАСИ ===
@@ -143,13 +115,6 @@
     const date = hijriToGregorian(year, day.hMonth, day.hDay);
     const daysLeft = Math.round((new Date(date.getFullYear(), date.getMonth(), date.getDate()) - today) / 86400000);
     return { date: date, daysLeft: daysLeft, hijri: { year: year, month: day.hMonth, day: day.hDay } };
-  }
-
-  // === ХАВФСИЗ HTML ===
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-    });
   }
 
   // === ЧАСТОТА ЁРЛИҒИ ===
