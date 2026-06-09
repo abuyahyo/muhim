@@ -105,38 +105,8 @@
     });
   }
 
-  // Жорий вақт қайси намоз вақтига кириб турганини аниқлаш.
-  // Аср фарзи кириб бўлгач — у вақт "ҳозирги" бўлади (Шом гача).
-  // Қайтаради: ҳозирги намоз индекси (prayers ичида) + кейингиси Date.
-  function currentAndNext(times, now) {
-    const sequence = [
-      { id: 'fajr',    t: times.fajr },
-      { id: 'sunrise', t: times.sunrise },
-      { id: 'dhuhr',   t: times.dhuhr },
-      { id: 'asr',     t: times.asr },
-      { id: 'maghrib', t: times.maghrib },
-      { id: 'isha',    t: times.isha },
-    ];
-    let currentId = null;
-    let nextId = null;
-    let nextTime = null;
-    for (let i = 0; i < sequence.length; i++) {
-      if (now < sequence[i].t) {
-        nextId = sequence[i].id;
-        nextTime = sequence[i].t;
-        // Бомдоддан олдин — Хуфтон вақти ҳамон давом этмоқда (кеча).
-        currentId = i > 0 ? sequence[i - 1].id : 'isha';
-        break;
-      }
-    }
-    // Хуфтондан кейин — эртанги Бомдод гача.
-    if (!nextId) {
-      currentId = 'isha';
-      nextId = 'fajr-next';
-      // эртанги фажр'ни ҳисоблаб қояйлик (caller параметр сифатида беради).
-    }
-    return { currentId, nextId, nextTime };
-  }
+  // Намоз ҳолат логикаси (ҳозирги/кейинги) — schedule.js модулида.
+  const { currentAndNext } = Schedule;
 
   // === БОШ САҲИФА ===
   function renderHome() {
