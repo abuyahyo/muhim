@@ -128,20 +128,21 @@ main {
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: var(--ink-mute);
+  /* Hero фони доим тўйинган рангли — кулранг эмас, оқиш ранг контраст беради. */
+  color: rgba(255, 255, 255, 0.82);
   font-weight: 600;
   margin-bottom: 10px;
 }
 .countdown-eyebrow-name {
-  color: var(--ink);
+  color: #fff;
   font-weight: 700;
 }
-.countdown-eyebrow-name::before { content: '·'; margin-right: 8px; color: var(--ink-mute); font-weight: 400; }
+.countdown-eyebrow-name::before { content: '·'; margin-right: 8px; color: rgba(255, 255, 255, 0.55); font-weight: 400; }
 .countdown-eyebrow-at {
-  color: var(--ink-mute);
+  color: rgba(255, 255, 255, 0.82);
   font-variant-numeric: tabular-nums;
 }
-.countdown-eyebrow-at::before { content: '·'; margin-right: 8px; color: var(--ink-mute); font-weight: 400; }
+.countdown-eyebrow-at::before { content: '·'; margin-right: 8px; color: rgba(255, 255, 255, 0.55); font-weight: 400; }
 .countdown-time {
   font-size: clamp(48px, 14vw, 84px);
   font-weight: 800;
