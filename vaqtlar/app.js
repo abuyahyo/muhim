@@ -639,7 +639,6 @@
       };
       window.addEventListener('deviceorientationabsolute', qiblaHandler, true);
       window.addEventListener('deviceorientation', qiblaHandler, true);
-      qiblaHintText('Стрелка тепага қараганда — юзингиз Қиблa томон.');
       const btn = document.getElementById('qibla-live-btn');
       if (btn) btn.style.display = 'none';
     };
