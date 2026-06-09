@@ -236,12 +236,9 @@
       if (isCurrent) cls += ' is-current';
       else if (isNext) cls += ' is-next';
       if (isPast) cls += ' is-past';
-      let tag = '';
-      if (isCurrent) tag = ' <span class="prayer-tag">Ҳозир</span>';
-      else if (isNext) tag = ' <span class="prayer-tag prayer-tag--next">Кейинги</span>';
       html += '<button class="' + cls + '" onclick="showPrayer(\'' + p.id + '\')">';
       html += '<span class="prayer-dot" aria-hidden="true"></span>';
-      html += '<span class="prayer-name">' + escapeHtml(p.name) + tag + '</span>';
+      html += '<span class="prayer-name">' + escapeHtml(p.name) + '</span>';
       html += '<span class="prayer-time">' + fmtTime(t) + '</span>';
       html += '</button>';
     }
