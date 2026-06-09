@@ -1,25 +1,9 @@
-/* === ВАҚТЛАР ИЛОВАСИ — ДИЗАЙН ТИЗИМИ === */
+/* === ВАҚТЛАР ИЛОВАСИ — ДИЗАЙН ТИЗИМИ ===
+   Умумий токенлар ../theme.css да (бу файлдан олдин юкланади). Қуйида
+   фақат шу бўлимга хос қўшимча токенлар. */
 :root {
-  --bg: #020617;
-  --surface: #0f172a;
-  --surface-2: #1e293b;
-  --line: #1e293b;
   --line-2: #334155;
-  --ink: #f1f5f9;
-  --ink-soft: #cbd5e1;
-  --ink-mute: #94a3b8;
-  --sea-500: #0ea5e9;
-  --sea-700: #0369a1;
   --amber-400: #fbbf24;
-
-  --r-md: 12px;
-  --r-lg: 16px;
-  --r-xl: 22px;
-  --r-2xl: 28px;
-  --r-full: 999px;
-  --t-fast: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.25s, opacity 0.25s;
-
-  --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -108,20 +92,7 @@ main {
   gap: 18px;
   transition: background 600ms ease;
 }
-/* Соатга мос ҳаво ранги — Кунлар саҳифасидаги hero билан бир хил. */
-.today-hero--dawn    { background: linear-gradient(135deg, #1e1b4b 0%, #db2777 55%, #f59e0b 100%); }
-.today-hero--day     { background: linear-gradient(135deg, #0c4a6e 0%, #0ea5e9 50%, #38bdf8 100%); }
-.today-hero--dusk    { background: linear-gradient(135deg, #312e81 0%, #db2777 45%, #f97316 100%); }
-.today-hero--evening { background: linear-gradient(135deg, #020617 0%, #4c1d95 55%, #f97316 100%); }
-.today-hero--night   { background: linear-gradient(135deg, #020617 0%, #0c1839 50%, #1e3a8a 100%); }
-
-/* Соатга мос акцент — нуқталар, hover, "is-current" хайлайт, Қибла
-   йўналиш стрелкаси ва бошқа --sea-* ишлатадиган элементлар шу
-   ўзгарувчилардан ранг олади. */
-.mood--dawn    { --sea-500: #f59e0b; --sea-700: #b45309; }
-.mood--dusk    { --sea-500: #f97316; --sea-700: #c2410c; }
-.mood--evening { --sea-500: #a855f7; --sea-700: #7e22ce; }
-.mood--night   { --sea-500: #6366f1; --sea-700: #4338ca; }
+/* Hero градиентлари (.today-hero--*) ва акцент (.mood--*) — ../theme.css да. */
 .countdown-block { text-align: center; }
 .countdown-eyebrow {
   display: inline-flex;
