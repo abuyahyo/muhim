@@ -1,30 +1,6 @@
-/* === ЖОЙЛАР ИЛОВАСИ — ДИЗАЙН ТИЗИМИ === */
-:root {
-  --bg: #020617;
-  --surface: #0f172a;
-  --surface-2: #1e293b;
-  --line: #1e293b;
-  --ink: #f1f5f9;
-  --ink-soft: #cbd5e1;
-  --ink-mute: #94a3b8;
-  --sea-500: #0ea5e9;
-  --sea-700: #0369a1;
-
-  --r-md: 12px;
-  --r-lg: 16px;
-  --r-xl: 22px;
-  --r-2xl: 28px;
-  --r-full: 999px;
-  --t-fast: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.25s, opacity 0.25s;
-
-  --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
-}
-
-/* Соатга мос акцент — Кунлар ва Вақтлар саҳифалари билан бир хил. */
-.mood--dawn    { --sea-500: #f59e0b; --sea-700: #b45309; }
-.mood--dusk    { --sea-500: #f97316; --sea-700: #c2410c; }
-.mood--evening { --sea-500: #a855f7; --sea-700: #7e22ce; }
-.mood--night   { --sea-500: #6366f1; --sea-700: #4338ca; }
+/* === ЖОЙЛАР ИЛОВАСИ — ДИЗАЙН ТИЗИМИ ===
+   Умумий токенлар ва ҳаво ранги (.mood--*) ../theme.css да (бу файлдан
+   олдин юкланади). Бу бўлимга хос қўшимча токен йўқ. */
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { min-height: 100%; }
