@@ -40,6 +40,11 @@
   text-decoration: none;
 }
 .app-nav-btn:hover { color: var(--sea-300, #7dd3fc); }
+.app-nav-btn:focus-visible {
+  outline: 3px solid var(--sea-300, #7dd3fc);
+  outline-offset: 2px;
+  color: var(--sea-300, #7dd3fc);
+}
 .app-nav-btn.active {
   background: linear-gradient(135deg, var(--sea-500, #0ea5e9) 0%, var(--sea-700, #0369a1) 100%);
   color: white;

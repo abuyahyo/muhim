@@ -40,3 +40,11 @@
 .today-hero--dusk    { background: linear-gradient(135deg, #312e81 0%, #db2777 45%, #f97316 100%); }
 .today-hero--evening { background: linear-gradient(135deg, #020617 0%, #4c1d95 55%, #f97316 100%); }
 .today-hero--night   { background: linear-gradient(135deg, #020617 0%, #0c1839 50%, #1e3a8a 100%); }
+
+/* Клавиатура фокуси кўриниши — фақат клавиатура/Tab билан (сичқонча
+   босишда чиқмайди). :where() — спецификлиги 0, бўлим керакда устидан
+   ёзади. Контур --sea-500 дан ранг олади (ҳаво рангига мос). */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--sea-500);
+  outline-offset: 2px;
+}
