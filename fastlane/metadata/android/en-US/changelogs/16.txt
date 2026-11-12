@@ -1,0 +1,1 @@
+Removed the title bar and the language picker from widget setup; the app name now follows the selected language too

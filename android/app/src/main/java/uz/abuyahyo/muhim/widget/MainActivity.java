@@ -215,6 +215,7 @@ public class MainActivity extends Activity {
         public void saveLang(String l) {
             if (l == null || l.isEmpty()) return;
             WidgetPrefs.saveLanguage(MainActivity.this, l);
+            WidgetPrefs.applyLauncherLabel(MainActivity.this, l);
             refreshAllWidgets();
         }
     }

@@ -96,3 +96,9 @@ Builds:
     subdir: android/app
     gradle:
       - yes
+  - versionName: 1.15
+    versionCode: 16
+    commit: HEADCOMMIT
+    subdir: android/app
+    gradle:
+      - yes

@@ -158,6 +158,7 @@ public class LanguageSettingsActivity extends Activity {
 
     private void selectLanguage(String lang) {
         WidgetPrefs.saveLanguage(this, lang);
+        WidgetPrefs.applyLauncherLabel(this, lang);
         if (Build.VERSION.SDK_INT >= 33) {
             android.app.LocaleManager lm = getSystemService(android.app.LocaleManager.class);
             if (lm != null) {
