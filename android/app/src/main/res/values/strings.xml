@@ -95,4 +95,9 @@
         <item>69.5950</item><item>67.9000</item><item>39.8262</item><item>39.6142</item>
     </string-array>
     <string name="settings_open">Sozlamalar</string>
+    <string name="config_widgets">Vidjetlar</string>
+    <string name="widget_refresh_all">Hammasini yangilash</string>
+    <string name="widget_refresh_done">Vidjetlar yangilandi</string>
+    <string name="widget_pin_sent">Launcher’da tasdiqlang</string>
+    <string name="widget_pin_unsupported">Bu Android versiyasi vidjet qo’yishni qo’llab-quvvatlamaydi</string>
 </resources>

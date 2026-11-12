@@ -95,4 +95,9 @@
         <item>69.5950</item><item>67.9000</item><item>39.8262</item><item>39.6142</item>
     </string-array>
     <string name="settings_open">Настройки</string>
+    <string name="config_widgets">Виджеты</string>
+    <string name="widget_refresh_all">Обновить все</string>
+    <string name="widget_refresh_done">Виджеты обновлены</string>
+    <string name="widget_pin_sent">Подтвердите на рабочем столе</string>
+    <string name="widget_pin_unsupported">Эта версия Android не поддерживает добавление виджетов</string>
 </resources>
