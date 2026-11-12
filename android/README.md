@@ -4,7 +4,7 @@ Uy ekranida ko'rinadigan **glassmorphism uslubidagi** namoz vaqtlari vidjetlari.
 Web-saytdagi `vaqtlar/prayer.js` algoritmi (PrayTimes.org, MWL + Hanafiy Asr)
 va `kunlar/hijri.js` ҳижрий algoritmi Java'ga ko'chirilgan — hammasi to'liq oflayn.
 
-## Vidjetlar (5 xil)
+## Vidjetlar (6 xil)
 | Vidjet | O'lcham | Mazmun |
 |---|---|---|
 | Намоз вақтлари | 4×2 | 6 vaqt to'liq panelda, keyingisi ko'k |
@@ -12,6 +12,7 @@ va `kunlar/hijri.js` ҳижрий algoritmi Java'ga ko'chirilgan — hammasi to'
 | Кейинги намоз | 2×1 | Faqat keyingi namoz — katta soat |
 | Сана ва намоз | 2×2 | Sana + ҳижрий + joy + keyingi namoz |
 | Ҳижрий сана | 2×2 | Ҳижрий kun/oy/yil + keyingi namoz |
+| Таҳажжуд ойнаси | 2×1 | Кечанинг учдан бири (start — end) |
 
 Glass uslub: yarim shaffof qatlamli fon, yorug'lik gradienti, nozik oq chegara,
 katta radiusli burchaklar. Haqiqiy blur Android RemoteViews'da mavjud emas —
@@ -19,7 +20,8 @@ wallpaper ustida muzlatilgan shisha effekti beradi.
 
 ## Sozlash
 Vidjetni uy ekraniga qo'shganda **sozlash oynasi** ochiladi:
-- **Shahar** — 16 O'zbekiston shahri + Мекка/Мадина (oflayn ro'yxat, koordinatalar bilan)
+- **📍 Менинг жойлашувим** — GPS/tarmoq orqali aniq joylashuv (shahar nomi Geocoder'dan)
+- **Shahar** — 21 O'zbekiston shahri + Мекка/Мадина (oflayn ro'yxat, koordinatalar bilan)
 - **Shisha rangi** — Қорамой yoki Оқ
 
 Har bir vidjet o'z sozlamasini alohida eslab qoladi. Vidjetni o'chirganda
@@ -50,5 +52,5 @@ Keystore yaratish (bir marta, Java bor mashinada):
 Vidjet qo'yish: uy ekranida bo'sh joyni bosib turib → Widgets → Муҳим виджет.
 
 ## Kelajak uchun
-- Shaharning aniqroq ro'yxati / GPS asosida joylashuv
-- Tahajjud oynasi vidjeti
+- Release imzolangan APK (Secrets orqali — yuqorida)
+- Vidjetda qo'shimcha sozlamalar (hisob usuli, Asr mazhabi)

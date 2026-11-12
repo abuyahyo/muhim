@@ -15,4 +15,7 @@
     <string name="widget_strip_name">Намоз вақтлари (лента)</string>
     <string name="widget_date_name">Сана ва намоз</string>
     <string name="widget_hijri_name">Ҳижрий сана</string>
+    <string name="widget_tahajjud_name">Таҳажжуд ойнаси</string>
+    <string name="widget_tahajjud_label">Таҳажжуд ойнаси</string>
+    <string name="widget_tahajjud_note">кечанинг учдан бири</string>
 </resources>

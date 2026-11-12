@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher">
@@ -78,6 +81,21 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/hijri_widget_info" />
+        </receiver>
+
+        <receiver
+            android:name=".TahajjudWidgetProvider"
+            android:exported="false"
+            android:label="@string/widget_tahajjud_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.DATE_CHANGED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/tahajjud_widget_info" />
         </receiver>
 
         <activity
