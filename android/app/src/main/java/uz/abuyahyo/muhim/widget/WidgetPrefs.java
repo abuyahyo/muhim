@@ -112,6 +112,30 @@ final class WidgetPrefs {
                 .apply();
     }
 
+    // Fon uslubi: "glass" (standart), "solid", "gradient".
+    static String bgStyle(Context context, int appWidgetId) {
+        return prefs(context).getString("bg_" + appWidgetId, "glass");
+    }
+
+    static int color1(Context context, int appWidgetId, boolean light) {
+        int def = light ? 0xE6F1F5F9 : 0xE60B1220;
+        return prefs(context).getInt("c1_" + appWidgetId, def);
+    }
+
+    static int color2(Context context, int appWidgetId, boolean light) {
+        int def = light ? 0x330369A1 : 0x337DD3FC;
+        return prefs(context).getInt("c2_" + appWidgetId, def);
+    }
+
+    static void saveStyle(Context context, int appWidgetId, String style,
+                          int c1, int c2) {
+        prefs(context).edit()
+                .putString("bg_" + appWidgetId, style)
+                .putInt("c1_" + appWidgetId, c1)
+                .putInt("c2_" + appWidgetId, c2)
+                .apply();
+    }
+
     static void delete(Context context, int appWidgetId) {
         prefs(context).edit()
                 .remove("lat_" + appWidgetId)
@@ -121,6 +145,9 @@ final class WidgetPrefs {
                 .remove("method_" + appWidgetId)
                 .remove("shafi_" + appWidgetId)
                 .remove("zikr_" + appWidgetId)
+                .remove("bg_" + appWidgetId)
+                .remove("c1_" + appWidgetId)
+                .remove("c2_" + appWidgetId)
                 .apply();
     }
 

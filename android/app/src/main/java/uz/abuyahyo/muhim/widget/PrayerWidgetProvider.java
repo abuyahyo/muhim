@@ -38,7 +38,7 @@ public class PrayerWidgetProvider extends BaseGlassWidgetProvider {
             int accent = accent(light);
 
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.prayer_widget);
-            rv.setInt(R.id.widget_root, "setBackgroundResource", bgRes(light));
+            applyBackground(context, rv, id, light);
             rv.setTextViewText(R.id.title_city, WidgetPrefs.city(context, id));
             rv.setTextViewText(R.id.title_date, date);
             for (int i = 0; i < values.length; i++) {

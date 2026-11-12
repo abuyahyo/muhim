@@ -11,6 +11,16 @@ sozlamalariga qarab ishlaydi: til (Sozlamalardagi tanlov) va joylashuv
 (Sozlamalardagi **"Mening joylashuvim"** tugmasi, GPS). Joylashuv o'zgarsa
 vidjetlar avtomatik yangilanadi.
 
+## Vidjet sozlamalari — Glassify uslubi (v1.13+)
+
+⚙ Sozlamalar → **Vidjetlar**: qo'yilgan vidjet nomini bosganda uning sozlash
+oynasi ochiladi. Fon bo'limida:
+- **Shisha** (standart glassmorphism) / **Bir rang** / **Gradient**
+- **1-rang** va **2-rang** — 8 ta rangdan tanlash (gradient uchi)
+
+Har vidjet o'z fonini alohida eslab qoladi. Blur faqat Samsung'da mumkin —
+umumiy emas, shuning uchun kiritilmadi.
+
 ## Sajda uslubidagi yangiliklar (v1.12+)
 
 - **Зикр vidjeti** (2×2): vidjetni bosganda sanaydi — 33 Субҳаналлоҳ + 33 Алҳамдулиллоҳ +

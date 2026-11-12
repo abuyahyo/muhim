@@ -106,4 +106,10 @@
     <string name="dhikr_2">Альхамдулиллях</string>
     <string name="dhikr_3">Аллаху Акбар</string>
     <string name="dhikr_round">Круг %d</string>
+    <string name="config_bg">Фон</string>
+    <string name="config_bg_glass">Стекло</string>
+    <string name="config_bg_solid">Однотонный</string>
+    <string name="config_bg_gradient">Градиент</string>
+    <string name="config_color1">Цвет 1 (основной)</string>
+    <string name="config_color2">Цвет 2 (конец градиента)</string>
 </resources>

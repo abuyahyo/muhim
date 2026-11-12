@@ -38,7 +38,7 @@ public class NextPrayerWidgetProvider extends BaseGlassWidgetProvider {
             }
 
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_next_prayer);
-            rv.setInt(R.id.widget_root, "setBackgroundResource", bgRes(light));
+            applyBackground(context, rv, id, light);
             rv.setTextViewText(R.id.np_name, name);
             rv.setTextViewText(R.id.np_time, PrayerCalculator.format(time));
             rv.setTextColor(R.id.np_name, mute(light));

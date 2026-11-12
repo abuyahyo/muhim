@@ -41,7 +41,7 @@ public class DateWidgetProvider extends BaseGlassWidgetProvider {
             int[] h = HijriDate.from(now);
 
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_date);
-            rv.setInt(R.id.widget_root, "setBackgroundResource", bgRes(light));
+            applyBackground(context, rv, id, light);
             rv.setTextViewText(R.id.dt_weekday, days[now.get(Calendar.DAY_OF_WEEK) - 1]);
             rv.setTextViewText(R.id.dt_day, String.valueOf(now.get(Calendar.DAY_OF_MONTH)));
             rv.setTextViewText(R.id.dt_month, months[now.get(Calendar.MONTH)]
