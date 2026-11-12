@@ -9,27 +9,16 @@ import android.content.Intent;
 import android.net.Uri;
 
 import java.util.Calendar;
+import java.util.Locale;
+import android.content.res.Configuration;
 
 // Barcha glass vidjetlar uchun umumiy asos: joy, ranglar, soat o'zgarganda
-// yangilash va umumiy yordamchi hisoblar.
+// yangilash va umumiy yordamchi hisoblar. Matnlar resurslardan olinadi
+// (o'zbek/rus/ingliz).
 
 abstract class BaseGlassWidgetProvider extends AppWidgetProvider {
 
-    static final double LAT = 41.2995;
-    static final double LON = 69.2401;
-    static final String CITY = "Тошкент";
     static final String SITE_URL = "https://abuyahyo.github.io/muhim/vaqtlar/";
-
-    static final String[] MONTHS = {
-            "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
-            "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
-    };
-    static final String[] DAYS = {
-            "Якшанба", "Душанба", "Сешанба", "Чоршанба", "Пайшанба", "Жума", "Шанба"
-    };
-    static final String[] PRAYER_NAMES = {
-            "Бомдод", "Қуёш", "Пешин", "Аср", "Шом", "Хуфтон"
-    };
 
     static final int COLOR_INK = 0xFFF8FAFC;
     static final int COLOR_MUTE = 0xFF94A3B8;
@@ -41,6 +30,32 @@ abstract class BaseGlassWidgetProvider extends AppWidgetProvider {
     static final int COLOR_INK_LIGHT = 0xFF0F172A;
     static final int COLOR_MUTE_LIGHT = 0xFF64748B;
     static final int COLOR_ACCENT_LIGHT = 0xFF0369A1;
+
+    // Tanlangan til bo'yicha resurslar konteksti ("system" — telefon tili).
+    static Context localizedContext(Context c) {
+        String lang = WidgetPrefs.language(c);
+        if ("system".equals(lang)) return c;
+        Locale locale = new Locale(lang);
+        Configuration config = new Configuration(c.getResources().getConfiguration());
+        config.setLocale(locale);
+        return c.createConfigurationContext(config);
+    }
+
+    static String[] prayerNames(Context c) {
+        return localizedContext(c).getResources().getStringArray(R.array.prayer_names);
+    }
+
+    static String[] months(Context c) {
+        return localizedContext(c).getResources().getStringArray(R.array.greg_months);
+    }
+
+    static String[] days(Context c) {
+        return localizedContext(c).getResources().getStringArray(R.array.weekdays);
+    }
+
+    static String[] hijriMonths(Context c) {
+        return localizedContext(c).getResources().getStringArray(R.array.hijri_months);
+    }
 
     static int bgRes(boolean light) {
         return light ? R.drawable.glass_bg_light : R.drawable.glass_bg;

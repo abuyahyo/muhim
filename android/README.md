@@ -25,6 +25,7 @@ Vidjetni uy ekraniga qo'shganda **sozlash oynasi** ochiladi:
 - **Shisha rangi** — Қорамой yoki Оқ
 - **Ҳисоблаш усули** — MWL, Миср, Карачи, Уммул Қуро, ISNA (PWA'dagidek)
 - **Аср мазҳаби** — Ҳанафий yoki Шофеъий
+- **Til** — Тизим (telefon tili) / O'zbek / Русский / English — foydalanuvchi o'zi tanlaydi
 - **✓ Сақлаш** tugmasi bilan saqlanadi (shahar tanlash ham darhol saqlaydi)
 
 Har bir vidjet o'z sozlamasini alohida eslab qoladi. Vidjetni o'chirganda

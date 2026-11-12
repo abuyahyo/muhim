@@ -1,0 +1,1 @@
+Added Russian and English languages (app is now trilingual)

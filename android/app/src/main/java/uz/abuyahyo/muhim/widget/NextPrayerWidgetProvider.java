@@ -14,6 +14,7 @@ public class NextPrayerWidgetProvider extends BaseGlassWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager manager, int[] appWidgetIds) {
         Calendar now = Calendar.getInstance();
+        String[] names = prayerNames(context);
 
         for (int id : appWidgetIds) {
             double lat = WidgetPrefs.lat(context, id);
@@ -25,13 +26,13 @@ public class NextPrayerWidgetProvider extends BaseGlassWidgetProvider {
             String name;
             double time;
             if (next >= 0) {
-                name = PRAYER_NAMES[next];
+                name = names[next];
                 time = values[next];
             } else {
                 Calendar tomorrow = (Calendar) now.clone();
                 tomorrow.add(Calendar.DAY_OF_MONTH, 1);
                 time = times(context, id, tomorrow, lat, lon).fajr;
-                name = PRAYER_NAMES[0];
+                name = names[0];
             }
 
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_next_prayer);
