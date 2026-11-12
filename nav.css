@@ -22,7 +22,11 @@
   z-index: 50;
   max-width: calc(100vw - 24px);
 }
+/* Tor ekranlarda tugmalar sig'masa, butun tugma ekrandan tashqariga chiqib
+   ketmasligi kerak ("Тақвим" → "Тақв" kesilishi). Shu sababli flex element
+   qisqarishi mumkin, yorliq esa oxirgi chora sifatida ellipsis bilan kesiladi. */
 .app-nav-btn {
+  min-width: 0;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -53,11 +57,16 @@
 .app-nav-btn.active:hover { color: white; }
 .app-nav-icon { display: inline-flex; line-height: 1; }
 .app-nav-icon svg { width: 18px; height: 18px; display: block; }
-.app-nav-label { letter-spacing: 0.2px; }
+.app-nav-label { letter-spacing: 0.2px; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 
 @media (max-width: 460px) {
   .app-nav-btn { padding: 9px 12px; font-size: 12px; gap: 5px; }
   .app-nav-icon svg { width: 17px; height: 17px; }
+}
+/* ~400px ekranlarda 4 ta yorliq sig'ishi uchun zichroq rejim. */
+@media (max-width: 410px) {
+  .app-nav-btn { padding: 9px 9px; font-size: 11px; gap: 4px; }
+  .app-nav-icon svg { width: 16px; height: 16px; }
 }
 @media (max-width: 360px) {
   .app-nav-btn { padding: 9px 10px; gap: 4px; }
