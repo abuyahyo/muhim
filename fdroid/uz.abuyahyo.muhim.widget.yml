@@ -86,7 +86,7 @@ Builds:
       - yes
   - versionName: 1.13
     versionCode: 14
-    commit: HEADCOMMIT
+    commit: 09be8ac4
     subdir: android/app
     gradle:
       - yes
