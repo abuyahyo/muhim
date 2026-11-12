@@ -22,21 +22,28 @@ public class PrayerWidgetProvider extends BaseGlassWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager manager, int[] appWidgetIds) {
         Calendar now = Calendar.getInstance();
-        double[] values = timesArray(PrayerCalculator.calculate(now, LAT, LON));
-        int next = nextIndex(values, nowHour(now));
-
         String date = DAYS[now.get(Calendar.DAY_OF_WEEK) - 1] + ", "
                 + now.get(Calendar.DAY_OF_MONTH) + " " + MONTHS[now.get(Calendar.MONTH)];
 
         for (int id : appWidgetIds) {
+            double lat = WidgetPrefs.lat(context, id);
+            double lon = WidgetPrefs.lon(context, id);
+            double[] values = timesArray(PrayerCalculator.calculate(now, lat, lon));
+            int next = nextIndex(values, nowHour(now));
+            boolean light = WidgetPrefs.isLight(context, id);
+            int ink = ink(light);
+            int mute = mute(light);
+            int accent = accent(light);
+
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.prayer_widget);
-            rv.setTextViewText(R.id.title_city, CITY);
+            rv.setInt(R.id.widget_root, "setBackgroundResource", bgRes(light));
+            rv.setTextViewText(R.id.title_city, WidgetPrefs.city(context, id));
             rv.setTextViewText(R.id.title_date, date);
             for (int i = 0; i < values.length; i++) {
                 rv.setTextViewText(TIME_IDS[i], PrayerCalculator.format(values[i]));
                 boolean isNext = (i == next);
-                rv.setTextColor(TIME_IDS[i], isNext ? COLOR_ACCENT : COLOR_INK);
-                rv.setTextColor(NAME_IDS[i], isNext ? COLOR_ACCENT : COLOR_MUTE);
+                rv.setTextColor(TIME_IDS[i], isNext ? accent : ink);
+                rv.setTextColor(NAME_IDS[i], isNext ? accent : mute);
             }
             rv.setOnClickPendingIntent(R.id.widget_root, siteIntent(context));
             manager.updateAppWidget(id, rv);

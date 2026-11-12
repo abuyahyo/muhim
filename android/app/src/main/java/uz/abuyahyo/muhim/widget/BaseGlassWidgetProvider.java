@@ -37,6 +37,27 @@ abstract class BaseGlassWidgetProvider extends AppWidgetProvider {
     static final int COLOR_DIM = 0xB3FFFFFF;
     static final int COLOR_WHITE = 0xFFFFFFFF;
 
+    // Оқ mavzu uchun to'q matn ranglari.
+    static final int COLOR_INK_LIGHT = 0xFF0F172A;
+    static final int COLOR_MUTE_LIGHT = 0xFF64748B;
+    static final int COLOR_ACCENT_LIGHT = 0xFF0369A1;
+
+    static int bgRes(boolean light) {
+        return light ? R.drawable.glass_bg_light : R.drawable.glass_bg;
+    }
+
+    static int ink(boolean light) {
+        return light ? COLOR_INK_LIGHT : COLOR_INK;
+    }
+
+    static int mute(boolean light) {
+        return light ? COLOR_MUTE_LIGHT : COLOR_MUTE;
+    }
+
+    static int accent(boolean light) {
+        return light ? COLOR_ACCENT_LIGHT : COLOR_ACCENT;
+    }
+
     static double nowHour(Calendar c) {
         return c.get(Calendar.HOUR_OF_DAY)
                 + c.get(Calendar.MINUTE) / 60.0
@@ -60,6 +81,13 @@ abstract class BaseGlassWidgetProvider extends AppWidgetProvider {
                 context, 0,
                 new Intent(Intent.ACTION_VIEW, Uri.parse(SITE_URL)),
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    @Override
+    public void onDeleted(Context context, int[] appWidgetIds) {
+        for (int id : appWidgetIds) {
+            WidgetPrefs.delete(context, id);
+        }
     }
 
     @Override
