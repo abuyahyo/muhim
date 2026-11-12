@@ -24,6 +24,8 @@
     <string name="config_lang_uz">O\'zbek</string>
     <string name="config_lang_ru">Русский</string>
     <string name="config_lang_en">English</string>
+    <string name="settings_title">Language</string>
+    <string name="settings_note">The selected language applies to all widgets.</string>
 
     <string name="config_title">Widget settings</string>
     <string name="config_pick_city">Pick a city:</string>
