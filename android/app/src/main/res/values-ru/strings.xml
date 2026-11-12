@@ -100,4 +100,5 @@
     <string name="widget_refresh_done">Виджеты обновлены</string>
     <string name="widget_pin_sent">Подтвердите на рабочем столе</string>
     <string name="widget_pin_unsupported">Эта версия Android не поддерживает добавление виджетов</string>
+    <string name="location_saved">Местоположение сохранено — виджеты обновлены</string>
 </resources>

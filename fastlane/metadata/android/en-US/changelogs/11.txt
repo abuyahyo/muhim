@@ -1,0 +1,1 @@
+No setup screen when adding widgets — widgets use app settings. Location in Settings

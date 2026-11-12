@@ -100,4 +100,5 @@
     <string name="widget_refresh_done">Widgets refreshed</string>
     <string name="widget_pin_sent">Confirm on your home screen</string>
     <string name="widget_pin_unsupported">This Android version does not support adding widgets</string>
+    <string name="location_saved">Location saved — widgets refreshed</string>
 </resources>

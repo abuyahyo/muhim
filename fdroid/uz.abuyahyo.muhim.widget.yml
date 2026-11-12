@@ -66,3 +66,9 @@ Builds:
     subdir: android/app
     gradle:
       - yes
+  - versionName: 1.10
+    versionCode: 11
+    commit: 1075befb
+    subdir: android/app
+    gradle:
+      - yes

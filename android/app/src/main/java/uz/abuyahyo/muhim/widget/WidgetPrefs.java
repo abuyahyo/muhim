@@ -24,18 +24,47 @@ final class WidgetPrefs {
     }
 
     static double lat(Context context, int appWidgetId) {
-        return prefs(context).getFloat("lat_" + appWidgetId, (float) DEFAULT_LAT);
+        if (prefs(context).contains("lat_" + appWidgetId)) {
+            return prefs(context).getFloat("lat_" + appWidgetId, (float) DEFAULT_LAT);
+        }
+        Double app = appLat(context);
+        return app != null ? app : DEFAULT_LAT;
     }
 
     static double lon(Context context, int appWidgetId) {
-        return prefs(context).getFloat("lon_" + appWidgetId, (float) DEFAULT_LON);
+        if (prefs(context).contains("lon_" + appWidgetId)) {
+            return prefs(context).getFloat("lon_" + appWidgetId, (float) DEFAULT_LON);
+        }
+        Double app = appLon(context);
+        return app != null ? app : DEFAULT_LON;
     }
 
     static String city(Context context, int appWidgetId) {
         String saved = prefs(context).getString("city_" + appWidgetId, null);
-        return saved != null ? saved
+        if (saved != null) return saved;
+        String app = prefs(context).getString("app_city", null);
+        return app != null ? app
                 : BaseGlassWidgetProvider.localizedContext(context)
                         .getString(R.string.widget_city_default);
+    }
+
+    // Ilova darajasidagi joylashuv — barcha vidjetlarning standarti.
+    static Double appLat(Context context) {
+        if (!prefs(context).contains("app_lat")) return null;
+        return (double) prefs(context).getFloat("app_lat", (float) DEFAULT_LAT);
+    }
+
+    static Double appLon(Context context) {
+        if (!prefs(context).contains("app_lon")) return null;
+        return (double) prefs(context).getFloat("app_lon", (float) DEFAULT_LON);
+    }
+
+    static void saveAppLocation(Context context, double lat, double lon, String city) {
+        prefs(context).edit()
+                .putFloat("app_lat", (float) lat)
+                .putFloat("app_lon", (float) lon)
+                .putString("app_city", city)
+                .apply();
     }
 
     // Til — butun ilova uchun (vidjetlar ham). "system" — telefon tili.
