@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Муҳим</string>
-    <!-- Launcher ikonka nomlari - qat'iy, tilga bog'liq emas (alias orqali tanlanadi) -->
-    <string name="app_label_uz">Муҳим</string>
-    <string name="app_label_ru">Важно</string>
-    <string name="app_label_en">Muhim</string>
+    <!-- Launcher ikonka nomi - qat'iy, tilga bog'liq emas -->
+    <string name="app_name_launcher">Муҳим</string>
     <string name="widget_name">Намоз вақтлари</string>
     <string name="widget_city_default">Тошкент</string>
     <string name="prayer_fajr">Бомдод</string>

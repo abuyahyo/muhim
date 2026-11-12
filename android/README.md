@@ -77,8 +77,7 @@ sozlamalar ham tozalanadi.
 Til vidjet sozlash oynasida tanlanmaydi — u butun ilova uchun yagona.
 Ilovani oching va ⚙ tugma bilan til sozlamalarini oching
 (Тизим / O'zbek / Русский / English). Tanlangan til barcha vidjetlarga
-ta'sir qiladi, uy ekranidagi ilova ikonkasining nomi ham tilga qarab
-o'zgaradi: Муҳим / Важно / Muhim.
+ta'sir qiladi. Uy ekranidagi ilova ikonkasining nomi esa o'zgarmaydi — doim Муҳим.
 
 ## Umumiy
 - Har 30 daqiqada + sana/soat o'zgarganda avtomatik yangilanadi
