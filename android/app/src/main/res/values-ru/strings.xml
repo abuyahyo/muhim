@@ -94,4 +94,5 @@
         <item>69.5819</item><item>66.8342</item><item>60.3639</item><item>69.2697</item>
         <item>69.5950</item><item>67.9000</item><item>39.8262</item><item>39.6142</item>
     </string-array>
+    <string name="settings_open">Настройки</string>
 </resources>

@@ -54,3 +54,9 @@ Builds:
     subdir: android/app
     gradle:
       - yes
+  - versionName: 1.8
+    versionCode: 9
+    commit: HEADCOMMIT
+    subdir: android/app
+    gradle:
+      - yes

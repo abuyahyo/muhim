@@ -4,6 +4,17 @@ Uy ekranida ko'rinadigan **glassmorphism uslubidagi** namoz vaqtlari vidjetlari.
 Web-saytdagi `vaqtlar/prayer.js` algoritmi (PrayTimes.org, MWL + Hanafiy Asr)
 va `kunlar/hijri.js` ҳижрий algoritmi Java'ga ko'chirilgan — hammasi to'liq oflayn.
 
+## Gibrid ilova (v1.8+)
+
+APK endi **web ilovani ham o'z ichiga oladi**: build vaqtida repo ildizidagi
+PWA fayllar (`vaqtlar/`, `kunlar/`, `joylar/`, `i18n.js`, `content-i18n.js` va boshqalar)
+`assets/web/` ga nusxalanadi va `MainActivity` ularni WebView'da ochadi
+(`shouldInterceptRequest` orqali `https://appassets.local/` → assets). To'liq oflayn.
+
+Til sozlamasi vidjetlar bilan umumiy: WebView ichidagi sahifa `MuhimAndroid`
+JS bridge orqali tilni o'qiydi va saqlaydi, vidjetlar darhol yangilanadi.
+Ilovadagi ⚙ tugma til sozlamasini ochadi; vidjetlar bosilganda ham ilova ochiladi.
+
 ## Vidjetlar (6 xil)
 | Vidjet | O'lcham | Mazmun |
 |---|---|---|

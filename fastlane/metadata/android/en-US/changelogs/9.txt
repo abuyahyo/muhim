@@ -1,0 +1,1 @@
+Hybrid app: the web app is now bundled inside the APK and works offline. Widgets remain
