@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 4x1 — 6 vaqt lenta -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@drawable/glass_bg"
+    android:padding="10dp"
+    android:gravity="center_vertical">
+
+    <LinearLayout style="@style/StripCell">
+        <TextView android:id="@+id/strip_name_fajr" style="@style/StripName" android:text="@string/prayer_fajr" />
+        <TextView android:id="@+id/strip_time_fajr" style="@style/StripTime" />
+    </LinearLayout>
+    <LinearLayout style="@style/StripCell">
+        <TextView android:id="@+id/strip_name_sunrise" style="@style/StripName" android:text="@string/prayer_sunrise" />
+        <TextView android:id="@+id/strip_time_sunrise" style="@style/StripTime" />
+    </LinearLayout>
+    <LinearLayout style="@style/StripCell">
+        <TextView android:id="@+id/strip_name_dhuhr" style="@style/StripName" android:text="@string/prayer_dhuhr" />
+        <TextView android:id="@+id/strip_time_dhuhr" style="@style/StripTime" />
+    </LinearLayout>
+    <LinearLayout style="@style/StripCell">
+        <TextView android:id="@+id/strip_name_asr" style="@style/StripName" android:text="@string/prayer_asr" />
+        <TextView android:id="@+id/strip_time_asr" style="@style/StripTime" />
+    </LinearLayout>
+    <LinearLayout style="@style/StripCell">
+        <TextView android:id="@+id/strip_name_maghrib" style="@style/StripName" android:text="@string/prayer_maghrib" />
+        <TextView android:id="@+id/strip_time_maghrib" style="@style/StripTime" />
+    </LinearLayout>
+    <LinearLayout style="@style/StripCell">
+        <TextView android:id="@+id/strip_name_isha" style="@style/StripName" android:text="@string/prayer_isha" />
+        <TextView android:id="@+id/strip_time_isha" style="@style/StripTime" />
+    </LinearLayout>
+</LinearLayout>
