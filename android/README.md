@@ -56,7 +56,7 @@ Har bir vidjet o'z sozlamasini alohida eslab qoladi. Vidjetni o'chirganda
 sozlamalar ham tozalanadi.
 
 Tilni vidjet qo'shmasdan ham o'zgartirish mumkin: ilova ro'yxatida
-(app drawer) **Муҳим виджет**'ni oching — alohida til sozlamalar oynasi
+(app drawer) **Муҳим** ilovasini oching — alohida til sozlamalar oynasi
 chiquvchi (Тизим / O'zbek / Русский / English), tanlash bilan barcha
 vidjetlar darhol yangilanadi.
 
@@ -82,7 +82,7 @@ Keystore yaratish (bir marta, Java bor mashinada):
 
 ## O'rnatish
 `app-debug.apk` ni telefonda ochib o'rnatish (noma'lum manbalarga ruxsat kerak bo'lishi mumkin).
-Vidjet qo'yish: uy ekranida bo'sh joyni bosib turib → Widgets → Муҳим виджет.
+Vidjet qo'yish: uy ekranida bo'sh joyni bosib turib → Widgets → Муҳим.
 
 ## F-Droid
 Ilova GPL-3.0 litsenziyasi ostida — F-Droid'ga qo'shish mumkin. "APK yuklash"
