@@ -13,9 +13,9 @@
     'Кунлар': { ru: 'Дни', en: 'Days' },
     'Жойлар': { ru: 'Места', en: 'Places' },
     'Тақвим': { ru: 'Календарь', en: 'Calendar' },
-    'Муҳим Вақтлар': { ru: 'Мухим — Времена', en: 'Muhim — Times' },
-    'Муҳим Кунлар': { ru: 'Мухим — Дни', en: 'Muhim — Days' },
-    'Муҳим Жойлар': { ru: 'Мухим — Места', en: 'Muhim — Places' },
+    'Муҳим Вақтлар': { ru: 'Muhim — Времена', en: 'Muhim — Times' },
+    'Муҳим Кунлар': { ru: 'Muhim — Дни', en: 'Muhim — Days' },
+    'Муҳим Жойлар': { ru: 'Muhim — Места', en: 'Muhim — Places' },
     'Исломий Тақвим': { ru: 'Исламский календарь', en: 'Islamic Calendar' },
     'Муқаддас Жойлар': { ru: 'Святые места', en: 'Sacred Places' },
     '← Орқага': { ru: '← Назад', en: '← Back' },
@@ -179,6 +179,29 @@
     }
   };
 
+  // Oʻzbekcha kirillni lotin yozuviga oʻtkazish ('uzl' tili uchun).
+  var CYR = {
+    'а':'a','б':'b','в':'v','г':'g','ғ':'gʻ','д':'d','е':'e','ё':'yo','ж':'j','з':'z','и':'i','й':'y','к':'k','қ':'q','л':'l','м':'m','н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u','ў':'oʻ','ф':'f','х':'x','ҳ':'h','ц':'ts','ч':'ch','ш':'sh','щ':'sh','ъ':'ʼ','ь':'','э':'e','ю':'yu','я':'ya'
+  };
+
+  function translit(s) {
+    if (!s) return s;
+    var out = '';
+    for (var i = 0; i < s.length; i++) {
+      var ch = s.charAt(i);
+      var lo = ch.toLowerCase();
+      if (!CYR.hasOwnProperty(lo)) { out += ch; continue; }
+      var r = CYR[lo];
+      var up = ch !== lo;
+      if (r.length === 1) { out += up ? r.toUpperCase() : r; continue; }
+      var nx = i + 1 < s.length ? s.charAt(i + 1) : '';
+      var nxLow = nx !== '' && nx === nx.toLowerCase() && CYR.hasOwnProperty(nx.toLowerCase());
+      if (up) out += nxLow ? r.charAt(0).toUpperCase() + r.slice(1) : r.toUpperCase();
+      else out += r;
+    }
+    return out;
+  }
+
   function androidLang() {
     try {
       var a = window.MuhimAndroid;
@@ -206,15 +229,19 @@
   }
 
   function t(s) {
+    var l = lang();
+    if (l === 'uzl') return translit(s);
     var e = DICT[s];
     if (!e) return s;
-    return e[lang()] || s;
+    return e[l] || s;
   }
 
   function arr(name) {
     var a = ARRAYS[name];
     if (!a) return [];
-    return a[lang()] || a.uz;
+    var l = lang();
+    if (l === 'uzl') return (a.uz || []).map(function (s) { return translit(s); });
+    return a[l] || a.uz;
   }
 
   // Kontent manbalarini ("<сура> сураси, N-оят" ва boshqalar) tarjima qilish.
@@ -223,6 +250,7 @@
     if (!s) return s;
     var l = lang();
     if (l === 'uz') return s;
+    if (l === 'uzl') return translit(s);
     var c = window.MuhimI18N && window.MuhimI18N.CONTENT;
     if (c && c[s]) return c[s][l] || s;
     var d = DICT[s];
@@ -243,7 +271,7 @@
   // Сахифа юкланганда статик HTML'ни (нав, title, lang) локаллаштириш.
   function applyStatic() {
     var l = lang();
-    document.documentElement.lang = (l === 'uz') ? 'uz-Cyrl' : l;
+    document.documentElement.lang = (l === 'uz') ? 'uz-Cyrl' : (l === 'uzl' ? 'uz-Latn' : l);
     var labels = document.querySelectorAll('.app-nav-label');
     for (var i = 0; i < labels.length; i++) {
       var txt = labels[i].textContent.trim();
@@ -255,7 +283,7 @@
   // Тил танлаш тугмалари — саҳифа сарлавҳасига қўйилади.
   function switcherHtml() {
     var l = lang();
-    var opts = [['uz', 'Oʻz'], ['ru', 'Рус'], ['en', 'Eng']];
+    var opts = [['uz', 'Үзбек'], ['uzl', 'Oʻzbek'], ['ru', 'Рус'], ['en', 'Eng']];
     var h = '<div class="lang-switch" role="group" aria-label="Til / Язык / Language">';
     for (var i = 0; i < opts.length; i++) {
       h += '<button class="lang-switch-btn' + (l === opts[i][0] ? ' active' : '')
@@ -269,5 +297,5 @@
     else applyStatic();
   }
 
-  window.MuhimI18N = { lang: lang, setLang: setLang, t: t, arr: arr, tc: tc, applyStatic: applyStatic, switcherHtml: switcherHtml };
+  window.MuhimI18N = { lang: lang, setLang: setLang, t: t, arr: arr, tc: tc, translit: translit, applyStatic: applyStatic, switcherHtml: switcherHtml };
 })();

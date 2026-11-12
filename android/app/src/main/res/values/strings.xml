@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Муҳим</string>
-    <!-- Launcher ikonka nomlari - qat'iy, tilga bog'liq emas (alias orqali tanlanadi) -->
-    <string name="app_label_uz">Муҳим</string>
-    <string name="app_label_ru">Мухим</string>
-    <string name="app_label_en">Muhim</string>
+    <string name="app_name">Muhim</string>
+    <!-- Launcher ikonka nomi - qat'iy, tilga bog'liq emas -->
+    <string name="app_name_launcher">Muhim</string>
     <string name="widget_name">Намоз вақтлари</string>
     <string name="widget_city_default">Тошкент</string>
     <string name="prayer_fajr">Бомдод</string>
@@ -26,6 +24,7 @@
     <string name="config_language">Til:</string>
     <string name="config_lang_system">Тизим</string>
     <string name="config_lang_uz">O\'zbek</string>
+    <string name="config_lang_uzl">Ўзбек (лотин)</string>
     <string name="config_lang_ru">Русский</string>
     <string name="config_lang_en">English</string>
     <string name="settings_title">Тил</string>

@@ -122,7 +122,7 @@ public class WidgetConfigActivity extends Activity {
     private void applyLocaleOverride() {
         String lang = WidgetPrefs.language(this);
         if ("system".equals(lang)) return;
-        Locale locale = new Locale(lang);
+        Locale locale = WidgetPrefs.localeFor(lang);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.setLocale(locale);

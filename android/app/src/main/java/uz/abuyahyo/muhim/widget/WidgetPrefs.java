@@ -1,10 +1,8 @@
 package uz.abuyahyo.muhim.widget;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.res.Resources;
+import java.util.Locale;
 
 // Har bir vidjet uchun alohida sozlamalar (shahar, mavzu).
 // SharedPreferences'da vidjet id'si bilan saqlanadi.
@@ -71,35 +69,24 @@ final class WidgetPrefs {
     }
 
     // Til — butun ilova uchun (vidjetlar ham). "system" — telefon tili.
+    // 'uzl' — lotin yozuvli o'zbek, 'uz' — kirill. Resurs to'g'ri tanlanishi
+    // uchun script aniq belgilanadi.
+    static Locale localeFor(String lang) {
+        if ("uzl".equals(lang)) {
+            return new Locale.Builder().setLanguage("uz").setScript("Latn").build();
+        }
+        if ("uz".equals(lang)) {
+            return new Locale.Builder().setLanguage("uz").setScript("Cyrl").build();
+        }
+        return new Locale(lang);
+    }
+
     static String language(Context context) {
         return prefs(context).getString("language", "system");
     }
 
     static void saveLanguage(Context context, String language) {
         prefs(context).edit().putString("language", language).apply();
-    }
-
-    // Launcher ikonka nomi tanlangan tilga qarab o'zgaradi (3 alias orqali).
-    static void applyLauncherLabel(Context context, String language) {
-        String lang = "system".equals(language) ? systemLanguage() : language;
-        String[] aliases = {".MainUz", ".MainRu", ".MainEn"};
-        String[] langs = {"uz", "ru", "en"};
-        PackageManager pm = context.getApplicationContext().getPackageManager();
-        String pkg = context.getPackageName();
-        for (int i = 0; i < aliases.length; i++) {
-            ComponentName cn = new ComponentName(pkg, pkg + aliases[i]);
-            int state = langs[i].equals(lang)
-                    ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-                    : PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
-            if (pm.getComponentEnabledSetting(cn) != state) {
-                pm.setComponentEnabledSetting(cn, state, PackageManager.DONT_KILL_APP);
-            }
-        }
-    }
-
-    private static String systemLanguage() {
-        String lang = Resources.getSystem().getConfiguration().locale.getLanguage();
-        return "ru".equals(lang) || "en".equals(lang) ? lang : "uz";
     }
 
     static boolean isLight(Context context, int appWidgetId) {

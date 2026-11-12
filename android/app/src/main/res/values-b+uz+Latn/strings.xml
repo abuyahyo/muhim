@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Muhim</string>
+    <!-- Launcher ikonka nomi - qat'iy, tilga bog'liq emas -->
+    <string name="app_name_launcher">Muhim</string>
+    <string name="widget_name">Namoz vaqtlari</string>
+    <string name="widget_city_default">Toshkent</string>
+    <string name="prayer_fajr">Bomdod</string>
+    <string name="prayer_sunrise">Quyosh</string>
+    <string name="prayer_dhuhr">Peshin</string>
+    <string name="prayer_asr">Asr</string>
+    <string name="prayer_maghrib">Shom</string>
+    <string name="prayer_isha">Xufton</string>
+    <string name="widget_next_label">Keyingi namoz</string>
+    <string name="widget_next_name">Namoz vaqtlari</string>
+    <string name="widget_grid_name">Namoz vaqtlari (panel)</string>
+    <string name="widget_strip_name">Namoz vaqtlari (lenta)</string>
+    <string name="widget_date_name">Sana va namoz</string>
+    <string name="widget_hijri_name">Hijriy sana</string>
+    <string name="widget_tahajjud_name">Tahajjud oynasi</string>
+    <string name="widget_tahajjud_label">Tahajjud oynasi</string>
+    <string name="widget_tahajjud_note">kechaning uchdan biri</string>
+
+    <string name="config_language">Til:</string>
+    <string name="config_lang_system">Tizim</string>
+    <string name="config_lang_uz">O\'zbek</string>
+    <string name="config_lang_uzl">Oʻzbek (lotin)</string>
+    <string name="config_lang_ru">Русский</string>
+    <string name="config_lang_en">English</string>
+    <string name="settings_title">Til</string>
+    <string name="settings_note">Tanlangan til barcha vidjetlarga toʻgʻri keladi.</string>
+
+    <string name="config_title">Vidjet sozlamalari</string>
+    <string name="config_pick_city">Shaharni tanlang:</string>
+    <string name="config_my_location">📍 Mening joylashuvim</string>
+    <string name="config_theme">Shisha rangi:</string>
+    <string name="config_theme_dark">Qoramoy</string>
+    <string name="config_theme_light">Oq</string>
+    <string name="config_method">Hisoblash usuli:</string>
+    <string name="method_mwl">MWL</string>
+    <string name="method_egypt">Misr</string>
+    <string name="method_karachi">Karachi</string>
+    <string name="method_makkah">Ummul Quro</string>
+    <string name="method_isna">ISNA</string>
+    <string name="config_madhab">Asr mazhabi:</string>
+    <string name="config_madhab_hanafi">Hanafiy</string>
+    <string name="config_madhab_shafi">Shofeʼiy</string>
+    <string name="config_save">✓ Saqlash</string>
+    <string name="config_perm_denied">Ruxsat berilmadi</string>
+    <string name="config_no_location">Joylashuv topilmadi — GPS\'ni yoqib, qayta urinib koʻring</string>
+    <string name="config_my_place">Mening joyim</string>
+
+    <string-array name="prayer_names">
+        <item>Bomdod</item>
+        <item>Quyosh</item>
+        <item>Peshin</item>
+        <item>Asr</item>
+        <item>Shom</item>
+        <item>Xufton</item>
+    </string-array>
+
+    <string-array name="greg_months">
+        <item>Yanvar</item><item>Fevral</item><item>Mart</item><item>Aprel</item>
+        <item>May</item><item>Iyun</item><item>Iyul</item><item>Avgust</item>
+        <item>Sentyabr</item><item>Oktyabr</item><item>Noyabr</item><item>Dekabr</item>
+    </string-array>
+    <string-array name="weekdays">
+        <item>Yakshanba</item><item>Dushanba</item><item>Seshanba</item><item>Chorshanba</item>
+        <item>Payshanba</item><item>Juma</item><item>Shanba</item>
+    </string-array>
+    <string-array name="hijri_months">
+        <item>Muharram</item><item>Safar</item><item>Rabiul avval</item><item>Rabiul oxir</item>
+        <item>Jumodul avval</item><item>Jumodul oxir</item><item>Rajab</item><item>Shaʼbon</item>
+        <item>Ramazon</item><item>Shavvol</item><item>Zulqaʼda</item><item>Zulhijja</item>
+    </string-array>
+    <string-array name="city_names">
+        <item>@string/widget_city_default</item><item>Samarqand</item><item>Buxoro</item>
+        <item>Namangan</item><item>Andijon</item><item>Fargona</item><item>Nukus</item>
+        <item>Qarshi</item><item>Urganch</item><item>Jizzax</item><item>Termiz</item>
+        <item>Navoiy</item><item>Guliston</item><item>Qoʻqon</item><item>Margʻilon</item>
+        <item>Chirchiq</item><item>Shahrisabz</item><item>Xiva</item><item>Bekobod</item>
+        <item>Olmaliq</item><item>Denov</item><item>Mekka</item><item>Madina</item>
+    </string-array>
+    <string-array name="city_lats">
+        <item>41.2995</item><item>39.6542</item><item>39.7747</item>
+        <item>40.9983</item><item>40.7821</item><item>40.3864</item><item>42.4531</item>
+        <item>38.8611</item><item>41.5345</item><item>40.1158</item><item>37.2242</item>
+        <item>40.0844</item><item>40.4897</item><item>40.5286</item><item>40.4711</item>
+        <item>41.4719</item><item>39.0578</item><item>41.3775</item><item>40.2208</item>
+        <item>40.8500</item><item>38.2833</item><item>21.4225</item><item>24.4686</item>
+    </string-array>
+    <string-array name="city_lons">
+        <item>69.2401</item><item>66.9597</item><item>64.4286</item>
+        <item>71.6726</item><item>72.3442</item><item>71.7864</item><item>59.6103</item>
+        <item>65.7847</item><item>60.6249</item><item>67.8422</item><item>67.2783</item>
+        <item>65.3792</item><item>68.7842</item><item>70.9425</item><item>71.7247</item>
+        <item>69.5819</item><item>66.8342</item><item>60.3639</item><item>69.2697</item>
+        <item>69.5950</item><item>67.9000</item><item>39.8262</item><item>39.6142</item>
+    </string-array>
+    <string name="settings_open">Sozlamalar</string>
+    <string name="config_widgets">Vidjetlar</string>
+    <string name="widget_refresh_all">Hammasini yangilash</string>
+    <string name="widget_refresh_done">Vidjetlar yangilandi</string>
+    <string name="widget_pin_sent">Launcher’da tasdiqlang</string>
+    <string name="widget_pin_unsupported">Bu Android versiyasi vidjet qo’yishni qo’llab-quvvatlamaydi</string>
+    <string name="location_saved">Joylashuv saqlandi — vidjetlar yangilandi</string>
+    <string name="widget_zikr_name">Zikr</string>
+    <string name="dhikr_1">Subhanalloh</string>
+    <string name="dhikr_2">Alhamdulilloh</string>
+    <string name="dhikr_3">Allohu akbar</string>
+    <string name="dhikr_round">%d-davra</string>
+    <string name="config_bg">Fon</string>
+    <string name="config_bg_glass">Shisha</string>
+    <string name="config_bg_solid">Bir rang</string>
+    <string name="config_bg_gradient">Gradient</string>
+    <string name="config_color1">1-rang (asos)</string>
+    <string name="config_color2">2-rang (gradient uchi)</string>
+    <string name="method_auto">Avtomatik</string>
+</resources>

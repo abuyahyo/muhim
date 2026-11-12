@@ -174,7 +174,7 @@ public class MainActivity extends Activity {
     private void applyLocaleOverride() {
         String lang = WidgetPrefs.language(this);
         if ("system".equals(lang)) return;
-        Locale locale = new Locale(lang);
+        Locale locale = WidgetPrefs.localeFor(lang);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.setLocale(locale);
@@ -215,7 +215,6 @@ public class MainActivity extends Activity {
         public void saveLang(String l) {
             if (l == null || l.isEmpty()) return;
             WidgetPrefs.saveLanguage(MainActivity.this, l);
-            WidgetPrefs.applyLauncherLabel(MainActivity.this, l);
             refreshAllWidgets();
         }
     }

@@ -22,6 +22,7 @@
     <string name="config_language">Language:</string>
     <string name="config_lang_system">System</string>
     <string name="config_lang_uz">O\'zbek</string>
+    <string name="config_lang_uzl">Uzbek (Latin)</string>
     <string name="config_lang_ru">Русский</string>
     <string name="config_lang_en">English</string>
     <string name="settings_title">Language</string>

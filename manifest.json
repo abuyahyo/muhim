@@ -1,6 +1,6 @@
 {
-  "name": "Исломий Тақвим",
-  "short_name": "Тақвим",
+  "name": "Muhim",
+  "short_name": "Muhim",
   "description": "Ҳижрий тақвим ва муҳим кунлар",
   "start_url": "./vaqtlar/",
   "scope": "./",
@@ -39,7 +39,7 @@
       "icons": [{ "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }]
     },
     {
-      "name": "Муҳим кунлар",
+      "name": "Muhim kunlar",
       "short_name": "Кунлар",
       "description": "Яқинлашаётган муҳим кунлар",
       "url": "./kunlar/",

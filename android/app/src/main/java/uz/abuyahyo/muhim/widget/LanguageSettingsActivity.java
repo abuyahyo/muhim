@@ -93,6 +93,13 @@ public class LanguageSettingsActivity extends Activity {
                         selectLanguage("uz");
                     }
                 }));
+        row.addView(optionButton(getString(R.string.config_lang_uzl),
+                "uzl".equals(currentLang), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selectLanguage("uzl");
+                    }
+                }));
         row.addView(optionButton(getString(R.string.config_lang_ru),
                 "ru".equals(currentLang), new View.OnClickListener() {
                     @Override
@@ -158,14 +165,13 @@ public class LanguageSettingsActivity extends Activity {
 
     private void selectLanguage(String lang) {
         WidgetPrefs.saveLanguage(this, lang);
-        WidgetPrefs.applyLauncherLabel(this, lang);
         if (Build.VERSION.SDK_INT >= 33) {
             android.app.LocaleManager lm = getSystemService(android.app.LocaleManager.class);
             if (lm != null) {
                 if ("system".equals(lang)) {
                     lm.setApplicationLocales(android.os.LocaleList.getEmptyLocaleList());
                 } else {
-                    lm.setApplicationLocales(new android.os.LocaleList(new Locale(lang)));
+                    lm.setApplicationLocales(new android.os.LocaleList(WidgetPrefs.localeFor(lang)));
                 }
             }
         } else {
@@ -191,7 +197,7 @@ public class LanguageSettingsActivity extends Activity {
     private void applyLocaleOverride() {
         String lang = WidgetPrefs.language(this);
         if ("system".equals(lang)) return;
-        Locale locale = new Locale(lang);
+        Locale locale = WidgetPrefs.localeFor(lang);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.setLocale(locale);
