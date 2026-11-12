@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.net.Uri;
 
 import java.util.Calendar;
+import java.util.Locale;
+import android.content.res.Configuration;
 
 // Barcha glass vidjetlar uchun umumiy asos: joy, ranglar, soat o'zgarganda
 // yangilash va umumiy yordamchi hisoblar. Matnlar resurslardan olinadi
@@ -29,20 +31,30 @@ abstract class BaseGlassWidgetProvider extends AppWidgetProvider {
     static final int COLOR_MUTE_LIGHT = 0xFF64748B;
     static final int COLOR_ACCENT_LIGHT = 0xFF0369A1;
 
+    // Tanlangan til bo'yicha resurslar konteksti ("system" — telefon tili).
+    static Context localizedContext(Context c) {
+        String lang = WidgetPrefs.language(c);
+        if ("system".equals(lang)) return c;
+        Locale locale = new Locale(lang);
+        Configuration config = new Configuration(c.getResources().getConfiguration());
+        config.setLocale(locale);
+        return c.createConfigurationContext(config);
+    }
+
     static String[] prayerNames(Context c) {
-        return c.getResources().getStringArray(R.array.prayer_names);
+        return localizedContext(c).getResources().getStringArray(R.array.prayer_names);
     }
 
     static String[] months(Context c) {
-        return c.getResources().getStringArray(R.array.greg_months);
+        return localizedContext(c).getResources().getStringArray(R.array.greg_months);
     }
 
     static String[] days(Context c) {
-        return c.getResources().getStringArray(R.array.weekdays);
+        return localizedContext(c).getResources().getStringArray(R.array.weekdays);
     }
 
     static String[] hijriMonths(Context c) {
-        return c.getResources().getStringArray(R.array.hijri_months);
+        return localizedContext(c).getResources().getStringArray(R.array.hijri_months);
     }
 
     static int bgRes(boolean light) {

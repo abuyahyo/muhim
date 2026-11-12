@@ -19,6 +19,12 @@
     <string name="widget_tahajjud_label">Tahajjud window</string>
     <string name="widget_tahajjud_note">last third of the night</string>
 
+    <string name="config_language">Language:</string>
+    <string name="config_lang_system">System</string>
+    <string name="config_lang_uz">O\'zbek</string>
+    <string name="config_lang_ru">Русский</string>
+    <string name="config_lang_en">English</string>
+
     <string name="config_title">Widget settings</string>
     <string name="config_pick_city">Pick a city:</string>
     <string name="config_my_location">📍 My location</string>

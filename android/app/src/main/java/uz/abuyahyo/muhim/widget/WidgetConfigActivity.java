@@ -4,8 +4,10 @@ import android.Manifest;
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
@@ -71,7 +73,56 @@ public class WidgetConfigActivity extends Activity {
         selectedMethod = WidgetPrefs.method(this, appWidgetId);
         selectedShafi = WidgetPrefs.isShafi(this, appWidgetId);
 
+        applyLocaleOverride();
         setContentView(buildUi());
+    }
+
+    // API < 33'da config oynasi matnini tanlangan tilda ko'rsatish.
+    private void applyLocaleOverride() {
+        String lang = WidgetPrefs.language(this);
+        if ("system".equals(lang)) return;
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(
+                config, getBaseContext().getResources().getDisplayMetrics());
+    }
+
+    private void selectLanguage(String lang) {
+        WidgetPrefs.saveLanguage(this, lang);
+        if (Build.VERSION.SDK_INT >= 33) {
+            android.app.LocaleManager lm = getSystemService(android.app.LocaleManager.class);
+            if (lm != null) {
+                if ("system".equals(lang)) {
+                    lm.setApplicationLocales(android.os.LocaleList.getEmptyLocaleList());
+                } else {
+                    lm.setApplicationLocales(new android.os.LocaleList(new Locale(lang)));
+                }
+            }
+            setContentView(buildUi());
+        } else {
+            recreate();
+        }
+        refreshAllWidgets();
+    }
+
+    private void refreshAllWidgets() {
+        AppWidgetManager mgr = AppWidgetManager.getInstance(this);
+        Class<?>[] providers = {
+                PrayerWidgetProvider.class, NextPrayerWidgetProvider.class,
+                PrayerStripWidgetProvider.class, DateWidgetProvider.class,
+                HijriWidgetProvider.class, TahajjudWidgetProvider.class
+        };
+        for (Class<?> p : providers) {
+            int[] ids = mgr.getAppWidgetIds(new ComponentName(this, p));
+            if (ids.length > 0) {
+                Intent update = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+                        .setComponent(new ComponentName(this, p));
+                update.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+                sendBroadcast(update);
+            }
+        }
     }
 
     private View buildUi() {
@@ -92,6 +143,47 @@ public class WidgetConfigActivity extends Activity {
 
         LinearLayout list = new LinearLayout(this);
         list.setOrientation(LinearLayout.VERTICAL);
+
+        TextView langLabel = new TextView(this);
+        langLabel.setText(R.string.config_language);
+        langLabel.setTextSize(14);
+        langLabel.setTextColor(0xB3FFFFFF);
+        langLabel.setPadding(pad, dp(4), pad, dp(4));
+        list.addView(langLabel);
+
+        String currentLang = WidgetPrefs.language(this);
+        LinearLayout langRow = new LinearLayout(this);
+        langRow.setOrientation(LinearLayout.HORIZONTAL);
+        langRow.setPadding(pad, 0, pad, dp(8));
+        langRow.addView(optionButton(getString(R.string.config_lang_system),
+                "system".equals(currentLang), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selectLanguage("system");
+                    }
+                }));
+        langRow.addView(optionButton(getString(R.string.config_lang_uz),
+                "uz".equals(currentLang), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selectLanguage("uz");
+                    }
+                }));
+        langRow.addView(optionButton(getString(R.string.config_lang_ru),
+                "ru".equals(currentLang), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selectLanguage("ru");
+                    }
+                }));
+        langRow.addView(optionButton(getString(R.string.config_lang_en),
+                "en".equals(currentLang), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selectLanguage("en");
+                    }
+                }));
+        list.addView(langRow);
 
         Button gps = new Button(this, null, android.R.attr.borderlessButtonStyle);
         gps.setText(R.string.config_my_location);

@@ -42,3 +42,9 @@ Builds:
     subdir: android/app
     gradle:
       - yes
+  - versionName: 1.6
+    versionCode: 7
+    commit: 25bb138654e59dde7be594beee3565ad97013bd7
+    subdir: android/app
+    gradle:
+      - yes

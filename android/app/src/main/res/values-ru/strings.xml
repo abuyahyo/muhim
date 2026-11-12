@@ -19,6 +19,12 @@
     <string name="widget_tahajjud_label">Окно тахаджуда</string>
     <string name="widget_tahajjud_note">последняя треть ночи</string>
 
+    <string name="config_language">Язык:</string>
+    <string name="config_lang_system">Системный</string>
+    <string name="config_lang_uz">O\'zbek</string>
+    <string name="config_lang_ru">Русский</string>
+    <string name="config_lang_en">English</string>
+
     <string name="config_title">Настройки виджета</string>
     <string name="config_pick_city">Выберите город:</string>
     <string name="config_my_location">📍 Моё местоположение</string>

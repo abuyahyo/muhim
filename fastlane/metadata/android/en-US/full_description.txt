@@ -18,5 +18,6 @@
   <li>Asr madhab: Hanafi or Shafi</li>
   <li>Dark and light glass themes</li>
   <li>No permissions required (GPS is optional)</li>
+  <li>3 languages: Uzbek, Russian, English — or follow the system language</li>
   <li>No ads, no tracking</li>
 </ul>

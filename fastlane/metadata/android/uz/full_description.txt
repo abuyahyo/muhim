@@ -18,5 +18,6 @@
   <li>Аср мазҳаби: Ҳанафий yoki Шофеъий</li>
   <li>Қорамой va Оқ shisha mavzulari</li>
   <li>Hech qanday ruxsat talab etilmaydi (GPS ixtiyoriy)</li>
+  <li>3 til: o'zbek, rus, ingliz — yoki telefon tili (tizim)</li>
   <li>Reklama va kuzatuv yo'q</li>
 </ul>

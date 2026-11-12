@@ -19,6 +19,12 @@
     <string name="widget_tahajjud_label">Таҳажжуд ойнаси</string>
     <string name="widget_tahajjud_note">кечанинг учдан бири</string>
 
+    <string name="config_language">Til:</string>
+    <string name="config_lang_system">Тизим</string>
+    <string name="config_lang_uz">O\'zbek</string>
+    <string name="config_lang_ru">Русский</string>
+    <string name="config_lang_en">English</string>
+
     <string name="config_title">Виджет созламалари</string>
     <string name="config_pick_city">Шаҳарни танланг:</string>
     <string name="config_my_location">📍 Менинг жойлашувим</string>

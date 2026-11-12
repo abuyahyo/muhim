@@ -33,7 +33,18 @@ final class WidgetPrefs {
 
     static String city(Context context, int appWidgetId) {
         String saved = prefs(context).getString("city_" + appWidgetId, null);
-        return saved != null ? saved : context.getString(R.string.widget_city_default);
+        return saved != null ? saved
+                : BaseGlassWidgetProvider.localizedContext(context)
+                        .getString(R.string.widget_city_default);
+    }
+
+    // Til — butun ilova uchun (vidjetlar ham). "system" — telefon tili.
+    static String language(Context context) {
+        return prefs(context).getString("language", "system");
+    }
+
+    static void saveLanguage(Context context, String language) {
+        prefs(context).edit().putString("language", language).apply();
     }
 
     static boolean isLight(Context context, int appWidgetId) {
