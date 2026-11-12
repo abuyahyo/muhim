@@ -5,7 +5,6 @@
     android:targetCellWidth="2"
     android:targetCellHeight="2"
     android:updatePeriodMillis="1800000"
-    android:configure="uz.abuyahyo.muhim.widget.WidgetConfigActivity"
     android:initialLayout="@layout/widget_hijri"
     android:resizeMode="none"
     android:widgetCategory="home_screen" />

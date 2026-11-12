@@ -4,6 +4,13 @@ Uy ekranida ko'rinadigan **glassmorphism uslubidagi** namoz vaqtlari vidjetlari.
 Web-saytdagi `vaqtlar/prayer.js` algoritmi (PrayTimes.org, MWL + Hanafiy Asr)
 va `kunlar/hijri.js` ҳижрий algoritmi Java'ga ko'chirilgan — hammasi to'liq oflayn.
 
+## Vidjet sozlamalari — ilova darajasida (v1.10+)
+
+Vidjet qo'yilganda sozlash oynasi **ochilmaydi** — vidjet darhol ilova
+sozlamalariga qarab ishlaydi: til (Sozlamalardagi tanlov) va joylashuv
+(Sozlamalardagi **"Mening joylashuvim"** tugmasi, GPS). Joylashuv o'zgarsa
+vidjetlar avtomatik yangilanadi.
+
 ## Vidjetlarni ilova ichidan qo'shish (v1.9+)
 
 Ilovani ochib ⚙ (Sozlamalar) → **Vidjetlar** bo'limida istalgan vidjetni bosing —

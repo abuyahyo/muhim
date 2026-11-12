@@ -107,6 +107,25 @@ public class LanguageSettingsActivity extends Activity {
                 }));
         card.addView(row);
 
+        Button gps = new Button(this, null, android.R.attr.borderlessButtonStyle);
+        gps.setText(R.string.config_my_location);
+        gps.setAllCaps(false);
+        gps.setTextSize(14);
+        gps.setTextColor(0xFF7DD3FC);
+        gps.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
+        gps.setPadding(dp(8), 0, dp(8), 0);
+        LinearLayout.LayoutParams gp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, dp(38));
+        gp.setMargins(0, dp(2), 0, dp(2));
+        gps.setLayoutParams(gp);
+        gps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestMyLocation();
+            }
+        });
+        card.addView(gps);
+
         TextView widgetsLabel = new TextView(this);
         widgetsLabel.setText(R.string.config_widgets);
         widgetsLabel.setTextSize(14);
@@ -175,6 +194,76 @@ public class LanguageSettingsActivity extends Activity {
         config.setLocale(locale);
         getBaseContext().getResources().updateConfiguration(
                 config, getBaseContext().getResources().getDisplayMetrics());
+    }
+
+    // Ilova darajasidagi joylashuv — vidjetlarning standarti (vidjet qo'yishda so'ralmaydi).
+    private void requestMyLocation() {
+        if (Build.VERSION.SDK_INT >= 23
+                && checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION)
+                        != android.content.pm.PackageManager.PERMISSION_GRANTED
+                && checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[] {
+                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION }, 2);
+            return;
+        }
+        useMyLocation();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] results) {
+        if (requestCode != 2) return;
+        for (int r : results) {
+            if (r == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                useMyLocation();
+                return;
+            }
+        }
+        toast(getString(R.string.config_perm_denied));
+    }
+
+    private void useMyLocation() {
+        android.location.Location best = null;
+        try {
+            android.location.LocationManager lm =
+                    (android.location.LocationManager) getSystemService(LOCATION_SERVICE);
+            for (String provider : lm.getProviders(false)) {
+                android.location.Location loc = lm.getLastKnownLocation(provider);
+                if (loc != null && (best == null || loc.getTime() > best.getTime())) {
+                    best = loc;
+                }
+            }
+        } catch (SecurityException e) {
+            toast(getString(R.string.config_perm_denied));
+            return;
+        } catch (Exception e) {
+            best = null;
+        }
+        if (best == null) {
+            toast(getString(R.string.config_no_location));
+            return;
+        }
+        WidgetPrefs.saveAppLocation(this, best.getLatitude(), best.getLongitude(),
+                resolveCityName(best.getLatitude(), best.getLongitude()));
+        toast(getString(R.string.location_saved));
+        refreshAllWidgets();
+    }
+
+    private String resolveCityName(double lat, double lon) {
+        try {
+            java.util.List<android.location.Address> addrs =
+                    new android.location.Geocoder(this, Locale.getDefault())
+                            .getFromLocation(lat, lon, 1);
+            if (addrs != null && !addrs.isEmpty()) {
+                android.location.Address a = addrs.get(0);
+                if (a.getLocality() != null) return a.getLocality();
+                if (a.getSubAdminArea() != null) return a.getSubAdminArea();
+                if (a.getAdminArea() != null) return a.getAdminArea();
+            }
+        } catch (Exception ignored) {
+        }
+        return getString(R.string.config_my_place);
     }
 
     // Ilova ichidan vidjet qo'yish — launcher'ga pin so'rovi (API 26+).

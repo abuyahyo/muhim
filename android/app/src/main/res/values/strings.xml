@@ -100,4 +100,5 @@
     <string name="widget_refresh_done">Vidjetlar yangilandi</string>
     <string name="widget_pin_sent">Launcher’da tasdiqlang</string>
     <string name="widget_pin_unsupported">Bu Android versiyasi vidjet qo’yishni qo’llab-quvvatlamaydi</string>
+    <string name="location_saved">Joylashuv saqlandi — vidjetlar yangilandi</string>
 </resources>
