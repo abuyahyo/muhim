@@ -9,4 +9,9 @@
     <string name="prayer_asr">Аср</string>
     <string name="prayer_maghrib">Шом</string>
     <string name="prayer_isha">Хуфтон</string>
+    <string name="widget_next_label">Кейинги намоз</string>
+    <string name="widget_next_name">Намоз вақтлари</string>
+    <string name="widget_grid_name">Намоз вақтлари (панель)</string>
+    <string name="widget_strip_name">Намоз вақтлари (лента)</string>
+    <string name="widget_date_name">Сана ва намоз</string>
 </resources>
