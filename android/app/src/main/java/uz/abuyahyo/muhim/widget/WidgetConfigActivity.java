@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -74,7 +75,34 @@ public class WidgetConfigActivity extends Activity {
         selectedShafi = WidgetPrefs.isShafi(this, appWidgetId);
 
         applyLocaleOverride();
-        setContentView(buildUi());
+        View ui = buildUi();
+        setContentView(ui);
+        playOpenAnimation(ui);
+    }
+
+    // Sozlash oynasi ochilganda bloklar web'dagidek navbatma-navbat, pastdan ko'tarilib paydo bo'ladi.
+    private void playOpenAnimation(View outer) {
+        outer.setAlpha(0f);
+        outer.setTranslationY(dp(18));
+        outer.animate().alpha(1f).translationY(0f)
+                .setDuration(240)
+                .setInterpolator(new DecelerateInterpolator(1.6f))
+                .start();
+
+        if (!(outer instanceof ViewGroup)) return;
+        ViewGroup inner = (ViewGroup) ((ViewGroup) outer).getChildAt(0);
+        long delay = 60;
+        for (int i = 0; i < inner.getChildCount(); i++) {
+            View child = inner.getChildAt(i);
+            child.setAlpha(0f);
+            child.setTranslationY(dp(12));
+            child.animate().alpha(1f).translationY(0f)
+                    .setStartDelay(delay)
+                    .setDuration(240)
+                    .setInterpolator(new DecelerateInterpolator(1.6f))
+                    .start();
+            delay += 40;
+        }
     }
 
     // API < 33'da config oynasi matnini tanlangan tilda ko'rsatish.
