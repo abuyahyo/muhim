@@ -10,7 +10,7 @@
 // `VERSION`ни ҳар жиддий ўзгаришда инкремент қилинг — буни ўзгартирилса
 // SW қайта ўрнатилади ва эски кеш тозаланади. Активация янги версия
 // тайёрланганда `SKIP_WAITING` хабари orqали тезлаштирилади (banner).
-const VERSION = 'v293';
+const VERSION = 'v294';
 const STATIC_CACHE = `static-${VERSION}`;
 const PRECACHE = [
   './',
@@ -51,7 +51,9 @@ self.addEventListener('install', (event) => {
   // ўрнатиш бузилмайди (addAll atomic, шунинг учун ишлатилмайди).
   event.waitUntil(
     caches.open(STATIC_CACHE).then((cache) =>
-      Promise.allSettled(PRECACHE.map((url) => cache.add(url)))
+      Promise.allSettled(
+        PRECACHE.map((url) => cache.add(new Request(url, { cache: 'no-cache' })))
+      )
     )
   );
 });
@@ -89,7 +91,9 @@ self.addEventListener('fetch', (event) => {
 async function networkFirst(req) {
   const cache = await caches.open(STATIC_CACHE);
   try {
-    const fresh = await fetch(req);
+    // `cache: 'no-cache'` — HTTP keshidagi (max-age=600) eski nusxa emas,
+    // doim server tekshiriladi. Aks holda yangi deploy 10 daqiqagacha ko'rinmaydi.
+    const fresh = await fetch(req, { cache: 'no-cache' });
     if (fresh && fresh.ok) cache.put(req, fresh.clone());
     return fresh;
   } catch (err) {
@@ -102,7 +106,7 @@ async function networkFirst(req) {
 async function staleWhileRevalidate(req) {
   const cache = await caches.open(STATIC_CACHE);
   const cached = await cache.match(req);
-  const fetched = fetch(req).then((res) => {
+  const fetched = fetch(req, { cache: 'no-cache' }).then((res) => {
     if (res && res.ok) cache.put(req, res.clone());
     return res;
   }).catch(() => cached);
