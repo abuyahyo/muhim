@@ -1,0 +1,22 @@
+<p><b>Muhim Widget</b> — glassmorphism (glass style) prayer times widgets for your home screen. Android companion of the <a href="https://abuyahyo.github.io/muhim/">Muhim</a> Islamic calendar PWA (Uzbek).</p>
+
+<p><b>6 widget types:</b></p>
+<ul>
+  <li>Prayer times panel (4×2) — all 6 times, next prayer highlighted</li>
+  <li>Prayer times strip (4×1) — 6 times in one row</li>
+  <li>Next prayer (2×1) — name and large clock</li>
+  <li>Date and prayer (2×2) — Gregorian + Hijri date</li>
+  <li>Hijri date (2×2) — Hijri day, month, year</li>
+  <li>Tahajjud window (2×1) — last third of the night</li>
+</ul>
+
+<p><b>Features:</b></p>
+<ul>
+  <li>Fully offline — times computed on the device (PrayTimes.org algorithm)</li>
+  <li>Per-widget city: GPS or a 23-city list including Makkah and Madina</li>
+  <li>Calculation methods: MWL, Egypt, Karachi, Umm al-Qura, ISNA</li>
+  <li>Asr madhab: Hanafi or Shafi</li>
+  <li>Dark and light glass themes</li>
+  <li>No permissions required (GPS is optional)</li>
+  <li>No ads, no tracking</li>
+</ul>
