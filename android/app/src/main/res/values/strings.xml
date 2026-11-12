@@ -101,4 +101,9 @@
     <string name="widget_pin_sent">Launcher’da tasdiqlang</string>
     <string name="widget_pin_unsupported">Bu Android versiyasi vidjet qo’yishni qo’llab-quvvatlamaydi</string>
     <string name="location_saved">Joylashuv saqlandi — vidjetlar yangilandi</string>
+    <string name="widget_zikr_name">Зикр</string>
+    <string name="dhikr_1">Субҳаналлоҳ</string>
+    <string name="dhikr_2">Алҳамдулиллоҳ</string>
+    <string name="dhikr_3">Аллоҳу акбар</string>
+    <string name="dhikr_round">%d-давра</string>
 </resources>

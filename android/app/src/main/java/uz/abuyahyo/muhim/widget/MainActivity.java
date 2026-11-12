@@ -187,7 +187,8 @@ public class MainActivity extends Activity {
         Class<?>[] providers = {
                 PrayerWidgetProvider.class, NextPrayerWidgetProvider.class,
                 PrayerStripWidgetProvider.class, DateWidgetProvider.class,
-                HijriWidgetProvider.class, TahajjudWidgetProvider.class
+                HijriWidgetProvider.class, TahajjudWidgetProvider.class,
+                ZikrWidgetProvider.class
         };
         for (Class<?> p : providers) {
             int[] ids = mgr.getAppWidgetIds(new ComponentName(this, p));

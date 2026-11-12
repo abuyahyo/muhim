@@ -28,12 +28,14 @@ public class LanguageSettingsActivity extends Activity {
     private static final Class<?>[] PROVIDERS = {
             PrayerWidgetProvider.class, NextPrayerWidgetProvider.class,
             PrayerStripWidgetProvider.class, DateWidgetProvider.class,
-            HijriWidgetProvider.class, TahajjudWidgetProvider.class
+            HijriWidgetProvider.class, TahajjudWidgetProvider.class,
+            ZikrWidgetProvider.class
     };
     private static final int[] PROVIDER_LABELS = {
             R.string.widget_grid_name, R.string.widget_next_name,
             R.string.widget_strip_name, R.string.widget_date_name,
-            R.string.widget_hijri_name, R.string.widget_tahajjud_name
+            R.string.widget_hijri_name, R.string.widget_tahajjud_name,
+            R.string.widget_zikr_name
     };
 
     @Override

@@ -101,4 +101,9 @@
     <string name="widget_pin_sent">Подтвердите на рабочем столе</string>
     <string name="widget_pin_unsupported">Эта версия Android не поддерживает добавление виджетов</string>
     <string name="location_saved">Местоположение сохранено — виджеты обновлены</string>
+    <string name="widget_zikr_name">Зикр</string>
+    <string name="dhikr_1">СубханАллах</string>
+    <string name="dhikr_2">Альхамдулиллях</string>
+    <string name="dhikr_3">Аллаху Акбар</string>
+    <string name="dhikr_round">Круг %d</string>
 </resources>

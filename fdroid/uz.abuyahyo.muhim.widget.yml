@@ -78,3 +78,9 @@ Builds:
     subdir: android/app
     gradle:
       - yes
+  - versionName: 1.12
+    versionCode: 13
+    commit: a67c6d17
+    subdir: android/app
+    gradle:
+      - yes

@@ -101,4 +101,9 @@
     <string name="widget_pin_sent">Confirm on your home screen</string>
     <string name="widget_pin_unsupported">This Android version does not support adding widgets</string>
     <string name="location_saved">Location saved — widgets refreshed</string>
+    <string name="widget_zikr_name">Dhikr</string>
+    <string name="dhikr_1">SubhanAllah</string>
+    <string name="dhikr_2">Alhamdulillah</string>
+    <string name="dhikr_3">Allahu Akbar</string>
+    <string name="dhikr_round">Round %d</string>
 </resources>
