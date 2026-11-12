@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.widget.RemoteViews;
 
 import java.util.Calendar;
 import java.util.Locale;
