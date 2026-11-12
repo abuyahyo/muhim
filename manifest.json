@@ -29,5 +29,35 @@
       "type": "image/png",
       "purpose": "any"
     }
+  ],
+  "shortcuts": [
+    {
+      "name": "Бугунги вақтлар",
+      "short_name": "Вақтлар",
+      "description": "Бугунги намоз вақтлари",
+      "url": "./vaqtlar/",
+      "icons": [{ "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }]
+    },
+    {
+      "name": "Муҳим кунлар",
+      "short_name": "Кунлар",
+      "description": "Яқинлашаётган муҳим кунлар",
+      "url": "./kunlar/",
+      "icons": [{ "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }]
+    },
+    {
+      "name": "Тақвим",
+      "short_name": "Тақвим",
+      "description": "Ҳижрий календар",
+      "url": "./kunlar/#/calendar",
+      "icons": [{ "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }]
+    },
+    {
+      "name": "Муқаддас жойлар",
+      "short_name": "Жойлар",
+      "description": "Муқаддас жойлар тўғрисида маълумот",
+      "url": "./joylar/",
+      "icons": [{ "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }]
+    }
   ]
 }
