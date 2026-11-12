@@ -34,7 +34,7 @@
     if (items.length > VISIBLE) {
       const remaining = items.length - VISIBLE;
       out += '<details class="quote-more">';
-      out += '<summary class="quote-more-summary">Кўпроқ кўрсатиш (' + remaining + ')</summary>';
+      out += '<summary class="quote-more-summary">' + window.MuhimI18N.t('Кўпроқ кўрсатиш') + ' (' + remaining + ')</summary>';
       for (let i = VISIBLE; i < items.length; i++) out += renderItem(items[i]);
       out += '</details>';
     }

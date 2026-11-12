@@ -4,8 +4,9 @@
 
   const { prayers, spiritual } = VaqtlarData;
   const { escapeHtml, currentMood, renderQuoteList } = MuhimShared;
+  const tr = window.MuhimI18N.t;
   const STORAGE_KEY = 'vaqtlar.settings.v1';
-  const DEFAULT_LOC = { lat: 41.2995, lon: 69.2401, name: 'Тошкент' }; // фолбэк
+  const DEFAULT_LOC = { lat: 41.2995, lon: 69.2401, name: tr('Тошкент') }; // фолбэк
   const KAABA = { lat: 21.4225, lon: 39.8262 };
 
   // === Қибла йўналиши (great-circle bearing шимолдан соат стрелкаси бўйича) ===
@@ -43,7 +44,7 @@
           resolve({
             lat: pos.coords.latitude,
             lon: pos.coords.longitude,
-            name: 'Жорий жой'
+            name: tr('Жорий жой')
           });
         },
         function () { resolve(null); },
@@ -98,8 +99,8 @@
 
     // Кейинги намоз номини олиш.
     const nextLabel = (cn.nextId === 'fajr-next')
-      ? 'Эртанги Бомдод'
-      : prayers.find(p => p.id === cn.nextId).name;
+      ? tr('Эртанги Бомдод')
+      : tr(prayers.find(p => p.id === cn.nextId).name);
     const countdownMs = cn.nextTime ? (cn.nextTime - now) : 0;
 
     const heroMood = currentMood();
@@ -109,14 +110,15 @@
     // Header
     html += '<header class="page-head">';
     html += '<div class="page-eyebrow">Муҳим</div>';
-    html += '<h1 class="page-title">Вақтлар</h1>';
+    html += window.MuhimI18N.switcherHtml();
+    html += '<h1 class="page-title">' + tr('Вақтлар') + '</h1>';
     html += '</header>';
 
     // Кейинги намоз ва countdown — соатга мос ҳаво ранги ўйнаб туради.
     html += '<section class="today-hero today-hero--' + heroMood + '">';
     html += '<div class="countdown-block">';
     html += '<div class="countdown-eyebrow">';
-    html +=   '<span>Кейинги</span>';
+    html +=   '<span>' + tr('Кейинги') + '</span>';
     html +=   '<span class="countdown-eyebrow-name">' + escapeHtml(nextLabel) + '</span>';
     if (cn.nextTime) {
       html += '<span class="countdown-eyebrow-at">' + escapeHtml(fmtTime(cn.nextTime)) + '</span>';
@@ -128,7 +130,7 @@
 
     // Намоз вақтлари рўйхати
     html += '<section class="times-section">';
-    html += '<div class="times-section-title">Бугунги вақтлар</div>';
+    html += '<div class="times-section-title">' + tr('Бугунги вақтлар') + '</div>';
     html += '<div class="prayers-list">';
     for (let i = 0; i < prayers.length; i++) {
       const p = prayers[i];
@@ -142,7 +144,7 @@
       if (isPast) cls += ' is-past';
       html += '<button class="' + cls + '" onclick="showPrayer(\'' + p.id + '\')">';
       html += '<span class="prayer-dot" aria-hidden="true"></span>';
-      html += '<span class="prayer-name">' + escapeHtml(p.name) + '</span>';
+      html += '<span class="prayer-name">' + escapeHtml(tr(p.name)) + '</span>';
       html += '<span class="prayer-time">' + fmtTime(t) + '</span>';
       html += '</button>';
     }
@@ -152,27 +154,27 @@
     // Таҳажжуд ойнаси
     if (tahajjud) {
       html += '<section class="times-section">';
-      html += '<div class="times-section-title">Маънавий вақтлар</div>';
+      html += '<div class="times-section-title">' + tr('Маънавий вақтлар') + '</div>';
       html += '<div class="spiritual-list">';
 
       html += '<button class="spiritual-card" onclick="showSpiritual(\'tahajjud\')">';
-      html += '<div class="spiritual-name">Таҳажжуд ва Қиёмул-лайл</div>';
+      html += '<div class="spiritual-name">' + tr('Таҳажжуд ва Қиёмул-лайл') + '</div>';
       html += '</button>';
 
       html += '<button class="spiritual-card" onclick="showSpiritual(\'azkar\')">';
-      html += '<div class="spiritual-name">Эрталабки ва Кечқурунги зикрлар</div>';
+      html += '<div class="spiritual-name">' + tr('Эрталабки ва Кечқурунги зикрлар') + '</div>';
       html += '</button>';
 
       html += '<button class="spiritual-card" onclick="showSpiritual(\'duha\')">';
-      html += '<div class="spiritual-name">Зуҳо (Чошгоҳ)</div>';
+      html += '<div class="spiritual-name">' + tr('Зуҳо (Чошгоҳ)') + '</div>';
       html += '</button>';
 
       html += '<button class="spiritual-card" onclick="showSpiritual(\'sahar\')">';
-      html += '<div class="spiritual-name">Саҳарлик / Ифтор</div>';
+      html += '<div class="spiritual-name">' + tr('Саҳарлик / Ифтор') + '</div>';
       html += '</button>';
 
       html += '<button class="spiritual-card" onclick="showSpiritual(\'mustajob\')">';
-      html += '<div class="spiritual-name">Мустажоб соатлар</div>';
+      html += '<div class="spiritual-name">' + tr('Мустажоб соатлар') + '</div>';
       html += '</button>';
 
       html += '</div></section>';
@@ -181,7 +183,7 @@
     // Қибла йўналиши
     const qBear = qiblaBearing(loc.lat, loc.lon);
     html += '<section class="qibla-section">';
-    html += '<div class="times-section-title">Қибла йўналиши</div>';
+    html += '<div class="times-section-title">' + tr('Қибла йўналиши') + '</div>';
     html += '<div class="qibla-card">';
     html += '<div class="qibla-compass" id="qibla-compass" data-qibla="' + qBear.toFixed(2) + '">';
     html +=   '<div class="qibla-rose">';
@@ -191,7 +193,7 @@
     html +=   '</div>';
     html += '</div>';
     html += '<div class="qibla-meta">';
-    html +=   '<button class="qibla-live-btn" id="qibla-live-btn" onclick="enableQiblaLive()">Жонли компас</button>';
+    html +=   '<button class="qibla-live-btn" id="qibla-live-btn" onclick="enableQiblaLive()">' + tr('Жонли компас') + '</button>';
     html +=   '<div class="qibla-hint" id="qibla-hint"></div>';
     html += '</div>';
     html += '</div>';
@@ -200,24 +202,24 @@
     // Sozlamalar (collapsible)
     html += '<section class="settings-section">';
     html += '<details class="settings-details"' + (settingsOpen ? ' open' : '') + '>';
-    html += '<summary class="settings-summary">⚙ Созламалар</summary>';
+    html += '<summary class="settings-summary">' + tr('⚙ Созламалар') + '</summary>';
     html += '<div class="settings-body">';
 
     html += '<div class="setting-row">';
-    html += '<label class="setting-label">Мазҳаб (Аср вақтига таъсир қилади)</label>';
+    html += '<label class="setting-label">' + tr('Мазҳаб (Аср вақтига таъсир қилади)') + '</label>';
     html += '<div class="setting-options">';
-    html += '<button class="opt-btn' + (settings.madhab === 'Hanafi' ? ' active' : '') + '" onclick="setMadhab(\'Hanafi\')">Ҳанафий</button>';
-    html += '<button class="opt-btn' + (settings.madhab === 'Shafi' ? ' active' : '') + '" onclick="setMadhab(\'Shafi\')">Шофиъий</button>';
+    html += '<button class="opt-btn' + (settings.madhab === 'Hanafi' ? ' active' : '') + '" onclick="setMadhab(\'Hanafi\')">' + tr('Ҳанафий') + '</button>';
+    html += '<button class="opt-btn' + (settings.madhab === 'Shafi' ? ' active' : '') + '" onclick="setMadhab(\'Shafi\')">' + tr('Шофиъий') + '</button>';
     html += '</div></div>';
 
     html += '<div class="setting-row">';
-    html += '<label class="setting-label">Ҳисоблаш усули</label>';
+    html += '<label class="setting-label">' + tr('Ҳисоблаш усули') + '</label>';
     html += '<div class="setting-options">';
     const methods = [
       { id: 'MWL', label: 'MWL' },
-      { id: 'Egypt', label: 'Миср' },
-      { id: 'Karachi', label: 'Карачи' },
-      { id: 'Makkah', label: 'Уммул Қуро' },
+      { id: 'Egypt', label: tr('Миср') },
+      { id: 'Karachi', label: tr('Карачи') },
+      { id: 'Makkah', label: tr('Уммул Қуро') },
       { id: 'ISNA', label: 'ISNA' },
     ];
     for (let i = 0; i < methods.length; i++) {
@@ -228,13 +230,13 @@
     html += '</div></div>';
 
     html += '<div class="setting-row">';
-    html += '<label class="setting-label">Шаҳар</label>';
+    html += '<label class="setting-label">' + tr('Шаҳар') + '</label>';
     html += '<div class="city-search">';
     html +=   '<input class="city-input" type="search" autocomplete="off" '
-         +     'placeholder="Шаҳар номини ёзинг…" oninput="cityQuery(this.value)" />';
+         +     'placeholder="' + tr('Шаҳар номини ёзинг…') + '" oninput="cityQuery(this.value)" />';
     html +=   '<div class="city-results" id="city-results"></div>';
     html += '</div>';
-    html += '<div class="setting-hint">Жорий: ' + escapeHtml(loc.name) + '</div>';
+    html += '<div class="setting-hint">' + tr('Жорий: ') + escapeHtml(loc.name) + '</div>';
     html += '</div>';
 
     html += '</div></details>';
@@ -283,8 +285,8 @@
 
     let html = '<div class="fade-in detail-wrap mood--' + currentMood() + '">';
     html += '<div class="detail-topbar">';
-    html += '<button class="back-btn" onclick="goBack()">← Орқага</button>';
-    html += '<button class="share-btn" onclick="shareSubject(\'' + escapeHtml(id) + '\', \'' + escapeHtml(kind) + '\')" aria-label="Улашиш" title="Улашиш">';
+    html += '<button class="back-btn" onclick="goBack()">' + tr('← Орқага') + '</button>';
+    html += '<button class="share-btn" onclick="shareSubject(\'' + escapeHtml(id) + '\', \'' + escapeHtml(kind) + '\')" aria-label="' + tr('Улашиш') + '" title="' + tr('Улашиш') + '">';
     html +=   '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
     html +=     '<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>';
     html +=     '<polyline points="16 6 12 2 8 6"/>';
@@ -294,14 +296,14 @@
     html += '</div>';
 
     html += '<div class="detail-hero">';
-    html += '<div class="detail-eyebrow">' + (kind === 'spiritual' ? 'Маънавий вақт' : 'Намоз вақти') + '</div>';
-    html += '<div class="detail-name">' + escapeHtml(p.name) + '</div>';
+    html += '<div class="detail-eyebrow">' + (kind === 'spiritual' ? tr('Маънавий вақт') : tr('Намоз вақти')) + '</div>';
+    html += '<div class="detail-name">' + escapeHtml(tr(p.name)) + '</div>';
     if (prayerTime) {
       html += '<div class="detail-hero-time">' + escapeHtml(fmtTime(prayerTime)) + '</div>';
     }
     html += '</div>';
 
-    html += '<section class="detail-block"><div class="block-title">Ҳақида</div>';
+    html += '<section class="detail-block"><div class="block-title">' + tr('Ҳақида') + '</div>';
     html += '<p class="block-text">' + escapeHtml(p.description) + '</p>';
     html += '</section>';
 
@@ -311,14 +313,14 @@
       const t = PrayerTimes.calculate(new Date(), loc.lat, loc.lon, opts);
       // Эрталабки: Бомдоддан Зуҳо бошланишига қадар (қуёш чиқишидан +20 дақиқа).
       const morningEnd = new Date(t.sunrise.getTime() + 20 * 60 * 1000);
-      html += '<section class="detail-block"><div class="block-title">Бугунги вақтлар</div>';
+      html += '<section class="detail-block"><div class="block-title">' + tr('Бугунги вақтлар') + '</div>';
       html += '<div class="azkar-windows">';
       html +=   '<div class="azkar-window">';
-      html +=     '<div class="azkar-window-label">Эрталабки зикрлар вақти</div>';
+      html +=     '<div class="azkar-window-label">' + tr('Эрталабки зикрлар вақти') + '</div>';
       html +=     '<div class="azkar-window-time">' + fmtTime(t.fajr) + ' → ' + fmtTime(morningEnd) + '</div>';
       html +=   '</div>';
       html +=   '<div class="azkar-window">';
-      html +=     '<div class="azkar-window-label">Кечқурунги зикрлар вақти</div>';
+      html +=     '<div class="azkar-window-label">' + tr('Кечқурунги зикрлар вақти') + '</div>';
       html +=     '<div class="azkar-window-time">' + fmtTime(t.asr) + ' → ' + fmtTime(t.isha) + '</div>';
       html +=   '</div>';
       html += '</div>';
@@ -332,10 +334,10 @@
       // Зуҳо ойнаси: қуёш чиқишидан +20 дақиқадан Пешиндан -5 дақиқагача.
       const dStart = new Date(t.sunrise.getTime() + 20 * 60 * 1000);
       const dEnd = new Date(t.dhuhr.getTime() - 5 * 60 * 1000);
-      html += '<section class="detail-block"><div class="block-title">Бугунги вақт</div>';
+      html += '<section class="detail-block"><div class="block-title">' + tr('Бугунги вақт') + '</div>';
       html += '<div class="azkar-windows">';
       html +=   '<div class="azkar-window">';
-      html +=     '<div class="azkar-window-label">Зуҳо вақти</div>';
+      html +=     '<div class="azkar-window-label">' + tr('Зуҳо вақти') + '</div>';
       html +=     '<div class="azkar-window-time">' + fmtTime(dStart) + ' → ' + fmtTime(dEnd) + '</div>';
       html +=   '</div>';
       html += '</div>';
@@ -351,14 +353,14 @@
       const tTomorrow = PrayerTimes.calculate(tomorrow, loc.lat, loc.lon, opts);
       const tah = PrayerTimes.tahajjudWindow(today, loc.lat, loc.lon, opts);
       if (tah && tToday.isha && tTomorrow.fajr) {
-        html += '<section class="detail-block"><div class="block-title">Бугунги вақтлар</div>';
+        html += '<section class="detail-block"><div class="block-title">' + tr('Бугунги вақтлар') + '</div>';
         html += '<div class="azkar-windows">';
         html +=   '<div class="azkar-window">';
-        html +=     '<div class="azkar-window-label">Қиёмул-лайл вақти</div>';
+        html +=     '<div class="azkar-window-label">' + tr('Қиёмул-лайл вақти') + '</div>';
         html +=     '<div class="azkar-window-time">' + fmtTime(tToday.isha) + ' → ' + fmtTime(tTomorrow.fajr) + '</div>';
         html +=   '</div>';
         html +=   '<div class="azkar-window">';
-        html +=     '<div class="azkar-window-label">Таҳажжуд вақти</div>';
+        html +=     '<div class="azkar-window-label">' + tr('Таҳажжуд вақти') + '</div>';
         html +=     '<div class="azkar-window-time">' + fmtTime(tah.start) + ' → ' + fmtTime(tah.end) + '</div>';
         html +=   '</div>';
         html += '</div>';
@@ -370,14 +372,14 @@
       const loc = settings.location || DEFAULT_LOC;
       const opts = { madhab: settings.madhab, method: settings.method };
       const t = PrayerTimes.calculate(new Date(), loc.lat, loc.lon, opts);
-      html += '<section class="detail-block"><div class="block-title">Бугунги вақтлар</div>';
+      html += '<section class="detail-block"><div class="block-title">' + tr('Бугунги вақтлар') + '</div>';
       html += '<div class="ramadan-pair">';
       html +=   '<div class="ramadan-card">';
-      html +=     '<div class="ramadan-label">Саҳарлик тугаши</div>';
+      html +=     '<div class="ramadan-label">' + tr('Саҳарлик тугаши') + '</div>';
       html +=     '<div class="ramadan-time">' + fmtTime(t.fajr) + '</div>';
       html +=   '</div>';
       html +=   '<div class="ramadan-card">';
-      html +=     '<div class="ramadan-label">Ифтор</div>';
+      html +=     '<div class="ramadan-label">' + tr('Ифтор') + '</div>';
       html +=     '<div class="ramadan-time">' + fmtTime(t.maghrib) + '</div>';
       html +=   '</div>';
       html += '</div>';
@@ -387,13 +389,13 @@
     if (p.externalUrl) {
       html += '<section class="detail-block"><a class="detail-cta" '
            +   'href="' + escapeHtml(p.externalUrl) + '" target="_blank" rel="noopener">'
-           +   '<span class="detail-cta-label">' + escapeHtml(p.externalLabel || 'Зикрларни ўқиш') + '</span>'
+           +   '<span class="detail-cta-label">' + escapeHtml(p.externalLabel || tr('Зикрларни ўқиш')) + '</span>'
            +   '<span class="detail-cta-arrow" aria-hidden="true">↗</span>'
            + '</a></section>';
     }
 
     if (p.verses && p.verses.length) {
-      html += '<section class="detail-block"><div class="block-title">Қуръон оятлари</div>';
+      html += '<section class="detail-block"><div class="block-title">' + tr('Қуръон оятлари') + '</div>';
       const grouped = groupVerses(p.verses);
       html += renderQuoteList(grouped, function (v) {
         let card = '<div class="quote-card">';
@@ -406,7 +408,7 @@
     }
 
     if (p.hadiths && p.hadiths.length) {
-      html += '<section class="detail-block"><div class="block-title">Ҳадислар</div>';
+      html += '<section class="detail-block"><div class="block-title">' + tr('Ҳадислар') + '</div>';
       html += renderQuoteList(p.hadiths, function (h) {
         let card = '<div class="quote-card">';
         card += '<div class="quote-source">' + escapeHtml(h.source) + '</div>';
@@ -467,7 +469,7 @@
       box.classList.remove('open');
       return;
     }
-    box.innerHTML = '<div class="city-result-status">Қидирилмоқда…</div>';
+    box.innerHTML = '<div class="city-result-status">' + tr('Қидирилмоқда…') + '</div>';
     box.classList.add('open');
     cityDebounce = setTimeout(function () {
       if (cityAbort) cityAbort.abort();
@@ -479,7 +481,7 @@
         .then(function (data) {
           cityResults = Array.isArray(data) ? data : [];
           if (!cityResults.length) {
-            box.innerHTML = '<div class="city-result-status">Топилмади</div>';
+            box.innerHTML = '<div class="city-result-status">' + tr('Топилмади') + '</div>';
             return;
           }
           let h = '';
@@ -495,7 +497,7 @@
         })
         .catch(function (err) {
           if (err && err.name === 'AbortError') return;
-          box.innerHTML = '<div class="city-result-status">Хатолик — тармоқни текширинг</div>';
+          box.innerHTML = '<div class="city-result-status">' + tr('Хатолик — тармоқни текширинг') + '</div>';
         });
     }, 600);
   }
@@ -506,7 +508,7 @@
     settings.location = {
       lat: parseFloat(it.lat),
       lon: parseFloat(it.lon),
-      name: name || 'Жорий жой',
+      name: name || tr('Жорий жой'),
     };
     saveSettings(settings);
     renderHome();
@@ -519,7 +521,7 @@
   function enableQiblaLive() {
     const DOE = window.DeviceOrientationEvent;
     if (!DOE) {
-      qiblaHintText('Қурилма йўналиш сенсорини қувватламайди.');
+      qiblaHintText(tr('Қурилма йўналиш сенсорини қувватламайди.'));
       return;
     }
     const startListening = function () {
@@ -549,8 +551,8 @@
     if (typeof DOE.requestPermission === 'function') {
       DOE.requestPermission().then(function (res) {
         if (res === 'granted') startListening();
-        else qiblaHintText('Сенсорга рухсат берилмади.');
-      }).catch(function () { qiblaHintText('Сенсорга рухсат берилмади.'); });
+        else qiblaHintText(tr('Сенсорга рухсат берилмади.'));
+      }).catch(function () { qiblaHintText(tr('Сенсорга рухсат берилмади.')); });
     } else {
       startListening();
     }
@@ -594,7 +596,7 @@
         // Кўп файлни қувватламайдиган илова бўлса — биринчи расимни юбориш.
         navigator.share({ files: [filtered[0]] }).catch(function () {});
       } else if (navigator.share) {
-        navigator.share({ title: p.name, text: p.short || p.description || '' }).catch(function () {});
+        navigator.share({ title: tr(p.name), text: p.short || p.description || '' }).catch(function () {});
       }
     });
   }
@@ -629,7 +631,7 @@
     // (`coverTruncatesDescription` true қайтарса), қолганлари аввалги
     // контент саҳифаси бошида блок сифатида чиқади.
     if (p.description && coverTruncatesDescription(ctx, p)) {
-      items.push(measureBlock(ctx, 'ҲАҚИДА', p.description, innerW));
+      items.push(measureBlock(ctx, tr('ҲАҚИДА'), p.description, innerW));
     }
     (p.verses || []).forEach(function (v) {
       items.push(measureBlock(ctx, String(v.source || '').toUpperCase(), '«' + v.translation + '»', innerW));
@@ -651,7 +653,7 @@
   function coverTruncatesDescription(ctx, p) {
     let cursorY = 220;
     if (p.eyebrow) cursorY += 60 + 60;
-    const fit = fitNameFont(ctx, p.name, SHARE_W - SHARE_PAD_X * 2, 2, 132, 72, '800');
+    const fit = fitNameFont(ctx, tr(p.name), SHARE_W - SHARE_PAD_X * 2, 2, 132, 72, '800');
     const useNameLines = Math.min(fit.lines.length, 3);
     const nameLineH = Math.round(fit.size * 1.12);
     cursorY += useNameLines * nameLineH + 40;
@@ -756,7 +758,7 @@
     ctx.textAlign = 'left';
     // Узун номлар учун шрифтни автомат кичрайтириб иккита қаторга
     // сиғдирамиз.
-    const fit = fitNameFont(ctx, p.name, SHARE_W - SHARE_PAD_X * 2, 2, 132, 72, '800');
+    const fit = fitNameFont(ctx, tr(p.name), SHARE_W - SHARE_PAD_X * 2, 2, 132, 72, '800');
     const useNameLines = Math.min(fit.lines.length, 3);
     const lineH = Math.round(fit.size * 1.12);
     for (let i = 0; i < useNameLines; i++) {
@@ -784,7 +786,7 @@
     ctx.textAlign = 'left';
     if (p.eyebrow) ctx.fillText(p.eyebrow.toUpperCase(), SHARE_PAD_X, 110);
     // Узун ном бўлса шрифт кичрайиб иккита қаторгача сиғади.
-    const fit = fitNameFont(ctx, p.name, SHARE_W - SHARE_PAD_X * 2, 2, 64, 40, '800');
+    const fit = fitNameFont(ctx, tr(p.name), SHARE_W - SHARE_PAD_X * 2, 2, 64, 40, '800');
     ctx.fillStyle = '#ffffff';
     const lineH = Math.round(fit.size * 1.1);
     const limit = Math.min(fit.lines.length, 2);

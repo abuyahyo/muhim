@@ -4,13 +4,15 @@
 
   const { places } = JoylarData;
   const { escapeHtml, currentMood, renderQuoteList } = MuhimShared;
+  const tr = window.MuhimI18N.t;
 
   // === БОШ САҲИФА — жойлар рўйхати ===
   function renderList() {
     let html = '<div class="fade-in mood--' + currentMood() + '">';
     html += '<header class="page-head">';
     html += '<div class="page-eyebrow">Муҳим</div>';
-    html += '<h1 class="page-title">Жойлар</h1>';
+    html += window.MuhimI18N.switcherHtml();
+    html += '<h1 class="page-title">' + tr('Жойлар') + '</h1>';
     html += '</header>';
 
     html += '<div class="places-stack">';
@@ -21,7 +23,7 @@
       html += '<img class="place-photo" src="img/' + escapeHtml(p.id) + '.webp" alt="" loading="lazy" onerror="this.remove()"/>';
       html += '<div class="place-scrim"></div>';
       html += '<div class="place-body">';
-      html += '<div class="place-name">' + escapeHtml(p.name) + '</div>';
+      html += '<div class="place-name">' + escapeHtml(tr(p.name)) + '</div>';
       if (loc) html += '<div class="place-loc">' + escapeHtml(loc) + '</div>';
       html += '</div>';
       html += '</button>';
@@ -40,11 +42,11 @@
 
     let html = '<div class="fade-in detail-wrap mood--' + currentMood() + '">';
     html += '<div class="detail-topbar">';
-    html += '<button class="back-btn" onclick="goBack()">← Орқага</button>';
+    html += '<button class="back-btn" onclick="goBack()">' + tr('← Орқага') + '</button>';
     html += '<div class="detail-actions">';
     const hasShareContent = (p.verses && p.verses.length) || (p.hadiths && p.hadiths.length) || (p.notes && p.notes.length);
     if (hasShareContent) {
-      html += '<button class="share-btn" onclick="sharePlaceSheet(\'' + escapeHtml(p.id) + '\')" aria-label="Расмлар тўплами" title="Тўлиқ маълумотли расмлар тўплами">';
+      html += '<button class="share-btn" onclick="sharePlaceSheet(\'' + escapeHtml(p.id) + '\')" aria-label="' + tr('Расмлар тўплами') + '" title="' + tr('Тўлиқ маълумотли расмлар тўплами') + '">';
       html += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
       html += '<rect x="6" y="2" width="16" height="16" rx="2"/>';
       html += '<circle cx="12" cy="8" r="2"/>';
@@ -52,7 +54,7 @@
       html += '<path d="M18 22H4a2 2 0 0 1-2-2V6"/>';
       html += '</svg></button>';
     }
-    html += '<button class="share-btn" onclick="sharePlace(\'' + escapeHtml(p.id) + '\')" aria-label="Улашиш" title="Улашиш">';
+    html += '<button class="share-btn" onclick="sharePlace(\'' + escapeHtml(p.id) + '\')" aria-label="' + tr('Улашиш') + '" title="' + tr('Улашиш') + '">';
     html += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
     html += '<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>';
     html += '<polyline points="16 6 12 2 8 6"/>';
@@ -66,19 +68,19 @@
     html += '<div class="detail-hero-body">';
     const loc = [p.city, p.country].filter(Boolean).join(' · ');
     if (loc) html += '<div class="detail-eyebrow">' + escapeHtml(loc) + '</div>';
-    html += '<div class="detail-name">' + escapeHtml(p.name) + '</div>';
+    html += '<div class="detail-name">' + escapeHtml(tr(p.name)) + '</div>';
     if (p.short) html += '<div class="detail-tagline">' + escapeHtml(p.short) + '</div>';
     html += '</div>';
     html += '</div>';
 
     if (p.description) {
-      html += '<section class="detail-block"><div class="block-title">Ҳақида</div>';
+      html += '<section class="detail-block"><div class="block-title">' + tr('Ҳақида') + '</div>';
       html += '<p class="block-text">' + escapeHtml(p.description) + '</p>';
       html += '</section>';
     }
 
     if (p.verses && p.verses.length) {
-      html += '<section class="detail-block"><div class="block-title">Қуръон оятлари</div>';
+      html += '<section class="detail-block"><div class="block-title">' + tr('Қуръон оятлари') + '</div>';
       html += renderQuoteList(p.verses, function (v) {
         let card = '<div class="quote-card">';
         card += '<div class="quote-source">' + escapeHtml(v.source) + '</div>';
@@ -92,7 +94,7 @@
     }
 
     if (p.hadiths && p.hadiths.length) {
-      html += '<section class="detail-block"><div class="block-title">Ҳадислар</div>';
+      html += '<section class="detail-block"><div class="block-title">' + tr('Ҳадислар') + '</div>';
       html += renderQuoteList(p.hadiths, function (h) {
         let card = '<div class="quote-card">';
         card += '<div class="quote-source">' + escapeHtml(h.source) + '</div>';
@@ -424,7 +426,7 @@
       ty += 18;
       ctx.font = '700 20px "DM Sans", system-ui, sans-serif';
       ctx.fillStyle = 'rgba(255,255,255,0.6)';
-      ctx.fillText('ИЗОҲ', textX, ty);
+      ctx.fillText(tr('ИЗОҲ'), textX, ty);
       ty += 30;
       ctx.font = '500 25px "DM Sans", system-ui, sans-serif';
       ctx.fillStyle = 'rgba(255,255,255,0.9)';
