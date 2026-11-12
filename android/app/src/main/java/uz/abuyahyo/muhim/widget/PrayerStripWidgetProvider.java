@@ -26,7 +26,7 @@ public class PrayerStripWidgetProvider extends BaseGlassWidgetProvider {
         for (int id : appWidgetIds) {
             double lat = WidgetPrefs.lat(context, id);
             double lon = WidgetPrefs.lon(context, id);
-            double[] values = timesArray(PrayerCalculator.calculate(now, lat, lon));
+            double[] values = timesArray(times(context, id, now, lat, lon));
             int next = nextIndex(values, nowHour(now));
             boolean light = WidgetPrefs.isLight(context, id);
             int ink = ink(light);

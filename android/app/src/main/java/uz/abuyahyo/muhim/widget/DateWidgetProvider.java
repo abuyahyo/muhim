@@ -17,7 +17,7 @@ public class DateWidgetProvider extends BaseGlassWidgetProvider {
         for (int id : appWidgetIds) {
             double lat = WidgetPrefs.lat(context, id);
             double lon = WidgetPrefs.lon(context, id);
-            double[] values = timesArray(PrayerCalculator.calculate(now, lat, lon));
+            double[] values = timesArray(times(context, id, now, lat, lon));
             int next = nextIndex(values, nowHour(now));
             boolean light = WidgetPrefs.isLight(context, id);
             int ink = ink(light);
@@ -31,7 +31,7 @@ public class DateWidgetProvider extends BaseGlassWidgetProvider {
                 Calendar tomorrow = (Calendar) now.clone();
                 tomorrow.add(Calendar.DAY_OF_MONTH, 1);
                 nextText = PRAYER_NAMES[0] + " · "
-                        + PrayerCalculator.format(PrayerCalculator.calculate(tomorrow, lat, lon).fajr);
+                        + PrayerCalculator.format(times(context, id, tomorrow, lat, lon).fajr);
             }
 
             int[] h = HijriDate.from(now);

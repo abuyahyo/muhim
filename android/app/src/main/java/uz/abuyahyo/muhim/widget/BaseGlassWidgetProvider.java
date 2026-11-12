@@ -76,24 +76,31 @@ abstract class BaseGlassWidgetProvider extends AppWidgetProvider {
         return new double[] { t.fajr, t.sunrise, t.dhuhr, t.asr, t.maghrib, t.isha };
     }
 
+    // Vidjetning shahri va usul sozlamalari bilan hisoblash.
+    static PrayerCalculator.Times times(Context c, int appWidgetId, Calendar date,
+                                        double lat, double lon) {
+        return PrayerCalculator.calculate(date, lat, lon, WidgetPrefs.opts(c, appWidgetId));
+    }
+
     // Таҳажжуд ойнаси — кечанинг учдан бири (maghrib -> fajr orasida).
     // {start, end} soatlarda; hozir tunda bo'lsa kechagi maghrib -> bugungi fajr,
     // aks holda bugungi maghrib -> ertangi fajr. null — hisoblanmadi.
-    static double[] tahajjudWindow(Calendar now, double lat, double lon) {
-        PrayerCalculator.Times today = PrayerCalculator.calculate(now, lat, lon);
+    static double[] tahajjudWindow(Context c, int appWidgetId, Calendar now,
+                                   double lat, double lon) {
+        PrayerCalculator.Times today = times(c, appWidgetId, now, lat, lon);
         if (Double.isNaN(today.fajr) || Double.isNaN(today.maghrib)) return null;
         double maghrib;
         double fajr;
         if (nowHour(now) < today.fajr) {
             Calendar yesterday = (Calendar) now.clone();
             yesterday.add(Calendar.DAY_OF_MONTH, -1);
-            maghrib = PrayerCalculator.calculate(yesterday, lat, lon).maghrib;
+            maghrib = times(c, appWidgetId, yesterday, lat, lon).maghrib;
             fajr = today.fajr;
         } else {
             Calendar tomorrow = (Calendar) now.clone();
             tomorrow.add(Calendar.DAY_OF_MONTH, 1);
             maghrib = today.maghrib;
-            fajr = PrayerCalculator.calculate(tomorrow, lat, lon).fajr;
+            fajr = times(c, appWidgetId, tomorrow, lat, lon).fajr;
         }
         if (Double.isNaN(maghrib) || Double.isNaN(fajr)) return null;
         double night = (fajr + 24 - maghrib) % 24;
