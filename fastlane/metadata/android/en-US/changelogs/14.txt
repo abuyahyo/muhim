@@ -1,0 +1,1 @@
+Widget settings: background style (glass/solid/gradient) and colors. Configure placed widgets from the app

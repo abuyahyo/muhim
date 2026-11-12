@@ -34,7 +34,7 @@ public class PrayerStripWidgetProvider extends BaseGlassWidgetProvider {
             int accent = accent(light);
 
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_strip);
-            rv.setInt(R.id.widget_root, "setBackgroundResource", bgRes(light));
+            applyBackground(context, rv, id, light);
             for (int i = 0; i < values.length; i++) {
                 rv.setTextViewText(TIME_IDS[i], PrayerCalculator.format(values[i]));
                 boolean isNext = (i == next);

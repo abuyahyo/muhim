@@ -37,7 +37,7 @@ public class HijriWidgetProvider extends BaseGlassWidgetProvider {
             boolean light = WidgetPrefs.isLight(context, id);
 
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_hijri);
-            rv.setInt(R.id.widget_root, "setBackgroundResource", bgRes(light));
+            applyBackground(context, rv, id, light);
             int ink = ink(light);
             int mute = mute(light);
             rv.setTextViewText(R.id.hj_weekday, days[now.get(Calendar.DAY_OF_WEEK) - 1]);

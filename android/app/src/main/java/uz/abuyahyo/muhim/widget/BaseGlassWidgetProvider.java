@@ -61,6 +61,52 @@ abstract class BaseGlassWidgetProvider extends AppWidgetProvider {
         return light ? R.drawable.glass_bg_light : R.drawable.glass_bg;
     }
 
+    // Fon: "glass" — standart shisha drawable, "solid"/"gradient" — foydalanuvchi
+    // ranglari bilan bitmap (burchaklar + nozik chegara saqlanadi).
+    static void applyBackground(Context c, RemoteViews rv, int appWidgetId, boolean light) {
+        String style = WidgetPrefs.bgStyle(c, appWidgetId);
+        if ("glass".equals(style)) {
+            rv.setImageViewResource(R.id.bg_layer, bgRes(light));
+            return;
+        }
+        int c1 = WidgetPrefs.color1(c, appWidgetId, light);
+        int c2 = WidgetPrefs.color2(c, appWidgetId, light);
+        rv.setImageViewBitmap(R.id.bg_layer, backgroundBitmap(c, style, c1, c2));
+    }
+
+    private static android.graphics.Bitmap backgroundBitmap(Context c, String style,
+                                                            int c1, int c2) {
+        float density = c.getResources().getDisplayMetrics().density;
+        int w = Math.round(320 * density);
+        int h = Math.round(200 * density);
+        android.graphics.Bitmap bmp = android.graphics.Bitmap
+                .createBitmap(w, h, android.graphics.Bitmap.Config.ARGB_8888);
+        android.graphics.Canvas canvas = new android.graphics.Canvas(bmp);
+        float radius = 22 * density;
+
+        android.graphics.Paint fill = new android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG);
+        if ("gradient".equals(style)) {
+            fill.setShader(new android.graphics.LinearGradient(
+                    0, 0, w * 0.6f, h, c1, c2, android.graphics.Shader.TileMode.CLAMP));
+        } else {
+            fill.setColor(c1);
+        }
+        android.graphics.RectF rect = new android.graphics.RectF(0, 0, w, h);
+        canvas.drawRoundRect(rect, radius, radius, fill);
+
+        android.graphics.Paint sheen = new android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG);
+        sheen.setShader(new android.graphics.LinearGradient(
+                0, 0, 0, h, 0x24FFFFFF, 0x08FFFFFF, android.graphics.Shader.TileMode.CLAMP));
+        canvas.drawRoundRect(rect, radius, radius, sheen);
+
+        android.graphics.Paint border = new android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG);
+        border.setStyle(android.graphics.Paint.Style.STROKE);
+        border.setStrokeWidth(1 * density);
+        border.setColor(0x26FFFFFF);
+        canvas.drawRoundRect(rect, radius, radius, border);
+        return bmp;
+    }
+
     static int ink(boolean light) {
         return light ? COLOR_INK_LIGHT : COLOR_INK;
     }

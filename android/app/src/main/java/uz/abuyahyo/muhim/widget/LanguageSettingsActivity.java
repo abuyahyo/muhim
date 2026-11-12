@@ -287,6 +287,13 @@ public class LanguageSettingsActivity extends Activity {
                 if (provider == null) {
                     refreshAllWidgets();
                     toast(getString(R.string.widget_refresh_done));
+                    return;
+                }
+                AppWidgetManager mgr = AppWidgetManager.getInstance(LanguageSettingsActivity.this);
+                int[] ids = mgr.getAppWidgetIds(new ComponentName(LanguageSettingsActivity.this, provider));
+                if (ids.length > 0) {
+                    startActivity(new Intent(LanguageSettingsActivity.this, WidgetConfigActivity.class)
+                            .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, ids[0]));
                 } else {
                     pinWidget(provider);
                 }

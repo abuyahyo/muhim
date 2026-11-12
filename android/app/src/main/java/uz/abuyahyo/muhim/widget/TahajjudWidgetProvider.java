@@ -21,7 +21,7 @@ public class TahajjudWidgetProvider extends BaseGlassWidgetProvider {
             boolean light = WidgetPrefs.isLight(context, id);
 
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_tahajjud);
-            rv.setInt(R.id.widget_root, "setBackgroundResource", bgRes(light));
+            applyBackground(context, rv, id, light);
             if (win != null) {
                 rv.setTextViewText(R.id.tj_time,
                         PrayerCalculator.format(win[0]) + " — " + PrayerCalculator.format(win[1]));

@@ -34,7 +34,7 @@ public class ZikrWidgetProvider extends BaseGlassWidgetProvider {
                     inCycle + 1, CYCLE_SIZE[cycle]);
 
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_zikr);
-            rv.setInt(R.id.widget_root, "setBackgroundResource", bgRes(light));
+            applyBackground(context, rv, id, light);
             rv.setTextViewText(R.id.zk_name, context.getString(DHIKR_LABELS[cycle]));
             rv.setTextViewText(R.id.zk_count, count);
             rv.setTextViewText(R.id.zk_round, context.getString(R.string.dhikr_round,

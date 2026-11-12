@@ -106,4 +106,10 @@
     <string name="dhikr_2">Алҳамдулиллоҳ</string>
     <string name="dhikr_3">Аллоҳу акбар</string>
     <string name="dhikr_round">%d-давра</string>
+    <string name="config_bg">Fon</string>
+    <string name="config_bg_glass">Shisha</string>
+    <string name="config_bg_solid">Bir rang</string>
+    <string name="config_bg_gradient">Gradient</string>
+    <string name="config_color1">1-rang (asos)</string>
+    <string name="config_color2">2-rang (gradient uchi)</string>
 </resources>

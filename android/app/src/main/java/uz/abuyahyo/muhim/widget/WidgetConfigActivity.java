@@ -52,6 +52,15 @@ public class WidgetConfigActivity extends Activity {
     private String selectedMethod;
     private boolean selectedShafi;
 
+    private static final int[] PALETTE = {
+            0xE60B1220, 0xE61E293B, 0xE6314066, 0xE6134E4A,
+            0xE614532D, 0xE64C1D95, 0xE67C2D12, 0xE6000000
+    };
+
+    private String selectedBg = "glass";
+    private int selectedC1;
+    private int selectedC2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +82,9 @@ public class WidgetConfigActivity extends Activity {
         lightTheme = WidgetPrefs.isLight(this, appWidgetId);
         selectedMethod = WidgetPrefs.method(this, appWidgetId);
         selectedShafi = WidgetPrefs.isShafi(this, appWidgetId);
+        selectedBg = WidgetPrefs.bgStyle(this, appWidgetId);
+        selectedC1 = WidgetPrefs.color1(this, appWidgetId, lightTheme);
+        selectedC2 = WidgetPrefs.color2(this, appWidgetId, lightTheme);
 
         applyLocaleOverride();
         View ui = buildUi();
@@ -332,6 +344,66 @@ public class WidgetConfigActivity extends Activity {
                     }
                 }));
 
+        TextView bgLabel = new TextView(this);
+        bgLabel.setText(R.string.config_bg);
+        bgLabel.setTextSize(14);
+        bgLabel.setTextColor(0xB3FFFFFF);
+        bgLabel.setPadding(pad, dp(16), pad, dp(4));
+
+        LinearLayout bgRow = new LinearLayout(this);
+        bgRow.setOrientation(LinearLayout.HORIZONTAL);
+        bgRow.setPadding(pad, 0, pad, 0);
+        bgRow.addView(optionButton(getString(R.string.config_bg_glass), "glass".equals(selectedBg),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selectedBg = "glass";
+                        setContentView(buildUi());
+                    }
+                }));
+        bgRow.addView(optionButton(getString(R.string.config_bg_solid), "solid".equals(selectedBg),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selectedBg = "solid";
+                        setContentView(buildUi());
+                    }
+                }));
+        bgRow.addView(optionButton(getString(R.string.config_bg_gradient), "gradient".equals(selectedBg),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selectedBg = "gradient";
+                        setContentView(buildUi());
+                    }
+                }));
+
+        TextView c1Label = new TextView(this);
+        c1Label.setText(R.string.config_color1);
+        c1Label.setTextSize(12);
+        c1Label.setTextColor(0xB3FFFFFF);
+        c1Label.setPadding(pad, dp(8), pad, 0);
+
+        LinearLayout c1Row = new LinearLayout(this);
+        c1Row.setOrientation(LinearLayout.HORIZONTAL);
+        c1Row.setPadding(pad, dp(4), pad, 0);
+        for (int color : PALETTE) {
+            c1Row.addView(swatch(color, true));
+        }
+
+        TextView c2Label = new TextView(this);
+        c2Label.setText(R.string.config_color2);
+        c2Label.setTextSize(12);
+        c2Label.setTextColor(0xB3FFFFFF);
+        c2Label.setPadding(pad, dp(8), pad, 0);
+
+        LinearLayout c2Row = new LinearLayout(this);
+        c2Row.setOrientation(LinearLayout.HORIZONTAL);
+        c2Row.setPadding(pad, dp(4), pad, 0);
+        for (int color : PALETTE) {
+            c2Row.addView(swatch(color, false));
+        }
+
         Button save = new Button(this, null, android.R.attr.borderlessButtonStyle);
         save.setText(R.string.config_save);
         save.setAllCaps(false);
@@ -364,6 +436,12 @@ public class WidgetConfigActivity extends Activity {
         root.addView(methodRow);
         root.addView(madhabLabel);
         root.addView(madhabRow);
+        root.addView(bgLabel);
+        root.addView(bgRow);
+        root.addView(c1Label);
+        root.addView(c1Row);
+        root.addView(c2Label);
+        root.addView(c2Row);
         root.addView(save);
 
         ScrollView outer = new ScrollView(this);
@@ -459,9 +537,29 @@ public class WidgetConfigActivity extends Activity {
         android.widget.Toast.makeText(this, text, android.widget.Toast.LENGTH_SHORT).show();
     }
 
+    private Button swatch(final int color, final boolean isC1) {
+        Button b = new Button(this, null, android.R.attr.borderlessButtonStyle);
+        boolean active = isC1 ? color == selectedC1 : color == selectedC2;
+        b.setText(active ? "\u2713" : "\u25CF");
+        b.setTextSize(18);
+        b.setTextColor(color);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, dp(36), 1f);
+        lp.setMargins(dp(2), 0, dp(2), 0);
+        b.setLayoutParams(lp);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isC1) selectedC1 = color; else selectedC2 = color;
+                setContentView(buildUi());
+            }
+        });
+        return b;
+    }
+
     private void saveAndFinish() {
         WidgetPrefs.save(this, appWidgetId, selectedLat, selectedLon, selectedCity,
                 lightTheme, selectedMethod, selectedShafi);
+        WidgetPrefs.saveStyle(this, appWidgetId, selectedBg, selectedC1, selectedC2);
 
         AppWidgetManager mgr = AppWidgetManager.getInstance(this);
         AppWidgetProviderInfo info = mgr.getAppWidgetInfo(appWidgetId);

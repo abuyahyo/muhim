@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 2x1 — Таҳажжуд ойнаси (кечанинг учдан бири) -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/bg_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/glass_bg" />
+
+    <LinearLayout    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/glass_bg"
     android:padding="12dp"
     android:gravity="center">
+
 
     <TextView
         android:id="@+id/tj_label"
@@ -34,4 +44,5 @@
         android:text="@string/widget_tahajjud_note"
         android:textColor="@color/widget_mute"
         android:textSize="10sp" />
-</LinearLayout>
+    </LinearLayout>
+</FrameLayout>
