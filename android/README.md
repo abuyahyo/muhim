@@ -69,16 +69,16 @@ Vidjetni uy ekraniga qo'shganda **sozlash oynasi** ochiladi:
 - **Shisha rangi** — Қорамой yoki Оқ
 - **Ҳисоблаш усули** — MWL, Миср, Карачи, Уммул Қуро, ISNA (PWA'dagidek)
 - **Аср мазҳаби** — Ҳанафий yoki Шофеъий
-- **Til** — Тизим (telefon tili) / O'zbek / Русский / English — foydalanuvchi o'zi tanlaydi
 - **✓ Сақлаш** tugmasi bilan saqlanadi (shahar tanlash ham darhol saqlaydi)
 
 Har bir vidjet o'z sozlamasini alohida eslab qoladi. Vidjetni o'chirganda
 sozlamalar ham tozalanadi.
 
-Tilni vidjet qo'shmasdan ham o'zgartirish mumkin: ilova ro'yxatida
-(app drawer) **Муҳим** ilovasini oching — alohida til sozlamalar oynasi
-chiquvchi (Тизим / O'zbek / Русский / English), tanlash bilan barcha
-vidjetlar darhol yangilanadi.
+Til vidjet sozlash oynasida tanlanmaydi — u butun ilova uchun yagona.
+Ilovani oching va ⚙ tugma bilan til sozlamalarini oching
+(Тизим / O'zbek / Русский / English). Tanlangan til barcha vidjetlarga
+ta'sir qiladi, uy ekranidagi ilova ikonkasining nomi ham tilga qarab
+o'zgaradi: Муҳим / Мухим / Muhim.
 
 ## Umumiy
 - Har 30 daqiqada + sana/soat o'zgarganda avtomatik yangilanadi
