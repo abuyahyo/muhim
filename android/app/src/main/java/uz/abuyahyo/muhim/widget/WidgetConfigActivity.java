@@ -2,6 +2,7 @@ package uz.abuyahyo.muhim.widget;
 
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProviderInfo;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
