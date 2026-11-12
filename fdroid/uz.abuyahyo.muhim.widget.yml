@@ -1,110 +1,40 @@
-# F-Droid metadata loyihasi — fdroiddata reposiga MR uchun tayyor shakl.
+# F-Droid metadata — fdroiddata reposiga MR uchun tayyor shakl.
 # 1) https://gitlab.com/fdroid/fdroiddata ni fork qiling
-# 2) Bu faylni metadata/uz.abuyahyo.muhim.widget.yml ga nusxalang
-# 3) MR yuboring: https://gitlab.com/fdroid/fdroiddata/-/merge_requests/new
-#    (https://gitlab.com/fdroid/fdroiddata/-/blob/master/CONTRIBUTING.md)
-# commit maydonini kerak bo'lganda yangi tag/commit'ga yangilang.
+# 2) Bu faylni forkda metadata/uz.abuyahyo.muhim.widget.yml ga nusxalang
+# 3) Yangi branch bilan MR yuboring: https://gitlab.com/fdroid/fdroiddata/-/merge_requests/new
+#    Sarlavha: "New app: Muhim" — batafsil: fdroiddata/-/blob/master/CONTRIBUTING.md
 
 Categories:
   - Religion
 License: GPL-3.0-only
 WebSite: https://abuyahyo.github.io/muhim/
 SourceCode: https://github.com/abuyahyo/muhim
-IssueTracker: https://github.com/abuyahyo/muhim/issues
-
-Name: Муҳим Виджет
-Summary: Glassmorphism uslubidagi namoz vaqtlari vidjetlari
+IssueTracker: https://github.com/abuyahyo/muhim
+Name: Muhim
+Summary: Glassmorphism uslubidagi namoz vaqtlari vidjetlari va islomiy taqvim
 Description: |-
-    Uy ekranidagi glassmorphism (shisha) uslubidagi namoz vaqtlari vidjetlari.
-    Муҳим islomiy taqvim PWA'sining Android hamrohi.
+    Uy ekranidagi glassmorphism (shisha) uslubidagi namoz vaqtlari vidjetlari
+    va islomiy taqvim PWA'sining Android hamrohi — Muhim.
 
-    6 xil vidjet: намоз вақтлари панели (4×2), лента (4×1), кейинги намоз (2×1),
-    сана ва намоз (2×2), ҳижрий сана (2×2), таҳажжуд ойнаси (2×1).
+    6 xil vidjet: namoz vaqtlari paneli (4×2), lenta (4×1), keyingi namoz (2×1),
+    sana va namoz (2×2), hijriy sana (2×2), tahajjud oynasi (2×1).
 
     To'liq oflayn — vaqtlar qurilmada hisoblanadi (PrayTimes.org algoritmi).
     Har bir vidjet uchun alohida shahar (GPS yoki 23 shahar ro'yxati),
-    hisoblash usuli (MWL, Миср, Карачи, Уммул Қуро, ISNA) ва Аср мазҳаби
-    (Ҳанафий/Шофеъий) tanlanadi. Қорамой ва Оқ mavzular. Reklama va kuzatuv yo'q.
+    hisoblash usuli (MWL, Misr, Karachi, Ummul Quro, ISNA) va Asr mazhabi
+    (Hanafiy/Shofe'iy) tanlanadi. Qoramo'y va Oq mavzular.
+
+    Tillar: o'zbekcha (kirill va lotin), ruscha, inglizcha — ilova ichidan tanlanadi.
+
+    Reklama va kuzatuv yo'q. Ilova to'liq lokal assetlardan ishlaydi.
 
 RepoType: git
 Repo: https://github.com/abuyahyo/muhim
 
 Builds:
-  - versionName: 1.4
-    versionCode: 5
-    commit: e689a28a48fb17d7816de59e64b44e760dee1f01
-    subdir: android/app
-    gradle:
-      - yes
-  - versionName: 1.5
-    versionCode: 6
-    commit: 0db5c3e4ee864f98a9d4071ec9109c18cf4b3f82
-    subdir: android/app
-    gradle:
-      - yes
-  - versionName: 1.6
-    versionCode: 7
-    commit: 25bb138654e59dde7be594beee3565ad97013bd7
-    subdir: android/app
-    gradle:
-      - yes
-  - versionName: 1.7
-    versionCode: 8
-    commit: d49bc21ed3d3b1ca0db73ad524110b0bbdcdc902
-    subdir: android/app
-    gradle:
-      - yes
-  - versionName: 1.8
-    versionCode: 9
-    commit: b64f1f5d
-    subdir: android/app
-    gradle:
-      - yes
-  - versionName: 1.9
-    versionCode: 10
-    commit: 02490ae7
-    subdir: android/app
-    gradle:
-      - yes
-  - versionName: 1.10
-    versionCode: 11
-    commit: 1075befb
-    subdir: android/app
-    gradle:
-      - yes
-  - versionName: 1.11
-    versionCode: 12
-    commit: 487ebeaa
-    subdir: android/app
-    gradle:
-      - yes
-  - versionName: 1.12
-    versionCode: 13
-    commit: a67c6d17
-    subdir: android/app
-    gradle:
-      - yes
-  - versionName: 1.13
-    versionCode: 14
-    commit: 09be8ac4
-    subdir: android/app
-    gradle:
-      - yes
-  - versionName: 1.14
-    versionCode: 15
-    commit: bd3b95be
-    subdir: android/app
-    gradle:
-      - yes
-  - versionName: 1.15
-    versionCode: 16
-    commit: 517d946a
-    subdir: android/app
-    gradle:
-      - yes
   - versionName: 1.16
     versionCode: 17
-    commit: bbcd7d2d
+    commit: bbcd7d2da4dfdb62dc4ea04404b08c704219c45d
     subdir: android/app
     gradle:
       - yes
