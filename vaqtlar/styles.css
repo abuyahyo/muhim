@@ -6,7 +6,7 @@
   --amber-400: #fbbf24;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html, body { min-height: 100%; }
 body {
   font-family: var(--font-sans);

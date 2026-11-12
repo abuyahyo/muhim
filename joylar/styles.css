@@ -2,7 +2,7 @@
    Умумий токенлар ва ҳаво ранги (.mood--*) ../theme.css да (бу файлдан
    олдин юкланади). Бу бўлимга хос қўшимча токен йўқ. */
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html, body { min-height: 100%; }
 body {
   font-family: var(--font-sans);
