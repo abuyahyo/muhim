@@ -18,4 +18,63 @@
     <string name="widget_tahajjud_name">Таҳажжуд ойнаси</string>
     <string name="widget_tahajjud_label">Таҳажжуд ойнаси</string>
     <string name="widget_tahajjud_note">кечанинг учдан бири</string>
+
+    <string name="config_title">Виджет созламалари</string>
+    <string name="config_pick_city">Шаҳарни танланг:</string>
+    <string name="config_my_location">📍 Менинг жойлашувим</string>
+    <string name="config_theme">Шиша ранги:</string>
+    <string name="config_theme_dark">Қорамой</string>
+    <string name="config_theme_light">Оқ</string>
+    <string name="config_method">Ҳисоблаш усули:</string>
+    <string name="method_mwl">MWL</string>
+    <string name="method_egypt">Миср</string>
+    <string name="method_karachi">Карачи</string>
+    <string name="method_makkah">Уммул Қуро</string>
+    <string name="method_isna">ISNA</string>
+    <string name="config_madhab">Аср мазҳаби:</string>
+    <string name="config_madhab_hanafi">Ҳанафий</string>
+    <string name="config_madhab_shafi">Шофеъий</string>
+    <string name="config_save">✓ Сақлаш</string>
+    <string name="config_perm_denied">Рухсат берилмади</string>
+    <string name="config_no_location">Жойлашув топилмади — GPS\'ни ёқиб, қайта уриниб кўринг</string>
+    <string name="config_my_place">Менинг жойим</string>
+
+    <string-array name="greg_months">
+        <item>Январь</item><item>Февраль</item><item>Март</item><item>Апрель</item>
+        <item>Май</item><item>Июнь</item><item>Июль</item><item>Август</item>
+        <item>Сентябрь</item><item>Октябрь</item><item>Ноябрь</item><item>Декабрь</item>
+    </string-array>
+    <string-array name="weekdays">
+        <item>Якшанба</item><item>Душанба</item><item>Сешанба</item><item>Чоршанба</item>
+        <item>Пайшанба</item><item>Жума</item><item>Шанба</item>
+    </string-array>
+    <string-array name="hijri_months">
+        <item>Муҳаррам</item><item>Сафар</item><item>Рабиул аввал</item><item>Рабиул охир</item>
+        <item>Жумодул аввал</item><item>Жумодул охир</item><item>Ражаб</item><item>Шаъбон</item>
+        <item>Рамазон</item><item>Шаввол</item><item>Зулқаъда</item><item>Зулҳижжа</item>
+    </string-array>
+    <string-array name="city_names">
+        <item>@string/widget_city_default</item><item>Самарқанд</item><item>Бухоро</item>
+        <item>Наманган</item><item>Андижон</item><item>Фаргона</item><item>Нукус</item>
+        <item>Қарши</item><item>Урганч</item><item>Жиззах</item><item>Термиз</item>
+        <item>Навоий</item><item>Гулистон</item><item>Қўқон</item><item>Марғилон</item>
+        <item>Чирчиқ</item><item>Шаҳрисабз</item><item>Хива</item><item>Бекобод</item>
+        <item>Олмалиқ</item><item>Денов</item><item>Мекка</item><item>Мадина</item>
+    </string-array>
+    <string-array name="city_lats">
+        <item>41.2995</item><item>39.6542</item><item>39.7747</item>
+        <item>40.9983</item><item>40.7821</item><item>40.3864</item><item>42.4531</item>
+        <item>38.8611</item><item>41.5345</item><item>40.1158</item><item>37.2242</item>
+        <item>40.0844</item><item>40.4897</item><item>40.5286</item><item>40.4711</item>
+        <item>41.4719</item><item>39.0578</item><item>41.3775</item><item>40.2208</item>
+        <item>40.8500</item><item>38.2833</item><item>21.4225</item><item>24.4686</item>
+    </string-array>
+    <string-array name="city_lons">
+        <item>69.2401</item><item>66.9597</item><item>64.4286</item>
+        <item>71.6726</item><item>72.3442</item><item>71.7864</item><item>59.6103</item>
+        <item>65.7847</item><item>60.6249</item><item>67.8422</item><item>67.2783</item>
+        <item>65.3792</item><item>68.7842</item><item>70.9425</item><item>71.7247</item>
+        <item>69.5819</item><item>66.8342</item><item>60.3639</item><item>69.2697</item>
+        <item>69.5950</item><item>67.9000</item><item>39.8262</item><item>39.6142</item>
+    </string-array>
 </resources>

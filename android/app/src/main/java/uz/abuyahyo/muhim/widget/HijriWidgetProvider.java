@@ -13,6 +13,9 @@ public class HijriWidgetProvider extends BaseGlassWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager manager, int[] appWidgetIds) {
         Calendar now = Calendar.getInstance();
+        String[] days = days(context);
+        String[] names = prayerNames(context);
+        String[] hijriMonths = hijriMonths(context);
 
         for (int id : appWidgetIds) {
             double lat = WidgetPrefs.lat(context, id);
@@ -22,11 +25,11 @@ public class HijriWidgetProvider extends BaseGlassWidgetProvider {
 
             String nextText;
             if (next >= 0) {
-                nextText = PRAYER_NAMES[next] + " · " + PrayerCalculator.format(values[next]);
+                nextText = names[next] + " · " + PrayerCalculator.format(values[next]);
             } else {
                 Calendar tomorrow = (Calendar) now.clone();
                 tomorrow.add(Calendar.DAY_OF_MONTH, 1);
-                nextText = PRAYER_NAMES[0] + " · "
+                nextText = names[0] + " · "
                         + PrayerCalculator.format(times(context, id, tomorrow, lat, lon).fajr);
             }
 
@@ -37,9 +40,9 @@ public class HijriWidgetProvider extends BaseGlassWidgetProvider {
             rv.setInt(R.id.widget_root, "setBackgroundResource", bgRes(light));
             int ink = ink(light);
             int mute = mute(light);
-            rv.setTextViewText(R.id.hj_weekday, DAYS[now.get(Calendar.DAY_OF_WEEK) - 1]);
+            rv.setTextViewText(R.id.hj_weekday, days[now.get(Calendar.DAY_OF_WEEK) - 1]);
             rv.setTextViewText(R.id.hj_day, String.valueOf(h[0]));
-            rv.setTextViewText(R.id.hj_month, HijriDate.MONTHS[h[1] - 1]);
+            rv.setTextViewText(R.id.hj_month, hijriMonths[h[1] - 1]);
             rv.setTextViewText(R.id.hj_year, h[2] + " ҳижрий · " + WidgetPrefs.city(context, id));
             rv.setTextViewText(R.id.hj_next, nextText);
             rv.setTextColor(R.id.hj_weekday, mute);

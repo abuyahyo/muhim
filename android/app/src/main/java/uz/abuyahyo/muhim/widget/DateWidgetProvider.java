@@ -13,6 +13,10 @@ public class DateWidgetProvider extends BaseGlassWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager manager, int[] appWidgetIds) {
         Calendar now = Calendar.getInstance();
+        String[] days = days(context);
+        String[] months = months(context);
+        String[] names = prayerNames(context);
+        String[] hijriMonths = hijriMonths(context);
 
         for (int id : appWidgetIds) {
             double lat = WidgetPrefs.lat(context, id);
@@ -26,11 +30,11 @@ public class DateWidgetProvider extends BaseGlassWidgetProvider {
 
             String nextText;
             if (next >= 0) {
-                nextText = PRAYER_NAMES[next] + " · " + PrayerCalculator.format(values[next]);
+                nextText = names[next] + " · " + PrayerCalculator.format(values[next]);
             } else {
                 Calendar tomorrow = (Calendar) now.clone();
                 tomorrow.add(Calendar.DAY_OF_MONTH, 1);
-                nextText = PRAYER_NAMES[0] + " · "
+                nextText = names[0] + " · "
                         + PrayerCalculator.format(times(context, id, tomorrow, lat, lon).fajr);
             }
 
@@ -38,10 +42,10 @@ public class DateWidgetProvider extends BaseGlassWidgetProvider {
 
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_date);
             rv.setInt(R.id.widget_root, "setBackgroundResource", bgRes(light));
-            rv.setTextViewText(R.id.dt_weekday, DAYS[now.get(Calendar.DAY_OF_WEEK) - 1]);
+            rv.setTextViewText(R.id.dt_weekday, days[now.get(Calendar.DAY_OF_WEEK) - 1]);
             rv.setTextViewText(R.id.dt_day, String.valueOf(now.get(Calendar.DAY_OF_MONTH)));
-            rv.setTextViewText(R.id.dt_month, MONTHS[now.get(Calendar.MONTH)]
-                    + " · " + h[0] + " " + HijriDate.MONTHS[h[1] - 1]);
+            rv.setTextViewText(R.id.dt_month, months[now.get(Calendar.MONTH)]
+                    + " · " + h[0] + " " + hijriMonths[h[1] - 1]);
             rv.setTextViewText(R.id.dt_city, WidgetPrefs.city(context, id));
             rv.setTextViewText(R.id.dt_next, nextText);
             rv.setTextColor(R.id.dt_weekday, mute);

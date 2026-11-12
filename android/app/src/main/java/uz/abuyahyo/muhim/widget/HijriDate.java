@@ -1,18 +1,12 @@
 package uz.abuyahyo.muhim.widget;
 
 import java.util.Calendar;
-import java.util.TimeZone;
 
 // Milodiy -> ҳижрий sana konvertatsiyasi (kunlar/hijri.js'dagi tabulyar
-// algoritmning aynan Java ko'chirmasi).
+// algoritmning aynan Java ko'chirmasi). Oy nomlari resurslarda
+// (R.array.hijri_months).
 
 final class HijriDate {
-
-    static final String[] MONTHS = {
-            "Муҳаррам", "Сафар", "Рабиул аввал", "Рабиул охир",
-            "Жумодул аввал", "Жумодул охир", "Ражаб", "Шаъбон",
-            "Рамазон", "Шаввол", "Зулқаъда", "Зулҳижжа"
-    };
 
     private HijriDate() {
     }
@@ -20,7 +14,7 @@ final class HijriDate {
     static int[] from(Calendar c) {
         // kunlar/hijri.js: mahalliy sana UTC tush vaqti sifatida olinadi —
         // shu tufayli kun davomida istalgan vaqtda bir xil JD chiqadi.
-        Calendar noon = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        Calendar noon = Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC"));
         noon.clear();
         noon.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), 12, 0, 0);
         long jd = noon.getTimeInMillis() / 86400000L + 2440588;

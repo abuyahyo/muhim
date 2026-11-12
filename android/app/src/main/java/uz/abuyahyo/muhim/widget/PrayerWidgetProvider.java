@@ -22,8 +22,10 @@ public class PrayerWidgetProvider extends BaseGlassWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager manager, int[] appWidgetIds) {
         Calendar now = Calendar.getInstance();
-        String date = DAYS[now.get(Calendar.DAY_OF_WEEK) - 1] + ", "
-                + now.get(Calendar.DAY_OF_MONTH) + " " + MONTHS[now.get(Calendar.MONTH)];
+        String[] days = days(context);
+        String[] months = months(context);
+        String date = days[now.get(Calendar.DAY_OF_WEEK) - 1] + ", "
+                + now.get(Calendar.DAY_OF_MONTH) + " " + months[now.get(Calendar.MONTH)];
 
         for (int id : appWidgetIds) {
             double lat = WidgetPrefs.lat(context, id);

@@ -10,7 +10,6 @@ final class WidgetPrefs {
 
     static final double DEFAULT_LAT = 41.2995;
     static final double DEFAULT_LON = 69.2401;
-    static final String DEFAULT_CITY = "Тошкент";
 
     private static final String PREFS = "muhim_widgets";
     private static final String THEME_DARK = "dark";
@@ -33,7 +32,8 @@ final class WidgetPrefs {
     }
 
     static String city(Context context, int appWidgetId) {
-        return prefs(context).getString("city_" + appWidgetId, DEFAULT_CITY);
+        String saved = prefs(context).getString("city_" + appWidgetId, null);
+        return saved != null ? saved : context.getString(R.string.widget_city_default);
     }
 
     static boolean isLight(Context context, int appWidgetId) {

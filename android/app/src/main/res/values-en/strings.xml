@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Muhim Widget</string>
+    <string name="widget_name">Prayer times</string>
+    <string name="widget_city_default">Tashkent</string>
+    <string name="prayer_fajr">Fajr</string>
+    <string name="prayer_sunrise">Sunrise</string>
+    <string name="prayer_dhuhr">Dhuhr</string>
+    <string name="prayer_asr">Asr</string>
+    <string name="prayer_maghrib">Maghrib</string>
+    <string name="prayer_isha">Isha</string>
+    <string name="widget_next_label">Next prayer</string>
+    <string name="widget_next_name">Prayer times</string>
+    <string name="widget_grid_name">Prayer times (panel)</string>
+    <string name="widget_strip_name">Prayer times (strip)</string>
+    <string name="widget_date_name">Date and prayer</string>
+    <string name="widget_hijri_name">Hijri date</string>
+    <string name="widget_tahajjud_name">Tahajjud window</string>
+    <string name="widget_tahajjud_label">Tahajjud window</string>
+    <string name="widget_tahajjud_note">last third of the night</string>
+
+    <string name="config_title">Widget settings</string>
+    <string name="config_pick_city">Pick a city:</string>
+    <string name="config_my_location">📍 My location</string>
+    <string name="config_theme">Glass color:</string>
+    <string name="config_theme_dark">Dark</string>
+    <string name="config_theme_light">Light</string>
+    <string name="config_method">Calculation method:</string>
+    <string name="method_mwl">MWL</string>
+    <string name="method_egypt">Egypt</string>
+    <string name="method_karachi">Karachi</string>
+    <string name="method_makkah">Umm al-Qura</string>
+    <string name="method_isna">ISNA</string>
+    <string name="config_madhab">Asr madhab:</string>
+    <string name="config_madhab_hanafi">Hanafi</string>
+    <string name="config_madhab_shafi">Shafi</string>
+    <string name="config_save">✓ Save</string>
+    <string name="config_perm_denied">Permission denied</string>
+    <string name="config_no_location">Location not found — enable GPS and try again</string>
+    <string name="config_my_place">My place</string>
+
+    <string-array name="greg_months">
+        <item>January</item><item>February</item><item>March</item><item>April</item>
+        <item>May</item><item>June</item><item>July</item><item>August</item>
+        <item>September</item><item>October</item><item>November</item><item>December</item>
+    </string-array>
+    <string-array name="weekdays">
+        <item>Sunday</item><item>Monday</item><item>Tuesday</item><item>Wednesday</item>
+        <item>Thursday</item><item>Friday</item><item>Saturday</item>
+    </string-array>
+    <string-array name="hijri_months">
+        <item>Muharram</item><item>Safar</item><item>Rabi al-Awwal</item><item>Rabi al-Thani</item>
+        <item>Jumada al-Ula</item><item>Jumada al-Akhirah</item><item>Rajab</item><item>Shaban</item>
+        <item>Ramadan</item><item>Shawwal</item><item>Dhu al-Qadah</item><item>Dhu al-Hijjah</item>
+    </string-array>
+    <string-array name="city_names">
+        <item>@string/widget_city_default</item><item>Samarkand</item><item>Bukhara</item>
+        <item>Namangan</item><item>Andijan</item><item>Fergana</item><item>Nukus</item>
+        <item>Karshi</item><item>Urgench</item><item>Jizzakh</item><item>Termez</item>
+        <item>Navoiy</item><item>Gulistan</item><item>Kokand</item><item>Margilan</item>
+        <item>Chirchiq</item><item>Shahrisabz</item><item>Khiva</item><item>Bekabad</item>
+        <item>Olmaliq</item><item>Denov</item><item>Makkah</item><item>Madinah</item>
+    </string-array>
+    <string-array name="city_lats">
+        <item>41.2995</item><item>39.6542</item><item>39.7747</item>
+        <item>40.9983</item><item>40.7821</item><item>40.3864</item><item>42.4531</item>
+        <item>38.8611</item><item>41.5345</item><item>40.1158</item><item>37.2242</item>
+        <item>40.0844</item><item>40.4897</item><item>40.5286</item><item>40.4711</item>
+        <item>41.4719</item><item>39.0578</item><item>41.3775</item><item>40.2208</item>
+        <item>40.8500</item><item>38.2833</item><item>21.4225</item><item>24.4686</item>
+    </string-array>
+    <string-array name="city_lons">
+        <item>69.2401</item><item>66.9597</item><item>64.4286</item>
+        <item>71.6726</item><item>72.3442</item><item>71.7864</item><item>59.6103</item>
+        <item>65.7847</item><item>60.6249</item><item>67.8422</item><item>67.2783</item>
+        <item>65.3792</item><item>68.7842</item><item>70.9425</item><item>71.7247</item>
+        <item>69.5819</item><item>66.8342</item><item>60.3639</item><item>69.2697</item>
+        <item>69.5950</item><item>67.9000</item><item>39.8262</item><item>39.6142</item>
+    </string-array>
+</resources>

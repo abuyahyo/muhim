@@ -24,48 +24,23 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-// Vidjet sozlamalari: shahar va shisha mavzusi (қорамой/оқ).
-// Launcher vidjetni qo'shganda android:configure orqali ochiladi.
+import java.util.Locale;
+
+// Vidjet sozlamalari: shahar, shisha mavzusi (қорамой/оқ), hisoblash usuli
+// va Asr mazhabi. Launcher vidjetni qo'shganda android:configure orqali
+// ochiladi. Barcha matnlar resurslardan (o'zbek/rus/ingliz).
 
 public class WidgetConfigActivity extends Activity {
 
-    private static final String[][] CITIES = {
-            {"Тошкент", "41.2995", "69.2401"},
-            {"Самарқанд", "39.6542", "66.9597"},
-            {"Бухоро", "39.7747", "64.4286"},
-            {"Наманган", "40.9983", "71.6726"},
-            {"Андижон", "40.7821", "72.3442"},
-            {"Фаргона", "40.3864", "71.7864"},
-            {"Нукус", "42.4531", "59.6103"},
-            {"Қарши", "38.8611", "65.7847"},
-            {"Урганч", "41.5345", "60.6249"},
-            {"Жиззах", "40.1158", "67.8422"},
-            {"Термиз", "37.2242", "67.2783"},
-            {"Навоий", "40.0844", "65.3792"},
-            {"Гулистон", "40.4897", "68.7842"},
-            {"Қўқон", "40.5286", "70.9425"},
-            {"Марғилон", "40.4711", "71.7247"},
-            {"Чирчиқ", "41.4719", "69.5819"},
-            {"Шаҳрисабз", "39.0578", "66.8342"},
-            {"Хива", "41.3775", "60.3639"},
-            {"Бекобод", "40.2208", "69.2697"},
-            {"Олмалиқ", "40.8500", "69.5950"},
-            {"Денов", "38.2833", "67.9000"},
-            {"Мекка", "21.4225", "39.8262"},
-            {"Мадина", "24.4686", "39.6142"}
-    };
-
     private static final int PERMISSION_LOCATION = 1;
 
-    private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
-
-    private static final String[][] METHODS = {
-            {"MWL", "MWL"},
-            {"Egypt", "Миср"},
-            {"Karachi", "Карачи"},
-            {"Makkah", "Уммул Қуро"},
-            {"ISNA", "ISNA"}
+    private static final String[] METHOD_IDS = {"MWL", "Egypt", "Karachi", "Makkah", "ISNA"};
+    private static final int[] METHOD_LABELS = {
+            R.string.method_mwl, R.string.method_egypt, R.string.method_karachi,
+            R.string.method_makkah, R.string.method_isna
     };
+
+    private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
     private String selectedCity;
     private double selectedLat;
@@ -103,14 +78,14 @@ public class WidgetConfigActivity extends Activity {
         int pad = dp(16);
 
         TextView title = new TextView(this);
-        title.setText("Виджет созламалари");
+        title.setText(R.string.config_title);
         title.setTextSize(18);
         title.setTypeface(Typeface.DEFAULT_BOLD);
         title.setTextColor(Color.WHITE);
         title.setPadding(pad, pad, pad, dp(4));
 
         TextView subtitle = new TextView(this);
-        subtitle.setText("Шаҳарни танланг:");
+        subtitle.setText(R.string.config_pick_city);
         subtitle.setTextSize(14);
         subtitle.setTextColor(0xB3FFFFFF);
         subtitle.setPadding(pad, dp(8), pad, dp(4));
@@ -119,7 +94,7 @@ public class WidgetConfigActivity extends Activity {
         list.setOrientation(LinearLayout.VERTICAL);
 
         Button gps = new Button(this, null, android.R.attr.borderlessButtonStyle);
-        gps.setText("📍 Менинг жойлашувим");
+        gps.setText(R.string.config_my_location);
         gps.setAllCaps(false);
         gps.setTextSize(15);
         gps.setTextColor(0xFF7DD3FC);
@@ -133,9 +108,15 @@ public class WidgetConfigActivity extends Activity {
         });
         list.addView(gps);
 
-        for (final String[] c : CITIES) {
+        String[] cityNames = getResources().getStringArray(R.array.city_names);
+        String[] cityLats = getResources().getStringArray(R.array.city_lats);
+        String[] cityLons = getResources().getStringArray(R.array.city_lons);
+        for (int i = 0; i < cityNames.length; i++) {
+            final String name = cityNames[i];
+            final double lat = Double.parseDouble(cityLats[i]);
+            final double lon = Double.parseDouble(cityLons[i]);
             Button b = new Button(this, null, android.R.attr.borderlessButtonStyle);
-            b.setText(c[0]);
+            b.setText(name);
             b.setAllCaps(false);
             b.setTextSize(15);
             b.setTextColor(Color.WHITE);
@@ -144,21 +125,21 @@ public class WidgetConfigActivity extends Activity {
             b.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectedCity = c[0];
-                    selectedLat = Double.parseDouble(c[1]);
-                    selectedLon = Double.parseDouble(c[2]);
+                    selectedCity = name;
+                    selectedLat = lat;
+                    selectedLon = lon;
                     saveAndFinish();
                 }
             });
-            if (c[0].equals(selectedCity)) {
+            if (name.equals(selectedCity)) {
                 b.setTextColor(0xFF7DD3FC);
-                b.setText("✓ " + c[0]);
+                b.setText("✓ " + name);
             }
             list.addView(b);
         }
 
         TextView themeLabel = new TextView(this);
-        themeLabel.setText("Шиша ранги:");
+        themeLabel.setText(R.string.config_theme);
         themeLabel.setTextSize(14);
         themeLabel.setTextColor(0xB3FFFFFF);
         themeLabel.setPadding(pad, dp(16), pad, dp(4));
@@ -166,11 +147,25 @@ public class WidgetConfigActivity extends Activity {
         LinearLayout themeRow = new LinearLayout(this);
         themeRow.setOrientation(LinearLayout.HORIZONTAL);
         themeRow.setPadding(pad, 0, pad, 0);
-        themeRow.addView(themeButton("Қорамой", false));
-        themeRow.addView(themeButton("Оқ", true));
+        themeRow.addView(optionButton(getString(R.string.config_theme_dark), !lightTheme,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        lightTheme = false;
+                        setContentView(buildUi());
+                    }
+                }));
+        themeRow.addView(optionButton(getString(R.string.config_theme_light), lightTheme,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        lightTheme = true;
+                        setContentView(buildUi());
+                    }
+                }));
 
         TextView methodLabel = new TextView(this);
-        methodLabel.setText("Ҳисоблаш усули:");
+        methodLabel.setText(R.string.config_method);
         methodLabel.setTextSize(14);
         methodLabel.setTextColor(0xB3FFFFFF);
         methodLabel.setPadding(pad, dp(16), pad, dp(4));
@@ -178,19 +173,20 @@ public class WidgetConfigActivity extends Activity {
         LinearLayout methodRow = new LinearLayout(this);
         methodRow.setOrientation(LinearLayout.HORIZONTAL);
         methodRow.setPadding(pad, 0, pad, 0);
-        for (final String[] m : METHODS) {
-            methodRow.addView(optionButton(m[1], m[0].equals(selectedMethod),
+        for (int i = 0; i < METHOD_IDS.length; i++) {
+            final String id = METHOD_IDS[i];
+            methodRow.addView(optionButton(getString(METHOD_LABELS[i]), id.equals(selectedMethod),
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            selectedMethod = m[0];
+                            selectedMethod = id;
                             setContentView(buildUi());
                         }
                     }));
         }
 
         TextView madhabLabel = new TextView(this);
-        madhabLabel.setText("Аср мазҳаби:");
+        madhabLabel.setText(R.string.config_madhab);
         madhabLabel.setTextSize(14);
         madhabLabel.setTextColor(0xB3FFFFFF);
         madhabLabel.setPadding(pad, dp(16), pad, dp(4));
@@ -198,23 +194,25 @@ public class WidgetConfigActivity extends Activity {
         LinearLayout madhabRow = new LinearLayout(this);
         madhabRow.setOrientation(LinearLayout.HORIZONTAL);
         madhabRow.setPadding(pad, 0, pad, 0);
-        madhabRow.addView(optionButton("Ҳанафий", !selectedShafi, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedShafi = false;
-                setContentView(buildUi());
-            }
-        }));
-        madhabRow.addView(optionButton("Шофеъий", selectedShafi, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedShafi = true;
-                setContentView(buildUi());
-            }
-        }));
+        madhabRow.addView(optionButton(getString(R.string.config_madhab_hanafi), !selectedShafi,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selectedShafi = false;
+                        setContentView(buildUi());
+                    }
+                }));
+        madhabRow.addView(optionButton(getString(R.string.config_madhab_shafi), selectedShafi,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selectedShafi = true;
+                        setContentView(buildUi());
+                    }
+                }));
 
         Button save = new Button(this, null, android.R.attr.borderlessButtonStyle);
-        save.setText("✓ Сақлаш");
+        save.setText(R.string.config_save);
         save.setAllCaps(false);
         save.setTextSize(15);
         save.setTypeface(Typeface.DEFAULT_BOLD);
@@ -255,34 +253,17 @@ public class WidgetConfigActivity extends Activity {
         return outer;
     }
 
-    private Button themeButton(String label, boolean light) {
+    private Button optionButton(String label, boolean active, View.OnClickListener listener) {
         Button b = new Button(this, null, android.R.attr.borderlessButtonStyle);
-        b.setText(label);
+        b.setText(active ? "✓ " + label : label);
         b.setAllCaps(false);
-        b.setTextColor(lightTheme == light ? 0xFF7DD3FC : Color.WHITE);
-        b.setTypeface(lightTheme == light ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, dp(44), 1f);
+        b.setTextColor(active ? 0xFF7DD3FC : Color.WHITE);
+        b.setTypeface(active ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, dp(40), 1f);
         lp.setMargins(dp(4), 0, dp(4), 0);
         b.setLayoutParams(lp);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                lightTheme = light;
-                setContentView(buildUi());
-            }
-        });
+        b.setOnClickListener(listener);
         return b;
-    }
-
-    private Drawable glassBackground() {
-        GradientDrawable base = new GradientDrawable();
-        base.setColor(0xE60B1220);
-        base.setCornerRadius(dp(20));
-        GradientDrawable border = new GradientDrawable();
-        border.setColor(Color.TRANSPARENT);
-        border.setCornerRadius(dp(20));
-        border.setStroke(dp(1), 0x26FFFFFF);
-        return new LayerDrawable(new Drawable[] { base, border });
     }
 
     private void requestMyLocation() {
@@ -308,7 +289,7 @@ public class WidgetConfigActivity extends Activity {
                     return;
                 }
             }
-            toast("Рухсат берилмади");
+            toast(getString(R.string.config_perm_denied));
         }
     }
 
@@ -323,13 +304,13 @@ public class WidgetConfigActivity extends Activity {
                 }
             }
         } catch (SecurityException e) {
-            toast("Рухсат берилмади");
+            toast(getString(R.string.config_perm_denied));
             return;
         } catch (Exception e) {
             best = null;
         }
         if (best == null) {
-            toast("Жойлашув топилмади — GPS'ни ёқиб, харитадан фойдаланинг");
+            toast(getString(R.string.config_no_location));
             return;
         }
         selectedLat = best.getLatitude();
@@ -341,7 +322,7 @@ public class WidgetConfigActivity extends Activity {
     private String resolveCityName(double lat, double lon) {
         try {
             java.util.List<android.location.Address> addrs =
-                    new Geocoder(this).getFromLocation(lat, lon, 1);
+                    new Geocoder(this, Locale.getDefault()).getFromLocation(lat, lon, 1);
             if (addrs != null && !addrs.isEmpty()) {
                 android.location.Address a = addrs.get(0);
                 if (a.getLocality() != null) return a.getLocality();
@@ -350,24 +331,11 @@ public class WidgetConfigActivity extends Activity {
             }
         } catch (Exception ignored) {
         }
-        return "Менинг жойим";
+        return getString(R.string.config_my_place);
     }
 
     private void toast(String text) {
         android.widget.Toast.makeText(this, text, android.widget.Toast.LENGTH_SHORT).show();
-    }
-
-    private Button optionButton(String label, boolean active, View.OnClickListener listener) {
-        Button b = new Button(this, null, android.R.attr.borderlessButtonStyle);
-        b.setText(active ? "✓ " + label : label);
-        b.setAllCaps(false);
-        b.setTextColor(active ? 0xFF7DD3FC : Color.WHITE);
-        b.setTypeface(active ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, dp(40), 1f);
-        lp.setMargins(dp(4), 0, dp(4), 0);
-        b.setLayoutParams(lp);
-        b.setOnClickListener(listener);
-        return b;
     }
 
     private void saveAndFinish() {
