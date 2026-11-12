@@ -80,7 +80,7 @@ Builds:
       - yes
   - versionName: 1.12
     versionCode: 13
-    commit: HEADCOMMIT
+    commit: a67c6d17
     subdir: android/app
     gradle:
       - yes
