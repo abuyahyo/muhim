@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Мухим Виджет</string>
+    <string name="app_name">Мухим</string>
     <string name="widget_name">Времена намаза</string>
     <string name="widget_city_default">Ташкент</string>
     <string name="prayer_fajr">Фаджр</string>
