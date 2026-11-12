@@ -199,6 +199,29 @@
     return a[lang()] || a.uz;
   }
 
+  // Kontent manbalarini ("<сура> сураси, N-оят" ва boshqalar) tarjima qilish.
+  // Avval CONTENT (content-i18n.js), keyin DICT, keyin surah regexi tekshiriladi.
+  function tc(s) {
+    if (!s) return s;
+    var l = lang();
+    if (l === 'uz') return s;
+    var c = window.MuhimI18N && window.MuhimI18N.CONTENT;
+    if (c && c[s]) return c[s][l] || s;
+    var d = DICT[s];
+    if (d) return d[l] || s;
+    var m = String(s).match(/^(.+?)\s+сураси,\s*(\d+)(?:\s*-\s*(\d+))?[\s-]*оят(лар)?\s*$/);
+    if (m) {
+      var su = window.MuhimI18N && window.MuhimI18N.SURAH && window.MuhimI18N.SURAH[m[1].trim()];
+      if (su) {
+        var range = m[3]
+          ? (l === 'ru' ? 'аяты ' + m[2] + '-' + m[3] : 'verses ' + m[2] + '-' + m[3])
+          : (l === 'ru' ? 'аят ' + m[2] : 'verse ' + m[2]);
+        return (l === 'ru' ? 'Сура ' : 'Surah ') + su[l] + ', ' + range;
+      }
+    }
+    return s;
+  }
+
   // Сахифа юкланганда статик HTML'ни (нав, title, lang) локаллаштириш.
   function applyStatic() {
     var l = lang();
@@ -228,5 +251,5 @@
     else applyStatic();
   }
 
-  window.MuhimI18N = { lang: lang, setLang: setLang, t: t, arr: arr, applyStatic: applyStatic, switcherHtml: switcherHtml };
+  window.MuhimI18N = { lang: lang, setLang: setLang, t: t, arr: arr, tc: tc, applyStatic: applyStatic, switcherHtml: switcherHtml };
 })();

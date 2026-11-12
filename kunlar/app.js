@@ -8,6 +8,7 @@
   const { importantDays } = AppData;
   const { escapeHtml, currentMood, renderQuoteList } = MuhimShared;
   const I = window.MuhimI18N;
+  const tc = I.tc;
   const tr = I.t;
   const hijriMonths = I.arr('hijriMonths');
   const gregorianMonths = I.arr('gregorianMonths');
@@ -341,7 +342,7 @@
         let card = '<div class="detail-block">';
         if (verse.arabic) card += '<div class="arabic" style="font-size:26px;text-align:right;line-height:1.9;margin-bottom:16px;color:var(--ink);" dir="rtl">' + escapeHtml(verse.arabic) + '</div>';
         card += '<div class="detail-text">«' + escapeHtml(verse.translation) + '»</div>';
-        card += '<div class="source-attrib">' + escapeHtml(verse.source) + '</div>';
+        card += '<div class="source-attrib">' + escapeHtml(tc(verse.source)) + '</div>';
         card += renderCommentary(verse.commentary);
         card += '</div>';
         return card;
@@ -353,7 +354,7 @@
     html += '<div style="margin: 28px 0 16px;"><div class="section-title" style="font-size:22px;">' + tr('Саҳиҳ ҳадислар') + '</div></div>';
       html += renderQuoteList(day.hadiths, function (hadith) {
         let card = '<div class="detail-block">';
-        card += '<div class="detail-block-label">' + escapeHtml(hadith.source) + '</div>';
+        card += '<div class="detail-block-label">' + escapeHtml(tc(hadith.source)) + '</div>';
         card += '<div class="detail-text" style="margin-bottom:12px;">«' + escapeHtml(hadith.text) + '»</div>';
         if (hadith.narrator) card += '<div style="font-size:13px;color:var(--ink-mute);font-weight:600;">— ' + escapeHtml(hadith.narrator) + '</div>';
         card += renderCommentary(hadith.commentary);
@@ -777,10 +778,10 @@
       items.push(measureBlock(ctx, String(day.noteTitle || tr('Зарур изоҳ')).toUpperCase(), day.note, innerW));
     }
     (day.verses || []).forEach(function (v) {
-      items.push(measureBlock(ctx, String(v.source || '').toUpperCase(), '«' + v.translation + '»', innerW, v.commentary));
+      items.push(measureBlock(ctx, String(tc(v.source) || '').toUpperCase(), '«' + v.translation + '»', innerW, v.commentary));
     });
     (day.hadiths || []).forEach(function (h) {
-      const block = measureBlock(ctx, String(h.source || '').toUpperCase(), '«' + h.text + '»', innerW, h.commentary);
+      const block = measureBlock(ctx, String(tc(h.source) || '').toUpperCase(), '«' + h.text + '»', innerW, h.commentary);
       if (h.narrator) {
         block.narrator = h.narrator;
         block.height += 36;
