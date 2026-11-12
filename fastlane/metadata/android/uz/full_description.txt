@@ -1,0 +1,22 @@
+<p><b>Муҳим Виджет</b> — uy ekranidagi glassmorphism (shisha) uslubidagi namoz vaqtlari vidjetlari. <a href="https://abuyahyo.github.io/muhim/">Муҳим</a> islomiy taqvim PWA'sining Android hamrohi.</p>
+
+<p><b>6 xil vidjet:</b></p>
+<ul>
+  <li>Намоз вақтлари (4×2) — 6 vaqt to'liq panelda, keyingi namoz ajratilgan</li>
+  <li>Намоз вақтлари (4×1) — 6 vaqt bitta qatorda</li>
+  <li>Кейинги намоз (2×1) — keyingi namoz nomi va katta soat</li>
+  <li>Сана ва намоз (2×2) — milodiy + ҳижрий sana</li>
+  <li>Ҳижрий сана (2×2) — ҳижрий kun, oy, yil</li>
+  <li>Таҳажжуд ойнаси (2×1) — кечанинг oxirgi uchdan biri</li>
+</ul>
+
+<p><b>Xususiyatlar:</b></p>
+<ul>
+  <li>To'liq oflayn — vaqtlar qurilmada hisoblanadi (PrayTimes.org algoritmi)</li>
+  <li>Har bir vidjet uchun alohida shahar (GPS yoki 23 shahar ro'yxati, jumladan Мекка/Мадина)</li>
+  <li>Hisoblash usuli: MWL, Миср, Карачи, Уммул Қуро, ISNA</li>
+  <li>Аср мазҳаби: Ҳанафий yoki Шофеъий</li>
+  <li>Қорамой va Оқ shisha mavzulari</li>
+  <li>Hech qanday ruxsat talab etilmaydi (GPS ixtiyoriy)</li>
+  <li>Reklama va kuzatuv yo'q</li>
+</ul>

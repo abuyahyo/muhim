@@ -54,5 +54,19 @@ Keystore yaratish (bir marta, Java bor mashinada):
 `app-debug.apk` ni telefonda ochib o'rnatish (noma'lum manbalarga ruxsat kerak bo'lishi mumkin).
 Vidjet qo'yish: uy ekranida bo'sh joyni bosib turib → Widgets → Муҳим виджет.
 
+## F-Droid
+Ilova GPL-3.0 litsenziyasi ostida — F-Droid'ga qo'shish mumkin. "APK yuklash"
+yo'q: F-Droid ilovani o'z serverida manba koddan build qiladi.
+
+1. `fdroid/uz.abuyahyo.muhim.widget.yml` faylini [fdroiddata](https://gitlab.com/fdroid/fdroiddata)
+   reposiga (fork → `metadata/` → Merge Request) yuboring
+2. Fastlane metadata (`fastlane/metadata/android/`) tavsiflar repoda bo'ladi —
+   F-Droid ularni avtomatik o'qiydi
+3. Yangi versiya chiqarganda `changelogs/<versionCode>.txt` qo'shing va yml'dagi
+   `commit` yangilang
+
+Batafsil: [Inclusion Policy](https://f-droid.org/en/docs/Inclusion_Policy/),
+[Build Metadata Reference](https://f-droid.org/en/docs/Build_Metadata_Reference/).
+
 ## Kelajak uchun
 - Release imzolangan APK (Secrets orqali — yuqorida)
