@@ -5,6 +5,7 @@
   const { places } = JoylarData;
   const { escapeHtml, currentMood, renderQuoteList } = MuhimShared;
   const tr = window.MuhimI18N.t;
+  const tc = window.MuhimI18N.tc;
 
   // === БОШ САҲИФА — жойлар рўйхати ===
   function renderList() {
@@ -83,7 +84,7 @@
       html += '<section class="detail-block"><div class="block-title">' + tr('Қуръон оятлари') + '</div>';
       html += renderQuoteList(p.verses, function (v) {
         let card = '<div class="quote-card">';
-        card += '<div class="quote-source">' + escapeHtml(v.source) + '</div>';
+        card += '<div class="quote-source">' + escapeHtml(tc(v.source)) + '</div>';
         if (v.arabic) card += '<div class="quote-arabic" dir="rtl">' + escapeHtml(v.arabic) + '</div>';
         card += '<div class="quote-text">«' + escapeHtml(v.translation) + '»</div>';
         if (v.commentary) card += '<div class="quote-commentary">' + escapeHtml(v.commentary) + '</div>';
@@ -97,7 +98,7 @@
       html += '<section class="detail-block"><div class="block-title">' + tr('Ҳадислар') + '</div>';
       html += renderQuoteList(p.hadiths, function (h) {
         let card = '<div class="quote-card">';
-        card += '<div class="quote-source">' + escapeHtml(h.source) + '</div>';
+        card += '<div class="quote-source">' + escapeHtml(tc(h.source)) + '</div>';
         card += '<div class="quote-text">«' + escapeHtml(h.text) + '»</div>';
         if (h.narrator) card += '<div class="quote-attr">— ' + escapeHtml(h.narrator) + '</div>';
         if (h.commentary) card += '<div class="quote-commentary">' + escapeHtml(h.commentary) + '</div>';
@@ -231,10 +232,10 @@
     const innerW = SHARE_W - SHARE_PAD_X * 2 - 72;
     const items = [];
     (p.verses || []).forEach(function (v) {
-      items.push(measureBlock(ctx, String(v.source || '').toUpperCase(), '«' + v.translation + '»', innerW, v.commentary));
+      items.push(measureBlock(ctx, String(tc(v.source) || '').toUpperCase(), '«' + v.translation + '»', innerW, v.commentary));
     });
     (p.hadiths || []).forEach(function (h) {
-      const block = measureBlock(ctx, String(h.source || '').toUpperCase(), '«' + h.text + '»', innerW, h.commentary);
+      const block = measureBlock(ctx, String(tc(h.source) || '').toUpperCase(), '«' + h.text + '»', innerW, h.commentary);
       if (h.narrator) { block.narrator = h.narrator; block.height += 36; }
       items.push(block);
     });

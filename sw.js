@@ -10,13 +10,14 @@
 // `VERSION`ни ҳар жиддий ўзгаришда инкремент қилинг — буни ўзгартирилса
 // SW қайта ўрнатилади ва эски кеш тозаланади. Активация янги версия
 // тайёрланганда `SKIP_WAITING` хабари orqали тезлаштирилади (banner).
-const VERSION = 'v299';
+const VERSION = 'v300';
 const STATIC_CACHE = `static-${VERSION}`;
 const PRECACHE = [
   './',
   './index.html',
   './install-banner.js',
   './i18n.js',
+  './content-i18n.js',
   './shared.js',
   './theme.css',
   './nav.css',

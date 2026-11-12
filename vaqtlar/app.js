@@ -5,6 +5,7 @@
   const { prayers, spiritual } = VaqtlarData;
   const { escapeHtml, currentMood, renderQuoteList } = MuhimShared;
   const tr = window.MuhimI18N.t;
+  const tc = window.MuhimI18N.tc;
   const STORAGE_KEY = 'vaqtlar.settings.v1';
   const DEFAULT_LOC = { lat: 41.2995, lon: 69.2401, name: tr('Тошкент') }; // фолбэк
   const KAABA = { lat: 21.4225, lon: 39.8262 };
@@ -399,7 +400,7 @@
       const grouped = groupVerses(p.verses);
       html += renderQuoteList(grouped, function (v) {
         let card = '<div class="quote-card">';
-        card += '<div class="quote-source">' + escapeHtml(v.source) + '</div>';
+        card += '<div class="quote-source">' + escapeHtml(tc(v.source)) + '</div>';
         card += '<div class="quote-text">«' + escapeHtml(v.translation) + '»</div>';
         card += '</div>';
         return card;
@@ -411,7 +412,7 @@
       html += '<section class="detail-block"><div class="block-title">' + tr('Ҳадислар') + '</div>';
       html += renderQuoteList(p.hadiths, function (h) {
         let card = '<div class="quote-card">';
-        card += '<div class="quote-source">' + escapeHtml(h.source) + '</div>';
+        card += '<div class="quote-source">' + escapeHtml(tc(h.source)) + '</div>';
         card += '<div class="quote-text">«' + escapeHtml(h.text) + '»</div>';
         if (h.narrator) card += '<div class="quote-attr">— ' + escapeHtml(h.narrator) + '</div>';
         card += '</div>';
@@ -634,10 +635,10 @@
       items.push(measureBlock(ctx, tr('ҲАҚИДА'), p.description, innerW));
     }
     (p.verses || []).forEach(function (v) {
-      items.push(measureBlock(ctx, String(v.source || '').toUpperCase(), '«' + v.translation + '»', innerW));
+      items.push(measureBlock(ctx, String(tc(v.source) || '').toUpperCase(), '«' + v.translation + '»', innerW));
     });
     (p.hadiths || []).forEach(function (h) {
-      const block = measureBlock(ctx, String(h.source || '').toUpperCase(), '«' + h.text + '»', innerW);
+      const block = measureBlock(ctx, String(tc(h.source) || '').toUpperCase(), '«' + h.text + '»', innerW);
       if (h.narrator) {
         block.narrator = h.narrator;
         block.height += 36;
