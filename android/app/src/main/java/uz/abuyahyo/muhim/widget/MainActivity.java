@@ -142,9 +142,10 @@ public class MainActivity extends Activity {
     }
 
     private WebResourceResponse assetResponse(String path) {
-        if (path == null || path.isEmpty() || "/".equals(path)) path = "index.html";
+        if (path == null || path.isEmpty() || "/".equals(path)) path = "/index.html";
         path = path.substring(1);
-        if (path.isEmpty() || path.contains("..")) path = "index.html";
+        if (path.endsWith("/")) path = path + "index.html";
+        if (path.isEmpty() || path.contains("..")) return null;
         InputStream is;
         try {
             is = getAssets().open("web/" + path);
