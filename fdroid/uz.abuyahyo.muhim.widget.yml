@@ -98,7 +98,7 @@ Builds:
       - yes
   - versionName: 1.15
     versionCode: 16
-    commit: c9126a0b
+    commit: 517d946a
     subdir: android/app
     gradle:
       - yes
