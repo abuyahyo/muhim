@@ -18,7 +18,7 @@ public class NextPrayerWidgetProvider extends BaseGlassWidgetProvider {
         for (int id : appWidgetIds) {
             double lat = WidgetPrefs.lat(context, id);
             double lon = WidgetPrefs.lon(context, id);
-            double[] values = timesArray(PrayerCalculator.calculate(now, lat, lon));
+            double[] values = timesArray(times(context, id, now, lat, lon));
             int next = nextIndex(values, nowHour(now));
             boolean light = WidgetPrefs.isLight(context, id);
 
@@ -30,7 +30,7 @@ public class NextPrayerWidgetProvider extends BaseGlassWidgetProvider {
             } else {
                 Calendar tomorrow = (Calendar) now.clone();
                 tomorrow.add(Calendar.DAY_OF_MONTH, 1);
-                time = PrayerCalculator.calculate(tomorrow, lat, lon).fajr;
+                time = times(context, id, tomorrow, lat, lon).fajr;
                 name = PRAYER_NAMES[0];
             }
 

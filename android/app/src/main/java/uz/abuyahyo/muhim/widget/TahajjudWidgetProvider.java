@@ -17,7 +17,7 @@ public class TahajjudWidgetProvider extends BaseGlassWidgetProvider {
         for (int id : appWidgetIds) {
             double lat = WidgetPrefs.lat(context, id);
             double lon = WidgetPrefs.lon(context, id);
-            double[] win = tahajjudWindow(now, lat, lon);
+            double[] win = tahajjudWindow(context, id, now, lat, lon);
             boolean light = WidgetPrefs.isLight(context, id);
 
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_tahajjud);

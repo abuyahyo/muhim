@@ -59,10 +59,20 @@ public class WidgetConfigActivity extends Activity {
 
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
+    private static final String[][] METHODS = {
+            {"MWL", "MWL"},
+            {"Egypt", "Миср"},
+            {"Karachi", "Карачи"},
+            {"Makkah", "Уммул Қуро"},
+            {"ISNA", "ISNA"}
+    };
+
     private String selectedCity;
     private double selectedLat;
     private double selectedLon;
     private boolean lightTheme;
+    private String selectedMethod;
+    private boolean selectedShafi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +93,8 @@ public class WidgetConfigActivity extends Activity {
         selectedLat = WidgetPrefs.lat(this, appWidgetId);
         selectedLon = WidgetPrefs.lon(this, appWidgetId);
         lightTheme = WidgetPrefs.isLight(this, appWidgetId);
+        selectedMethod = WidgetPrefs.method(this, appWidgetId);
+        selectedShafi = WidgetPrefs.isShafi(this, appWidgetId);
 
         setContentView(buildUi());
     }
@@ -153,9 +165,68 @@ public class WidgetConfigActivity extends Activity {
 
         LinearLayout themeRow = new LinearLayout(this);
         themeRow.setOrientation(LinearLayout.HORIZONTAL);
-        themeRow.setPadding(pad, 0, pad, pad);
+        themeRow.setPadding(pad, 0, pad, 0);
         themeRow.addView(themeButton("Қорамой", false));
         themeRow.addView(themeButton("Оқ", true));
+
+        TextView methodLabel = new TextView(this);
+        methodLabel.setText("Ҳисоблаш усули:");
+        methodLabel.setTextSize(14);
+        methodLabel.setTextColor(0xB3FFFFFF);
+        methodLabel.setPadding(pad, dp(16), pad, dp(4));
+
+        LinearLayout methodRow = new LinearLayout(this);
+        methodRow.setOrientation(LinearLayout.HORIZONTAL);
+        methodRow.setPadding(pad, 0, pad, 0);
+        for (final String[] m : METHODS) {
+            methodRow.addView(optionButton(m[1], m[0].equals(selectedMethod),
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            selectedMethod = m[0];
+                            setContentView(buildUi());
+                        }
+                    }));
+        }
+
+        TextView madhabLabel = new TextView(this);
+        madhabLabel.setText("Аср мазҳаби:");
+        madhabLabel.setTextSize(14);
+        madhabLabel.setTextColor(0xB3FFFFFF);
+        madhabLabel.setPadding(pad, dp(16), pad, dp(4));
+
+        LinearLayout madhabRow = new LinearLayout(this);
+        madhabRow.setOrientation(LinearLayout.HORIZONTAL);
+        madhabRow.setPadding(pad, 0, pad, 0);
+        madhabRow.addView(optionButton("Ҳанафий", !selectedShafi, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedShafi = false;
+                setContentView(buildUi());
+            }
+        }));
+        madhabRow.addView(optionButton("Шофеъий", selectedShafi, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedShafi = true;
+                setContentView(buildUi());
+            }
+        }));
+
+        Button save = new Button(this, null, android.R.attr.borderlessButtonStyle);
+        save.setText("✓ Сақлаш");
+        save.setAllCaps(false);
+        save.setTextSize(15);
+        save.setTypeface(Typeface.DEFAULT_BOLD);
+        save.setTextColor(0xFF7DD3FC);
+        save.setGravity(Gravity.CENTER);
+        save.setPadding(pad, dp(12), pad, dp(12));
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveAndFinish();
+            }
+        });
 
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
@@ -170,6 +241,11 @@ public class WidgetConfigActivity extends Activity {
         root.addView(scroll);
         root.addView(themeLabel);
         root.addView(themeRow);
+        root.addView(methodLabel);
+        root.addView(methodRow);
+        root.addView(madhabLabel);
+        root.addView(madhabRow);
+        root.addView(save);
 
         ScrollView outer = new ScrollView(this);
         outer.addView(root, new ViewGroup.LayoutParams(
@@ -281,8 +357,22 @@ public class WidgetConfigActivity extends Activity {
         android.widget.Toast.makeText(this, text, android.widget.Toast.LENGTH_SHORT).show();
     }
 
+    private Button optionButton(String label, boolean active, View.OnClickListener listener) {
+        Button b = new Button(this, null, android.R.attr.borderlessButtonStyle);
+        b.setText(active ? "✓ " + label : label);
+        b.setAllCaps(false);
+        b.setTextColor(active ? 0xFF7DD3FC : Color.WHITE);
+        b.setTypeface(active ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, dp(40), 1f);
+        lp.setMargins(dp(4), 0, dp(4), 0);
+        b.setLayoutParams(lp);
+        b.setOnClickListener(listener);
+        return b;
+    }
+
     private void saveAndFinish() {
-        WidgetPrefs.save(this, appWidgetId, selectedLat, selectedLon, selectedCity, lightTheme);
+        WidgetPrefs.save(this, appWidgetId, selectedLat, selectedLon, selectedCity,
+                lightTheme, selectedMethod, selectedShafi);
 
         AppWidgetManager mgr = AppWidgetManager.getInstance(this);
         AppWidgetProviderInfo info = mgr.getAppWidgetInfo(appWidgetId);

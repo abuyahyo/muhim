@@ -23,6 +23,9 @@ Vidjetni uy ekraniga qo'shganda **sozlash oynasi** ochiladi:
 - **📍 Менинг жойлашувим** — GPS/tarmoq orqali aniq joylashuv (shahar nomi Geocoder'dan)
 - **Shahar** — 21 O'zbekiston shahri + Мекка/Мадина (oflayn ro'yxat, koordinatalar bilan)
 - **Shisha rangi** — Қорамой yoki Оқ
+- **Ҳисоблаш усули** — MWL, Миср, Карачи, Уммул Қуро, ISNA (PWA'dagidek)
+- **Аср мазҳаби** — Ҳанафий yoki Шофеъий
+- **✓ Сақлаш** tugmasi bilan saqlanadi (shahar tanlash ham darhol saqlaydi)
 
 Har bir vidjet o'z sozlamasini alohida eslab qoladi. Vidjetni o'chirganda
 sozlamalar ham tozalanadi.
@@ -53,4 +56,3 @@ Vidjet qo'yish: uy ekranida bo'sh joyni bosib turib → Widgets → Муҳим �
 
 ## Kelajak uchun
 - Release imzolangan APK (Secrets orqali — yuqorida)
-- Vidjetda qo'shimcha sozlamalar (hisob usuli, Asr mazhabi)

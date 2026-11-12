@@ -40,13 +40,35 @@ final class WidgetPrefs {
         return THEME_LIGHT.equals(prefs(context).getString("theme_" + appWidgetId, THEME_DARK));
     }
 
+    static String method(Context context, int appWidgetId) {
+        return prefs(context).getString("method_" + appWidgetId, "MWL");
+    }
+
+    static boolean isShafi(Context context, int appWidgetId) {
+        return prefs(context).getBoolean("shafi_" + appWidgetId, false);
+    }
+
+    static PrayerCalculator.Options opts(Context context, int appWidgetId) {
+        PrayerCalculator.Options o;
+        switch (method(context, appWidgetId)) {
+            case "Egypt":   o = PrayerCalculator.Options.egypt(); break;
+            case "Karachi": o = PrayerCalculator.Options.karachi(); break;
+            case "Makkah":  o = PrayerCalculator.Options.makkah(); break;
+            case "ISNA":    o = PrayerCalculator.Options.isna(); break;
+            default:        o = PrayerCalculator.Options.mwl(); break;
+        }
+        return o.withMadhab(isShafi(context, appWidgetId));
+    }
+
     static void save(Context context, int appWidgetId, double lat, double lon,
-                     String city, boolean light) {
+                     String city, boolean light, String method, boolean shafi) {
         prefs(context).edit()
                 .putFloat("lat_" + appWidgetId, (float) lat)
                 .putFloat("lon_" + appWidgetId, (float) lon)
                 .putString("city_" + appWidgetId, city)
                 .putString("theme_" + appWidgetId, light ? THEME_LIGHT : THEME_DARK)
+                .putString("method_" + appWidgetId, method)
+                .putBoolean("shafi_" + appWidgetId, shafi)
                 .apply();
     }
 
@@ -56,6 +78,8 @@ final class WidgetPrefs {
                 .remove("lon_" + appWidgetId)
                 .remove("city_" + appWidgetId)
                 .remove("theme_" + appWidgetId)
+                .remove("method_" + appWidgetId)
+                .remove("shafi_" + appWidgetId)
                 .apply();
     }
 }

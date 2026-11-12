@@ -30,7 +30,31 @@ public final class PrayerCalculator {
     private static final double FAJR_ANGLE = 18.0;
     private static final double ISHA_ANGLE = 17.0;
     private static final double SUNRISE_ANGLE = 0.833;
-    private static final int ASR_FACTOR = 2; // Hanafiy
+
+    // Hisoblash usuli — PWA'dagi METHODS bilan bir xil.
+    public static final class Options {
+        public final double fajrAngle;
+        public final double ishaAngle;
+        public final boolean ishaMinutes; // Ummul Quro: isha = maghrib + N daqiqa
+        public final double asrFactor;    // Hanafiy = 2, Shofiy = 1
+
+        private Options(double fajrAngle, double ishaAngle, boolean ishaMinutes, double asrFactor) {
+            this.fajrAngle = fajrAngle;
+            this.ishaAngle = ishaAngle;
+            this.ishaMinutes = ishaMinutes;
+            this.asrFactor = asrFactor;
+        }
+
+        public static Options mwl()      { return new Options(18.0, 17.0, false, 2); }
+        public static Options egypt()    { return new Options(19.5, 17.5, false, 2); }
+        public static Options karachi()  { return new Options(18.0, 18.0, false, 2); }
+        public static Options makkah()   { return new Options(18.5, 90.0, true, 2); }
+        public static Options isna()     { return new Options(15.0, 15.0, false, 2); }
+
+        public Options withMadhab(boolean shafi) {
+            return new Options(fajrAngle, ishaAngle, ishaMinutes, shafi ? 1 : 2);
+        }
+    }
 
     private static double dToR(double d) { return d * Math.PI / 180.0; }
     private static double rToD(double r) { return r * 180.0 / Math.PI; }
@@ -84,13 +108,19 @@ public final class PrayerCalculator {
         return ccw ? -t : t;
     }
 
-    private static double asrTime(double lat, double decl) {
-        double angle = -acotD(ASR_FACTOR + tanD(Math.abs(lat - decl)));
+    private static double asrTime(double lat, double decl, double asrFactor) {
+        double angle = -acotD(asrFactor + tanD(Math.abs(lat - decl)));
         return sunAngleTime(angle, lat, decl, false);
     }
 
     // date — mahalliy kalendar kuni (soat maydonlari e'tiborga olinmaydi).
+    // opts == null bulsa — MWL + Hanafiy.
     public static Times calculate(java.util.Calendar date, double lat, double lon) {
+        return calculate(date, lat, lon, null);
+    }
+
+    public static Times calculate(java.util.Calendar date, double lat, double lon, Options opts) {
+        if (opts == null) opts = Options.mwl();
         long offsetMillis = date.get(java.util.Calendar.ZONE_OFFSET)
                 + date.get(java.util.Calendar.DST_OFFSET);
         double tz = offsetMillis / 3600000.0;
@@ -104,12 +134,14 @@ public final class PrayerCalculator {
         double eqt = sun[1];
 
         double dhuhr = 12.0 - eqt - lon / 15.0 + tz;
-        double fajr = dhuhr + sunAngleTime(FAJR_ANGLE, lat, decl, true);
+        double fajr = dhuhr + sunAngleTime(opts.fajrAngle, lat, decl, true);
         double sunrise = dhuhr + sunAngleTime(SUNRISE_ANGLE, lat, decl, true);
-        double asr = dhuhr + asrTime(lat, decl);
+        double asr = dhuhr + asrTime(lat, decl, opts.asrFactor);
         double sunset = dhuhr + sunAngleTime(SUNRISE_ANGLE, lat, decl, false);
         double maghrib = sunset;
-        double isha = dhuhr + sunAngleTime(ISHA_ANGLE, lat, decl, false);
+        double isha = opts.ishaMinutes
+                ? maghrib + opts.ishaAngle / 60.0
+                : dhuhr + sunAngleTime(opts.ishaAngle, lat, decl, false);
 
         return new Times(fajr, sunrise, dhuhr, asr, maghrib, isha);
     }
