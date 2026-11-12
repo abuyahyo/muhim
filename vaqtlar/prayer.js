@@ -132,5 +132,14 @@
     return { start: lastThirdStart, end: t2.fajr };
   }
 
-  return { calculate, tahajjudWindow, METHODS };
+  // Joylashuvga qarab eng munosib usul ("Auto" rejimi).
+  function autoMethod(lat, lon) {
+    if (lat >= 12 && lat <= 33 && lon >= 34 && lon <= 60) return 'Makkah';
+    if (lat >= 20 && lat <= 32 && lon >= 24 && lon <= 37) return 'Egypt';
+    if (lat >= 24 && lat <= 72 && lon >= -130 && lon <= -60) return 'ISNA';
+    if (lat >= 5 && lat <= 37 && lon >= 60 && lon <= 92) return 'Karachi';
+    return 'MWL';
+  }
+
+  return { calculate, tahajjudWindow, autoMethod, METHODS };
 }));

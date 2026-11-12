@@ -112,4 +112,5 @@
     <string name="config_bg_gradient">Gradient</string>
     <string name="config_color1">Color 1 (base)</string>
     <string name="config_color2">Color 2 (gradient end)</string>
+    <string name="method_auto">Auto</string>
 </resources>

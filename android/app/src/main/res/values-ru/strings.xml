@@ -112,4 +112,5 @@
     <string name="config_bg_gradient">Градиент</string>
     <string name="config_color1">Цвет 1 (основной)</string>
     <string name="config_color2">Цвет 2 (конец градиента)</string>
+    <string name="method_auto">Автоматически</string>
 </resources>

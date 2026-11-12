@@ -112,4 +112,5 @@
     <string name="config_bg_gradient">Gradient</string>
     <string name="config_color1">1-rang (asos)</string>
     <string name="config_color2">2-rang (gradient uchi)</string>
+    <string name="method_auto">Автоматик</string>
 </resources>

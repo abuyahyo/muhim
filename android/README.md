@@ -18,7 +18,9 @@ oynasi ochiladi. Fon bo'limida:
 - **Shisha** (standart glassmorphism) / **Bir rang** / **Gradient**
 - **1-rang** va **2-rang** — 8 ta rangdan tanlash (gradient uchi)
 
-Har vidjet o'z fonini alohida eslab qoladi. Blur faqat Samsung'da mumkin —
+Har vidjet o'z fonini alohida eslab qoladi. Hisoblash usulida **"Автоматик"** (standart) —
+joylashuvga qarab eng munosibi tanlanadi (Saudiya → Уммул Қуро, Миср → Миср,
+Janubiy Osiyo → Карачи, Shimoliy Amerika → ISNA, qolganlari → MWL). Blur faqat Samsung'da mumkin —
 umumiy emas, shuning uchun kiritilmadi.
 
 ## Sajda uslubidagi yangiliklar (v1.12+)

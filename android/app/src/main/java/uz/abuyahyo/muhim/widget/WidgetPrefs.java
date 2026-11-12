@@ -81,7 +81,7 @@ final class WidgetPrefs {
     }
 
     static String method(Context context, int appWidgetId) {
-        return prefs(context).getString("method_" + appWidgetId, "MWL");
+        return prefs(context).getString("method_" + appWidgetId, "Auto");
     }
 
     static boolean isShafi(Context context, int appWidgetId) {
@@ -89,8 +89,12 @@ final class WidgetPrefs {
     }
 
     static PrayerCalculator.Options opts(Context context, int appWidgetId) {
+        String m = method(context, appWidgetId);
+        if ("Auto".equals(m)) {
+            m = autoMethodId(lat(context, appWidgetId), lon(context, appWidgetId));
+        }
         PrayerCalculator.Options o;
-        switch (method(context, appWidgetId)) {
+        switch (m) {
             case "Egypt":   o = PrayerCalculator.Options.egypt(); break;
             case "Karachi": o = PrayerCalculator.Options.karachi(); break;
             case "Makkah":  o = PrayerCalculator.Options.makkah(); break;
@@ -98,6 +102,15 @@ final class WidgetPrefs {
             default:        o = PrayerCalculator.Options.mwl(); break;
         }
         return o.withMadhab(isShafi(context, appWidgetId));
+    }
+
+    // Joylashuvga qarab eng munosib hisoblash usuli ("Auto" rejimi).
+    private static String autoMethodId(double lat, double lon) {
+        if (lat >= 12 && lat <= 33 && lon >= 34 && lon <= 60) return "Makkah";
+        if (lat >= 20 && lat <= 32 && lon >= 24 && lon <= 37) return "Egypt";
+        if (lat >= 24 && lat <= 72 && lon >= -130 && lon <= -60) return "ISNA";
+        if (lat >= 5 && lat <= 37 && lon >= 60 && lon <= 92) return "Karachi";
+        return "MWL";
     }
 
     static void save(Context context, int appWidgetId, double lat, double lon,
