@@ -90,3 +90,9 @@ Builds:
     subdir: android/app
     gradle:
       - yes
+  - versionName: 1.14
+    versionCode: 15
+    commit: bd3b95be
+    subdir: android/app
+    gradle:
+      - yes

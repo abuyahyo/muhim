@@ -28,11 +28,21 @@
     } catch (e) {}
     return defaults();
   }
+  // "Auto" usuli — joylashuvga qarab eng munosibi tanlanadi.
+  function currentOpts(loc) {
+    return {
+      madhab: settings.madhab,
+      method: settings.method === 'Auto'
+        ? PrayerTimes.autoMethod(loc.lat, loc.lon)
+        : settings.method
+    };
+  }
+
   function saveSettings(s) {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch (e) {}
   }
   function defaults() {
-    return { madhab: 'Hanafi', method: 'MWL', location: null };
+    return { madhab: 'Hanafi', method: 'Auto', location: null };
   }
   let settings = loadSettings();
 
@@ -88,7 +98,7 @@
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const tomorrow = new Date(today); tomorrow.setDate(today.getDate() + 1);
 
-    const opts = { madhab: settings.madhab, method: settings.method };
+    const opts = currentOpts(loc);
     const times = PrayerTimes.calculate(today, loc.lat, loc.lon, opts);
     const tomTimes = PrayerTimes.calculate(tomorrow, loc.lat, loc.lon, opts);
     const tahajjud = PrayerTimes.tahajjudWindow(today, loc.lat, loc.lon, opts);
@@ -217,6 +227,7 @@
     html += '<label class="setting-label">' + tr('Ҳисоблаш усули') + '</label>';
     html += '<div class="setting-options">';
     const methods = [
+      { id: 'Auto', label: tr('Автоматик') },
       { id: 'MWL', label: 'MWL' },
       { id: 'Egypt', label: tr('Миср') },
       { id: 'Karachi', label: tr('Карачи') },
@@ -279,7 +290,7 @@
     let prayerTime = null;
     if (kind !== 'spiritual') {
       const loc = settings.location || DEFAULT_LOC;
-      const opts = { madhab: settings.madhab, method: settings.method };
+      const opts = currentOpts(loc);
       const t = PrayerTimes.calculate(new Date(), loc.lat, loc.lon, opts);
       prayerTime = t[p.id];
     }
@@ -310,7 +321,7 @@
 
     if (p.id === 'azkar') {
       const loc = settings.location || DEFAULT_LOC;
-      const opts = { madhab: settings.madhab, method: settings.method };
+      const opts = currentOpts(loc);
       const t = PrayerTimes.calculate(new Date(), loc.lat, loc.lon, opts);
       // Эрталабки: Бомдоддан Зуҳо бошланишига қадар (қуёш чиқишидан +20 дақиқа).
       const morningEnd = new Date(t.sunrise.getTime() + 20 * 60 * 1000);
@@ -330,7 +341,7 @@
 
     if (p.id === 'duha') {
       const loc = settings.location || DEFAULT_LOC;
-      const opts = { madhab: settings.madhab, method: settings.method };
+      const opts = currentOpts(loc);
       const t = PrayerTimes.calculate(new Date(), loc.lat, loc.lon, opts);
       // Зуҳо ойнаси: қуёш чиқишидан +20 дақиқадан Пешиндан -5 дақиқагача.
       const dStart = new Date(t.sunrise.getTime() + 20 * 60 * 1000);
@@ -347,7 +358,7 @@
 
     if (p.id === 'tahajjud') {
       const loc = settings.location || DEFAULT_LOC;
-      const opts = { madhab: settings.madhab, method: settings.method };
+      const opts = currentOpts(loc);
       const today = new Date();
       const tomorrow = new Date(today); tomorrow.setDate(today.getDate() + 1);
       const tToday = PrayerTimes.calculate(today, loc.lat, loc.lon, opts);
@@ -371,7 +382,7 @@
 
     if (p.id === 'sahar') {
       const loc = settings.location || DEFAULT_LOC;
-      const opts = { madhab: settings.madhab, method: settings.method };
+      const opts = currentOpts(loc);
       const t = PrayerTimes.calculate(new Date(), loc.lat, loc.lon, opts);
       html += '<section class="detail-block"><div class="block-title">' + tr('Бугунги вақтлар') + '</div>';
       html += '<div class="ramadan-pair">';

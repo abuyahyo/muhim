@@ -37,10 +37,11 @@ public class WidgetConfigActivity extends Activity {
 
     private static final int PERMISSION_LOCATION = 1;
 
-    private static final String[] METHOD_IDS = {"MWL", "Egypt", "Karachi", "Makkah", "ISNA"};
+    private static final String[] METHOD_IDS = {
+            "Auto", "MWL", "Egypt", "Karachi", "Makkah", "ISNA"};
     private static final int[] METHOD_LABELS = {
-            R.string.method_mwl, R.string.method_egypt, R.string.method_karachi,
-            R.string.method_makkah, R.string.method_isna
+            R.string.method_auto, R.string.method_mwl, R.string.method_egypt,
+            R.string.method_karachi, R.string.method_makkah, R.string.method_isna
     };
 
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;

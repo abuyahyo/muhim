@@ -1,0 +1,1 @@
+"Auto" calculation method — the most suitable one is chosen by location (web and widgets)
