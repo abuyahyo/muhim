@@ -357,6 +357,17 @@ public class WidgetConfigActivity extends Activity {
         finish();
     }
 
+    private Drawable glassBackground() {
+        GradientDrawable base = new GradientDrawable();
+        base.setColor(0xE60B1220);
+        base.setCornerRadius(dp(20));
+        GradientDrawable border = new GradientDrawable();
+        border.setColor(Color.TRANSPARENT);
+        border.setCornerRadius(dp(20));
+        border.setStroke(dp(1), 0x26FFFFFF);
+        return new LayerDrawable(new Drawable[] { base, border });
+    }
+
     private int dp(int v) {
         return Math.round(v * getResources().getDisplayMetrics().density);
     }

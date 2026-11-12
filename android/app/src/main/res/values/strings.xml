@@ -39,6 +39,15 @@
     <string name="config_no_location">Жойлашув топилмади — GPS\'ни ёқиб, қайта уриниб кўринг</string>
     <string name="config_my_place">Менинг жойим</string>
 
+    <string-array name="prayer_names">
+        <item>Бомдод</item>
+        <item>Қуёш</item>
+        <item>Пешин</item>
+        <item>Аср</item>
+        <item>Шом</item>
+        <item>Хуфтон</item>
+    </string-array>
+
     <string-array name="greg_months">
         <item>Январь</item><item>Февраль</item><item>Март</item><item>Апрель</item>
         <item>Май</item><item>Июнь</item><item>Июль</item><item>Август</item>

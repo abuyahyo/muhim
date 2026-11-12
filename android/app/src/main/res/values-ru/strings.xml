@@ -39,6 +39,15 @@
     <string name="config_no_location">Местоположение не найдено — включите GPS и попробуйте снова</string>
     <string name="config_my_place">Моё место</string>
 
+    <string-array name="prayer_names">
+        <item>Фаджр</item>
+        <item>Восход</item>
+        <item>Зухр</item>
+        <item>Аср</item>
+        <item>Магриб</item>
+        <item>Иша</item>
+    </string-array>
+
     <string-array name="greg_months">
         <item>Январь</item><item>Февраль</item><item>Март</item><item>Апрель</item>
         <item>Май</item><item>Июнь</item><item>Июль</item><item>Август</item>

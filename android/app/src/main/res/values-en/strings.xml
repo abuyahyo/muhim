@@ -39,6 +39,15 @@
     <string name="config_no_location">Location not found — enable GPS and try again</string>
     <string name="config_my_place">My place</string>
 
+    <string-array name="prayer_names">
+        <item>Fajr</item>
+        <item>Sunrise</item>
+        <item>Dhuhr</item>
+        <item>Asr</item>
+        <item>Maghrib</item>
+        <item>Isha</item>
+    </string-array>
+
     <string-array name="greg_months">
         <item>January</item><item>February</item><item>March</item><item>April</item>
         <item>May</item><item>June</item><item>July</item><item>August</item>
