@@ -37,6 +37,10 @@
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
+  /* Android Chrome: tez ikki marta bosilganda sahifa zoom bo'lmasin
+   (fixed nav ham kattalashib, yorliq "kattalashgandek" ko'rinardi). */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transition: var(--t-fast, color 0.2s, background-color 0.2s);
   font-family: inherit;
   white-space: nowrap;
