@@ -48,3 +48,9 @@ Builds:
     subdir: android/app
     gradle:
       - yes
+  - versionName: 1.7
+    versionCode: 8
+    commit: d49bc21ed3d3b1ca0db73ad524110b0bbdcdc902
+    subdir: android/app
+    gradle:
+      - yes

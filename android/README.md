@@ -31,6 +31,11 @@ Vidjetni uy ekraniga qo'shganda **sozlash oynasi** ochiladi:
 Har bir vidjet o'z sozlamasini alohida eslab qoladi. Vidjetni o'chirganda
 sozlamalar ham tozalanadi.
 
+Tilni vidjet qo'shmasdan ham o'zgartirish mumkin: ilova ro'yxatida
+(app drawer) **Муҳим виджет**'ni oching — alohida til sozlamalar oynasi
+chiquvchi (Тизим / O'zbek / Русский / English), tanlash bilan barcha
+vidjetlar darhol yangilanadi.
+
 ## Umumiy
 - Har 30 daqiqada + sana/soat o'zgarganda avtomatik yangilanadi
 - Bosilganda web-saytning Вақтлар bo'limi ochiladi

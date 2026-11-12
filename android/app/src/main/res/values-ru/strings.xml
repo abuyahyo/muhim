@@ -24,6 +24,8 @@
     <string name="config_lang_uz">O\'zbek</string>
     <string name="config_lang_ru">Русский</string>
     <string name="config_lang_en">English</string>
+    <string name="settings_title">Язык</string>
+    <string name="settings_note">Выбранный язык применяется ко всем виджетам.</string>
 
     <string name="config_title">Настройки виджета</string>
     <string name="config_pick_city">Выберите город:</string>
