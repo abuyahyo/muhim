@@ -178,11 +178,28 @@
     }
   };
 
+  function androidLang() {
+    try {
+      var a = window.MuhimAndroid;
+      if (a && a.lang) {
+        var l = a.lang();
+        if (l && l !== 'system') return l;
+      }
+    } catch (e) {}
+    return null;
+  }
+
   function lang() {
+    var al = androidLang();
+    if (al) return al;
     try { return localStorage.getItem(LANG_KEY) || 'uz'; } catch (e) { return 'uz'; }
   }
 
   function setLang(l) {
+    try {
+      var a = window.MuhimAndroid;
+      if (a && a.saveLang) a.saveLang(l);
+    } catch (e) {}
     try { localStorage.setItem(LANG_KEY, l); } catch (e) {}
     location.reload();
   }

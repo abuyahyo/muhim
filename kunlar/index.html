@@ -53,7 +53,7 @@
 // PWA / Service Worker регистрацияси + янги версия banner.
 // SW кейинги версияни топса, фойдаланувчига кичкина banner кўрсатилади.
 // Banner босилса skipWaiting() ишга тушади ва саҳифа янгиланади.
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && !window.MuhimAndroid) {
   window.addEventListener('load', function () {
     navigator.serviceWorker.register('../sw.js').then(function (reg) {
       reg.addEventListener('updatefound', function () {

@@ -126,7 +126,7 @@ abstract class BaseGlassWidgetProvider extends AppWidgetProvider {
     static PendingIntent siteIntent(Context context) {
         return PendingIntent.getActivity(
                 context, 0,
-                new Intent(Intent.ACTION_VIEW, Uri.parse(SITE_URL)),
+                new Intent(context, MainActivity.class),
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
     }
 

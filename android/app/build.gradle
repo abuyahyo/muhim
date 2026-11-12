@@ -10,8 +10,8 @@ android {
         applicationId 'uz.abuyahyo.muhim.widget'
         minSdk 21
         targetSdk 34
-        versionCode 8
-        versionName '1.7'
+        versionCode 9
+        versionName '1.8'
     }
 
     // Ixtiyoriy imzolash: CI'da APK_KEYSTORE_BASE64, APK_KEYSTORE_PASSWORD,
@@ -45,4 +45,28 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+
+    sourceSets {
+        main {
+            assets.srcDirs += layout.buildDirectory.dir('generated/webAssets')
+        }
+    }
 }
+
+// Web ilovani (PWA) APK assets ichiga bundle qilish — gibrid WebView ilova
+// oflayn ishlashi uchun. Repo ildizidan kerakli fayllar nusxalanadi.
+def webFiles = [
+        'i18n.js', 'content-i18n.js', 'shared.js', 'theme.css', 'nav.css',
+        'index.html', 'manifest.json', 'favicon-32.png', 'icon-512.png',
+        'apple-touch-icon.png', 'install-banner.js'
+]
+tasks.register('syncWebAssets', Copy) {
+    from(rootDir.parentFile) {
+        webFiles.each { f -> it.include f }
+        include 'vaqtlar/**'
+        include 'kunlar/**'
+        include 'joylar/**'
+    }
+    into layout.buildDirectory.dir('generated/webAssets/web')
+}
+preBuild.dependsOn 'syncWebAssets'
