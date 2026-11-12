@@ -5,15 +5,15 @@
 (function () {
   'use strict';
 
-  const {
-    hijriMonths,
-    gregorianMonths,
-    gregorianMonthsShort,
-    weekDays,
-    weekDaysFull,
-    importantDays
-  } = AppData;
+  const { importantDays } = AppData;
   const { escapeHtml, currentMood, renderQuoteList } = MuhimShared;
+  const I = window.MuhimI18N;
+  const tr = I.t;
+  const hijriMonths = I.arr('hijriMonths');
+  const gregorianMonths = I.arr('gregorianMonths');
+  const gregorianMonthsShort = I.arr('gregorianMonthsShort');
+  const weekDays = I.arr('weekDays');
+  const weekDaysFull = I.arr('weekDaysFull');
 
   const { gregorianToHijri, hijriToGregorian, hijriMonthLength } = HijriCalc;
 
@@ -67,9 +67,9 @@
   // Карточкадаги тег матни ва унга мос CSS синфи. Олдин 'байрам/муҳим'
   // ёзиларди — энди такрор-частотага ўтилди.
   function freqLabel(day) {
-    if (day.frequency === 'weekly') return 'Ҳар ҳафта';
-    if (day.frequency === 'monthly') return 'Ҳар ой';
-    return 'Ҳар йил';
+    if (day.frequency === 'weekly') return tr('Ҳар ҳафта');
+    if (day.frequency === 'monthly') return tr('Ҳар ой');
+    return tr('Ҳар йил');
   }
 
   // === ИЗОҲ ===
@@ -77,7 +77,7 @@
   // тугма ҳолатида туради, босилгач кенгаяди.
   function renderCommentary(text) {
     if (!text) return '';
-    return '<details class="commentary"><summary>Изоҳ</summary>'
+    return '<details class="commentary"><summary>' + tr('Изоҳ') + '</summary>'
          + '<div class="commentary-body">' + escapeHtml(text) + '</div>'
          + '</details>';
   }
@@ -135,9 +135,9 @@
   }
 
   function dayCountdown(d) {
-    if (d.daysLeft === 0) return { num: '0', label: 'Бугун' };
-    if (d.daysLeft === 1) return { num: '1', label: 'Эртага' };
-    return { num: d.daysLeft, label: 'кун қолди' };
+    if (d.daysLeft === 0) return { num: '0', label: tr('Бугун') };
+    if (d.daysLeft === 1) return { num: '1', label: tr('Эртага') };
+    return { num: d.daysLeft, label: tr('кун қолди') };
   }
 
   // Битта кун карточкаси — ном + сана + саноқ.
@@ -145,7 +145,7 @@
     const cd = dayCountdown(d);
     let h = '<button class="upcoming-card" style="--up-tint:' + d.color + ';" onclick="showDay(\'' + escapeHtml(d.id) + '\')">';
     h += '<div class="upcoming-info">';
-    h += '<div class="upcoming-name">' + escapeHtml(d.name) + '</div>';
+    h += '<div class="upcoming-name">' + escapeHtml(tr(d.name)) + '</div>';
     h += '<div class="upcoming-short">' + dayDateLine(d) + '</div>';
     h += '</div>';
     h += '<div class="upcoming-countdown">';
@@ -202,21 +202,22 @@
 
     html += '<header class="page-head">';
     html += '<div class="page-eyebrow">Муҳим</div>';
-    html += '<h1 class="page-title">Кунлар</h1>';
+    html += window.MuhimI18N.switcherHtml();
+    html += '<h1 class="page-title">' + tr('Кунлар') + '</h1>';
     html += '</header>';
 
     html += '<section class="hero hero--' + currentMood() + '">';
     html += '<div class="hero-stars">' + STARS_HTML + '</div>';
     html += '<div class="hero-content">';
-    html += '<div class="hero-label"><span class="live-dot"></span><span>Бугунги сана</span></div>';
+    html += '<div class="hero-label"><span class="live-dot"></span><span>' + tr('Бугунги сана') + '</span></div>';
     html += '<div class="hero-grid">';
     html += '<div class="hijri-main">';
     html += '<div class="hijri-day">' + hijri.day + '</div>';
     html += '<div class="hijri-month">' + escapeHtml(hijriMonths[hijri.month - 1]) + '</div>';
-    html += '<div class="hijri-year">' + hijri.year + ' ҳижрий</div>';
+    html += '<div class="hijri-year">' + hijri.year + tr(' ҳижрий') + '</div>';
     html += '</div>';
     html += '<div class="gregorian-box">';
-    html += '<div class="gregorian-label">Милодий</div>';
+    html += '<div class="gregorian-label">' + tr('Милодий') + '</div>';
     html += '<div class="gregorian-date">' + today.getDate() + ' ' + escapeHtml(gregorianMonths[today.getMonth()]) + '</div>';
     html += '<div class="gregorian-week">' + escapeHtml(weekDaysFull[today.getDay()]) + ' · ' + today.getFullYear() + '</div>';
     html += '</div>';
@@ -229,13 +230,13 @@
     });
     if (upcomingDays.length) {
       html += '<section class="upcoming">';
-      html += '<div class="upcoming-eyebrow">Яқинлашаётган кунлар</div>';
+      html += '<div class="upcoming-eyebrow">' + tr('Яқинлашаётган кунлар') + '</div>';
       html += '<div class="upcoming-list">';
       for (let i = 0; i < upcomingDays.length; i++) html += dayCardHtml(upcomingDays[i]);
       html += '</div></section>';
     }
 
-    if (recurring.length) html += renderDayGrid('Ҳар ҳафта · Ой', 'Такрорий кунлар', recurring);
+    if (recurring.length) html += renderDayGrid(tr('Ҳар ҳафта · Ой'), tr('Такрорий кунлар'), recurring);
 
     html += '</div>';
 
@@ -255,11 +256,11 @@
 
     let html = '<div class="fade-in detail-wrap mood--' + currentMood() + '">';
     html += '<div class="detail-topbar">';
-    html += '<button class="back-btn" onclick="goBack()">← Орқага</button>';
+    html += '<button class="back-btn" onclick="goBack()">' + tr('← Орқага') + '</button>';
     html += '<div class="detail-actions">';
     const hasShareContent = !!day.note || (day.verses && day.verses.length) || (day.hadiths && day.hadiths.length);
     if (hasShareContent) {
-      html += '<button class="share-btn" onclick="shareDaySheet(\'' + escapeHtml(day.id) + '\')" aria-label="Расмлар тўплами" title="Тўлиқ маълумотли расмлар тўплами">';
+      html += '<button class="share-btn" onclick="shareDaySheet(\'' + escapeHtml(day.id) + '\')" aria-label="' + tr('Расмлар тўплами') + '" title="' + tr('Тўлиқ маълумотли расмлар тўплами') + '">';
       html += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
       html += '<rect x="6" y="2" width="16" height="16" rx="2"/>';
       html += '<circle cx="12" cy="8" r="2"/>';
@@ -267,7 +268,7 @@
       html += '<path d="M18 22H4a2 2 0 0 1-2-2V6"/>';
       html += '</svg></button>';
     }
-    html += '<button class="share-btn" onclick="shareDay(\'' + escapeHtml(day.id) + '\')" aria-label="Улашиш" title="Улашиш">';
+    html += '<button class="share-btn" onclick="shareDay(\'' + escapeHtml(day.id) + '\')" aria-label="' + tr('Улашиш') + '" title="' + tr('Улашиш') + '">';
     html += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
     html += '<path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>';
     html += '<polyline points="16 6 12 2 8 6"/>';
@@ -279,20 +280,20 @@
     html += '<div class="detail-hero">';
     html += '<div class="detail-content">';
     html += '<span class="detail-cat">' + escapeHtml(freqLabel(day)) + '</span>';
-    html += '<div class="detail-name">' + escapeHtml(day.name) + '</div>';
+    html += '<div class="detail-name">' + escapeHtml(tr(day.name)) + '</div>';
     html += '<div class="detail-dates">';
 
     // Ҳижрий ёки такрорлик ёзуви (частотага қараб)
     let leftLabel, leftValue;
     if (day.frequency === 'weekly') {
-      leftLabel = 'Ҳафталик';
+      leftLabel = tr('Ҳафталик');
       const dows = day.weekDays || [day.weekDay];
-      leftValue = dows.map(function (d) { return escapeHtml(weekDaysFull[d]); }).join(' ва ');
+      leftValue = dows.map(function (d) { return escapeHtml(weekDaysFull[d]); }).join(tr(' ва '));
     } else if (day.frequency === 'monthly') {
-      leftLabel = 'Ҳар ҳижрий ой';
-      leftValue = day.hDays.join(', ') + '-куни';
+      leftLabel = tr('Ҳар ҳижрий ой');
+      leftValue = day.hDays.join(', ') + tr('-куни');
     } else {
-      leftLabel = 'Ҳижрий';
+      leftLabel = tr('Ҳижрий');
       leftValue = day.hDay + ' ' + escapeHtml(hijriMonths[day.hMonth - 1]);
     }
     html += '<div class="detail-date-block">';
@@ -301,7 +302,7 @@
     html += '</div>';
 
     // Кейинги — гар частота учун
-    const rightLabel = day.frequency ? 'Кейинги' : 'Милодий';
+    const rightLabel = day.frequency ? tr('Кейинги') : tr('Милодий');
     html += '<div class="detail-date-block">';
     html += '<div class="detail-date-label">' + rightLabel + '</div>';
     html += '<div class="detail-date-value">' + gDate.getDate() + ' ' + escapeHtml(gregorianMonths[gDate.getMonth()]) + ' ' + gDate.getFullYear() + '</div>';
@@ -311,7 +312,7 @@
     // фақат йиллик ва ойлик кунларга қўшилади (кўрсатилаётган санага кўра).
     if (day.frequency !== 'weekly') {
       html += '<div class="detail-date-block">';
-      html += '<div class="detail-date-label">Ҳафта куни</div>';
+      html += '<div class="detail-date-label">' + tr('Ҳафта куни') + '</div>';
       html += '<div class="detail-date-value">' + escapeHtml(weekDaysFull[gDate.getDay()]) + '</div>';
       html += '</div>';
     }
@@ -319,14 +320,14 @@
 
     if (day.description) {
       html += '<div class="detail-block">';
-      html += '<div class="detail-block-label">Кун ҳақида</div>';
+      html += '<div class="detail-block-label">' + tr('Кун ҳақида') + '</div>';
       html += '<div class="detail-text">' + escapeHtml(day.description) + '</div>';
       html += '</div>';
     }
 
     if (day.note) {
       html += '<div class="detail-block">';
-      html += '<div class="detail-block-label">' + escapeHtml(day.noteTitle || 'Илмий шарҳ') + '</div>';
+      html += '<div class="detail-block-label">' + escapeHtml(day.noteTitle || tr('Илмий шарҳ')) + '</div>';
       html += '<div class="detail-text">' + escapeHtml(day.note) + '</div>';
       html += '</div>';
     }
@@ -335,7 +336,7 @@
     // (масалан Мавлуд каби, бу кунга оид Қуръон ояти йўқлиги аниқ бўлганда).
     // Оятлар — фақат мавжуд бўлганда кўрсатилади (бўш бўлса бўлим чиқмайди).
     if (day.verses && day.verses.length) {
-    html += '<div style="margin: 28px 0 16px;"><div class="section-title" style="font-size:22px;">Қуръон оятлари</div></div>';
+    html += '<div style="margin: 28px 0 16px;"><div class="section-title" style="font-size:22px;">' + tr('Қуръон оятлари') + '</div></div>';
       html += renderQuoteList(day.verses, function (verse) {
         let card = '<div class="detail-block">';
         if (verse.arabic) card += '<div class="arabic" style="font-size:26px;text-align:right;line-height:1.9;margin-bottom:16px;color:var(--ink);" dir="rtl">' + escapeHtml(verse.arabic) + '</div>';
@@ -349,7 +350,7 @@
 
     // Ҳадислар — фақат мавжуд бўлганда кўрсатилади.
     if (day.hadiths && day.hadiths.length) {
-    html += '<div style="margin: 28px 0 16px;"><div class="section-title" style="font-size:22px;">Саҳиҳ ҳадислар</div></div>';
+    html += '<div style="margin: 28px 0 16px;"><div class="section-title" style="font-size:22px;">' + tr('Саҳиҳ ҳадислар') + '</div></div>';
       html += renderQuoteList(day.hadiths, function (hadith) {
         let card = '<div class="detail-block">';
         card += '<div class="detail-block-label">' + escapeHtml(hadith.source) + '</div>';
@@ -420,8 +421,8 @@
     html += '<section class="moon-card">';
     html += '<div class="moon-card-art">' + moonPhaseSVG(phaseNow) + '</div>';
     html += '<div class="moon-card-body">';
-    html += '<div class="moon-card-eyebrow">Бугунги ой фазаси</div>';
-    html += '<div class="moon-card-illum">Ёритилиш — ' + illumPct + '%</div>';
+    html += '<div class="moon-card-eyebrow">' + tr('Бугунги ой фазаси') + '</div>';
+    html += '<div class="moon-card-illum">' + tr('Ёритилиш — ') + illumPct + '%</div>';
     html += '</div>';
     html += '</section>';
 
@@ -432,12 +433,12 @@
          + '">';
     html += '<div class="cal-top">';
     html += '<div class="cal-title-block">';
-    html += '<div class="cal-eyebrow">Ҳижрий тақвим</div>';
+    html += '<div class="cal-eyebrow">' + tr('Ҳижрий тақвим') + '</div>';
     html += '<div class="cal-month-name">' + escapeHtml(hijriMonths[hMonth - 1]) + '</div>';
-    html += '<div class="cal-year">' + hYear + ' ҳижрий йил</div>';
+    html += '<div class="cal-year">' + hYear + tr(' ҳижрий йил') + '</div>';
     html += '</div>';
     html += '<div class="cal-controls">';
-    html += '<select class="cal-picker" aria-label="Ой танлаш" onchange="calJumpMonth(this.value)">';
+    html += '<select class="cal-picker" aria-label="' + tr('Ой танлаш') + '" onchange="calJumpMonth(this.value)">';
     for (let mi = 1; mi <= 12; mi++) {
       html += '<option value="' + mi + '"' + (mi === hMonth ? ' selected' : '') + '>'
            + escapeHtml(hijriMonths[mi - 1]) + '</option>';
@@ -498,16 +499,16 @@
     html +=   '<button class="cal-greg-toggle' + (showGregDays ? ' is-on' : '') + '" '
          +         'onclick="toggleGregDays()" '
          +         'aria-pressed="' + showGregDays + '" '
-         +         'title="Ҳужайрада Милодий рақамни кўрсатиш/беркитиш">';
+         +         'title="' + tr('Ҳужайрада Милодий рақамни кўрсатиш/беркитиш') + '">';
     html +=     '<span class="cal-greg-toggle-dot" aria-hidden="true"></span>';
-    html +=     '<span>Милодий кунлар</span>';
+    html +=     '<span>' + tr('Милодий кунлар') + '</span>';
     html +=   '</button>';
     html +=   '<button class="cal-greg-toggle' + (showCellTint ? ' is-on' : '') + '" '
          +         'onclick="toggleCellTint()" '
          +         'aria-pressed="' + showCellTint + '" '
-         +         'title="Муҳим кунларни катак ранги билан белгилаш">';
+         +         'title="' + tr('Муҳим кунларни катак ранги билан белгилаш') + '">';
     html +=     '<span class="cal-greg-toggle-dot" aria-hidden="true"></span>';
-    html +=     '<span>Катак ранги</span>';
+    html +=     '<span>' + tr('Катак ранги') + '</span>';
     html +=   '</button>';
     html += '</div>';
 
@@ -522,7 +523,7 @@
     }
     if (monthRows.length > 0) {
       html += '<div class="month-events">';
-      html += '<div class="month-events-title">Бу ойдаги муҳим кунлар</div>';
+      html += '<div class="month-events-title">' + tr('Бу ойдаги муҳим кунлар') + '</div>';
       for (let me = 0; me < monthRows.length; me++) {
         const ev = monthRows[me];
         let meta;
@@ -547,7 +548,7 @@
         }
         html += '<button class="event-row" onclick="showDay(\'' + escapeHtml(ev.id) + '\')">';
         html += '<div class="event-info">';
-        html += '<div class="event-name">' + escapeHtml(ev.name) + '</div>';
+        html += '<div class="event-name">' + escapeHtml(tr(ev.name)) + '</div>';
         html += '<div class="event-meta">' + meta + '</div>';
         html += '</div>';
         html += '<div class="event-arrow">→</div>';
@@ -556,7 +557,7 @@
       html += '</div>';
     } else {
       html += '<div class="month-events">';
-      html += '<div style="text-align:center;padding:32px;color:var(--ink-mute);font-size:14px;">Бу ойда муҳим кунлар йўқ</div>';
+      html += '<div style="text-align:center;padding:32px;color:var(--ink-mute);font-size:14px;">' + tr('Бу ойда муҳим кунлар йўқ') + '</div>';
       html += '</div>';
     }
 
@@ -683,12 +684,12 @@
       const fallback = day.name + ' — ' + (day.short || '') + '\n' + url;
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(fallback).then(function () {
-          showToast('Нусха олинди');
+          showToast(tr('Нусха олинди'));
         }).catch(function () {
-          showToast('Нусха олиб бўлмади');
+          showToast(tr('Нусха олиб бўлмади'));
         });
       } else {
-        showToast('Браузер ulashish-ни қўлламайди');
+        showToast(tr('Браузер ulashish-ни қўлламайди'));
       }
     });
   }
@@ -773,7 +774,7 @@
     const innerW = SHARE_W - SHARE_PAD_X * 2 - 72;
     const items = [];
     if (day.note) {
-      items.push(measureBlock(ctx, String(day.noteTitle || 'Зарур изоҳ').toUpperCase(), day.note, innerW));
+      items.push(measureBlock(ctx, String(day.noteTitle || tr('Зарур изоҳ')).toUpperCase(), day.note, innerW));
     }
     (day.verses || []).forEach(function (v) {
       items.push(measureBlock(ctx, String(v.source || '').toUpperCase(), '«' + v.translation + '»', innerW, v.commentary));
@@ -891,7 +892,7 @@
     ctx.fillStyle = 'rgba(255,255,255,0.75)';
     ctx.textBaseline = 'top';
     ctx.textAlign = 'left';
-    ctx.fillText('КУН ҲАҚИДА', textX, y + padTop);
+    ctx.fillText(tr('КУН ҲАҚИДА'), textX, y + padTop);
     ctx.font = '500 30px "DM Sans", system-ui, sans-serif';
     ctx.fillStyle = '#ffffff';
     const textY = y + padTop + labelGap;
@@ -996,7 +997,7 @@
       ty += 18;
       ctx.font = '700 20px "DM Sans", system-ui, sans-serif';
       ctx.fillStyle = 'rgba(255,255,255,0.6)';
-      ctx.fillText('ИЗОҲ', textX, ty);
+      ctx.fillText(tr('ИЗОҲ'), textX, ty);
       ty += 30;
       ctx.font = '500 25px "DM Sans", system-ui, sans-serif';
       ctx.fillStyle = 'rgba(255,255,255,0.9)';
@@ -1084,13 +1085,13 @@
     const occ = nextOccurrence(day);
     const hijriLine = formatHijriLine(day, occ);
     const gregLine = formatGregLine(day, occ);
-    drawInfoBlock(ctx, padX, 540, W - padX * 2, 'ҲИЖРИЙ', hijriLine);
-    drawInfoBlock(ctx, padX, 720, W - padX * 2, 'МИЛОДИЙ', gregLine);
+    drawInfoBlock(ctx, padX, 540, W - padX * 2, tr('ҲИҶРИЙ'), hijriLine);
+    drawInfoBlock(ctx, padX, 720, W - padX * 2, tr('МИЛОДИЙ'), gregLine);
 
     // Ҳафта куни — ҳафталик кунларда ҲИЖРИЙ блок аллақачон кўрсатгани учун
     // фақат йиллик ва ойлик кунларга алоҳида блок сифатида қўшилади.
     if (day.frequency !== 'weekly') {
-      drawInfoBlock(ctx, padX, 900, W - padX * 2, 'ҲАФТА КУНИ', weekDaysFull[occ.date.getDay()]);
+      drawInfoBlock(ctx, padX, 900, W - padX * 2, tr('ҲАФТА КУНИ'), weekDaysFull[occ.date.getDay()]);
     }
 
     // Сайт номи пастда
@@ -1145,7 +1146,7 @@
   function formatHijriLine(day, occ) {
     if (day.frequency === 'weekly') {
       const dows = day.weekDays || [day.weekDay];
-      return dows.map(function (d) { return weekDaysFull[d]; }).join(' ва ');
+      return dows.map(function (d) { return weekDaysFull[d]; }).join(tr(' ва '));
     }
     if (day.frequency === 'monthly') {
       return (day.hDays || []).join(', ');

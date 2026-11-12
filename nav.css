@@ -60,6 +60,37 @@
 .app-nav-btn.active:hover { color: white; }
 .app-nav-label { letter-spacing: 0.2px; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 
+/* Til tanlash tugmalari — sahifa sarlavhasi (page-head) ichida, o'ngda. */
+.page-head { position: relative; }
+.lang-switch {
+  position: absolute;
+  right: 0;
+  bottom: 2px;
+  display: flex;
+  gap: 6px;
+}
+.lang-switch-btn {
+  padding: 4px 10px;
+  border: 1px solid var(--line, #1e293b);
+  border-radius: var(--r-full, 999px);
+  background: transparent;
+  color: var(--ink-mute, #94a3b8);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  font-family: inherit;
+  transition: var(--t-fast, color 0.2s, background-color 0.2s);
+}
+.lang-switch-btn:hover { color: var(--sea-300, #7dd3fc); border-color: var(--sea-300, #7dd3fc); }
+.lang-switch-btn.active {
+  background: var(--sea-500, #0ea5e9);
+  border-color: var(--sea-500, #0ea5e9);
+  color: white;
+}
+
 @media (max-width: 460px) {
   .app-nav-btn { padding: 9px 12px; font-size: 12px; }
 }
