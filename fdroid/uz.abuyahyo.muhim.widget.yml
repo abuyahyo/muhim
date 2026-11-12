@@ -74,7 +74,7 @@ Builds:
       - yes
   - versionName: 1.11
     versionCode: 12
-    commit: HEADCOMMIT
+    commit: 487ebeaa
     subdir: android/app
     gradle:
       - yes
