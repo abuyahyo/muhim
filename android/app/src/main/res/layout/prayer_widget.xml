@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/widget_bg"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/title_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/widget_city_default"
+            android:textColor="@color/widget_ink"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/title_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/widget_mute"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <LinearLayout style="@style/WidgetCell">
+            <TextView android:id="@+id/name_fajr" style="@style/WidgetCellName" android:text="@string/prayer_fajr" />
+            <TextView android:id="@+id/time_fajr" style="@style/WidgetCellTime" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/WidgetCell">
+            <TextView android:id="@+id/name_sunrise" style="@style/WidgetCellName" android:text="@string/prayer_sunrise" />
+            <TextView android:id="@+id/time_sunrise" style="@style/WidgetCellTime" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/WidgetCell">
+            <TextView android:id="@+id/name_dhuhr" style="@style/WidgetCellName" android:text="@string/prayer_dhuhr" />
+            <TextView android:id="@+id/time_dhuhr" style="@style/WidgetCellTime" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <LinearLayout style="@style/WidgetCell">
+            <TextView android:id="@+id/name_asr" style="@style/WidgetCellName" android:text="@string/prayer_asr" />
+            <TextView android:id="@+id/time_asr" style="@style/WidgetCellTime" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/WidgetCell">
+            <TextView android:id="@+id/name_maghrib" style="@style/WidgetCellName" android:text="@string/prayer_maghrib" />
+            <TextView android:id="@+id/time_maghrib" style="@style/WidgetCellTime" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/WidgetCell">
+            <TextView android:id="@+id/name_isha" style="@style/WidgetCellName" android:text="@string/prayer_isha" />
+            <TextView android:id="@+id/time_isha" style="@style/WidgetCellTime" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

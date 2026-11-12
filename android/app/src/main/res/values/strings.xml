@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Муҳим виджет</string>
+    <string name="widget_name">Намоз вақтлари</string>
+    <string name="widget_city_default">Тошкент</string>
+    <string name="prayer_fajr">Бомдод</string>
+    <string name="prayer_sunrise">Қуёш</string>
+    <string name="prayer_dhuhr">Пешин</string>
+    <string name="prayer_asr">Аср</string>
+    <string name="prayer_maghrib">Шом</string>
+    <string name="prayer_isha">Хуфтон</string>
+</resources>
