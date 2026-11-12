@@ -11,6 +11,13 @@ sozlamalariga qarab ishlaydi: til (Sozlamalardagi tanlov) va joylashuv
 (Sozlamalardagi **"Mening joylashuvim"** tugmasi, GPS). Joylashuv o'zgarsa
 vidjetlar avtomatik yangilanadi.
 
+## Sajda uslubidagi yangiliklar (v1.12+)
+
+- **Зикр vidjeti** (2×2): vidjetni bosganda sanaydi — 33 Субҳаналлоҳ + 33 Алҳамдулиллоҳ +
+  34 Аллоҳу акбар = 100, davra tugagach yangi davra boshlanadi. ↺ — nolga qaytarish.
+- **Jonli countdown**: "Кейинги намоз" vidjetida keyingi namozgacha qolgan vaqt
+  to'g'ridan-to'g'ri tiksanadi (API 24+).
+
 ## Vidjetlarni ilova ichidan qo'shish (v1.9+)
 
 Ilovani ochib ⚙ (Sozlamalar) → **Vidjetlar** bo'limida istalgan vidjetni bosing —
@@ -28,7 +35,7 @@ Til sozlamasi vidjetlar bilan umumiy: WebView ichidagi sahifa `MuhimAndroid`
 JS bridge orqali tilni o'qiydi va saqlaydi, vidjetlar darhol yangilanadi.
 Ilovadagi ⚙ tugma til sozlamasini ochadi; vidjetlar bosilganda ham ilova ochiladi.
 
-## Vidjetlar (6 xil)
+## Vidjetlar (7 xil)
 | Vidjet | O'lcham | Mazmun |
 |---|---|---|
 | Намоз вақтлари | 4×2 | 6 vaqt to'liq panelda, keyingisi ko'k |
@@ -37,6 +44,7 @@ Ilovadagi ⚙ tugma til sozlamasini ochadi; vidjetlar bosilganda ham ilova ochil
 | Сана ва намоз | 2×2 | Sana + ҳижрий + joy + keyingi namoz |
 | Ҳижрий сана | 2×2 | Ҳижрий kun/oy/yil + keyingi namoz |
 | Таҳажжуд ойнаси | 2×1 | Кечанинг учдан бири (start — end) |
+| Зикр | 2×2 | Bosganda sanaladigan zikr hisoblagichi (33+33+34 = 100) |
 
 Glass uslub: yarim shaffof qatlamli fon, yorug'lik gradienti, nozik oq chegara,
 katta radiusli burchaklar. Haqiqiy blur Android RemoteViews'da mavjud emas —

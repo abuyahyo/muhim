@@ -120,6 +120,19 @@ final class WidgetPrefs {
                 .remove("theme_" + appWidgetId)
                 .remove("method_" + appWidgetId)
                 .remove("shafi_" + appWidgetId)
+                .remove("zikr_" + appWidgetId)
                 .apply();
+    }
+
+    static int zikrCount(Context context, int appWidgetId) {
+        return prefs(context).getInt("zikr_" + appWidgetId, 0);
+    }
+
+    static void saveZikr(Context context, int appWidgetId, int count) {
+        prefs(context).edit().putInt("zikr_" + appWidgetId, count).apply();
+    }
+
+    static void deleteZikr(Context context, int appWidgetId) {
+        prefs(context).edit().remove("zikr_" + appWidgetId).apply();
     }
 }

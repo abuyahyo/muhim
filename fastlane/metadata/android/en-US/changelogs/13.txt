@@ -1,0 +1,1 @@
+New: Dhikr counter widget and a live countdown to the next prayer

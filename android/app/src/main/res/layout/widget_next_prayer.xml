@@ -27,11 +27,18 @@
         android:textSize="15sp"
         android:textStyle="bold" />
 
+    <Chronometer
+        android:id="@+id/np_countdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/widget_ink"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/np_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/widget_ink"
-        android:textSize="26sp"
-        android:textStyle="bold" />
+        android:textColor="@color/widget_mute"
+        android:textSize="12sp" />
 </LinearLayout>

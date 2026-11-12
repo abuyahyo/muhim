@@ -2,6 +2,8 @@ package uz.abuyahyo.muhim.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.os.Build;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import java.util.Calendar;
@@ -40,7 +42,21 @@ public class NextPrayerWidgetProvider extends BaseGlassWidgetProvider {
             rv.setTextViewText(R.id.np_name, name);
             rv.setTextViewText(R.id.np_time, PrayerCalculator.format(time));
             rv.setTextColor(R.id.np_name, mute(light));
-            rv.setTextColor(R.id.np_time, ink(light));
+            rv.setTextColor(R.id.np_time, mute(light));
+
+            // Jonli countdown — Sajda uslubi (API 24+; Chronometer o'zi tiksaydi).
+            double remainingH = (time - nowHour(now) + 24.0) % 24.0;
+            long remainingMs = (long) (remainingH * 3600000.0);
+            if (Build.VERSION.SDK_INT >= 24) {
+                rv.setViewVisibility(R.id.np_countdown, View.VISIBLE);
+                rv.setChronometer(R.id.np_countdown,
+                        android.os.SystemClock.elapsedRealtime() + remainingMs, null, true);
+                rv.setChronometerCountDown(R.id.np_countdown, true);
+                rv.setTextColor(R.id.np_countdown, ink(light));
+            } else {
+                rv.setViewVisibility(R.id.np_countdown, View.GONE);
+            }
+
             rv.setOnClickPendingIntent(R.id.widget_root, siteIntent(context));
             manager.updateAppWidget(id, rv);
         }
