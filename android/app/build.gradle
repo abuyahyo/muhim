@@ -69,6 +69,4 @@ tasks.register('syncWebAssets', Copy) {
     }
     into layout.buildDirectory.dir('generated/webAssets/web')
 }
-tasks.matching { it.name.startsWith('merge') && it.name.endsWith('Assets') }.configureEach {
-    dependsOn 'syncWebAssets'
-}
+preBuild.dependsOn 'syncWebAssets'
