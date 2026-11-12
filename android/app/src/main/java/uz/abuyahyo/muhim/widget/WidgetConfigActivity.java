@@ -1,14 +1,20 @@
 package uz.abuyahyo.muhim.widget;
 
+import android.Manifest;
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -40,9 +46,16 @@ public class WidgetConfigActivity extends Activity {
             {"Қўқон", "40.5286", "70.9425"},
             {"Марғилон", "40.4711", "71.7247"},
             {"Чирчиқ", "41.4719", "69.5819"},
+            {"Шаҳрисабз", "39.0578", "66.8342"},
+            {"Хива", "41.3775", "60.3639"},
+            {"Бекобод", "40.2208", "69.2697"},
+            {"Олмалиқ", "40.8500", "69.5950"},
+            {"Денов", "38.2833", "67.9000"},
             {"Мекка", "21.4225", "39.8262"},
             {"Мадина", "24.4686", "39.6142"}
     };
+
+    private static final int PERMISSION_LOCATION = 1;
 
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
@@ -92,6 +105,22 @@ public class WidgetConfigActivity extends Activity {
 
         LinearLayout list = new LinearLayout(this);
         list.setOrientation(LinearLayout.VERTICAL);
+
+        Button gps = new Button(this, null, android.R.attr.borderlessButtonStyle);
+        gps.setText("📍 Менинг жойлашувим");
+        gps.setAllCaps(false);
+        gps.setTextSize(15);
+        gps.setTextColor(0xFF7DD3FC);
+        gps.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
+        gps.setPadding(pad, dp(10), pad, dp(10));
+        gps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestMyLocation();
+            }
+        });
+        list.addView(gps);
+
         for (final String[] c : CITIES) {
             Button b = new Button(this, null, android.R.attr.borderlessButtonStyle);
             b.setText(c[0]);
@@ -178,6 +207,78 @@ public class WidgetConfigActivity extends Activity {
         border.setCornerRadius(dp(20));
         border.setStroke(dp(1), 0x26FFFFFF);
         return new LayerDrawable(new Drawable[] { base, border });
+    }
+
+    private void requestMyLocation() {
+        if (Build.VERSION.SDK_INT >= 23
+                && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED
+                && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[] {
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION }, PERMISSION_LOCATION);
+            return;
+        }
+        useMyLocation();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == PERMISSION_LOCATION) {
+            for (int r : grantResults) {
+                if (r == PackageManager.PERMISSION_GRANTED) {
+                    useMyLocation();
+                    return;
+                }
+            }
+            toast("Рухсат берилмади");
+        }
+    }
+
+    private void useMyLocation() {
+        Location best = null;
+        try {
+            LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+            for (String provider : lm.getProviders(false)) {
+                Location loc = lm.getLastKnownLocation(provider);
+                if (loc != null && (best == null || loc.getTime() > best.getTime())) {
+                    best = loc;
+                }
+            }
+        } catch (SecurityException e) {
+            toast("Рухсат берилмади");
+            return;
+        } catch (Exception e) {
+            best = null;
+        }
+        if (best == null) {
+            toast("Жойлашув топилмади — GPS'ни ёқиб, харитадан фойдаланинг");
+            return;
+        }
+        selectedLat = best.getLatitude();
+        selectedLon = best.getLongitude();
+        selectedCity = resolveCityName(selectedLat, selectedLon);
+        saveAndFinish();
+    }
+
+    private String resolveCityName(double lat, double lon) {
+        try {
+            java.util.List<android.location.Address> addrs =
+                    new Geocoder(this).getFromLocation(lat, lon, 1);
+            if (addrs != null && !addrs.isEmpty()) {
+                android.location.Address a = addrs.get(0);
+                if (a.getLocality() != null) return a.getLocality();
+                if (a.getSubAdminArea() != null) return a.getSubAdminArea();
+                if (a.getAdminArea() != null) return a.getAdminArea();
+            }
+        } catch (Exception ignored) {
+        }
+        return "Менинг жойим";
+    }
+
+    private void toast(String text) {
+        android.widget.Toast.makeText(this, text, android.widget.Toast.LENGTH_SHORT).show();
     }
 
     private void saveAndFinish() {
