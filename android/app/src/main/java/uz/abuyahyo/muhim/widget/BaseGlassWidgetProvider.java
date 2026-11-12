@@ -36,7 +36,7 @@ abstract class BaseGlassWidgetProvider extends AppWidgetProvider {
     static Context localizedContext(Context c) {
         String lang = WidgetPrefs.language(c);
         if ("system".equals(lang)) return c;
-        Locale locale = new Locale(lang);
+        Locale locale = WidgetPrefs.localeFor(lang);
         Configuration config = new Configuration(c.getResources().getConfiguration());
         config.setLocale(locale);
         return c.createConfigurationContext(config);

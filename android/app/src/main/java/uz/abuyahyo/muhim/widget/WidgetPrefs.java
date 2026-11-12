@@ -2,6 +2,7 @@ package uz.abuyahyo.muhim.widget;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import java.util.Locale;
 
 // Har bir vidjet uchun alohida sozlamalar (shahar, mavzu).
 // SharedPreferences'da vidjet id'si bilan saqlanadi.
@@ -68,6 +69,18 @@ final class WidgetPrefs {
     }
 
     // Til — butun ilova uchun (vidjetlar ham). "system" — telefon tili.
+    // 'uzl' — lotin yozuvli o'zbek, 'uz' — kirill. Resurs to'g'ri tanlanishi
+    // uchun script aniq belgilanadi.
+    static Locale localeFor(String lang) {
+        if ("uzl".equals(lang)) {
+            return new Locale.Builder().setLanguage("uz").setScript("Latn").build();
+        }
+        if ("uz".equals(lang)) {
+            return new Locale.Builder().setLanguage("uz").setScript("Cyrl").build();
+        }
+        return new Locale(lang);
+    }
+
     static String language(Context context) {
         return prefs(context).getString("language", "system");
     }

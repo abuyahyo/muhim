@@ -12,8 +12,10 @@
 
   function L(s) {
     if (s == null) return s;
+    var l = I.lang();
+    if (l === 'uzl') return I.translit(s);
     var e = CONTENT[s];
-    if (e) return e[I.lang()] || s;
+    if (e) return e[l] || s;
     return I.t(s);
   }
 
