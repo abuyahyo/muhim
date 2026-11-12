@@ -25,6 +25,17 @@ import java.util.Locale;
 
 public class LanguageSettingsActivity extends Activity {
 
+    private static final Class<?>[] PROVIDERS = {
+            PrayerWidgetProvider.class, NextPrayerWidgetProvider.class,
+            PrayerStripWidgetProvider.class, DateWidgetProvider.class,
+            HijriWidgetProvider.class, TahajjudWidgetProvider.class
+    };
+    private static final int[] PROVIDER_LABELS = {
+            R.string.widget_grid_name, R.string.widget_next_name,
+            R.string.widget_strip_name, R.string.widget_date_name,
+            R.string.widget_hijri_name, R.string.widget_tahajjud_name
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +107,22 @@ public class LanguageSettingsActivity extends Activity {
                 }));
         card.addView(row);
 
+        TextView widgetsLabel = new TextView(this);
+        widgetsLabel.setText(R.string.config_widgets);
+        widgetsLabel.setTextSize(14);
+        widgetsLabel.setTextColor(0xB3FFFFFF);
+        widgetsLabel.setPadding(0, dp(8), 0, dp(4));
+        card.addView(widgetsLabel);
+
+        for (int i = 0; i < PROVIDERS.length; i++) {
+            card.addView(widgetButton(getString(PROVIDER_LABELS[i]), PROVIDERS[i]));
+        }
+
+        Button refresh = widgetButton(getString(R.string.widget_refresh_all), null);
+        refresh.setTypeface(Typeface.DEFAULT_BOLD);
+        refresh.setTextColor(0xFF7DD3FC);
+        card.addView(refresh);
+
         TextView note = new TextView(this);
         note.setText(R.string.settings_note);
         note.setTextSize(12);
@@ -128,12 +155,7 @@ public class LanguageSettingsActivity extends Activity {
 
     private void refreshAllWidgets() {
         AppWidgetManager mgr = AppWidgetManager.getInstance(this);
-        Class<?>[] providers = {
-                PrayerWidgetProvider.class, NextPrayerWidgetProvider.class,
-                PrayerStripWidgetProvider.class, DateWidgetProvider.class,
-                HijriWidgetProvider.class, TahajjudWidgetProvider.class
-        };
-        for (Class<?> p : providers) {
+        for (Class<?> p : PROVIDERS) {
             int[] ids = mgr.getAppWidgetIds(new ComponentName(this, p));
             if (ids.length > 0) {
                 Intent update = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
@@ -153,6 +175,47 @@ public class LanguageSettingsActivity extends Activity {
         config.setLocale(locale);
         getBaseContext().getResources().updateConfiguration(
                 config, getBaseContext().getResources().getDisplayMetrics());
+    }
+
+    // Ilova ichidan vidjet qo'yish — launcher'ga pin so'rovi (API 26+).
+    private Button widgetButton(final String label, final Class<?> provider) {
+        Button b = new Button(this, null, android.R.attr.borderlessButtonStyle);
+        b.setText(label);
+        b.setAllCaps(false);
+        b.setTextSize(14);
+        b.setTextColor(Color.WHITE);
+        b.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
+        b.setPadding(dp(8), 0, dp(8), 0);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, dp(38));
+        lp.setMargins(0, dp(2), 0, dp(2));
+        b.setLayoutParams(lp);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (provider == null) {
+                    refreshAllWidgets();
+                    toast(getString(R.string.widget_refresh_done));
+                } else {
+                    pinWidget(provider);
+                }
+            }
+        });
+        return b;
+    }
+
+    private void pinWidget(Class<?> provider) {
+        AppWidgetManager mgr = AppWidgetManager.getInstance(this);
+        if (Build.VERSION.SDK_INT < 26 || !mgr.isRequestPinAppWidgetSupported()) {
+            toast(getString(R.string.widget_pin_unsupported));
+            return;
+        }
+        mgr.requestPinAppWidget(new ComponentName(this, provider), null, null);
+        toast(getString(R.string.widget_pin_sent));
+    }
+
+    private void toast(String text) {
+        android.widget.Toast.makeText(this, text, android.widget.Toast.LENGTH_SHORT).show();
     }
 
     private Button optionButton(String label, boolean active, View.OnClickListener listener) {

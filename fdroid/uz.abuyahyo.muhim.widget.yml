@@ -60,3 +60,9 @@ Builds:
     subdir: android/app
     gradle:
       - yes
+  - versionName: 1.9
+    versionCode: 10
+    commit: 02490ae7
+    subdir: android/app
+    gradle:
+      - yes

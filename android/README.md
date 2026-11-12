@@ -4,6 +4,12 @@ Uy ekranida ko'rinadigan **glassmorphism uslubidagi** namoz vaqtlari vidjetlari.
 Web-saytdagi `vaqtlar/prayer.js` algoritmi (PrayTimes.org, MWL + Hanafiy Asr)
 va `kunlar/hijri.js` ҳижрий algoritmi Java'ga ko'chirilgan — hammasi to'liq oflayn.
 
+## Vidjetlarni ilova ichidan qo'shish (v1.9+)
+
+Ilovani ochib ⚙ (Sozlamalar) → **Vidjetlar** bo'limida istalgan vidjetni bosing —
+launcher tasdiqlash oynasini ko'rsatadi va vidjet uy ekraniga qo'shiladi.
+Qotib qolgan vidjetlarni **"Hammasini yangilash"** tugmasi bilan jonlantirish mumkin.
+
 ## Gibrid ilova (v1.8+)
 
 APK endi **web ilovani ham o'z ichiga oladi**: build vaqtida repo ildizidagi
