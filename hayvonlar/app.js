@@ -5,9 +5,13 @@
     { id: 'cat', name: 'Mushuk', emoji: '🐱', caption: 'Miyov', color: '#fbbf24' },
     { id: 'dog', name: 'It', emoji: '🐶', caption: 'Vov', color: '#60a5fa' },
     { id: 'cow', name: 'Sigir', emoji: '🐮', caption: 'Muu', color: '#cbd5e1' },
-    { id: 'rooster', name: 'Xo'ro'z', emoji: '🐓', caption: 'Kukuruku', color: '#fca5a5' },
-    { id: 'horse', name: 'Ot', emoji: '🐴', caption: 'Ih', color: '#a78bfa' },
-    { id: 'duck', name: 'O'rdak', emoji: '🦆', caption: 'Qak-qak', color: '#7dd3fc' }
+    { id: 'goat', name: 'Echki', emoji: '🐐', caption: 'Be-e', color: '#facc15' },
+    { id: 'donkey', name: 'Eshak', emoji: '🐴', caption: 'I-a', color: '#a78bfa' },
+    { id: 'camel', name: 'Tuya', emoji: '🐪', caption: 'A-a-a', color: '#f59e0b' },
+    { id: 'rooster', name: 'Xo`roz', emoji: '🐓', caption: 'Kukuruku', color: '#fca5a5' },
+    { id: 'horse', name: 'Ot', emoji: '🐎', caption: 'Ih', color: '#a78bfa' },
+    { id: 'duck', name: 'O`rdak', emoji: '🦆', caption: 'Qak-qak', color: '#7dd3fc' },
+    { id: 'lion', name: 'Sher', emoji: '🦁', caption: 'Rrrr', color: '#f97316' }
   ];
 
   const state = { audioCtx: null };
@@ -65,6 +69,19 @@
         { frequency: 180, duration: 0.16, type: 'sine', volume: 0.05, sweepTo: 140, sweepTime: 0.16 },
         { frequency: 150, duration: 0.18, type: 'sine', volume: 0.05, sweepTo: 110, sweepTime: 0.18 }
       ],
+      goat: [
+        { frequency: 360, duration: 0.09, type: 'triangle', volume: 0.045, sweepTo: 240, sweepTime: 0.08 },
+        { frequency: 320, duration: 0.12, type: 'triangle', volume: 0.04, sweepTo: 220, sweepTime: 0.1 }
+      ],
+      donkey: [
+        { frequency: 220, duration: 0.14, type: 'square', volume: 0.04, sweepTo: 160, sweepTime: 0.11 },
+        { frequency: 170, duration: 0.18, type: 'square', volume: 0.038, sweepTo: 120, sweepTime: 0.14 }
+      ],
+      camel: [
+        { frequency: 160, duration: 0.18, type: 'sawtooth', volume: 0.045, sweepTo: 120, sweepTime: 0.15 },
+        { frequency: 150, duration: 0.2, type: 'sawtooth', volume: 0.04, sweepTo: 110, sweepTime: 0.16 },
+        { frequency: 140, duration: 0.23, type: 'triangle', volume: 0.036, sweepTo: 90, sweepTime: 0.18 }
+      ],
       rooster: [
         { frequency: 640, duration: 0.08, type: 'square', volume: 0.045, sweepTo: 820, sweepTime: 0.08 },
         { frequency: 1120, duration: 0.08, type: 'square', volume: 0.04, sweepTo: 930, sweepTime: 0.08 },
@@ -78,6 +95,11 @@
         { frequency: 520, duration: 0.07, type: 'triangle', volume: 0.04, sweepTo: 420, sweepTime: 0.07 },
         { frequency: 460, duration: 0.09, type: 'triangle', volume: 0.035, sweepTo: 360, sweepTime: 0.08 },
         { frequency: 430, duration: 0.12, type: 'triangle', volume: 0.03, sweepTo: 310, sweepTime: 0.1 }
+      ],
+      lion: [
+        { frequency: 90, duration: 0.25, type: 'sawtooth', volume: 0.05, sweepTo: 60, sweepTime: 0.2 },
+        { frequency: 120, duration: 0.2, type: 'square', volume: 0.045, sweepTo: 80, sweepTime: 0.16 },
+        { frequency: 80, duration: 0.3, type: 'sine', volume: 0.05, sweepTo: 50, sweepTime: 0.2 }
       ]
     };
 
@@ -114,13 +136,8 @@
       const id = button.getAttribute('data-id');
       if (!id) return;
 
-      animals.forEach(function (animal) {
-        if (animal.id === id) {
-          button.classList.add('is-playing');
-          setTimeout(function () { button.classList.remove('is-playing'); }, 200);
-        }
-      });
-
+      button.classList.add('is-playing');
+      setTimeout(function () { button.classList.remove('is-playing'); }, 220);
       playAnimalSound(id);
     });
   }
