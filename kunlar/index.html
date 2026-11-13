@@ -36,6 +36,9 @@
   <a class="app-nav-btn" href="../joylar/" aria-label="Жойлар">
     <span class="app-nav-label">Жойлар</span>
   </a>
+  <a class="app-nav-btn" href="../hayvonlar/" aria-label="Hayvonlar">
+    <span class="app-nav-label">Hayvonlar</span>
+  </a>
   <button class="app-nav-btn" id="nav-cal" onclick="showCalendar()" aria-label="Тақвим">
     <span class="app-nav-label">Тақвим</span>
   </button>
@@ -50,9 +53,6 @@
 <script src="app.js"></script>
 
 <script>
-// PWA / Service Worker регистрацияси + янги версия banner.
-// SW кейинги версияни топса, фойдаланувчига кичкина banner кўрсатилади.
-// Banner босилса skipWaiting() ишга тушади ва саҳифа янгиланади.
 if ('serviceWorker' in navigator && !window.MuhimAndroid) {
   window.addEventListener('load', function () {
     navigator.serviceWorker.register('../sw.js').then(function (reg) {
@@ -60,7 +60,6 @@ if ('serviceWorker' in navigator && !window.MuhimAndroid) {
         var nw = reg.installing;
         if (!nw) return;
         nw.addEventListener('statechange', function () {
-          // Фақат олдинги SW бор бўлса янги версия деб қойилади (1-юкланиш эмас).
           if (nw.state === 'installed' && navigator.serviceWorker.controller) {
             showUpdateBanner(nw);
           }
@@ -68,7 +67,6 @@ if ('serviceWorker' in navigator && !window.MuhimAndroid) {
       });
     }).catch(function () {});
 
-    // Янги SW тахт олганда — саҳифани автомат янгилаймиз.
     var refreshing = false;
     navigator.serviceWorker.addEventListener('controllerchange', function () {
       if (refreshing) return;
